@@ -1,0 +1,150 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="StoriesListViewController">
+	<aura:attribute name="storyRec" type="Story__c" access="global"/>
+	<aura:attribute name="recID" type="String" access="global"/>
+	<aura:attribute name="StatusList" type="String[]" access="global"/>
+	<aura:attribute name="priority" type="String" access="global"/>
+	<aura:attribute name="ErrorMessge" type="String" access="global"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<!-- <aura:handler name="closeEditModalEvent" event="c:CloseEditModal" action="{!c.closeEditModal}"/> -->
+	
+	<div class="slds-modal__content slds-p-around--small">
+	 	<div class="slds-grid slds-wrap">
+	        
+	        <div class="slds-p-horizontal--small slds-size--1-of-5">                                                            
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Name</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Name}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--1-of-5">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Story Name</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Story_Name__c}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--1-of-5">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Story Status</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Status__c}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-5">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Priority</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Priority__c}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-5">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Level of Effort</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Level_of_Effort__c}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Epic</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Epic__r.Name}"></ui:outputText>
+	                </div>
+	            </div>                            
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">   
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Functional Owner</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Functional_Owner__r.Name}"></ui:outputText>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Project Name</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Project__r.Name}"></ui:outputText>
+	                </div>
+	            </div>                            
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Sprint</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText class=" slds-input" value="{!v.storyRec.Sprint__r.Name}"></ui:outputText>
+	                </div>
+	            </div>                                                                    
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Description</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputTextArea class=" slds-input" value="{!v.storyRec.Description__c}"></ui:outputTextArea>                                                                    
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element slds-hint-parent ">
+	                <span class="slds-form-element__label">Technical Design Notes</span>
+	                <div class="slds-form-element__control">
+	                    <ui:outputTextArea class=" slds-input" value="{!v.storyRec.Technical_Design_Notes__c}"></ui:outputTextArea>                                                                    
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element">
+	                <div class="slds-form-element slds-hint-parent ">
+	                    <span class="slds-form-element__label">Test Scenarios</span>
+	                    <div class="slds-form-element__control">
+	                        <ui:outputTextArea class=" slds-input" value="{!v.storyRec.Test_Scenarios__c}"></ui:outputTextArea>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	                                                
+	    </div>
+	</div>
+    <div class="slds-modal__footer">
+        <button class="slds-button slds-button--neutral" data-modalid="storyRecordView" onclick="{!c.showstoryRecordEdit}">Edit</button>
+    </div>
+        <!-- StoryRecordEdit Modal Start-->
+            <div role="dialog" aura:id="storyRecordEdit" id="storyRecordEdit"  aria-hidden="true"  aria-labelledby="Story" class="slds-modal slds-fade-in-close slds-modal--large">
+            <div class="slds-grid">   
+				        <div class="slds-col  slds-large-size--1-of-1">
+				            <div class="slds-notify_container" style="position:inherit" >
+				                <div id="notify3"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+				                    <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+				                        <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+				                        <span class="slds-assistive-text">Close</span>
+				                    </button>
+				                    <span class="slds-assistive-text">Error</span>
+				                    <span>
+				                        {!v.ErrorMessge}
+				                    </span>
+				                </div>
+				            </div>
+				        </div>         
+				    </div>            
+                <div class="slds-modal__container">
+                	
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close slds-button__icon--large" data-modalid="storyRecordEdit" onclick="{!c.hidestoryRecordEdit}">                                
+                            <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header43" class="slds-text-heading--medium">{!v.storyRec.Name}</h2>
+                    </div>
+                        <c:StoryRecordEdit recID="{!v.recID}" StatusList="{!v.StatusList}" storyRec="{!v.storyRec}" priority="{!v.priority}"/>
+                </div>
+            </div>
+        <!-- StoryRecordEdit Modal End-->
+        
+</aura:component>

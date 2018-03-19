@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used for Trekbin to notify of feedback record creation</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Feedback Bug</name>
+    <style>freeForm</style>
+    <subject>CORRECTION: 10K Feedback Bug</subject>
+    <textOnly>Hello,
+
+On August 3rd we noticed a bug in the Expert to Expert Feedback record creation.
+
+Many of you may have received a notification to complete feedback incorrectly.
+
+If you have received a request that doesn&apos;t apply, please ignore it.
+
+We apologize for this mistake. Please let us know if you have any questions.
+
+Thanks,
+Jared</textOnly>
+    <type>html</type>
+</EmailTemplate>

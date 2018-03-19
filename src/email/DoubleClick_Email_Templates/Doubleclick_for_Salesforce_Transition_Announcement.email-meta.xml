@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Doubleclick for Salesforce Transition Announcement</name>
+    <style>none</style>
+    <subject>**IMPORTANT: Change in Support for Doubleclick/Salesforce Connector**</subject>
+    <textOnly>{!Contact.FirstName},
+
+I&apos;m writing to inform you that support for the Google Doubleclick for Publishers integration with Salesforce, originally distributed and supported by Appirio, is in the process of transitioning to 10K Advisors.
+
+In 2014, Google contracted with Appirio to develop the original connector in an effort to provide an integration solution to a growing list of customers who used Doubleclick and Salesforce. While Appirio owned all customer-facing aspects of the connector, their team worked closely with 10K to perform the development. Google&apos;s funding of the development allowed Appirio to offer the connector for free, although there were a number of customers who opted to pay for support and additional functionality. Last year, Google discontinued their funding, and with this action Appirio decided that it was no longer viable to continue providing support for the connector.
+
+Effective immediately, 10K will be taking over all support and development for the connector. Because our team was instrumental in the connector&apos;s development and has in-depth knowledge of the inner workings, it was a natural decision to transition support to 10K. We have Google&apos;s support in this endeavor as well, who is very interested in seeing their customers continue to succeed with their use of the connector without any business disruption.
+
+How will this impact current users of the connector?
+
+Because Google is no longer subsidising any of the development, 10K will be transitioning to a subscription licensing model for the connector and will no longer be providing free support or upgrades.
+
+Whether you had a support contract with Appirio or you were using the connector unsupported for free, you will need to execute a new subscription agreement with 10K in order to receive any additional upgrades or support. Our vision is to not only keep the connector functioning but to also enhance its features and functionality based on feedback from our subscribers. As part of the 10K subscription agreement you will:
+
+- Receive regular maintenance upgrades based on Google API additions, changes, and deprecations
+- Have access to support for any issues or bugs you encounter with the connector
+- Receive upgraded functionality built by 10K as part of our roadmap for the connector
+- Have the ability to work with our team to influence prioritization and functionality of new features
+
+If you are interested in receiving more information about the subscription agreement for the connector, you can respond to this email, and I will work with you directly. If you decide not to move forward with a subscription agreement your version of the connector will continue to function until Google deprecates the latest API used in the package, which is slated for sometime in Q1 of 2017. You can view the API deprecation schedule here.
+
+We are constantly striving to provide the best experience possible for our clients. If you have any questions, concerns, or feedback, please email me directly. I would love to hear from you!
+
+Cheers!
+
+Nick Hamm
+CEO
+10K Advisors
+nick@10Kview.com
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

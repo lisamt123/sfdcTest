@@ -1,0 +1,118 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" controller="AddStoryToReleaseLightning">
+    <!-- <ltng:require styles="{!$Resource.lightningCss}" /> -->
+    <!-- attributes -->
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="storyName" type="String" default=""/>    
+    <aura:attribute name="source" type="String" default=""/>    
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="releaseId" type="String" default=""/>
+    <aura:attribute name="relatedReleaseId" type="String" default=""/>
+    <aura:attribute name="story" type="Story__c"/>
+    <aura:attribute name="releaseOptions" type="Object[]" />
+    <aura:attribute name="relatedReleaseOptions" type="Object[]" />
+    <aura:attribute name="isCreatedOnHeroku" type="Boolean" default="false"/>
+    <aura:attribute name="isNewRelease" type="Boolean" default="false"/>
+    <aura:attribute name="statusOption" type="Object[]"/>
+    <aura:attribute name="isExitRelease" type="Boolean" default="false"/>
+
+
+    <aura:attribute name="release" type="Release__c" default="{ 'sobjectType': 'Release__c'}"/>
+    <!-- doInit Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- Spinner -->
+    <lightning:spinner aura:id="Spinner" variant="brand"/>
+    <!-- <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> -->
+    <!-- root div -->
+    <force:inputField value="{!v.release.Name}" class="inputFieldClass"/>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 100%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                  X
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add To Release</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <lightning:layout horizontalAlign="start" multipleRows='true'>
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                        <lightning:button class="{!if(v.isExitRelease,'true','false')}" variant="brand" label="Add to Existing" onclick="{!c.onGroup}" disabled="{!!v.isCreatedOnHeroku}" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                        <lightning:button class="{!if(v.isNewRelease,'true','false')}" variant="brand" label="Create a New Release" onclick="{!c.onGroup}" disabled="{!!v.isCreatedOnHeroku}" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <aura:if isTrue="{!v.isNewRelease}" >
+                    <lightning:layout horizontalAlign="start" multipleRows='true'>
+                         <lightning:layoutItem size="12" flexibility="grow" padding="around-small">
+                            <h3 class="slds-section-title--divider">Information</h3>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <lightning:Input aura:id="relName" name="releaseName" label="Release Name *" value="{!v.release.Name}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <c:CustomLookupComponent sObjectAPIName="Project__c" label="Project *" pluralLabel="Projects" Value="{!v.release.Project__c}" listIconSVGPath="custom:custom32" placeHolderCustom="Search Projects..." isDisabled="true"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <c:CustomLookupComponent sObjectAPIName="Connection__c" relatedSObjectFieldName="Project__c" sObjectRelatedId="{!v.release.Project__c}" label="Source *" pluralLabel="Connections" Value="{!v.release.Source__c}" listIconSVGPath="custom:custom37" placeHolderCustom="Search Connections..."/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <!-- <force:inputField value="{!v.release.Status__c}" class="inputFieldClass"/> -->
+                            <lightning:select name="statusSelect"  label="Status"  aura:id="mySelect" value="{!v.release.Status__c}">
+                                <aura:iteration items="{!v.statusOption}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" />
+                                </aura:iteration>
+                            </lightning:select> 
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <c:CustomLookupComponent sObjectAPIName="Connection__c" relatedSObjectFieldName="Project__c" sObjectRelatedId="{!v.release.Project__c}" label="Target" pluralLabel="Connections" Value="{!v.release.Target__c}" listIconSVGPath="custom:custom37" placeHolderCustom="Search Connections..."/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <ui:inputDate aura:id="targetReleaseDate" label="Target Release Date" value="{!v.release.Target_Release_Date__c}" displayDatePicker="true"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+                            <ui:inputDate aura:id="actualReleaseDate" label="Actual Release Date" value="{!v.release.Actual_Release_Date__c}" displayDatePicker="true"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" flexibility="grow" padding="around-small">
+                            <h3 class="slds-section-title--divider">Manual Step</h3>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" >
+                            <ui:outputText value="Manual Pre Deployment Steps"  />
+                            <lightning:inputRichText value="{!v.release.Manual_Pre_Deployment_Steps__c}"  />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" >
+                            <ui:outputText value="Manual Post Deployment Steps"  />
+                            <lightning:inputRichText value="{!v.release.Manual_Post_Deployment_Steps__c}" />
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </aura:if>
+                <aura:if isTrue="{!v.isExitRelease}">
+                    <lightning:layout horizontalAlign="start" multipleRows='true'>
+                        <br/>
+                        <br/>
+                        <lightning:layoutItem flexibility="grow" padding="around-small" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" >
+                            <ui:inputSelect label="Select a Release: " value="{!v.releaseId}" class="unrelated" aura:id="releaseList"  />
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <br/>
+                    <br/>
+                </aura:if>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <aura:if isTrue="{!or(v.isExitRelease,v.isNewRelease)}">
+                    <lightning:button aura:id="UpdateButton" onclick="{!c.updateClick}" variant="brand"  label="Save and Close" disabled="{!!v.isCreatedOnHeroku}"/>
+                </aura:if>
+            </footer>
+        </div>
+    </section>
+</aura:component>

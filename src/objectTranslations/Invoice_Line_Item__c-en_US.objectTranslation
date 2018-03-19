@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Invoice Line Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Invoice Line Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Billable Hours Total --></label>
+        <name>Billable_Hours_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Amount --></label>
+        <name>Credit_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount --></label>
+        <name>Discount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expense Amount --></label>
+        <name>Expense_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Named Resources who worked on this Line Item for the given Invoice. --></help>
+        <label><!-- Expert Names --></label>
+        <name>Expert_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Amount --></label>
+        <name>Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hourly Rate --></label>
+        <name>Hourly_Rate_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours --></label>
+        <name>Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Invoice Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Line Item Total (Text) --></label>
+        <name>Line_Item_Total_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Line Item Total --></label>
+        <name>Line_Item_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- If necessary, an Admin can set the Line Item Total to a specific value, overriding the automatic calculations based on Rate &amp; Hours or Monthly Minimum. --></help>
+        <label><!-- Manual Line Item Total Override --></label>
+        <name>Manual_Line_Item_Total_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration Id --></label>
+        <name>Migration_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Commitment --></label>
+        <name>Minimum_Commitment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monthly Rate --></label>
+        <name>Monthly_Rate_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Named Resource? --></label>
+        <name>Named_Resource__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Weeks --></label>
+        <name>Number_of_Weeks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Invoice Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- QuickBooks Id --></label>
+        <name>QuickBooks_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rate Name --></label>
+        <name>Rate_Name_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rate --></label>
+        <name>Rate__c</name>
+        <relationshipLabel><!-- Invoice Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- List Price --></label>
+        <name>Sales_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Price --></label>
+        <name>Total_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trimmed Rate Name --></label>
+        <name>Trimmed_Rate_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Key --></label>
+        <name>Unique_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workato Description --></label>
+        <name>Workato_Description__c</name>
+    </fields>
+    <layouts>
+        <layout>10K Credit Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Expense Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Goodwill Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Product Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Services Invoice Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- 10K Credit Invoice Line Item --></label>
+        <name>X10K_Credit_Invoice_Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Expense Invoice Line Item --></label>
+        <name>X10K_Expense_Invoice_Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Goodwill Invoice Line Item --></label>
+        <name>X10K_Goodwill_Invoice_Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Product Invoice Line Item --></label>
+        <name>X10K_Product_Invoice_Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Services Invoice Line Item --></label>
+        <name>X10K_Services_Invoice_Line_Item</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Manual Overrides have been deprecated on Invoices past Jan 1, 2017. Please use an appropriate Invoice Line Item Record Type to make any necessary adjustments to the Invoice. --></errorMessage>
+        <name>Disallow_Manual_Overrides_Past_Jan_2017</name>
+    </validationRules>
+</CustomObjectTranslation>

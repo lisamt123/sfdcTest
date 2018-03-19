@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K Launch Email - Customers and Partners</name>
+    <style>none</style>
+    <subject>Trekbin US is now 10K Advisors</subject>
+    <textOnly>EFFECTIVE IMMEDIATELY
+
+Announcing the official launch of 10K Advisors!
+
+Trusted Partner,
+
+Today is an exciting day in the evolution of Salesforce services!
+
+As you may be aware, Trekbin is composed of both US and India-based operations. Effective immediately, the US arm of the business will be re-branded as 10K Advisors, or 10K for short. With the 10K brand the current US leadership will expand the delivery capacity and capabilities available to our clients by adding more technical staff and bringing more analysis and project management experts into our pool of available resources.
+
+With any change there are always lots of questions and concerns, and we&apos;ve done our best to address below what we think the most commonly asked will be.
+
+Does Trekbin go away entirely?
+
+No. The Trekbin brand will remain in-tact and will be represented solely by the India-based side of the business.
+
+What is 10K&apos;s relationship with Trekbin going forward?
+
+Trekbin will remain a strategic delivery partner for 10K. Current clients utilizing Trekbin resources will continue to do so.
+
+Do I need to sign a new contract or a new W4?
+
+No. 10K will operate under the same federal tax id as the US-based Trekbin entity. All unexpired contracts remain valid with 10K.
+
+Where will Becky and Matt go?
+
+Both Becky and Matt will transition their current roles to 10K effective immediately.
+
+Who do I contact if I need help or have questions?
+
+You can email nick@10kview.com, like us on Facebook, and follow us on Twitter and LinkedIn.  All trekbin.com email addresses will remain active and in service.
+
+If you want to learn more about these changes, please view (and share!) our press release: https://www.newswire.com/news/new-company-will-develop-global-community-of-elite-salesforce-13177860.
+
+We will be announcing more details over the coming weeks and months, so please stay tuned. Thank you for your continued partnership and support. We are excited to achieve more together!
+
+Nick Hamm
+CEO
+10K Advisors
+nick@10Kview.com
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

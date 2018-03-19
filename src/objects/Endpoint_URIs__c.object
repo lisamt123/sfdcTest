@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ContactId_URI_Salesforce_Certificate__c</fullName>
+        <externalId>false</externalId>
+        <label>ContactId URI Salesforce Certificate</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Limit_of_Records_Sync__c</fullName>
+        <externalId>false</externalId>
+        <label>Limit of Records Sync</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SalesforceCertificates_URI__c</fullName>
+        <externalId>false</externalId>
+        <label>SalesforceCertificates URI</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TrailheadBadges_URI_Trailhead__c</fullName>
+        <externalId>false</externalId>
+        <label>TrailheadBadges URI Trailhead</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X10K_Community_Landing_Page__c</fullName>
+        <externalId>false</externalId>
+        <label>10K Community Landing Page</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Endpoint URIs</label>
+    <visibility>Public</visibility>
+</CustomObject>

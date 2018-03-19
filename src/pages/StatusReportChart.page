@@ -1,0 +1,14 @@
+<apex:page standardcontroller="Status_Report__c" extensions="StatusReportChartController" showHeader="true" sidebar="true">
+	<apex:chart data="{!data}" height="400" width="500">
+	    <apex:legend position="left"/>
+	    <apex:axis type="Numeric" position="left" title="Total Number Of Hours" grid="true"
+	        fields="hours" dashSize="2">
+	        <apex:chartLabel />
+	    </apex:axis>
+	    <apex:axis type="Category" position="bottom" fields="name" title="{!xAxis}">
+	        <apex:chartLabel rotate="315"/>
+	    </apex:axis>
+	    <apex:barSeries orientation="vertical" axis="left" stacked="true"
+	        xField="name" yField="hours" title="Hours"/>
+	</apex:chart>
+</apex:page>

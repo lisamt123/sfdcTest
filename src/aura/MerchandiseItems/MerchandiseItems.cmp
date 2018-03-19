@@ -1,0 +1,52 @@
+<aura:component controller="MerchandiseStoreController">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="MerchandiseList" type="Merchandise__c[]" />
+	<aura:attribute name="CartItems" type="Item__c[]" />
+	<aura:attribute name="CartMerchandises" type="Merchandise__c[]" />
+	<aura:attribute name="CurrentMerchandise" type="Merchandise__c" />
+	<aura:attribute name="ContactRec" type="Object" />
+	<aura:attribute name="modalTitle" type="String" default="Header Message"/>
+	<aura:attribute name="availablePoints" type="Integer" default="0"/>
+	<aura:attribute name="cartPoints" type="Integer" default="0"/>
+	<aura:dependency resource="markup://c:MerchandiseItem" />
+	<aura:handler name="addToCart" event="c:AddToCartEvent" action="{!c.handleComponentEvent}"/>
+
+	<div aura:id="toggleDiv">
+		<lightning:layout multipleRows="true">
+			<aura:iteration var="item" items="{!v.MerchandiseList}" indexVar="index" >
+				<lightning:layoutItem padding="around-small" flexibility="no-grow" size="3" smallDeviceSize="6" mediumDeviceSize="4" largeDeviceSize="3">
+					<article class="slds-card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+						<div class="slds-card__header slds-grid">
+							<header class="slds-media slds-media_center slds-has-flexi-truncate">
+								<div class="slds-media__figure slds-grid" style="width:100%;">
+									<ui:outputRichText value="{!item.Picture__c}" class="imageContainer" />
+								</div>
+							</header>
+						</div>
+						<div class="slds-card__body slds-card__body_inner" style="min-height:144px;margin-bottom: 0.3rem !important;">
+							<div class="itemHead">
+								<b>{!item.Name}</b>
+							</div>
+							<hr style="border-top: 3px solid #f4f4f4;"/>
+							<div class="itemDesc">
+							    <p class="slds-text-longform">
+						            <aura:unescapedHtml value="{!item.Description__c}" />
+						        </p>
+						    </div>
+							<!-- <ui:outputRichText value="{!item.Description__c}" class="itemDesc"  /> -->
+						</div><hr/>
+						<footer class="slds-card__footer">
+							<div style="float:left;">
+								Points&nbsp;:&nbsp;<ui:outputNumber value="{!item.Point_Value__c}" format="###,###,###" ></ui:outputNumber>
+							</div>
+							<div class="slds-no-flex">
+								<button class="slds-button slds-button_neutral" data-index="{!index}" onclick="{!c.handlesingleItem}">View</button>
+							</div>
+						</footer>
+					</article>
+				</lightning:layoutItem>
+			</aura:iteration>
+		</lightning:layout>
+		<div aura:id="ModalDialogPlaceholder" />
+	</div>
+</aura:component>

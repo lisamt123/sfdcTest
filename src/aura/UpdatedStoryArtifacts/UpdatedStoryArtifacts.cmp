@@ -1,0 +1,74 @@
+<aura:component controller="ManageReleaseArtifactsLightning" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <ltng:require styles="{!$Resource.lightningCss}" />
+
+    <aura:attribute name="storyWrapperListToUpdate" type="ManageReleaseArtifactsLightning.StoryWrapper[]"/>
+    <aura:attribute name="releaseId" type="Id" />
+    <aura:attribute name="isUpdate" type="Boolean" default="false"  />
+    <aura:registerEvent name="refreshReleaseArtifacts" type="c:RefreshReleaseArtifacts" />
+    
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Updated Story Metadata Detected</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-2">
+            	<div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate" style="padding-top: .5rem;">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class=" slds-line-height--reset">
+                                        <label>The metadata on the following Stories which are attached to this Release have been updated. Select the Stories for which you want to update the metadata on this Release and click Save and Close.</label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <lightning:layout > 
+                    <!-- Table 2 -->
+                    <lightning:layoutItem flexibility="auto" class="borderClass">
+                        <table class="slds-table slds-table--bordered fixHeaderDiv" role="grid" style="table-layout: fixed;border-left: 1px solid #f4f4f4" id="fixHeaderDiv">
+                            <thead>
+                                <tr class="headerRow">
+                                    <th style="width:25px"></th>
+                                    <th style="width:100px;" id="Name" >Story #</th>
+                                    <th style="width:20%" id="Status__c" >Status</th>
+                                    <th>Story Name</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="artifactsListContainer" >
+                            <div id="innerDiv" aura:id="innerDiv">
+                                <table data-reactroot="" class="slds-table forceRecordLayout slds-table--bordered resizable-cols" style="table-layout: fixed;">
+                                    <tbody>
+                                        <aura:iteration items="{!v.storyWrapperListToUpdate}" var="wrap" indexVar="index1">
+                                            <tr>
+                                                <td role="gridcell" style="width:25px">
+                                                    <ui:inputCheckbox value="{!wrap.selected}" aura:id="storyInputSelected" class="{!'childCheck ' + wrap.story.Id}" name="{!wrap.story.Id}" label="{!wrap.story.Id}" change="{!c.updateSelectedStoryChkbk}"/>
+                                                </td>
+                                                <td role="gridcell" style="width:100px;" title="{!wrap.story.Name}"><div class="slds-truncate">{!wrap.story.Name}</div></td>
+                                                <td role="gridcell" style="width:20%" title="{!wrap.story.Status__c}"><div class="slds-truncate">{!wrap.story.Status__c}</div></td>
+                                                <td role="gridcell" title="{!wrap.story.Story_Name__c}"><div class="slds-truncate">{!wrap.story.Story_Name__c}</div></td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Close"/>
+                <lightning:button aura:id="UpdateButton" onclick="{!c.updateReleaseStoryArtifacts}" variant="brand"  label="Save and Close" disabled="{!!v.isUpdate}"  />
+            </footer>
+        </div>
+    </section>
+    <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+</aura:component>

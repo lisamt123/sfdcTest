@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Referral</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Referrals</value>
+    </caseValues>
+    <fields>
+        <label><!-- Referee  Contact --></label>
+        <name>Referee_Contact__c</name>
+        <relationshipLabel><!-- Referrals (Referee  Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Referee Lead --></label>
+        <name>Referee_Lead__c</name>
+        <relationshipLabel><!-- Referrals (Referee Lead) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Referral Source --></label>
+        <name>Referral_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Referred By Contact --></label>
+        <name>Referred_By_Contact__c</name>
+        <relationshipLabel><!-- Referrals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Referred By Lead --></label>
+        <name>Referred_By_Lead__c</name>
+        <relationshipLabel><!-- Referrals --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Referral Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Referral Source --></label>
+            <section>Referral Source</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

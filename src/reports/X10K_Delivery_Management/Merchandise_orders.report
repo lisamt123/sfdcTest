@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Order__c.Contact__c</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Order__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Quantity_Ordered__c</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Order__c.Country__c</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r$Size__c</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c$Name</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Order__c.Name</field>
+    </columns>
+    <columns>
+        <field>Merchandise__c.Items__r.Order_Line_Items__r$Name</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Merchandise orders</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Merchandise_with_Items_with_Order_Line_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Merchandise__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

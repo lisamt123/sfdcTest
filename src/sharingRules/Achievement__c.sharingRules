@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Share_Achievements_Read_Only_with_Everyone</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Share Achievements Read Only with Everyone</label>
+        <sharedTo>
+            <roleAndSubordinates>Administrator</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>Administrator</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

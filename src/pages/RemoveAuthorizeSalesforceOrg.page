@@ -1,0 +1,52 @@
+<apex:page showHeader="true" sidebar="true" standardController="Connection__c" extensions="RemoveAuthConnectionController">
+    <style>
+        .custPopup {
+           background-color: white;
+           border-width: 0px;
+           border-radius:10px;
+           z-index: 9999;
+           left: 50%;
+           padding:20px;
+           position: absolute; 
+           margin-left: -100px; top:40%;
+       }
+       .popupBackground {
+           background-color:black;
+           opacity: 0.30;
+           filter: alpha(opacity = 30);
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           top: 0;
+           left: 0;
+           z-index: 9998;
+       }
+    </style>
+    <apex:form >
+        <apex:actionFunction name="returnBackAF" action="{!returnBack}" />
+        <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block"/>
+            <apex:outputPanel styleClass="custPopup" layout="block">
+                <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    <script>
+        if({!Connection__c.Created_On_Heroku__c} && '{!Connection__c.Status__c}' == 'Active') {
+            var res = confirm('Are you sure?'); 
+            if(res)
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.RemoveAuthConnectionController.removeAuth}','{!Connection__c.Id}', handleResult);
+            else
+                returnBackAF();
+        }
+        else {
+            alert('Please authorize the connection before removing oAuth Connection.');
+            returnBackAF();
+        }
+
+        function handleResult(result,event) {
+            alert(result);
+            returnBackAF();
+        }
+    </script>
+</apex:page>

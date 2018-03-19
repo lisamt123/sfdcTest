@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>EOY 2016 Expert Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Expert - EOY 2016</name>
+    <style>freeForm</style>
+    <subject>Happy New Year from 10K!</subject>
+    <textOnly>Hello {!Contact.FirstName},
+
+2017 is fast approaching and I wanted to make sure I said &quot;Thank you!&quot; before the year is over. 2016 has been great and we are very excited for all that we will accomplish in 2017!
+
+There will be many positive changes coming your way in 2017. We will be launching a new website, improving the 10K Community, and adding more opportunities for learning and collaboration.
+
+Our 10K Experts are the best of the best and we are proud to have you aboard!
+
+Thank you for all of your work in 2016 and we are looking forward to 2017!
+
+Happy New Year,
+
+From the 10K Advisor&apos;s Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

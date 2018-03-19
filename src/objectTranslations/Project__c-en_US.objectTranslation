@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Projects</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Variance to Plan --></label>
+        <name>Budget_Variance_to_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Standards --></label>
+        <name>Delivery_Standards__c</name>
+    </fields>
+    <fields>
+        <label><!-- Documentation Provided --></label>
+        <name>Documentation_Provided__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Variance to Plan --></label>
+        <name>Hours_Variance_to_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- If/How To Log Time In Their System --></label>
+        <name>If_How_To_Log_Time_In_Their_System__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal? --></label>
+        <name>Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoiced Separately --></label>
+        <name>Invoiced_Separately__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin Billable Amount Rollup --></label>
+        <name>Margin_Billable_Amount_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin Cost Amount Rollup --></label>
+        <name>Margin_Cost_Amount_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin % --></label>
+        <name>Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration Id --></label>
+        <name>Migration_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Not To Exceed --></label>
+        <name>Not_To_Exceed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Agreements --></label>
+        <name>Number_of_Agreements__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <lookupFilter>
+            <errorMessage><!-- This Opportunity does not belong to the selected Account. Please select another Opportunity. --></errorMessage>
+            <informationalMessage><!-- Only Opportunities for the selected Account are shown. --></informationalMessage>
+        </lookupFilter>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Preferred Meeting Tool --></label>
+        <name>Preferred_Meeting_Tool__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Client Contact Name --></label>
+        <name>Primary_Client_Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Client Contact --></label>
+        <lookupFilter>
+            <errorMessage><!-- This Contact does not belong to the selected Account. Please select another Contact. --></errorMessage>
+            <informationalMessage><!-- Only Contacts for the selected Account are shown. --></informationalMessage>
+        </lookupFilter>
+        <name>Primary_Client_Contact__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Margin $ --></label>
+        <name>Profit_Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project And Requirement Management Tools --></label>
+        <name>Project_And_Requirement_Management_Tools__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Billing Code --></label>
+        <name>Project_Billing_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Notes --></label>
+        <name>Project_Health_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Health Status --></label>
+        <name>Project_Health_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Health --></label>
+        <name>Project_Health__c</name>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Project Lead --></label>
+        <name>Project_Lead__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recalculate Sharing on Save --></label>
+        <name>Recalculate_Sharing_on_Save__c</name>
+    </fields>
+    <fields>
+        <label><!-- Require Stories on Time Entries --></label>
+        <name>Require_Stories_on_Time_Entries__c</name>
+    </fields>
+    <fields>
+        <label><!-- Required Security/Personnel Information --></label>
+        <name>Required_Security_Personnel_Information__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shared with Trekbin? --></label>
+        <name>Shared_with_Trekbin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Notes --></label>
+        <name>Status_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Projected</masterLabel>
+            <translation><!-- Projected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Story LOE Required Starting At --></label>
+        <name>Story_LOE_Required_Starting_At__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task LOE Required Starting At --></label>
+        <name>Task_LOE_Required_Starting_At__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Assigned Budget --></label>
+        <name>Total_Assigned_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Billable Amount --></label>
+        <name>Total_Billable_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Cost Amount --></label>
+        <name>Total_Cost_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Hours --></label>
+        <name>Total_Number_of_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Planned Hours --></label>
+        <name>Total_Planned_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Project Budget --></label>
+        <name>Total_Project_Budget__c</name>
+    </fields>
+    <layouts>
+        <layout>Project Layout (External - No RM)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Analytics --></label>
+            <section>Hours Analytics</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Project Delivery Requirements --></label>
+            <section>Project Delivery Requirements</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Project Layout (External - With RM)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Analytics --></label>
+            <section>Hours Analytics</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Project Delivery Requirements --></label>
+            <section>Project Delivery Requirements</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Project Layout (Internal Admins)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Analytics --></label>
+            <section>Hours Analytics</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Margin --></label>
+            <section>Margin</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Project Delivery Requirements --></label>
+            <section>Project Delivery Requirements</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Project Layout (Internal Auditor)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Analytics --></label>
+            <section>Hours Analytics</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Configure Code Quality Scan --></label>
+        <name>Configure_Code_Quality_Scan</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Manage Connection Permissions --></label>
+        <name>Manage_Connection_Permissions</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Manage Dates --></label>
+        <name>Manage_Dates</name>
+    </quickActions>
+    <sharingReasons>
+        <label><!-- Customer --></label>
+        <name>Customer</name>
+    </sharingReasons>
+    <sharingReasons>
+        <label><!-- Delivery Employee --></label>
+        <name>Delivery_Employee</name>
+    </sharingReasons>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The End Date of the Project must be after the Start Date. --></errorMessage>
+        <name>End_Date_Must_Be_After_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please Fill the required field Project Billing Code --></errorMessage>
+        <name>Required_BCode_If_Invoiced_Separately</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Manage_Assignments --></label>
+        <name>Manage_Assignments</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Cost_Rates --></label>
+        <name>Manage_Cost_Rates</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Scan_Code_Result --></label>
+        <name>Scan_Code_Result</name>
+    </webLinks>
+</CustomObjectTranslation>

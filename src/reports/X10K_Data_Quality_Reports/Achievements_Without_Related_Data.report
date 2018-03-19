@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_ID</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <crossFilters>
+        <operation>without</operation>
+        <primaryTableColumn>CUST_ID</primaryTableColumn>
+        <relatedTable>Expert_Achievement__c</relatedTable>
+        <relatedTableJoinColumn>Achievement__c</relatedTableJoinColumn>
+    </crossFilters>
+    <crossFilters>
+        <operation>without</operation>
+        <primaryTableColumn>CUST_ID</primaryTableColumn>
+        <relatedTable>Achievement_Skill__c</relatedTable>
+        <relatedTableJoinColumn>Achievement__c</relatedTableJoinColumn>
+    </crossFilters>
+    <format>Tabular</format>
+    <name>Achievements Without Related Data</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Achievement__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>CUST_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Achievement__c.Expiration_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

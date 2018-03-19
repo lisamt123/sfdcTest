@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        body {font-family: Arial !important;}
+	table{max-width:650px!important; font-family:Arial !important;}
+	p{padding:0px 10px!important; text-align:justify!important; font-family:Arial !important; font-size:12pt; color:#000000;}
+</style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>
+			<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000003BvhL&oid=00D36000000v5KY" width="100%" border="0" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>{!CampaignMember.FirstName}!</p>
+			<p>Thank you so much for joining us at our 10K Bourbon Trail event! We hope you enjoyed tasting those rare bourbons!</p>
+			
+
+<p></p>
+<p>The event gave us a great opportunity to catch up and put faces to names in some cases. 2018 is going to be an exciting year and we are very much looking forward to working with you! </p>
+<p></p>
+<p>Cheers!</p>
+			<p>The 10K Team</p>
+<p></p>
+<p>P.S. If you did not get one of our gift bags on departure from the event, let us know and we'll get that out to you as soon as we can.</p>
+		
+		</td>
+	</tr>
+</table>
+</body>
+</html>

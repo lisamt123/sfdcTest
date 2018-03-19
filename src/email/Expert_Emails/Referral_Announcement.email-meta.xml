@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce 10K referral program (does not include incentives)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Referral Announcement</name>
+    <style>freeForm</style>
+    <subject>Announcing 10K Expert Referral Progam</subject>
+    <textOnly>Hey there!
+
+You know how much fun you have working for 10K and our Clients, right? And you know people who are SFDC gurus, who like the freelance world and enjoy working with top talent, right? Well, we need even more Experts like you!
+
+Now, with the social media links and messages we’ve created, you can easily post to Twitter, Facebook, and LinkedIn, and you’ll get credit for referring qualified* experts! Each referral link has your own unique referral code so we can track when someone fills out the form.
+
+The program begins immediately! You can locate the social media links (with embedded messaging) on your Community Profile under the Referrals tab.
+
+We&apos;d love it if you use #10K Connect in your messaging to promote 10K Advisors wherever you see fit. It&apos;s a unique hashtag and helps identify you with 10K and us with you!
+
+We are excited to connect with your community!
+
+#10KConnect
+
+*Qualified individuals have passed our two stage process and are asked to interview
+
+Jared Miller
+COO
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

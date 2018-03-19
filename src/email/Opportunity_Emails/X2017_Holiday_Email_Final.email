@@ -1,0 +1,85 @@
+<messaging:emailTemplate subject="Holiday Email" recipientType="User" relatedToType="Contact">
+    <messaging:htmlEmailBody >
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+    <!-- <style type="text/css"> 
+        table{width:550px!important;}
+        @media screen and (max-width: 767px) {
+            table{width:100%!important;}
+        }
+    </style>-->
+    <table cellspacing="2" cellpadding="2" border="0" align="center" style="border:1px solid #e5e5e5; font:normal 12px Arial!important; color:#333!important; width:550px;">
+    <tr>
+        <td align="right" style="border-bottom:5px solid #3C8D0D!important; color:#333!important; margin-bottom:10px; padding:10px 20px; font-size:12px!important; font-weight:normal!important;">
+            <!-- background:#C21717!important;  color:#333!important; -->
+            <!-- <img src="http://www.10kview.com/resource/1472296553000/Resources/Resources/images/10K_Advisors_Logo_300x300.png" 
+                 src="http://www.10kview.com/resource/1472296553000/Resources/Resources/images/10K_Advisors_Logo_KO_300x300.png" style="width:75px; height:auto!important;" />-->
+            <img src="http://www.10kview.com/resource/1472296553000/Resources/Resources/images/10K_Advisors_Logo_300x300.png" style="width:75px; height:auto!important;" />            
+        </td>
+    </tr>
+    <tr>
+        <td style="border-bottom:5px solid #C21717!important; margin-bottom:10px; padding:10px; color:#333!important; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+            <p>Dear {!Contact.FirstName},</p>
+            <p>This year has been transformational for 10K, and we feel privileged to have you and your team among our closest partners. 
+            As a token of our thanks and a toast to the holiday season, we want to make a donation to a nonprofit organization on behalf of your company. </p>
+            
+            <p>Our team has selected four deserving nonprofits for you to choose from. The descriptions for each charity are below, and you can let us know which one you’d like to choose <a href="https://www.getfeedback.com/r/8bqDjWud?AccountName={!Account.Name}&AccountID={!Account.Id}" target="_blank" style="color:#3C8D0D;">here</a>.
+            Please send us your selection by <strong>December 22</strong>, and we’ll take care of the donation.</p>
+            
+            <p>We have big plans for 2018, and we look forward to reaching new heights with you! We are grateful for your trust and partnership, and we wish you all a productive and prosperous year ahead.</p>
+            
+            <p>Happy holidays! <br /><br /> 
+            Cheers, <br />
+            <strong> The 10K Team </strong>
+            </p>
+<!--
+        </td>
+    </tr>
+    <tr>
+        <td style="border-bottom:5px solid #C21717!important; color:#333!important; margin-bottom:10px!important; padding:10px; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+            Cheers,<br /> <br />
+            <strong>The 10K Team</strong>  -->    
+        </td>
+    </tr>
+    <tr>
+        <td style="margin-bottom:10px; padding:10px; color:#333!important; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+        <img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000002NePA&oid=00D36000000v5KY" 
+        style="border-top:2px solid #C21717!important; border-right:2px solid #C21717!important; border-bottom:2px solid #3C8D0D!important; border-left:2px solid #3C8D0D!important; 
+        border-radius:100px; padding:5px!important; margin-right:10px;" align="left" />
+        <strong>Nick&#39;s pick is <a href="http://www.boyshaven.org/" target="_blank" style="color:#3C8D0D;">Boys and Girls Haven</a></strong> “because they provide hope and opportunity to children and young adults who have lead 
+        difficult and sometimes traumatic lives and have nowhere else to turn. Many of the children who come to Boys and Girls Haven have been abused, abandoned, 
+        neglected, and have likely been through a number of foster homes and unstable living situations before coming under their care. 
+        Donations will help support a bright future for the next generation."</td>
+    </tr>
+    <tr>
+        <td style="margin-bottom:10px; padding:10px; color:#333!important; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+        <img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000003D33V&oid=00D36000000v5KY" 
+        style="border-top:2px solid #C21717!important; border-right:2px solid #C21717!important; border-bottom:2px solid #3C8D0D!important; border-left:2px solid #3C8D0D!important; 
+        border-radius:100px; padding:5px!important; margin-right:10px;" align="left" />
+        <strong>Diane&#39;s pick is <a href="http://www.dsdiagnosisnetwork.org/" target="_blank" style="color:#3C8D0D;">Down Syndrome Diagnosis Network</a></strong> “because behind every child born with Down Syndrome, there are parents – a mom and/or dad who experiences the unforgettable moment of hearing the diagnosis for the first time. The Down Syndrome Diagnosis Network exists to support these families through that diagnosis experience and into early childhood. 
+        Donations ensure physicians are educated about how to deliver a diagnosis and reach hundreds of new families joining the Down Syndrome community each year.”
+        </td>
+    </tr>
+    <tr>
+        <td style="margin-bottom:10px; padding:10px; color:#333!important; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+        <img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000002NeOv&oid=00D36000000v5KY" 
+        style="border-top:2px solid #C21717!important; border-right:2px solid #C21717!important; border-bottom:2px solid #3C8D0D!important; border-left:2px solid #3C8D0D!important; 
+        border-radius:100px; padding:5px!important; margin-right:10px;" align="left" />
+        <strong>Matt&#39;s pick is <a href="https://www.redcross.org/" target="_blank" style="color:#3C8D0D;">American Red Cross</a></strong> “because they offer assistance to those affected by natural disasters, 
+        when we're vulnerable and in need of support, regardless of background or station or belief. They also supply the nation with lifesaving blood. Donations will be invested 
+        in these lifesaving humanitarian services, preparing the Red Cross to respond when they're most needed.”
+        </td>
+    </tr>
+    <tr>
+        <td style="margin-bottom:10px; padding:10px; color:#333!important; font-size:12px!important; font-weight:normal!important; text-align:justify!important;">
+        <img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000002NeOq&oid=00D36000000v5KY" 
+        style="border-top:2px solid #C21717!important; border-right:2px solid #C21717!important; border-bottom:2px solid #3C8D0D!important; border-left:2px solid #3C8D0D!important; 
+        border-radius:100px; padding:5px!important; margin-right:10px;" align="left" />
+        <strong>Jared&#39;s pick is <a href="http://jilliansdream.org/" target="_blank" style="color:#3C8D0D;">Prelude to a Cure through Jillian’s Dream</a></strong> “because it is a charity that hits close 
+        to home for me. Lung Cancer kills more people than the top 3 funded cancers combined. In our lifetime, 1 out of every 14 people will be diagnosed with lung cancer and 20% of 
+        those cases are from never smokers. The money donated goes 100% to finding a cure to lung cancer.”
+        </td>
+    </tr>
+    </table>    
+    
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

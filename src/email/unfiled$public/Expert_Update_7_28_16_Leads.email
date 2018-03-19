@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Hi {!Lead.FirstName},
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Thank you for signing up for the 10K community! We have had a fantastic response to our launch from Salesforce customers, partners, and experts alike! I'm writing to let you know that we are in the process of going through all of the submissions we've received and will be working over the next several weeks to reach out to those who have expressed interest in becoming a 10K Delivery Partner. We'll be asking you to complete your profile in the 10K community with more information so that we can better understand your skills, experience, and areas of interest in order to best match you with the opportunities presented to us by our clients. We are building all of the technology behind this as we speak (using the community of course!) as well as bringing in a dedicated team to onboard and work with our delivery partners. Stay tuned for more news to come.
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+In the meantime, I have a client who is looking for about 80 hours of Ruby work and another who is looking for some iOS development help. If you or your team has experience in either area, please reply to this email outlining your experience and include some examples of your work. Candidates for these opportunities will be considered based on verifiable experience only, so please do not apply if you only have a basic understanding of these technologies and cannot provide references for work you've completed.
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Thank you again for you interest in 10K - we're looking forward to achieving more with you!
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Cheers,
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Nick       
+
+ </td>
+    </tr>
+    <tr>
+    	<td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+        </td>
+    </tr>
+</table>
+</body>
+</html>

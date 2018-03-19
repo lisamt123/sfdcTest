@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT">
+	<aura:attribute name="timeEntry" type="Time_Entry__c[]" />   
+    <aura:attribute name="selectedDay" type="String" />
+    <aura:attribute name="selectedAssig" type="String" />
+    <aura:attribute name="selectedProject" type="String" /> 
+    <aura:attribute name="isStoryRequired" type="Boolean" />
+    <aura:attribute name="clickedProjectName" type="String" />
+</aura:event>

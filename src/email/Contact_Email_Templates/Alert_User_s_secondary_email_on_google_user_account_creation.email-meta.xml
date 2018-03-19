@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Alert User&apos;s secondary email on google user account creation</name>
+    <style>freeForm</style>
+    <subject>Welcome to {!$Setup.GoogleAuthSettings__c.X10K_Domain__c}</subject>
+    <textOnly>Hello {!Contact.FirstName},
+
+You have a new account at {!$Setup.GoogleAuthSettings__c.X10K_Domain__c}
+
+Account details:
+
+Username: {!Contact.Email}
+Password: {!Contact.Temporary_Gmail_Password__c}
+
+Start using your new account by signing in at
+https://www.google.com/accounts/AccountChooser?Email={!Contact.Email}&amp;continue=https://apps.google.com/user/hub
+
+Please note that two-step verification is required on the 10kview.com. You have one week to set up two-step verification before it becomes required. If you do not set it up before then, you&apos;ll be locked our of your email.
+
+After setting up your account, go to https://myaccount.google.com/security to set up your preferred two-step verification mechanisms. We highly recommend setting up Google Authenticator as it doesn&apos;t rely on cell phone connection.</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,161 @@
+<aura:component controller="ViewReleaseMetadataLightning" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+	 <ltng:require styles="{!$Resource.lightningCss}" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="releaseArtifactList" type="ViewReleaseMetadataLightning.Artifacts[]"/>
+    <aura:attribute name="releaseStoryList" type="ViewReleaseMetadataLightning.Stories[]"/>
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="baseUrl" type="String" default=" "/>
+    <!-- lightning spinner -->
+	<lightning:spinner aura:id="Spinner" variant="brand"/>
+    <!-- handler to call doInIt method -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- table1 -->
+
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                  X
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Release Artifacts</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset"><b>Stories Artifacts</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <!-- custom message -->
+                <lightning:layout horizontalAlign="start">
+                    <lightning:layoutItem flexibility="auto">
+                        <table data-reactroot="" class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                            <thead>
+                                <tr class="tableThead" >
+                                    <th style="width: 60px;"></th>
+                                    <th scope="col" style="width:100px;" >
+                                        Story
+                                    </th>
+                                    <th scope="col" >
+                                        Artifact Type
+                                    </th>
+                                    <th scope="col" >
+                                        Artifact Name
+                                    </th>                                    
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyStyle">
+                               
+                                <aura:if isTrue="{!v.releaseStoryList.length == 0}">
+                                    <tr class="mainLogRow" >
+                                        <td></td>
+                                        <td colspan="3">
+                                            No related story for this release.
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                              
+                                <aura:if isTrue="{!v.releaseStoryList.length > 0}">
+                                    <aura:iteration items="{!v.releaseStoryList}" var="wrap">
+                                        <tr class="mainLogRow" >
+                                            <td>
+                                                <img id="{!wrap.storyId}" class="{!wrap.storyId}" src="{!v.baseUrl+'/resource/expand'}" style="{!wrap.artifacts.length > 0 ? 'cursor:pointer;':'visibility:hidden;'}" onclick="{!c.toggel}"/>
+                                            </td>
+                                            <td scope="row">
+                                                {!wrap.storyName}
+                                            </td>                                       
+                                            <td ></td >
+                                            <td ></td>
+                                        </tr>
+                                        <aura:iteration items="{!wrap.artifacts}" var="w">
+                                            <aura:iteration items="{!w.metadataName}"  var="n">
+                                                <tr id="{!'slds-hide child'+ wrap.storyId}" class="{!'slds-hide child'+ wrap.storyId}" >    
+                                                    <td></td>        
+                                                    <td scope="row" ></td>
+                                                    <td  class="slds-cell-wrap">{!w.metadataType}</td>
+                                                    <td  class="slds-cell-wrap">{!n.name}</td>             
+                                                </tr>
+                                            </aura:iteration>    
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </aura:if>    
+                            </tbody>
+                        </table> 
+                     </lightning:layoutItem>
+                </lightning:layout> 
+                <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset"><b>Release Artifacts</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <lightning:layout horizontalAlign="start">
+                    <lightning:layoutItem flexibility="auto">
+                         <table data-reactroot="" class="slds-table slds-table_bordered slds-table_cell-buffer">    
+                            <thead>
+                                <tr class="tableThead" >
+                                    <th style="width:60px;"></th>
+                                    <th scope="col" style="width:100px;" >
+                                        Metadata Type
+                                    </th>
+                                    <th scope="col" >
+                                        Metadata Name
+                                    </th>                                    
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyStyle">
+                               
+                                <aura:if isTrue="{!v.releaseArtifactList.length == 0}">
+                                    <tr class="mainLogRow" >
+                                        <td>
+                                        </td>
+                                        <td colspan="2">
+                                            No related artifact for this release.
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                               
+                                <aura:if isTrue="{!v.releaseArtifactList.length > 0}">
+                                    <aura:iteration items="{!v.releaseArtifactList}" var="wrap">
+                                        <tr class="mainLogRow" >
+                                            <td>
+                                                <img id="{!wrap.metadataType}" class="{!wrap.metadataType}" src="{!v.baseUrl+'/resource/expand'}" style="cursor:pointer;" onclick="{!c.toggel}"/>
+                                            </td>
+                                            <th scope="row" >
+                                                {!wrap.metadataType}
+                                            </th>                                       
+                                            <td ></td>
+                                        </tr>
+                                        <aura:iteration items="{!wrap.metadataName}" var="W">
+                                            <tr id="{!'slds-hide child'+ wrap.metadataType}" class="{!'slds-hide child'+ wrap.metadataType}" >    <td></td>                 
+                                                <td scope="row" ></td>                                             
+                                                <td  class="slds-cell-wrap ">{!W.name}</td>
+                                            </tr>  
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </aura:if>    
+                            </tbody>
+                        </table> 
+                     </lightning:layoutItem>    
+                </lightning:layout> 
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+            </footer>
+        </div>
+    </section>
+</aura:component>

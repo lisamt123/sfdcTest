@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>DoubleClick for Salesforce - Invalid Integer Bug Notification</name>
+    <style>freeForm</style>
+    <subject>10K DoubleClick for Salesforce - Invalid Integer Bug Notification</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+This afternoon we received two reports of a bug that has the potential to impact all DoubleClick for Salesforce users. The issue comes up under the following circumstances:
+
+A new Account is pushed to DSM, and a 10-digit DoubleClick Id is generated for that newly created Company, and successfully stored on the Account in Salesforce.
+An Opportunity is created in Salesforce against this Account.
+When the user tries to push that Opportunity to DSM, they&apos;ll receive an error for &quot;System.TypeException: Invalid integer: 4XXXXXXXXXX for field:CompanyId&quot; (where 4XXXXXXXXXX is the 10-digit DoubleClick Id of the Opportunity&apos;s Account)
+
+At the moment we understand this issue to impact only pushing Opportunities to DSM for Accounts that are newly created in DSM, and assigned a 10-digit DoubleClick Id.
+
+We have a high level understanding of the root cause, and will be working on a fix in the connector code tonight. Once we have a fix made, we&apos;ll release a new version of the connector and perform the upgrade in your sandbox for testing.
+
+Provided we can get the fix made tonight, we will target having this new version of the connector in your sandbox by mid-day US time tomorrow (Friday June 16).
+
+I will keep you posted as we progress through this issue resolution process. Please contact me if you have any questions in the mean time.
+
+Matthew Lamb
+VP, Technology
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify the 10K Delivery team when a new 10K Store Order has been placed</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Notify 10K Delivery Of New Order</name>
+    <style>freeForm</style>
+    <subject>A New 10K Store Order Has Been Placed</subject>
+    <textOnly>{!Contact.Name} has just placed Order {!Order__c.Name}:
+
+{!Order__c.Link}
+
+Please review the order and start the shipping process.</textOnly>
+    <type>html</type>
+</EmailTemplate>

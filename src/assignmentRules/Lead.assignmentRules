@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>10K Lead Routing</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>matt@10kview.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.LeadSource</field>
+                <operation>contains</operation>
+                <value>DSM,Doubleclick,Package,Install</value>
+            </criteriaItems>
+            <template>Lead_Email_Templates/New_DoubleClick_for_Salesforce_Lead_Notification</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>matt@10kview.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Type__c</field>
+                <operation>equals</operation>
+                <value>Expert</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Delivery Partner</value>
+            </criteriaItems>
+            <template>Lead_Email_Templates/New_Lead_Notification</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>nick@10kview.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.Type__c</field>
+                <operation>equals</operation>
+                <value>SI / ISV,Customer</value>
+            </criteriaItems>
+            <template>Lead_Email_Templates/New_Lead_Notification</template>
+        </ruleEntry>
+    </assignmentRule>
+    <assignmentRule>
+        <fullName>test</fullName>
+        <active>false</active>
+    </assignmentRule>
+</AssignmentRules>

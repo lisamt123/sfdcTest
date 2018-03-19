@@ -1,0 +1,30 @@
+<aura:component access="global" controller="TimecardGridController">
+	<aura:attribute name="storyTaskMap" type="Map" access="global"/>
+	<aura:attribute name="index" type="Integer" default="0" access="global"/>
+	<aura:attribute name="selectedStoryId" type="String" default=""/>
+	<aura:handler name="init" value="this" action="{!c.fetchRecords}"/>
+
+	<div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" >
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                        <input type="select" class="slds-input slds-combobox__input" id="{! 'dropdownId' + v.index}" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="--None--" disabled="true" onclick="{!c.toggleSelectList}"/>
+                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                            <lightning:icon iconName="utility:down" variant="inverse" alternativeText="downArrow" size="x-small" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"/>                                
+                            <span class="slds-assistive-text">Description of icon</span>
+                        </span>
+                    </div>
+                    <div id="listbox-unique-id" role="listbox">
+                        <input type="text" class="slds-input typeahead slds-hide" placeholder="SEARCH TASKS" autofocus="autofocus" onkeyup="{!c.typeAhead}"/>
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" id="{! 'listId' + v.index}" role="presentation">
+                            <aura:iteration items="{!v.storyTaskMap}" var="task">
+                                <li role="presentation" class="typeaheadlist" data-name="{!task.recName}" data-val="{!task.recId}" onclick="{!c.selectTask}">{!task.recName}</li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,194 @@
+<apex:page standardController="Project__c" extensions="ProjectCodeScanResultController">
+	<apex:includeScript value="{!$Resource.jqueryLatest}"/>
+	
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		.outerRow {
+			background: rgba(242, 243, 243, 0.58);
+		}
+		th {
+			background: rgba(193, 193, 193, 0.65);
+		}
+		.popupBackground{
+            background-color:black;
+            opacity: 0.30;
+            filter: alpha(opacity = 30);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+        .custPopup{
+            background-color: white;
+            border-width: 0px;
+            border-radius:10px;
+            z-index: 9999;
+            left: 50%;
+            padding:20px;
+            position: absolute; 
+            margin-left: -100px; top:40%;
+        }
+	</style>
+	
+	<apex:form >
+        <apex:sectionHeader title="Scan Project" subtitle="{!project.Name}"/>
+        <apex:pageMessages />
+        <apex:pageBlock id="block" title="Logs">
+
+        	 <table class="list">
+            	<thead>
+                	<tr class="headerRow">
+                		<th style="width:200px">Release</th>
+                		<th style="width:10px"></th>
+                		<th style="width:100px">Status</th>
+                		<th style="width:200px">Time</th>
+                		<th>Description</th>
+                	</tr>
+            	</thead>
+            	<tbody>
+            		<apex:repeat value="{!logsList}" var="log" >
+            			<tr class="dataRow outerRow">
+            				<td>
+	            				<img src="{!baseUrl+'/resource/expand'}" height="13" id="{!log.releaseId}" onclick="toggleInnerRows('{!log.releaseId}');" style="cursor:pointer;"/>
+            					{!log.releaseName}
+            				</td>
+            				<td></td>
+            				<td></td>
+            				<td></td>
+            				<td></td> 
+            			</tr>
+            		</apex:repeat>
+            		<tr class="dataRow innerRow" style="display: {!IF(logsList.size > 0 ,'none','')};">
+						<td colspan="2">No scan result found for this Project.</td>
+					</tr>
+            	</tbody>
+            </table>
+            
+        </apex:pageBlock>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <apex:outputPanel id="tstpopup">
+                    <apex:outputPanel styleClass="popupBackground" layout="block"/>
+                    <apex:outputPanel styleClass="custPopup" layout="block">
+                        <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:facet>
+        </apex:actionStatus>
+    </apex:form>
+     <script>
+
+     	toggleInnerRows = function(releaseId) {
+     		var expand;
+	        var img         = document.getElementById(releaseId).src 
+	        if (img.includes("expand")) {
+	            document.getElementById(releaseId).src  = img.replace('expand','collapse');
+	            expand = true;
+	        }
+	         else {
+	         	expand= false;
+	           	document.getElementById(releaseId).src  = img.replace('collapse','expand');
+	           	$('.'+releaseId).remove();
+	           	$('.'+releaseId+'innerRow').remove();
+	        }
+     		
+     		if(expand) {
+     			$('[id$="start"').show();
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ProjectCodeScanResultController.retriveReleaseReviewLogs}',releaseId,function(result,event) {
+                    if (event.status) {  
+                        var retRecords = result;
+                        var recList = [];
+                        retRecords.forEach(function(item,index)
+                        {
+
+                            var tableRow = document.createElement('tr');
+                            tableRow.setAttribute("class", "dataRow " + releaseId);
+
+                            var tableData = document.createElement('td');
+                            tableRow.appendChild(tableData);
+
+                            var tableData4 = document.createElement('td');
+                            if(item.status == 'Violation') {
+                            	var image = document.createElement('img');
+	                            image.setAttribute("src", "{!baseUrl+'/resource/expand'}");
+	                            image.setAttribute("height", "13");
+	                            image.setAttribute("id", item.logClass);
+	                            image.setAttribute("style", "cursor:pointer;");
+	                            image.setAttribute("onclick", 'toggleRows("'+ item.logId + '","' + item.logClass+ '","' + releaseId+ '")')
+	                            tableData4.appendChild(image);
+                            }
+                            tableRow.appendChild(tableData4);
+
+                            var tableData2 = document.createElement('td');
+                            var tableDataNode2 = document.createTextNode(item.status);
+                            tableData2.appendChild(tableDataNode2);
+                            tableRow.appendChild(tableData2);
+
+                            var tableData1 = document.createElement('td');
+                            tableData1.innerHTML = item.logTime;
+                            tableRow.appendChild(tableData1);
+
+                            var tableData3 = document.createElement('td');
+                            tableData3.setAttribute("colspan", "1");
+                            tableRow.appendChild(tableData3);
+
+                            recList.push(tableRow);
+                        });
+
+                        var btn_clicked = document.getElementById(releaseId);
+                        var tr_referred = btn_clicked.parentNode.parentNode;
+                        for(var i = recList.length - 1 ; i >= 0  ; i--) {
+                        	tr_referred.parentNode.insertBefore(recList[i], tr_referred.nextSibling);
+                        }
+                        $('[id$="start"').hide();
+                    }        
+                });
+     		}
+     	}
+
+        toggleRows = function(logId,logClass,releaseId) {
+        	var img         = document.getElementById(logClass).src 
+	        if (img.includes("expand")) {
+	            document.getElementById(logClass).src  = img.replace('expand','collapse');
+	            expand = true;
+	        }
+	         else {
+	         	expand= false;
+	           	document.getElementById(logClass).src  = img.replace('collapse','expand');
+	           	$('.'+logClass).remove();
+	        }
+            if(expand) {
+                $('[id$="start"').show();
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ProjectCodeScanResultController.retriveScanCodeResult}',logId,function(result,event) { 
+                    if (event.status) {  
+                        var retRecords = result;
+                        retRecords.forEach(function(item,index)
+                        {
+                        	var btn_clicked = document.getElementById(logClass);
+                        	var tr_referred = btn_clicked.parentNode.parentNode; 
+
+                            var tableRow = document.createElement('tr');
+                            tableRow.setAttribute("class",releaseId + "innerRow dataRow " + logClass);
+
+                            var tableData = document.createElement('td');
+                            tableData.setAttribute("colspan", "4");
+                            tableRow.appendChild(tableData);
+
+                            var tableData1 = document.createElement('td');
+                            tableData1.innerHTML = item.description;
+                            tableRow.appendChild(tableData1);
+
+                            tr_referred.parentNode.insertBefore(tableRow, tr_referred.nextSibling);
+                        });
+                        $('[id$="start"').hide();
+                    }                
+                });
+            }
+        }
+
+    </script>
+</apex:page>

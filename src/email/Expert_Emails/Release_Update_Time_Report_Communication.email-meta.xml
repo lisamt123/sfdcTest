@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce Time Report functionality in the Community</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Release Update: Time Report Communication</name>
+    <style>freeForm</style>
+    <subject>10K Community New Functionality - Time Entry Report!</subject>
+    <textOnly>Hello!
+
+Happy New Year! To start 2017 off right, we are happy to introduce the Time Entry Report Tab. This will allow you to view time entered by project (including your team members on a project).
+
+When you now login to the 10K Community, you will notice a Time Entry Report tab:
+
+Click on this tab to access your Time Entry Report:
+
+When you are in your Time Entry Report, you will notice:
+
+-Date Filters (in blue)
+-Project Filters (in orange)
+-The ability to expand your selection to see your time entry details (in red)
+-The ability to export your selection (in purple)
+
+
+Please feel free to contact me with any feedback or questions!
+
+Jared
+
+
+Jared Miller
+VP, Service Delivery</textOnly>
+    <type>html</type>
+</EmailTemplate>

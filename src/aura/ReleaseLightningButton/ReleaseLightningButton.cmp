@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="truthy" type="Boolean" default="false"/>
+	<aura:attribute name="recordId" type="String" />
+	<aura:attribute name="heading" type="String" />
+	<aura:attribute name="innerComp" type="String" />
+	<!-- <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> -->
+	<div style="height:5%">
+		<br/>
+		<lightning:button aura:id="validate" label="Validate Deployment" onclick="{!c.toggelComponent}" class="slds-float_right"/>
+		<lightning:button aura:id="artifacts" label="Manage Release Artifacts" onclick="{!c.toggelComponent}" class="slds-float_right"/>
+		<br/>
+		<!-- <center><ui:spinner aura:id="spinner" /></center> -->
+		<!--  -->
+		<aura:if isTrue="{!v.truthy}">
+			<div class="demo-only" style="height: 100%;">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+	                            X
+	                            <span class="slds-assistive-text">Close</span>
+	                        </button>
+							<lightning:layout horizontalAlign="start" class="slds-text-align--left">
+                                <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                                    <h2 id="header99" class="slds-text-heading--medium">{!v.heading}</h2>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem flexibility="auto" padding="around-small" size="4">
+                                </lightning:layoutItem>
+                                
+                            </lightning:layout>		
+						</header>
+						<div class="slds-modal__content " id="modal-content-id-1">
+							<aura:if isTrue="{!v.innerComp == 'artifacts' }" >
+								<c:ManageReleaseArtifacts recordId="{!v.recordId}"/> 
+							</aura:if>
+							<aura:if isTrue="{!v.innerComp == 'validate'}" >
+								
+							</aura:if>
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</aura:if>
+	</div>	
+</aura:component>

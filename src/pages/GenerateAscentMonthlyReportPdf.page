@@ -1,0 +1,16 @@
+<apex:page renderAs="pdf" controller="GenerateAscentMonthlyReportPdfController">
+
+<div style="text-align:right;"><apex:image url="{!URLFOR($Resource.x10KLogo125x125)}" height="80px" /></div> 
+<br/><hr style="background:#3399CC; height:5px;"/>
+    
+    <c:AccountRelatedInvoicesTemplate recipientName="{!allContactName}"  ascRec="{!ascendMetricRec}" status="true" ascRecId="{!ascendMetricRec.Id}" accIds="{!ascendMetricRec.Account__c}" />
+    <p>
+        Please don’t hesitate to contact us with any questions or concerns.
+        <br/><br/>
+        Thank you for your continued partnership,
+        <br/><br/>
+        {!ascendMetricRec.Account__r.Owner.Name}
+    </p>
+    <hr style="background:#3399CC; height:5px;margin-top: -5px!important;"/>
+
+</apex:page>

@@ -1,0 +1,150 @@
+<apex:page standardcontroller="Achievement_Skill__c" recordSetVar="achievementskills" extensions="ManageAchievementSkillsController" showHeader="true" sidebar="true">
+
+	    <style>
+        .slds-scope .slds-panel__section 
+        {
+          padding: 1rem 0 !important;
+        }
+        
+        .slds-scope .slds-m-bottom--medium 
+        {
+          margin: 1rem !important;
+        }
+        
+        .slds-scope .slds-button--neutral
+        {
+          margin-left: 300px;
+          margin-top: 7px;
+        }
+        .defaultSelectList{
+            width: 60%;
+        
+        }
+        .leftButtonStyle{
+            width: 43%;
+            margin-left: 27%;
+        }
+        .rightImageStyle{
+            width: 2%;
+            margin-top: 1%;
+            margin-bottom: 2%;
+            margin-left: 4%;
+        }
+        .leftImageStyle{
+            width: 2%;
+            margin-left: -2%;
+            margin-right: 3%;
+        }
+        .slds-scope .messageText
+        {
+          color: white !important;
+        }
+        .slds-scope .messageText h4
+        {
+          display: none !important;
+        }
+        .slds-scope .message
+        {
+              background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-size: 64px 64px;
+              background-color: #c23934;
+              margin: 0px !important;
+              border-radius: 0px !important;
+              border: 0px !important;
+        }
+        .slds-scope .confirmM3
+        {
+            background-color: #04844b !important;
+        }
+        .slds-scope .message table tr td:first-child
+        {
+          display: none !important;
+        }
+        .slds-scope .messageText
+        {
+          text-align: center !important;
+        }
+        .slds-scope .lookupInput  a
+        {
+          border: 0px !important;
+          padding: 0px !important;
+          background-color: transparent !important;
+          min-height: 0px !important;
+          width: 24px !important;
+        }
+        .slds-scope td.messageCell {
+            display: none;
+        }
+        .slds-scope ul {
+            text-align: center;
+            color: white !important;
+        }
+        .slds-scope table {
+		    max-width: 600px;
+		}
+       
+    </style>
+	<apex:sectionHeader title="{!achievement.Name}" subtitle="Manage Achievement Skills" rendered="{!!isLightningExperience}"/>
+	<apex:form >
+		<apex:pageBlock title="Manage Achievement Skills" rendered="{!!isLightningExperience}">
+            <apex:pageMessages />
+			<c:MultiselectPicklist leftLabel="Available Skills" 
+									rightLabel="Selected Skills" 
+									size="25" 
+									leftOption="{!availableSkills}" 
+									rightOption="{!selectedSkills}"
+									width="350px"/>
+			<apex:pageBlockButtons location="both">
+				<apex:commandButton action="{!saveModification}" value="Save"/>
+				<apex:commandButton action="{!cancel}" value="Cancel"/>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+		<apex:outputPanel id="lightningSLDSViewPanel" rendered="{!isLightningExperience}">
+            <apex:slds />
+			<div class="slds-scope">
+                <apex:pageMessages />
+				<div class="slds-container">
+                    <div class="slds-spinner_container slds-hide">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                
+                    <div class="slds-page-header" role="banner">              
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-media--center slds-no-space slds-grow">
+                                    <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #38c393" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                                        <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                                            <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/custom/custom48_60.png')}" class="icon " alt="Contact" title="Contact"/>
+                                        </span>
+                                    </div>   
+                                    <div class="slds-media__body">
+                                        <div style="float: left;">
+                                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Manage Skills">Manage Achievement Skills</p>
+                                            <p class="slds-text-body--small page-header__info">{!achievement.Name}</p>
+                                        </div>
+                                        <apex:outputPanel style="float: right;" layout="block" >
+                                            <apex:commandButton action="{!saveModification}" value="Save" styleclass="slds-button slds-button--neutral slds-not-selected"/>
+                                            <apex:commandButton action="{!cancel}" value="Cancel" styleclass="slds-button slds-button--neutral slds-not-selected"/>
+                                        </apex:outputPanel>
+                                    </div>             
+                                </div>
+                            </div>      
+                        </div>
+                    </div>
+                    <c:MultiselectPicklist leftLabel="Available Skills" 
+                    						rightLabel="Selected Skills" 
+                    						size="25" 
+                    						leftOption="{!availableSkills}" 
+                    						rightOption="{!selectedSkills}"
+                    						width="350px"
+                    						isLDS="true" >
+                    </c:MultiselectPicklist>
+                </div>
+            </div>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

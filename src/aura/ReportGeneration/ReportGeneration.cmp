@@ -1,0 +1,128 @@
+<aura:component controller="LightningReportGenerationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  >
+ 	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="projectOptions" type="String[]"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    <aura:attribute name="project" type="String"/>
+    <aura:attribute name="allData" type="Object[]" />
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="assignSetId" type="Set" default="[]"/>
+    <aura:attribute name="errorMessage" type="String"/>
+
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+    <lightning:spinner aura:id="Spinner" variant="brand"/>
+    
+    <div class="slds-grid" style="padding: 20px;position: relative;">
+        <div class="slds-col" style="margin-right: 10px;">
+            <ui:inputDate aura:id="startId" label="Start Date" value="{!v.startDate}" displayDatePicker="true"/>
+        </div>
+        <div class="slds-col" style="margin-right: 10px;">
+            <ui:inputDate aura:id="endId" label="End Date" value="{!v.endDate}" displayDatePicker="true"/>
+        </div>
+        <div class="slds-col" style="margin-right: 10px;max-width:200px">
+            <div>
+                <label>
+                    Select Project
+                </label>
+            </div>
+            <ui:inputSelect aura:id="projectId" value="{!v.project}">
+                <aura:iteration items="{!v.projectOptions}" var="obj">
+                    <ui:inputSelectOption text="{!obj}" />
+                </aura:iteration>
+            </ui:inputSelect>
+        </div>
+        <div class="slds-col">
+            <button class="slds-button slds-button--neutral" id="reportBtn" onclick="{!c.onScripLoad}" >Run Report</button>
+            <aura:if isTrue="{!v.errorMessage == null}">
+                <div class="slds-button-group slds-dropdown-trigger" role="group" aria-haspopup="true">
+                    <button class="slds-button slds-button--neutral" name="edit" id="lc-219-edit" type="button">Export To PDF</button>
+                    <div class="slds-dropdown slds-dropdown--right slds-dropdown--actions" id="lc-222-dd">
+                        <ul class="dropdown__list" role="menu">
+                            <li id="lc-220-delete-item" class="slds-dropdown__item" tabindex="-1" role="menuitem option" onclick="{!c.exportToPdfColapsed}">
+                                <a id="lc-220-delete" data-value="delete"  class="slds-truncate" tabindex="-1">Collapsed</a>
+                            </li>
+                            <li id="lc-221-save-item" class="slds-dropdown__item" tabindex="-1" role="menuitem option" onclick="{!c.exportToPdfExpended}">
+                                <a id="lc-221-save" data-value="save" class="slds-truncate" tabindex="-1">Expanded</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aura:if>
+        </div>
+    </div>
+    <!-- Data table -->
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer "  > 
+        <thead>
+            <tr style="background-color:rgba(95, 158, 160, 0.33);">
+                <th><b>Project</b></th>
+                <th><b>Assignment</b></th>
+                <th><b>Assignment Role</b></th>
+                <th><b>Assignment Type</b></th>
+                <th><b>Expert Name</b></th>
+                <th><b>Hours</b></th>
+            </tr>
+        </thead>
+        <tbody id="tBodyId" aura:id="childTab">
+            <aura:if isTrue="{!v.errorMessage != null}">
+                <tr>
+                    <td colspan="8">
+                        {!v.errorMessage}
+                    </td>
+                </tr>
+            </aura:if>
+            <aura:iteration items="{!v.allData}" var="all">
+                <tr id="{!all.project.Id}" class="projectName" onclick="{!c.colapseChilds}" style="{!if( all.project.Id == null , 'display:none;', '' )}">
+                    <td>{!all.project.Name}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{!all.totalTime}</td>
+                </tr>
+                <aura:iteration items="{!all.wrappList}" var="wrapp">
+                    <tr class="assignmentName">
+                        <td>
+                            <aura:if isTrue="{!wrapp.entryList.length > 0}">
+                                <img src="{!wrapp.communityUrl+'/resource/collapse'}" onclick="{!c.onScripLoad}" id="{!wrapp.assignment.Id}" style="cursor:pointer;"/>
+                                <aura:set attribute="else">
+                                    <img src="{!wrapp.communityUrl+'/resource/expand'}" onclick="{!c.onScripLoad}" id="{!wrapp.assignment.Id}" style="cursor:pointer;"/>
+                                </aura:set>
+                            </aura:if>
+                        </td>
+                        <td>{!wrapp.assignment.Name}</td>
+                        <td>{!wrapp.assignment.Role__c}</td>
+                        <td>{!wrapp.assignment.Assignment_Type__c}</td>
+                        <td>{!wrapp.assignment.Resource_Name__c}</td>
+                        <td>{!wrapp.totalTime}</td>
+                    </tr>
+                    <aura:if isTrue="{!wrapp.entryList.length > 0}"  >
+                        <tr>
+                            <th><b>Time Entry Name</b></th>
+                            <th><b>Story Name</b></th>
+                            <th><b>Task Name</b></th>
+                            <th><b>Date</b></th>
+                            <th><b>Description</b></th>
+                            <th><b>Hours</b></th>
+                         </tr>
+                    </aura:if>
+                    <aura:iteration items="{!wrapp.entryList}" var="assign">
+                        <tr>
+                            <td> {!assign.Name}</td>
+                            <td> {!assign.Story__r.Name}</td>
+                            <td> {!assign.Task__r.Name}</td>
+                            <td> {!assign.Date__c}</td>
+                            <td class="slds-cell-wrap" > {!assign.Description__c}</td>
+                            <td> {!assign.Hours__c}</td>
+                         </tr>
+                    </aura:iteration>
+                </aura:iteration>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

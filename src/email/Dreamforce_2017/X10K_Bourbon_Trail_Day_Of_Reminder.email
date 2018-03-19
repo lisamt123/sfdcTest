@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        body {font-family: Arial !important;}
+	table{max-width:650px!important; font-family:Arial !important;}
+	p{padding:0px 10px!important; text-align:justify!important; font-family:Arial !important; font-size:12pt; color:#000000;}
+</style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>
+			<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000003BvhL&oid=00D36000000v5KY" width="100%" border="0" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>{!CampaignMember.FirstName}!</p>
+			<p>We’re so excited that you’ll be attending the 10K Bourbon Trail event! </p>
+			
+
+<p><b>What:</b></p>
+<p>10K Bourbon Trail party, where you can taste rare bourbons, drink craft cocktails, and commiserate with some of the top Salesforce influencers around the globe.</p>
+
+<p><b>When:</b></p>
+<p>Monday, November 6th<br>
+6:30PM - 9:30 PM<br>
+<a href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=Mjg3MXV1M2R0MWRwMGQ2ZjRvMnUwNmRkZW0gMTBrdmlldy5jb21fZWg4NzZrNm0zdThvbWk2Z2FmYnNuOWxpZWNAZw&tmsrc=10kview.com_eh876k6m3u8omi6gafbsn9liec%40group.calendar.google.com">Add to your Google Calendar</a><br>
+<a href="https://drive.google.com/file/d/0B5bPV4fSkHL1dTNMVS13UG51b1U/view?usp=sharing">Add to other calendars</a></p>
+
+<p><b>Where:</b></p>
+<p><a href="https://www.google.com/maps/place/415+Sansome+St,+San+Francisco,+CA+94111/@37.7942702,-122.4038258,17z/data=!4m13!1m7!3m6!1s0x8085808a7df3fee7:0x1d9c30611c4995c!2s415+Sansome+St,+San+Francisco,+CA+94111!3b1!8m2!3d37.7942702!4d-122.4016371!3m4!1s0x8085808a7df3fee7:0x1d9c30611c4995c!8m2!3d37.7942702!4d-122.4016371">Barrel Room<br>
+415 Sansome St<br>
+San Francisco, CA 94111</a></p>
+
+<p><b>Why:</b></p>
+<p>Because you want to have a great time!</p>
+
+<p><b>What to bring:</b></p>
+<p>Just yourself and a picture ID</p>
+
+<p>The event is by invitation only. Should your plans to attend change for any reason, please send us a note to let us know.
+
+<p>We can’t wait to share an evening of memory making with you!</p>
+			<p>Cheers!</p>
+			<p>The 10K Team</p>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

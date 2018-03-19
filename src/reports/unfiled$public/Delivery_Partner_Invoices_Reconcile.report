@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Invoice__c$Name</field>
+    </columns>
+    <columns>
+        <field>Invoice__c.Time_Entries1__r$Name</field>
+    </columns>
+    <columns>
+        <field>Invoice__c.Time_Entries1__r$Resource_Name__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Invoice__c.Time_Entries1__r$Hours__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Invoice__c$Name</column>
+            <operator>equals</operator>
+            <value>10K-TREKBI-072017</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Invoice__c.Time_Entries1__r$Project__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Invoice__c$Agreement__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Delivery Partner Invoices - Reconcile</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Delivery_Partner_Invoices_with_Time_Entries__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Invoice__c$Invoice_Generated_On__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

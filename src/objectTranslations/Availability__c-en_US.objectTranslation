@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Availability</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Availability</value>
+    </caseValues>
+    <fields>
+        <label><!-- Available Hours --></label>
+        <name>Available_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Availability --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Forecasted Hours --></label>
+        <name>Forecasted_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Worked Rollup --></label>
+        <name>Hours_Worked_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Worked --></label>
+        <name>Hours_Worked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Week --></label>
+        <name>Week__c</name>
+        <relationshipLabel><!-- Availability --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Availability Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

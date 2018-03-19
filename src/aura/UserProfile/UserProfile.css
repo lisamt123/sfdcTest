@@ -1,0 +1,131 @@
+.THIS  .bodyClass{
+    margin-left: 20px;
+}
+.THIS  .imageClass{
+    width: 95%;
+    height: 90%;
+}
+.THIS  .headerCls{
+    margin-top: 2%;
+    background-color: #ffffff;
+    margin-bottom: 5px;
+    border: 1px solid #f4f4f4;
+    border-radius: 7px;
+    padding: 2%;
+}
+.THIS  .titleCls{
+    color: #163261;
+}
+.THIS  .outerDiv{
+    display: none !important;
+}
+.THIS .userHeaderDetail
+{
+	background-color: #ffffff;
+    margin-bottom: 5px;
+    border: 1px solid #f4f4f4;
+    border-radius: 7px;
+    padding: 2%;
+    display: flex;
+}
+.THIS .userHeaderFollow
+{
+	width: 25%;
+}
+.THIS .userDetails
+{
+	width: 75%;
+}
+.THIS .forceCommunityUserProfileDetail
+{
+	padding-left: 0;
+	padding-right: 7px;
+}
+.THIS .username
+{
+    max-width: 60%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 1.75rem;
+    float: left;
+}
+.THIS .usernametext
+{
+    font-size: 18px;
+    font-weight: 700;
+}
+.THIS .innerSection
+{
+    width: 50%;
+    margin-top: 2%;
+}
+.THIS .forcePageBlockSectionRow
+{
+    width: 100%;
+    display: flex;
+}
+.THIS .profileDetailView
+{
+    margin-left: 2%;
+}
+.THIS .reputationPoints
+{
+    font-size: 14px;
+    opacity: .7;
+    text-align: center;
+    padding: 12px;
+    color: black !important;
+}
+.THIS .slds-form-element__label 
+{
+    display: inline-block;
+    line-height: 1.375;
+    margin-right: .75rem;
+    margin-bottom: .25rem;
+    color: #333 !important;
+    font-size: 12px;
+    font-family: Lato;
+}
+.THIS .slds-form-element__control 
+{
+    color: #333 !important;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: Lato;
+}
+.THIS .userBadge 
+{
+    max-width: 60%;
+    clear: left;
+    color: #696969;
+    font-size: 14px;
+}
+.THIS .levelContainer
+{
+    text-align: center;
+}
+.THIS .level
+{
+    border-radius: 50%;
+    height: 25px;
+    margin-top: 3%;
+}
+.THIS .follow:hover span
+{
+    display : none;
+}
+.THIS .follow:hover:before
+{
+    content:"UnFollow";
+}
+.THIS .follow:hover
+{
+    background-color: #0070d2;
+    color: white;
+}
+.THIS .followButton
+{
+    text-align: center;
+}

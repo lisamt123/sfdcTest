@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ChainedBatchId</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ChainedBatchId</value>
+    </caseValues>
+    <fields>
+        <label><!-- FifthBatch Id --></label>
+        <name>FifthBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- FirstBatch Id --></label>
+        <name>FirstBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- FourthBatch Id --></label>
+        <name>FourthBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- SecondBatch Id --></label>
+        <name>SecondBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- SeventhBatch Id --></label>
+        <name>SeventhBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- SixthBatch Id --></label>
+        <name>SixthBatch_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- ThirdBatch Id --></label>
+        <name>ThirdBatch_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

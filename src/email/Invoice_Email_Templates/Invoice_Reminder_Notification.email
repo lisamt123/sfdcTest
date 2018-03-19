@@ -1,0 +1,71 @@
+<messaging:emailTemplate subject="10K Advisors Past Due Invoice Reminder" recipientType="Contact" relatedToType="Account">
+
+<messaging:htmlEmailBody >
+    <style type="text/css">
+            body {font-family: Arial;}
+    </style>
+ <div style="text-align:right;"><apex:image url="{!URLFOR($Resource.x10KLogo125x125)}" height="80px"/></div> 
+<br/><hr style="background:#3399CC; height:5px;"/>
+
+    <p>
+        <apex:outputText rendered="{!IF(CONTAINS(recipient.FirstName, 'Accounts') || CONTAINS(recipient.LastName, 'Accounts') || CONTAINS(recipient.FirstName, 'Payable') || CONTAINS(recipient.LastName, 'Payable'),True, False)}">
+            Hi {!recipient.FirstName} {!recipient.LastName},
+        </apex:outputText>
+        <apex:outputText rendered="{!IF(!CONTAINS(recipient.FirstName, 'Accounts') && !CONTAINS(recipient.LastName, 'Accounts') && !CONTAINS(recipient.FirstName, 'Payable') && !CONTAINS(recipient.LastName, 'Payable'),True, False)}">
+            Hi {!recipient.FirstName},
+        </apex:outputText>
+        <br/><br/> 
+        Please note that there are one or more invoices that are past due on your account:  
+        <br/><br/> 
+
+        <apex:variable var="count" value="{!1}"/>
+        <apex:variable var="totalBalance" value="{!0}"/>
+        <apex:repeat value="{!relatedTo.invoices__r}" var="inv">
+            <apex:outputText rendered="{!IF(inv.RecordTypeId != $Label.RECORDTYPEID_INVOICE_DELIVERYPARTNERINVOICE && !isBlank(inv.Due_Date__c) && inv.Due_Date__c < TODAY() && inv.Exclude_From_Next_Past_Due_Notification__c == false && inv.Outstanding_Balance__c > 0,True,False)}">
+            {!count})<b> Invoice: </b> {!inv.Name} 
+            <ul>
+                <li><b>Invoice Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                            <apex:param value="{!inv.Invoice_Generated_On__c}" /> 
+                                          </apex:outputText> </li>
+                <li><b>Due Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                          <apex:param value="{!inv.Due_Date__c}" /> 
+                                      </apex:outputText> </li>
+                <li><b>Outstanding balance: </b> <apex:outputText value="{0, number, currency}">
+                                          <apex:param value="{!inv.Outstanding_Balance__c}" /> 
+                                      </apex:outputText> </li>
+                <li><b>Days outstanding: </b> <apex:outputText value="{0, number, ###,##0}">
+                                          <apex:param value="{!TODAY() - inv.Sent_To_Customer_On__c}" /> 
+                                      </apex:outputText> </li>
+            </ul>
+
+            <apex:variable var="count" value="{!count+1}"/>
+            <apex:variable var="totalBalance" value="{!totalBalance+inv.Outstanding_Balance__c}"/>
+            </apex:outputText>
+        </apex:repeat>
+    <br/>
+    <b>Total Past Due Balance:  </b> <apex:outputText value="{0, number, currency}">
+                                          <apex:param value="{!totalBalance}" /> 
+                                      </apex:outputText>
+    </p>
+
+    <style>
+        .im {
+            color: #282222 !important;
+        }
+    </style>
+
+<p>
+
+    We appreciate your attention to this and your prompt payment. If you have any questions, please contact our team at ar@10kview.com. As always, you may view this information and detailed time entries in the <a href="https://10k.force.com/10kcommunity/login">10K Community</a>.
+    <br/><br/>
+    Cheers,
+    <br/><br/>
+    10K Accounts Receivable Team
+    <hr style="background:#3399CC; height:5px;margin-top: -5px!important;"/>
+    <p style="font-size:7pt;">This is an automated message</p>
+</p>
+
+</messaging:htmlEmailBody>
+
+
+</messaging:emailTemplate>

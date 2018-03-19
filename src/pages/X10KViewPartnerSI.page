@@ -1,0 +1,104 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false">
+	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+	
+	<form action="https://login.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+		<input type="hidden" name="oid" value="00D36000000v5KY" />
+		<input type="hidden" name="retURL" value="http://10kview.force.com/" />
+		<input type="hidden" id="00N3600000Okmkl" name="00N3600000Okmkl" value="SI / ISV" />
+		<input type="hidden" id="lead_source" name="lead_source" value="10kview.com" />
+
+		<title>10K Advisors - Salesforce SI or ISV</title>
+	    <apex:composition template="X10KViewSiteTemplate">
+	        <apex:define name="header">
+	            <c:X10KViewHeader seletedTab="#partner"/>
+	        </apex:define>
+	        <apex:define name="body">
+				<div class="container-fluid">
+					<div class="row text-left salesforce-si" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/salesforce_si_background.jpg')}')">
+						<div class="col-md-8 col-md-offset-2">
+							<button type="button" class="btn btn-lg nohover btn-default">Salesforce SI or ISV</button>
+							<h1>Work with top Salesforce talent to help your customers achieve more</h1>
+						</div>
+					</div>
+					<div class="row text-left si-form" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/10kAdvisors_Logo_Mountain_Background.png')}')">
+						<div class="col-md-6 col-md-offset-3">
+							<button type="button" class="btn btn-lg nohover btn-default">Sign Up</button>
+							<p class="form-instructions">Please complete the form, fields marked with * are required.</p>
+							<form role="form" action="#" class="form-horizontal">
+								<div class="form-group">
+									<label class="sr-only" for="company">Company:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="company" class="form-control" id="company" name="company" placeholder="Company*" required="true"/>
+									</div>
+									<label class="sr-only" for="firstname">First Name:</label>
+									<div class="col-sm-6 add-margin">
+										<input type="firstname" class="form-control" id="first_name" name="first_name" placeholder="First Name*" required="true"/>
+									</div>
+									<label class="sr-only" for="lastname">Last Name:</label>
+									<div class="col-sm-6 add-margin">
+										<input type="lastname" class="form-control" id="last_name" name="last_name" placeholder="Last Name*" required="true"/>
+									</div>
+									<label class="sr-only" for="title">Title:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="title" class="form-control" id="title" name="name" placeholder="Title*" required="true"/>
+									</div>
+									<label class="sr-only" for="email">Email Address:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="email" class="form-control" id="email" name="email" placeholder="Email Address*" required="true"/>
+									</div>
+									<label class="sr-only" for="website">Website:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="website" class="form-control" id="URL" name="URL" placeholder="Website*" required="true"/>
+									</div>
+									<label class="sr-only" for="about-us">About Us:</label>
+									<div class="col-sm-12 add-margin">
+										<textarea type="about-us" class="form-control" id="about-us" placeholder="About Us*" required="true"></textarea>
+									</div>
+									<label class="sr-only" for="partner-type">Partner Type:</label>
+									<div class="col-sm-6 add-margin">
+										<select class="form-control" id="00N3600000OknRa" name="00N3600000OknRa" required="true">
+											<option selected="true" disabled="true" class="select-heading">Partner Type*</option>
+											<option>SI</option>
+											<option>ISV</option>
+											<option>Both</option>
+										</select>
+									</div>
+									<label class="sr-only" for="partner-tier">Partner Tier:</label>
+									<div class="col-sm-6 add-margin">
+										<select class="form-control" id="00N3600000OknRf" name="00N3600000OknRf" required="true">
+											<option selected="true" disabled="true" class="select-heading">Partner Tier*</option>
+											<option>Global Strategic</option>
+											<option>Platinum</option>
+											<option>Gold</option>
+											<option>Silver</option>
+											<option>Registered</option>
+										</select>
+									</div>
+									<label class="sr-only" for="employees">Number of Employees Focused on Salesforce:</label>
+									<div class="col-sm-6 add-margin">
+										<input type="employees" class="form-control" id="00N3600000OknQD" name="00N3600000OknQD" placeholder="Number of Employees Focused on Salesforce*" required="true"/>
+									</div>
+									<label class="sr-only" for="resources">Current Use of Third-Party Salesforce Resources:</label>
+									<div class="col-sm-12 add-margin">
+										<textarea type="resources" class="form-control" id="00N3600000OknQI" name="00N3600000OknQI" placeholder="Current Use of Third-Party Salesforce Resources*" required="true"></textarea>
+									</div>
+									<label class="sr-only" for="help-type">What type of help are you looking for?:</label>
+									<div class="col-sm-12 add-margin">
+										<textarea type="help-type" class="form-control" id="00N3600000OknQS" name="00N3600000OknQS" placeholder="What type of help are you looking for?*" required="true"></textarea>
+									</div>
+									<div class="col-sm-4 add-margin">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</apex:define>
+	        <apex:define name="footer">
+	            <c:X10KViewFooter />
+	        </apex:define>
+	    </apex:composition>
+	    <site:googleAnalyticsTracking />
+	</form>
+</apex:page>

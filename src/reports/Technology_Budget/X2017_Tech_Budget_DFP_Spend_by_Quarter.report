@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>25000</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <downGroupingContext>Project__c.Assignments__r.Time_Entries__r$Date__c</downGroupingContext>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>DFP Tech Budget (Quarterly)</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_77749706</developerName>
+        <masterLabel>Support / Development</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Project__c$Name</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>10K DoubleClick for Salesforce - Client Support</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>10K DoubleClick for Salesforce - Client Support (OLD)</sourceValue>
+            </sourceValues>
+            <value>Client Support</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>10K DoubleClick for Salesforce - Development (OLD)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>10K DoubleClick for Salesforce - Development</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>10K Ad Sales for Salesforce - Development</sourceValue>
+            </sourceValues>
+            <value>Development</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Project__c.Assignments__r.Time_Entries__r$Name</field>
+    </columns>
+    <columns>
+        <field>Project__c.Assignments__r.Time_Entries__r$Hours__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Project__c.Assignments__r.Time_Entries__r$Total_Cost_Amount__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Project__c$Name</column>
+            <operator>contains</operator>
+            <value>10K DoubleClick for Salesforce,10K Ad Sales for Salesforce</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Quarter</dateGranularity>
+        <field>Project__c.Assignments__r.Time_Entries__r$Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_77749706</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>2017 Tech Budget - DFP Spend by Quarter</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Projects_with_Assignments_with_Time_Entries__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project__c.Assignments__r.Time_Entries__r$Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2017-01-01</startDate>
+    </timeFrameFilter>
+</Report>

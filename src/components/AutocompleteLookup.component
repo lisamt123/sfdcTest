@@ -1,0 +1,100 @@
+<apex:component Controller="AutocompleteLookupController" >
+
+    <apex:attribute name="objectName" description="Name of Object." type="String" required="true" assignTo="{!selectedObject}"/>
+    <apex:attribute name="FieldName" description="Name of the field of the object." type="String" required="true" assignTo="{!selectedField}"/>
+    <apex:attribute name="component-Id" description="Id of the Component" type="String" required="true" assignTo="{!component_Id}"/>
+    <apex:attribute name="index" type="String"  description="The SLDS class to use for the icon." />
+    <apex:attribute name="isNewlyAdded" type="Boolean"  description="The SLDS class to use for the icon." />
+    <apex:attribute name="value" type="String"  description="The SLDS class to use for the icon." />
+
+    <!--    
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" />
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" />
+    <apex:styleSheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/smoothness/jquery-ui.css" /> 
+    -->
+    <apex:includeScript value="{!URLFOR($Resource.Autocomplete, '/Autocomplete/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.Autocomplete, '/Autocomplete/jquery-ui.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Autocomplete, '/Autocomplete/jquery-ui.css')}" />
+
+    <script>    
+        var records;
+        var queryTerm;
+        $(document).ready(function() 
+        {       
+                $('[id$="{!component_Id}"]').autocomplete(
+                {
+                    source : function(request, response) 
+                    {
+                        queryTerm = request.term;
+                        var res = queryTerm + '#' + '{!objectName}' + '#' + '{!FieldName}';
+                        AutocompleteLookupController.dynamicQuery(res , function(result, event)
+                        {
+                            if(event.type == 'exception') 
+                            { 
+                                  alert(event.message);
+                            }
+                            else 
+                            {
+                                 records = result;
+                                 response(records);
+                            }
+                        });
+                   },
+                    focus: function( event, ui ) 
+                    {
+                        //$('[id$="{!component_Id}"]').val( ui.item.Name );
+                        return false;
+                    },
+                
+                    select: function(event , ui)
+                    {
+                        $('[id$="{!component_Id}"]').val( ui.item.Name );
+                        var compId = '.'+'{!component_Id}';
+
+                        //console.log(ui.item.Name);
+                        //console.log(ui.item.id);
+                        //console.log(ui.item.Id);
+                        //$($($(compId)[0]).children()[1]).val(ui.item.Name);
+                        //$($($(compId)[0]).children()[2]).val(ui.item.Id);
+                        //var idFieldId = '#' + $($(compId)[0]).attr('id') + '_lkid';
+                        //console.log(idFieldId);
+                        //console.log(compId);
+                        var idFieldId   = $($(compId)[0]).attr('id') + '_lkid';
+                        var nameFieldId = $($(compId)[0]).attr('id') + '_lkold';
+                        console.log(idFieldId);
+                        console.log(nameFieldId);
+                        document.getElementById($($(compId)[0]).attr('id')).value = ui.item.Name;
+                        document.getElementById(nameFieldId).value  = ui.item.Name;
+                        document.getElementById(idFieldId).value    = ui.item.Id;
+                        $($(compId)[0]).change();
+                        //resourceSelectedByUser('{!index}',this,{!isNewlyAdded});addTagtoTable();
+                        return false;
+                    },
+                })
+                .data( "ui-autocomplete" )._renderItem = function( ul, item )
+                {
+                    var entry = "<a>" + item.Name;
+                    entry = entry + "</a>";
+                    return $( "<li></li>" )
+                    .data( "ui-autocomplete-item", item )
+                    .append( entry )
+                    .appendTo( ul );
+                };
+        });
+    </script>
+    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+        <input id="{!component_Id}" type="text"  placeholder="Search Contacts" size="80" style="max-width: 200px;" class="slds-input plannedHoursClass image"  >
+            <script>
+                $('#{!component_Id}').val($($('.{!component_Id}')[0]).val());
+            </script>
+        </input>
+    </div>
+   	<style>
+   	.image
+   	{
+   		background-image:url("{!URLFOR ($Asset.SLDS, '/assets/icons/utility/search_60.png')}"); 
+   		background-size: 25px;
+   		background-repeat: no-repeat;
+   	}
+   </style>
+</apex:component>

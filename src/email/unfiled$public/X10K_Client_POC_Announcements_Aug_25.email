@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;line-height:18px; font-size:12px;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+
+            <p>
+Dear {!Contact.FirstName},
+</p>
+            <p>
+            	For those of you who don’t know me, my name is Becky Webster and I run our Client Success program here at 10K - this means that I am your primary POC for all things relationship (e.g., feedback) and operational (e.g., new projects or expert requests). For the last few months I’ve been enjoying maternity leave with my first baby, but now I’m back and looking forward to meeting and working with all of you! <p>
+               <h4 style="font-size:18px; margin:0px; padding:0px; color:#399ab6;">Our 10K Team is Movin’ and Groovin’</h4>
+               <p>
+Needless to say, this summer brought a ton of change for our team: we’ve morphed into <a href="http://10kview.force.com/"> a new brand</a>, we’ve <a href="https://www.linkedin.com/pulse/10k-advisors-hires-salesforce-mvp-lead-service-delivery-nick-hamm">expanded our team</a>, we’ve launched our own <a href="https://10k.force.com/10kcommunity/s/login/">Salesforce Community</a>, and we’ve <a href="https://www.linkedin.com/pulse/10k-advisors-building-tightknit-consulting-community-nick-hamm?trk=prof-post"> answered a lot of questions</a> (and recorded <a href="http://www.gooddaysirpodcast.com/podcast/2016/8/4/92-hot-cold-and-bourbon">an entire podcast</a>) about who we are and the value that we provide to Salesforce customers, partners, and experts. With all of this change happening so quickly, I want to make sure that we’re keeping you up to date and clearly communicating these new changes that will positively impact how we work and deliver quality Salesforce development to your teams.<p>
+               <h4 style="font-size:18px; margin:0px; padding:0px; color:#399ab6;">Important Flags</h4>
+<p>
+</p>
+<ol>
+	<li dir="ltr">
+			<b>Submitting new project/expert requests</b>
+<br/>
+<b>Please direct any new project or expert requests to me (<a href="mailto:becky@10kview.com">becky@10kview.com</a>) rather than sending them to Nick, Vinod, or anyone else on our team.</b> Sending them directly to me is the best way to ensure an efficient turnaround on your requests.
+
+	</li>
+</ol>
+<ol start="2">
+	<li dir="ltr">
+			<b>Onshore Salesforce Experts</b>
+<br/>
+			One of our primary goals when we shifted to the 10K brand was to broaden our pool of available experts. In addition to our partnership with Trekbin experts, we now also have a community of US- and EMEA-based experts who are available to our clients and partners on a T&amp;M and/or retainer basis. These onshore roles include:
+	</li>
+
+<ul>
+<li> Salesforce Technical Architects
+<li>Salesforce Project Managers
+<li>Salesforce Business Analysts &amp; Configuration Specialists
+<li>Salesforce Developers
+</ul>
+If you have any need for additional bandwidth that these roles could fulfill, please don’t hesitate to contact me.</p> 
+</ol>
+
+               <h4 style="font-size:18px; margin:0px; padding:0px; color:#399ab6;">10K Community</h4>
+               <p>
+	The <a href="https://10k.force.com/10kcommunity/s/login/">10K Community</a> is alive and kicking - go check it out! This platform is open to all of our clients and experts and allows you to: 
+</p>
+<p dir="ltr">
+<p>
+<ul>
+<li>Easily view your projects, the experts assigned to those projects, as well as their time entries and descriptions of work completed
+<li>View your current or prior invoices and balance due
+</ul>
+<p dir="ltr">
+<p>
+	<i><b>Coming soon:</i></b>
+</p>
+<ul>
+	<li dir="ltr">
+Matt is <a href="http://kallieross.com/wp-content/uploads/2014/09/813846192.gif">working super hard</a> to finish building a brand new project/expert request app that will be available to you in the 10K Community. We’ll send more details about this as we prepare to launch, but
+basically it will provide you with an easier way to communicate and track the resourcing assignments for projects you’re working with our team to complete. Stay tuned for more details coming in the next month or so!
+	</li>
+	<li dir="ltr">
+			We will also launch project management functionality to our clients and partners (sprints, epics, stories, tasks) that our experts use to manage	their work on your projects, giving you greater insight into what our team is working on.
+	</li>
+</ul>
+<p>
+	It’s an exciting time and we are grateful for your trust as we continue paving this new path. Please do not hesitate to contact me anytime via email, Gchat, phone, DM, trained carrier pigeon, or whatever method floats your boat - my contact info is below. 
+</p>
+	Cheers!
+
+<br/>
+<br/>
+Becky Webster<br/>
+VP Client Success, <a href="http://www.10kview.com">10K</a><br/>
+<a href="mailto:becky@10kview.com">becky@10kview.com</a><br/>
+<a href="https://twitter.com/BeckyMaeW">@BeckyMaeW</a><br/>
++1.801.541.7688
+</p>
+	
+        </td>
+    </tr>
+    <tr>
+    	<td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+        </td>
+    </tr>
+</table>
+</body>
+</html>

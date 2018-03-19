@@ -1,0 +1,94 @@
+<aura:component controller="CodeReviewLightning" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" >
+    <ltng:require styles="{!$Resource.lightningCss}" />
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="wrapperLog" type="ValidateDeploymentLightning.Log[]"/>
+    <aura:attribute name="showButtons" type="Boolean" default="true"/>
+    <aura:attribute name="flag" type="Boolean" default="true"/>
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="isRefreshRunning" type="boolean" default="false"/>
+    <aura:attribute name="objctAPIName" type="string" default=""/>
+    <aura:attribute name="objctLabel" type="string" default=""/>
+    <aura:dependency resource="markup://c:ScanResult" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:spinner aura:id="Spinner" variant="brand"/> 
+    
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 98%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                  X
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Scan All {!v.objctLabel} Artifacts</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <lightning:layout > 
+                    <!-- Table 2 -->
+                    <lightning:layoutItem flexibility="auto" >
+                        <table class="slds-table slds-table--bordered fixHeaderDiv" role="grid" style="table-layout: fixed;" id="fixHeaderDiv">
+                            <thead>
+                                <tr class="headerRow" >
+                                    <th style="width:33px;"></th>
+                                    <th >Status</th>
+                                    <th >Time</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="artifactsListContainer" class="artifactsListContainer" aura:id="artifactsListContainer">
+                            <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                <tbody class="tbodyStyle">
+                                    <aura:if isTrue="{!and(v.wrapperLog.length == 0,!v.isRefreshRunning) }">
+                                        <tr class="mainLogRow" >
+                                            <td style="width:33px;"></td>
+                                            <td colspan="2">No scan results found.</td>
+                                        </tr>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isRefreshRunning}">
+                                        <tr class="mainLogRow" >
+                                            <td style="width:33px;"></td>
+                                            <td data-label="Status" colspan="2">In Progress</td>
+                                        </tr>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.wrapperLog.length > 0}">
+                                        <aura:iteration items="{!v.wrapperLog}" var="wrap">
+                                            <tr class="mainLogRow" >
+                                                <td style="width:33px;">
+                                                    <aura:if isTrue="{!wrap.status == 'Violation'}"  >
+                                                        <img id="{!wrap.logId}" class="{!wrap.logId}" src="{!wrap.communityUrl+'/resource/ExpandIcon'}" style="cursor:pointer;height: 15px;"  onclick="{!c.toggel}"/>
+                                                    </aura:if>
+                                                </td>
+                                                <td data-label="Status">{!wrap.status}</td>
+                                                <td data-label="Log Time">
+                                                    <lightning:formattedDateTime value="{!wrap.logTime}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZone="{!$Locale.timezone}"/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </aura:if>    
+                                </tbody>
+                            </table>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <div aura:id="scanresult" />
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <aura:if isTrue="{!v.showButtons}">
+                    <aura:if isTrue="{!v.isRefreshRunning}"  >
+                        <lightning:button label="Scan in Progress" disabled="true"  variant="brand"/>
+                        <aura:set attribute="else" >
+                            <lightning:button label="Scan" onclick="{!c.doScan}" variant="brand"/>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+            </footer>
+        </div>
+    </section>
+</aura:component>

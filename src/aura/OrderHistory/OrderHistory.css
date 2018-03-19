@@ -1,0 +1,12 @@
+.THIS .fixHeaderDiv{
+    position: absolute;
+    z-index: 2;
+}
+.THIS .slds-cell-fixed {
+    background-color: transparent !important;
+    top: 2% !important;
+    padding-left: .5rem !important;
+}
+.THIS .emptyOrder{
+    text-align: center !important;
+}

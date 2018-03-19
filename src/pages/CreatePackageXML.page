@@ -1,0 +1,97 @@
+<apex:page showHeader="false" sidebar="false" standardController="Release__c" extensions="CreatePackageXMLController" >
+    <style>
+        .custPopup {
+           	background-color: white;
+           	border-width: 0px;
+           	border-radius:10px;
+           	z-index: 9999;
+           	left: 50%;
+           	padding:20px;
+           	position: absolute; 
+           	margin-left: -100px; top:40%;
+       	}
+       	.popupBackground {
+           	background-color:black;
+           	opacity: 0.30;
+           	filter: alpha(opacity = 30);
+           	position: absolute;
+           	width: 100%;
+           	height: 100%;
+           	top: 0;
+           	left: 0;
+        	z-index: 9998;
+       	}
+    </style>
+    <apex:includeScript value="{!$Resource.zip}"/>
+    <apex:form >
+        <apex:actionFunction name="redirectBackToReleaseAF" action="{!redirectBackToRelease}" />
+        <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block"/>
+            <apex:outputPanel styleClass="custPopup" layout="block">
+                <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    <script>
+        window.onload = function() {
+            if('{!errorMessage}' != '') 
+                alert('{!errorMessage}');
+            else 
+                downloadZipFile(b64toBlob(data));
+            redirectBackToReleaseAF();
+	    }
+        packageXMLCreator = function(packageXmlMap) {
+			var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">';
+			for(var mType in packageXmlMap) {
+				var packageXmlLi = [];
+				packageXmlLi = packageXmlMap[mType];
+				xml = xml + '\n\t<types>';
+				for(var index in packageXmlLi) {
+					if(index < packageXmlLi.length) {
+						xml = xml + '\n\t\t<members>';
+						xml = xml + packageXmlLi[index];
+						xml = xml + '</members>';
+					}
+				}
+				xml = xml + '\n\t\t<name>'+mType+'</name>\n\t</types>';
+			}
+			xml = xml + '\n\t<version>40.0</version>\n</Package>';
+			return xml;
+		}
+
+		var zip = new JSZip();
+		zip.file('Package.xml', decodeURIComponent(packageXMLCreator(JSON.parse('{!artifactPackageXMLString}'))));
+		zip.file('DestrictiveChanges.xml', decodeURIComponent(packageXMLCreator(JSON.parse('{!artifactDestructiveXMLString}'))));
+		var data = zip.generate({type:"base64",compression:"DEFLATE"});
+
+		function b64toBlob (b64Data, contentType='application/zip', sliceSize=512) {
+            const byteCharacters = atob(b64Data);
+            const byteArrays = [];
+            var offset,i;
+            for ( offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
+                
+                const byteNumbers = new Array(slice.length);
+                for ( i = 0; i < slice.length; i++) {
+                  	byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+              
+          	const blob = new Blob(byteArrays, {type: contentType});
+          	return blob;
+        }
+
+		// to download blob file
+		function downloadZipFile(blobFile){
+			var a = window.document.createElement('a');
+			var t = document.createTextNode("Download");
+		    a.appendChild(t);
+			a.href = window.URL.createObjectURL(blobFile, {type: 'application/zip'});
+			
+			a.download = '{!Release__c.Name}.zip';
+			a.click();		
+		}
+    </script>
+</apex:page>

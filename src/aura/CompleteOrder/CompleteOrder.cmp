@@ -1,0 +1,167 @@
+<aura:component >
+	<aura:attribute name="CartItems" type="Item__c[]" />
+	<aura:attribute name="CartMerchandises" type="Merchandise__c[]" />
+	<aura:attribute name="ContactRec" type="Object" />
+	<aura:attribute name="billTotal" type="Integer" default="0" />
+	<aura:attribute name="FreeMerchandiseLineItemWrapper" type="Object[]" />
+
+	<div class="c-container" style="overflow:hidden;">
+		<lightning:layout >
+			<lightning:layoutItem padding="around-small" flexibility="auto" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+		        <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="fname" label="Shipping First Name" value="{!v.ContactRec.contactDetail.FirstName}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="lname" label="Shipping Last Name" value="{!v.ContactRec.contactDetail.LastName}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="email" label="Shipping Email" value="{!v.ContactRec.contactDetail.Email}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="country" label="Shipping Country" value="{!v.ContactRec.contactDetail.MailingCountry}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="street" label="Shipping Street" value="{!v.ContactRec.contactDetail.MailingStreet}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="city" label="Shipping City" value="{!v.ContactRec.contactDetail.MailingCity}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="state" label="Shipping State" value="{!v.ContactRec.contactDetail.MailingState}" class="quantInput" maxlength="255"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="zip" label="Shipping Zip Code" value="{!v.ContactRec.contactDetail.MailingPostalCode}" class="quantInput" maxlength="6"/>
+	            </lightning:layoutItem>
+	            <lightning:layoutItem flexibility="auto" 
+	                                  padding="around-x-small"
+	                                  size="12"
+	                                  smallDeviceSize="12"
+	                                  mediumDeviceSize="12"
+	                                  largeDeviceSize="12"
+	                                  class="padSpace" >
+	                <lightning:input type="text" name="phone" label="Shipping Phone" value="{!v.ContactRec.contactDetail.Phone}" class="quantInput" maxlength="15"/>
+	            </lightning:layoutItem>
+            </lightning:layoutItem>
+	        <lightning:layoutItem padding="around-small" flexibility="auto" size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6">
+	        	<div>
+	        		<table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_striped slds-no-row-hover" style="opacity:0.7;" >
+	        			<thead>
+	        				<tr class="slds-text-title_caps"><th colspan="5" style="text-align:center;" >Your Order Summary</th></tr>
+		        			<tr class="slds-text-title_caps" style="text-align:center;">
+		        				<th scope="col" style="max-width:4%; text-align: center; background: #EFF5F9;" >#</th>
+		        				<th scope="col" style="max-width:46%; text-align: center; background: #EFF5F9;" >Merchandise</th>
+		        				<th scope="col" style="max-width:15%; text-align: center; background: #EFF5F9;" >Quantity</th>
+		        				<th scope="col" style="max-width:15%; text-align: center; background: #EFF5F9;" >Points</th>
+		        				<th scope="col" style="max-width:20%; text-align: center; background: #EFF5F9;" >Total</th>
+		        			</tr>
+		        		</thead>
+		        		<tbody>
+			        		<aura:iteration items="{!v.CartItems}" var="item" indexVar="index">
+			        			<aura:iteration items="{!v.CartMerchandises}" var="merchant">
+			        				<aura:if isTrue="{!item.Merchandise__c == merchant.Id}" >
+					        			<tr>
+					        				<th scope="row" data-label="Sr No" >{!index + 1}</th>
+					        				<aura:if isTrue="{!merchant.Display_Sizes__c}" >
+					        					<td data-label="Merchandise" >{!merchant.Name}&nbsp;(Size: {!item.Size__c})</td>
+					        					<aura:set attribute="else">
+					        						<td data-label="Merchandise" >{!merchant.Name}</td>
+					        					</aura:set>
+					        				</aura:if>
+					        				<td data-label="Quantity"  style="text-align: right;">
+					        					<ui:outputNumber value="{!item.Quantity_Redeemed__c}" format="###,###,###" ></ui:outputNumber>
+					        				</td>
+					        				<td data-label="Points"  style="text-align: right;">
+					        					<ui:outputNumber value="{!merchant.Point_Value__c}" format="###,###,###" ></ui:outputNumber>
+					        				</td>
+					        				<td data-label="Total"  style="text-align: right;">
+					        					<ui:outputNumber value="{!merchant.Point_Value__c * item.Quantity_Redeemed__c}" format="###,###,###" ></ui:outputNumber>
+					        				</td>
+					        			</tr>
+					        			
+					        				<aura:iteration items="{!v.FreeMerchandiseLineItemWrapper}" var="lineItem">
+					        					<aura:if isTrue="{!lineItem.merchantItem.Id == item.Id}" >
+					        						<tr>
+					        							<th scope="row" data-label="Sr No" ></th>
+			        									<aura:if isTrue="{!lineItem.freeMerchantItem.Merchandise__r.Display_Sizes__c}" >
+					        								<td data-label="Merchandise" >{!lineItem.freeMerchantItem.Merchandise__r.Name}&nbsp;(Size: {!lineItem.freeMerchantItem.Size__c})</td>
+					        								<aura:set attribute="else">
+					        									<td data-label="Merchandise" >{!lineItem.freeMerchantItem.Merchandise__r.Name}</td>
+					        								</aura:set>
+					        							</aura:if>
+								        				<td data-label="Quantity"  style="text-align: right;">
+								        					<ui:outputNumber value="{!item.Quantity_Redeemed__c}" format="###,###,###" ></ui:outputNumber>
+								        				</td>
+								        				<td data-label="Points"  style="text-align: right;">
+								        					<ui:outputNumber value="{!lineItem.freeMerchantItem.Merchandise__r.Point_Value__c}" format="###,###,###" ></ui:outputNumber>
+								        				</td>
+								        				<td data-label="Total"  style="text-align: right;">
+								        					<ui:outputText value="Free"/>
+								        				</td>
+			        								</tr>
+			        							</aura:if>
+			        						</aura:iteration>
+					        			
+					        		</aura:if>
+				        		</aura:iteration>
+			        		</aura:iteration>
+			        		<tr class="slds-text-title_caps">
+			        			<th scope="row" colspan="4"  style="text-align:center;" >Order Total</th>
+			        			<td  style="text-align: right;">
+			        				<ui:outputNumber value="{!v.billTotal}" format="###,###,###" ></ui:outputNumber>
+			        			</td>
+			        		</tr>
+			        	</tbody>
+		        	</table>
+	        	</div>
+	    	</lightning:layoutItem>
+	    </lightning:layout>
+    </div>
+</aura:component>

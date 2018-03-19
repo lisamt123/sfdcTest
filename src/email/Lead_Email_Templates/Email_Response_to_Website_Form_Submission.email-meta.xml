@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Email Response to Website Form Submission</name>
+    <style>none</style>
+    <subject>Your inquiry has been received by 10K</subject>
+    <textOnly>{!Contact.FirstName},
+
+Thank you for submitting an inquiry to 10k Advisors!
+
+Someone from the 10K team will be in touch with you soon. In the meantime, please like us on Facebook and follow us on Twitter and LinkedIn.
+
+
+Nick Hamm
+CEO
+10K Advisors
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

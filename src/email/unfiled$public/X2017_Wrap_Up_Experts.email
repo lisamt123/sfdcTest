@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">{!Contact.FirstName},</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">What a great year 2017 has been!!!</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">Together, we’ve accomplished so much! Here are a few highlights:</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+<ul style="font-size:12px;">
+<li>Altogether, 10K Experts delivered over 47,000 hours for the year! Experts in the Developer role delivered the most hours, totaling over 31,000.</li>
+<li>We introduced The 10K Way in conjunction with 10K Climb to make delivery processes more predictable and consistent.</li>
+<li>The 10K Store was opened for business along with ways to earn points that can be exchanged for 10K gear.</li>
+<li>Expert-to-Expert Feedback was developed as a way to help 10K Experts continuously improve both as individuals and as part of how they work with other team members.</li>
+</ul></p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">And we have lots of new initiatives in the pipeline for 2018! To name a few:</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+<ul style="font-size:12px;">
+<li>An easy to use release management application integrated into 10K Connect.</li>
+<li>Code scanning tools that can review any code base against both 10K and customer coding standards.</li>
+<li>Metadata backup and comparison tools integrated into 10K Connect.</li>
+<li>Lots of new learning and implementation opportunities for AppExchange applications.</li>
+<li>A completely new UX for 10K Connect.</li>
+</ul></p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">We have seen tremendous adoption of our model, both from independent experts like yourself and clients who want to work with top talent in a flexible manner. We’re proud to have you as part of the team innovating on-demand services and making them a viable option for Salesforce partners and customers. Our goal is to continually improve the experience for all of our 10K Experts, and we can’t do it without your honest feedback. Please consider taking a couple of minutes to complete our anonymous <a href="https://www.getfeedback.com/r/7qubSzVC">Expert Survey</a> to let us know your thoughts.</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">Thank you for all that you do. We would not be where we are today without your dedication and support.</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">Cheers!</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">Nick Hamm<br>CEO<br>10K Advisors</p>
+
+
+
+        </td>
+    </tr>
+    <tr>
+    	<td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+        </td>
+    </tr>
+</table>
+</body>
+</html>

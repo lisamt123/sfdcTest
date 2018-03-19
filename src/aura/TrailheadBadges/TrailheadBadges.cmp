@@ -1,0 +1,21 @@
+<aura:component controller="BadgesDetails" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="badgesURL" type="Object[]"/>
+	<aura:attribute name="TotalBadges" type="Integer"/>
+    <aura:attribute name="ErrorMsg" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.onLoad}"/>
+    
+    <aura:if isTrue="{!v.ErrorMsg != ''}">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded ">
+            <aura:iteration items="{!v.badgesURL}" var="trail">
+                <aura:iteration items="{!trail.trailBadges}" var="bedge">
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-5 bodyClass" >
+                    <img src="{!bedge.Achievement__r.Trailhead_Logo_Url__c}" class="ImgClass"/><br/>
+                    <p><ui:outputText value="{!bedge.Achievement__r.Name}"/></p><br/><br/>
+                </div>
+                </aura:iteration>
+            </aura:iteration>
+        </div>
+    </aura:if>
+    <label class="errorClass" style="padding: 2%;font-size: large;">{!v.ErrorMsg}</label>
+</aura:component>

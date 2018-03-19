@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Appirio_DSM_Status__c</field>
+    </columns>
+    <columns>
+        <field>Account.Appirio_DSM_Expiration_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.X10K_DSM_Status__c</field>
+    </columns>
+    <crossFilters>
+        <operation>without</operation>
+        <primaryTableColumn>ACCOUNT_ID</primaryTableColumn>
+        <relatedTable>sfLma__License__c</relatedTable>
+        <relatedTableJoinColumn>sfLma__Account__c</relatedTableJoinColumn>
+    </crossFilters>
+    <filter>
+        <criteriaItems>
+            <column>ACCOUNT_SOURCE</column>
+            <operator>equals</operator>
+            <value>DSM for Salesforce</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>DSM Accounts from Appirio w/out Licenses</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

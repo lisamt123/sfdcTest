@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CHILD_NAME</field>
+    </columns>
+    <columns>
+        <field>Story__c.Story_Name__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Delivery_Owner__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status_Notes__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>contains</operator>
+            <value>namely - Roadmap</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FK_NAME</column>
+            <operator>equals</operator>
+            <value>sprint 2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Story__c.Status__c</column>
+            <operator>notEqual</operator>
+            <value>Canceled</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Story__c.Epic__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Namely Roadmap Sprint Planning</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$Project__c$Story__c@Story__c.Sprint__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Story__c.Status__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Project__c.End_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

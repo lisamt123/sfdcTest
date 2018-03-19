@@ -1,0 +1,87 @@
+<aura:component controller="MerchandiseStoreController">
+	<aura:attribute name="item" type="Item__c" />
+	<aura:attribute name="CartItems" type="Item__c[]" />
+	<aura:attribute name="freeMerchandises" type="Merchandise__c" />
+	<aura:attribute name="merchant" type="Merchandise__c" />
+	<aura:attribute name="totalPoints" type="Integer" default="0"/>
+	<aura:attribute name="RemainingPoints" type="Integer" default="0"/>
+	<aura:attribute name="oldRedeemedValue" type="Integer" default="0"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<div class="slds-notify_container slds-notify_container--inline">
+		<div class="slds-modal" aria-hidden="false" role="dialog" aura:id="delModal">
+			<div class="slds-modal__container" style="width:0% !important;">
+				<div class="slds-modal__header">
+					<h2 class="slds-text-heading--medium">Remove Cartitem</h2>
+				</div>
+				<div class="slds-modal__content slds-p-around--small">
+					<div>
+						<p>Are you sure you want to delete this item?</p>
+					</div>
+				</div>
+				<div class="slds-modal__footer">
+					<button class="slds-button slds-button--neutral" onclick="{!c.cancelDelete}">Cancel</button>
+					<lightning:button variant="brand" label="Delete" onclick="{!c.removeItem}" />
+                </div>
+			</div>
+		</div>
+		<div class="slds-backdrop" aura:id="delBackdrop" />
+	</div>
+	<lightning:layout >
+		<article class="slds-card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);width:100%;">
+			<div class="slds-card__header slds-grid">
+				<lightning:layoutItem padding="around-small" flexibility="no-grow" size="2" smallDeviceSize="2" mediumDeviceSize="2" largeDeviceSize="2">
+					<header class="slds-media slds-media_center slds-has-flexi-truncate">
+						<div class="slds-media__figure slds-grid">
+							<div class="{!v.freeMerchandises != null ? 'halfWidth':'fullWidth'}">
+								<ui:outputRichText value="{!v.merchant.Picture__c}" class="cartPic"  />
+							</div>
+						</div>
+						<aura:if isTrue="{!v.freeMerchandises != null}">
+							<div style="margin:30% 5px 0px 2px">
+								<lightning:icon size="x-small" iconName="utility:add"  variant="add" />
+							</div>
+							<div class="slds-media__figure slds-grid" style="height:50px;width:50px;">
+								<ui:outputRichText value="{!v.freeMerchandises.Picture__c}" class="cartPic"  />
+							</div>
+						</aura:if>
+					</header>
+				</lightning:layoutItem>
+				<lightning:layoutItem padding="around-small" flexibility="no-grow" size="4" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="4" class="leftSeparator" >
+					<div class="slds-media__body">
+						<div style="text-align:left;" class="cartHead"><b>{!v.merchant.Name}</b>
+						<aura:if isTrue="{!v.merchant.Display_Sizes__c}" >
+        					(Size: {!v.item.Size__c})
+        				</aura:if>
+						</div>
+						<div class="itemDesc">
+						    <p class="slds-text-longform">
+					            <aura:unescapedHtml value="{!v.merchant.Description__c}" />
+					        </p>
+					    </div>
+						<!-- <ui:outputRichText value="{!v.merchant.Description__c}" class="itemDesc"  /> -->
+					</div>
+				</lightning:layoutItem>
+				<lightning:layoutItem padding="around-small" flexibility="no-grow" size="5" smallDeviceSize="5" mediumDeviceSize="5" largeDeviceSize="5" >
+					<div >
+						<aura:if isTrue="{!and(v.merchant.Allow_Orders_for_Sold_Out_Items__c, v.item.Quantity_On_Hand__c == 0)}" >
+                            <lightning:input type="number" label="Quantity :" value="{!v.item.Quantity_Redeemed__c}" min="1" max="100" onchange="{!c.updateAvailablePoints}" class="quantInput" messageWhenRangeOverflow=" " messageWhenRangeUnderflow=" "/>
+                            <aura:set attribute="else">
+                                <lightning:input type="number" label="Quantity :" value="{!v.item.Quantity_Redeemed__c}" min="1" max="{!v.item.Quantity_On_Hand__c}" onchange="{!c.updateAvailablePoints}" class="quantInput" messageWhenRangeOverflow=" " messageWhenRangeUnderflow=" "/>
+                            </aura:set>
+                        </aura:if>
+                        <label class="slds-form-element__label">Points :</label>
+						<ui:outputNumber value="{!v.merchant.Point_Value__c}" format="###,###,###" ></ui:outputNumber><br/>
+    					<label class="slds-form-element__label">Total Points :</label>
+    					<ui:outputNumber value="{!v.merchant.Point_Value__c * v.item.Quantity_Redeemed__c}" format="###,###,###" ></ui:outputNumber><br/>
+					</div>
+				</lightning:layoutItem>
+				<lightning:layoutItem padding="around-small" flexibility="no-grow" size="1" smallDeviceSize="1" mediumDeviceSize="1" largeDeviceSize="1">
+					<div class="slds-no-flex" style="float: right;">
+						<lightning:buttonIcon iconName="utility:close" variant="bare" size="large" onclick="{!c.confirmDelete}" alternativeText="Remove" />
+					</div>
+				</lightning:layoutItem>
+			</div>
+		</article>
+	</lightning:layout>
+</aura:component>

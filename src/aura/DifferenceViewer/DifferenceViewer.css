@@ -1,0 +1,78 @@
+.THIS .slds-modal__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important; 
+    max-height: 100% !important;
+}
+.THIS .slds-modal-close{
+    font-size: 20px;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    right: -.01rem;
+}
+.THIS .slds-modal__content {
+    height: 100% !important;
+}
+
+.THIS table.diff {
+	border-collapse:collapse;
+	border:1px solid darkgray;
+	white-space:pre-wrap
+}
+.THIS table.diff tbody { 
+	font-family:Courier, monospace
+}
+.THIS table.diff tbody th {
+	font-family:verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+	background:#EED;
+	font-size:11px;
+	font-weight:normal;
+	border:1px solid #BBC;
+	color:#886;
+	padding:.3em .5em .1em 2em;
+	text-align:right;
+	vertical-align:top
+}
+.THIS table.diff thead {
+	border-bottom:1px solid #BBC;
+	background:#EFEFEF;
+	font-family:Verdana
+}
+.THIS table.diff thead th.texttitle {
+	text-align:left
+}
+.THIS table.diff tbody td {
+	padding:0px .4em;
+	padding-top:.4em;
+	vertical-align:top;
+}
+.THIS table.diff .empty {
+	background-color:#DDD;
+}
+.THIS table.diff .replace {
+	background-color:#FD8;
+}
+.THIS table.diff .delete {
+	background-color:#FD8;
+}
+.THIS table.diff .skip {
+	background-color:#EFEFEF;
+	border:1px solid #AAA;
+	border-right:1px solid #BBC;
+}
+.THIS table.diff .insert {
+	background-color:#FD8
+}
+.THIS table.diff th.author {
+	text-align:right;
+	border-top:1px solid #BBC;
+	background:#EFEFEF
+}
+.THIS .countTable table table td:nth-child(0) {
+	width: 10px;
+}
+.THIS .countTable table table td:nth-child(2) {
+	width: 10px;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K Bourbon Trail Day Of Reminder</name>
+    <style>none</style>
+    <subject>10K Dreamforce Bourbon Trail Event is Today!</subject>
+    <textOnly>{!CampaignMember.FirstName}!
+
+We’re so excited that you’ll be attending the 10K Bourbon Trail event!
+
+What:
+
+10K Bourbon Trail party, where you can taste rare bourbons, drink craft cocktails, and commiserate with some of the top Salesforce influencers around the globe.
+
+When:
+
+Monday, November 6th
+6:30PM - 9:30 PM
+Add to your Google Calendar
+Add to other calendars
+
+Where:
+
+Barrel Room
+415 Sansome St
+San Francisco, CA 94111
+
+Why:
+
+Because you want to have a great time!
+
+What to bring:
+
+Just yourself and a picture ID
+
+The event is by invitation only. Should your plans to attend change for any reason, please send us a note to let us know.
+
+We can’t wait to share an evening of memory making with you!
+
+Cheers!
+
+The 10K Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>

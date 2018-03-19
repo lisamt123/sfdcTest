@@ -1,0 +1,22 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+	<aura:handler name="init" value="{!this}" action="{!c.handleStore}" />
+
+	<div class="slds-tabs__nav-scroller">
+		<div class="slds-tabs__nav-scroller--inner">
+			<ul class="slds-tabs--default__nav" role="tablist">
+				<li class="slds-tabs--default__item slds-active" role="presentation" title="BROWSE THE STORE" aura:id="storeTab">
+					<a class="slds-tabs--default__link" href="javascript:void(0)" role="tab" tabindex="0" onclick="{! c.handleStore }" >BROWSE THE STORE</a>
+				</li>
+				<li class="slds-tabs--default__item" role="presentation" title="ORDER HISTORY" aura:id="historyTab">
+					<a class="slds-tabs--default__link" href="javascript:void(0)" role="tab" tabindex="-1" onclick="{! c.handleHistory }">ORDER HISTORY</a>
+				</li>
+				<li class="slds-tabs--default__item" role="presentation" title="MY POINTS" aura:id="pointsTab">
+					<a class="slds-tabs--default__link" href="javascript:void(0)" role="tab" tabindex="-2" onclick="{! c.handlePoints }">MY POINTS</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="slds-tabs--default__content slds-show"  role="tabpanel" aura:id="storePanel" />
+	<div class="slds-tabs--default__content slds-hide"  role="tabpanel" aura:id="historyPanel" />
+	<div class="slds-tabs--default__content slds-hide"  role="tabpanel" aura:id="pointsPanel" />
+</aura:component>

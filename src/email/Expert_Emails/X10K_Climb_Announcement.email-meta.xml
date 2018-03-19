@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce 10K Climb and 10K Way to Experts</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Climb_Letterhead</letterhead>
+    <name>10K Climb Announcement</name>
+    <style>freeForm</style>
+    <subject>Reach the top with 10K Climb!</subject>
+    <textOnly>Hello 10K Expert!
+
+
+
+One of 10K’s core values is Knowledge. As a 10K value, providing our Experts with learning opportunities is key to you acquiring skills and abilities that are applicable within and outside the 10K Advisor ecosystem.
+
+
+In order for us to provide those learning opportunities, we have invested in a Learning Management System which we’ve dubbed 10K Climb. The definition of climb, “the act of moving upward or to increase gradually”, captures how we feel about knowledge and learning. Climb, as a platform, gives us the ability to build training that fits the needs of our business, our clients, and you!
+
+
+10K Climb is launching at the end of June with our initial training course, the 10K Way. The 10K Way is a set of processes and best practices designed to help you successfully deliver and manage Client projects. The 10K Way is comprised of four major components: Onboarding, Client Communications, Delivery Practices and Feedback and was developed based on years of successful Salesforce project delivery experience. Upon successful completion of 10K Way training you’ll be awarded the 10K Way badge. All Experts will be enrolled and be expected to complete the 10K Way training.
+
+
+Later this week we’ll be sending instructions on using 10K Climb and completing the 10K Way training course. We will also be rolling out additional training courses in the future. Some may be required, like 10K Way, while others are optional learning opportunities.
+
+
+We’re thrilled to offer 10K Climb platform and 10K Way delivery standards that set the stage for our mutual success!
+
+
+Diane
+
+VP, Client Services
+
+That&apos;s me &quot;Climbing&quot; in Sedona, Arizona!</textOnly>
+    <type>html</type>
+</EmailTemplate>

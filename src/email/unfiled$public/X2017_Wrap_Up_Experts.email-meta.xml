@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>2017 Wrap Up - Experts</name>
+    <style>none</style>
+    <subject>Thank you for a great 2017!</subject>
+    <textOnly>10K Emailer
+
+{!Contact.FirstName},
+
+What a great year 2017 has been!!!
+
+Together, we’ve accomplished so much! Here are a few highlights:
+
+- Altogether, 10K Experts delivered over 47,000 hours for the year! Experts in the Developer role delivered the most hours, totaling over 31,000.
+- We introduced The 10K Way in conjunction with 10K Climb to make delivery processes more predictable and consistent.
+- The 10K Store was opened for business along with ways to earn points that can be exchanged for 10K gear.
+- Expert-to-Expert Feedback was developed as a way to help 10K Experts continuously improve both as individuals and as part of how they work with other team members.
+
+And we have lots of new initiatives in the pipeline for 2018! To name a few:
+
+- An easy to use release management application integrated into 10K Connect.
+- Code scanning tools that can review any code base against both 10K and customer coding standards.
+- Metadata backup and comparison tools integrated into 10K Connect.
+- Lots of new learning and implementation opportunities for AppExchange applications.
+- A completely new UX for 10K Connect.
+
+We have seen tremendous adoption of our model, both from independent experts like yourself and clients who want to work with top talent in a flexible manner. We’re proud to have you as part of the team innovating on-demand services and making them a viable option for Salesforce partners and customers. Our goal is to continually improve the experience for all of our 10K Experts, and we can’t do it without your honest feedback. Please consider taking a couple of minutes to complete our anonymous Expert Survey to let us know your thoughts: https://www.getfeedback.com/r/7qubSzVC.
+
+Thank you for all that you do. We would not be where we are today without your dedication and support.
+
+Cheers!
+
+Nick Hamm
+CEO
+10K Advisors
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Assignment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Assignments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agreement End Date --></label>
+        <name>Agreement_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assignment Type --></label>
+        <name>Assignment_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Automatically Close --></label>
+        <name>Automatically_Close__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billable? --></label>
+        <name>Billable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost Rate --></label>
+        <name>Cost_Rate__c</name>
+        <relationshipLabel><!-- Assignments (Cost Rate) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Current Portal User Flag --></label>
+        <name>Current_Portal_User_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Do Not Send Feedback Survey --></label>
+        <name>Do_Not_Send_Feedback_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Account Name --></label>
+        <name>Expert_Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generate Budget Records --></label>
+        <name>Generate_Budget_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Variance to Plan --></label>
+        <name>Hours_Variance_to_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin Billable Amount Rollup --></label>
+        <name>Margin_Billable_Amount_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin Cost Amount Rollup --></label>
+        <name>Margin_Cost_Amount_Rollup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin % --></label>
+        <name>Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Partner External Id --></label>
+        <name>Partner_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Allocated --></label>
+        <name>Percent_Allocated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned Hours --></label>
+        <name>Planned_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin $ --></label>
+        <name>Profit_Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billable Rate --></label>
+        <name>Rate__c</name>
+        <relationshipLabel><!-- Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recalculate Sharing on Save --></label>
+        <name>Recalculate_Sharing_on_Save__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region Mismatch? --></label>
+        <name>Region_Mismatch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Name --></label>
+        <name>Resource_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert --></label>
+        <name>Resource__c</name>
+        <relationshipLabel><!-- Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Projected</masterLabel>
+            <translation><!-- Projected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Billable Amount --></label>
+        <name>Total_Billable_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Budget --></label>
+        <name>Total_Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Cost Amount --></label>
+        <name>Total_Cost_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Hours --></label>
+        <name>Total_Number_of_Hours__c</name>
+    </fields>
+    <layouts>
+        <layout>Assignment Layout (External)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Assignment Layout (Internal)</layout>
+        <sections>
+            <label><!-- Budget Metrics --></label>
+            <section>Budget Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Metrics --></label>
+            <section>Hours Metrics</section>
+        </sections>
+        <sections>
+            <label><!-- Margin --></label>
+            <section>Margin</section>
+        </sections>
+        <sections>
+            <label><!-- Rates --></label>
+            <section>Rates</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Assignment --></label>
+        <name>Assignment</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Time has already been logged against Assignment, so you cannot change the Billable Rate. Please create a new Assignment instead. --></errorMessage>
+        <name>Billable_Rate_Change_If_No_TimeEntries</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Time has already been logged against Assignment, so you cannot change the Cost Rate. Please create a new Assignment instead. --></errorMessage>
+        <name>Cost_Rate_Change_If_No_TimeEntries</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Assignment&apos;s End Date should be later than Start Date. --></errorMessage>
+        <name>End_Date_is_later_than_the_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- An Assignment can only be scheduled for a maximum of 2 years. --></errorMessage>
+        <name>Start_End_Date_Cannot_More_Than_Two_Year</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Manage_Assignments --></label>
+        <name>Manage_Assignments</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,76 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="OrderHistoryController" >
+	<aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+	<center><lightning:spinner aura:id="Spinner" class="slds-hide" variant="brand" size="large" alternativeText="Please Wait."/></center>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="OrderList" type="Order__c[]" />
+	<aura:attribute name="NoOrders" type="Boolean" default="false" />
+
+	<div class="slds-page-header" role="banner" >
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:orders" size="medium" alternativeText="Done" variant="inverse"  />
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-title--caps slds-line-height--reset">Orders</p>
+                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title" id="pageHeader">Order History</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.NoOrders}" > 
+    	<lightning:card title="No order history available." class="emptyOrder"></lightning:card>
+    	<aura:set attribute="else">
+    		<div class="slds-table--header-fixed_container" style="height:650px;">
+		        <div class="slds-scrollable_y" style="height:100%;">
+				    <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_striped slds-table--header-fixed">
+				    	<thead>
+				    		<tr class="slds-text-title_caps">
+				    			<th scope="col" style="width:15%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Order Number">Order Number</div>
+				    			</th>
+				    			<th scope="col" style="width:25%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Order Date">Order Date</div>
+				    			</th>
+				    			<th scope="col" style="width:20%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Order Status">Order Status</div>
+				    			</th>
+				    			<th scope="col" style="width:20%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Total Points">Total Points</div>
+				    			</th>
+				    			<th scope="col" style="width:20%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Action">Action</div>
+				    			</th>
+				    		</tr>
+				    	</thead>
+				    	<tbody>
+				    		<aura:iteration var="order" items="{!v.OrderList}" indexVar="index"  >
+					    		<tr>
+					    			<th scope="row" data-label="Order Date" style="width:15%;">
+					    				<ui:outputText value="{!order.Name}"  />
+					    			</th>
+					    			<th data-label="Order Date" style="width:25%;">
+					    				<lightning:formattedDateTime value="{!order.LastModifiedDate}" year="numeric" month="short" day="2-digit"  hour="2-digit" minute="2-digit" />
+					    			</th>
+					    			<td data-label="Order Status" style="width:20%;">
+					    				<ui:outputText value="{!order.Status__c}"  />
+					    			</td>
+					    			<td data-label="Total Points" style="width:20%;">
+					    				<ui:outputNumber value="{!order.Total_Points_Redeemed__c}"  />
+					    			</td>
+					    			<td data-label="Action" style="width:20%;">
+						    			<button class="slds-button slds-button_neutral" data-name="{!order.Name}" data-index="{!order.Id}" onclick="{!c.handlesingleOrder}">View Items Ordered</button>
+					    			</td>
+					    		</tr>
+				    		</aura:iteration>
+				    	</tbody>
+				    </table>
+				</div>
+			</div>
+    	</aura:set>
+    </aura:if>
+    <div aura:id="ModalDialogOrder" />
+</aura:component>

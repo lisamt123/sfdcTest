@@ -1,0 +1,67 @@
+<apex:component >
+    <div class="container-fluid">
+        <div class="row-fluid logos-row">
+            <div id="myCarousel2" class="carousel slide" data-ride="carousel" data-interval="3500">
+                <div class="carousel-inner">
+                    <div class="item active text-center">
+                        <ul class="logos">
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/agent_partner.jpg')}" alt="Agent Partner"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/appirio.jpg')}" alt="Appirio"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/cloud_kettle.jpg')}" alt="Cloud Kettle"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/endiem.jpg')}" alt="Endiem"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/kindred_healthcare.jpg')}" alt="Kindred Healthcare"/>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <ul class="logos">
+                            
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/live_hive.jpg')}" alt="Live Hive"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/namely.jpg')}" alt="Namely"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/samtec.jpg')}" alt="Samtec"/>
+                            </li>
+                            <li class="span6 text-center">
+                                <img src="{!URLFOR($Resource.Resources, 'Resources/images/logos/talent_rover.jpg')}" alt="Talent Rover"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row footer" style="margin: 0px;">
+        <div class="text-right col-md-2 logo">
+            <img src="{!URLFOR($Resource.Resources, 'Resources/images/10K_Advisors_Logo_KO_300x300.png')}" alt="10K Advisors Logo"/>
+        </div>
+        <div class="text-left col-md-5 footer-text">
+            <p>Copyright &copy; 2016 10K Advisors &middot; All Rights Reserved &middot;</p>
+        </div>
+        <div class="text-right col-md-1 social-icons">
+            <a href="https://www.facebook.com/10kview/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/10kview" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+        <div class="text-left col-md-4 footer-menu">
+              
+            <ul>
+                <li><a href="/apex/X10KViewHome">Home</a></li>
+                <li><a href="/apex/X10KViewAbout">About</a></li>
+                <li><a href="/apex/X10KViewPartner">Partner</a></li>
+                <li><a href="/apex/X10KViewExpert">Expert</a></li>
+            </ul>
+        </div>
+    </div>
+</apex:component>

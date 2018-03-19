@@ -1,0 +1,933 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="StoriesListViewController">
+    <!--Reuqired Resources-->
+    
+    <ltng:require scripts="{!$Resource.jqueryLatest}" afterScriptsLoaded="{!c.jsLoaded}" />    
+    <!--Aura:handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <!-- Event handlers For Lookup -->
+    <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIdUpdate}"/>    
+    <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIdClear}"/>
+    <aura:handler name="closeEditModalEvent" event="c:CloseEditModal" action="{!c.closeEditModal}"/>
+    <!--Public Method-->
+    <aura:method name="reload" action="{!c.doInit}" />
+    <aura:method name="filterList" action="{!c.filter}" />
+    
+    
+    
+    <center>
+        <!--<aura:if isTrue="{!v.showSpinner}">-->
+        <div aura:id="Spinner" id="spinn" class="slds-spinner_container hide"  style="position:fixed !important;">
+            <div class="slds-spinner slds-spinner--large" role="alert" >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+        <!-- </aura:if>-->
+    </center>
+    
+    <!--Attributes-->
+    <aura:attribute name="CurrUserId" type="String" access="global"/>
+    <aura:attribute name="recID" type="String" access="global"/>
+    <aura:attribute name="priority" type="String" access="global"/>
+    <aura:attribute name="ErrorMessge" type="String" access="global"/>
+    <aura:attribute name="AllStoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="StoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="tempStoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="blankStoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="ProjectsList" type="Project__c[]" access="global"/>
+    <aura:attribute name="EpicsList" type="Epic__c[]" access="global"/>
+    <aura:attribute name="StatusList" type="String[]" access="global"/>
+    <aura:attribute name="lastSortHeader" default="none" type="String" access="global"/>
+    <aura:attribute name="SprintsList" type="Sprint__c[]" access="global"/>
+    <aura:attribute name="tempStory" type="Story__c" access="global"/>
+    <aura:attribute name="newStory"
+                    type="Story__c"
+                    default="{ 'sobjectType': 'Story__c',
+                             'Name': '',
+                             'Story_Name__c': '',
+                             'Status__c': '',
+                             'Priority__c': '',
+                             'Level_of_Effort__c': 0,
+                             'Epic__c': '',
+                             'Functional_Owner__c': '',
+                             'Project__c': '',
+                             'Sprint__c': '',
+                             'Description__c': '',
+                             'Technical_Design_Notes__c': '',
+                             'Test_Scenarios__c':'',
+                             }"
+                    />    
+    <aura:attribute name="index" type="Integer" default="-1" access="global"/>
+    <aura:attribute name="index1" type="Integer" default="-1" access="global"/>
+    <aura:attribute name="edit" type="Boolean" default="false"/>
+    <aura:attribute name="tempStr" type="Story__c" default="{ 'sobjectType': 'Story__c',
+                             'Name': '',
+                             'Story_Name__c': '',
+                             'Status__c': '',
+                             'Priority__c': '',
+                             'Level_of_Effort__c': 0,
+                             'Epic__c': '',
+                             'Functional_Owner__c': '',
+                             'Project__c': '',
+                             'Sprint__c': '',
+                             'Description__c': '',
+                             'Technical_Design_Notes__c': '',
+                             'Test_Scenarios__c':'',
+                             }" />
+    
+    <aura:attribute name="showid" type="Id" default="" access="global" />
+    <!--Section Header-->
+    <div class="slds" style="min-width:850px">
+        <div class="slds-grid">   
+            <div class="slds-col  slds-large-size--1-of-1">
+                <div class="slds-notify_container" style="position:inherit" >
+                    <div id="notify2"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+                        <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+                            <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <span class="slds-assistive-text">Error</span>
+                        <span>
+                            {!v.ErrorMessge}
+                        </span>
+                    </div>
+                </div>
+            </div>         
+        </div>
+        <div class="slds-page-header" role="banner" >
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:article" size="large" variant="bare" class="IconbgColor"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title--caps slds-line-height--reset">Stories</p>
+                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title" id="pageHeader">All Stories</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom--xx-small">
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button--neutral" data-modalid="createStoryModal" onclick="{!c.showModel}">New</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!--sub header-->
+            <div class="slds-grid">
+                <div class="slds-col slds-align-bottom">
+                    <p class="slds-text-body--small"><span id="totItems"></span><span> • </span><span id="sortedBy">Sorted by None</span> <span> • </span><span id="filterBy">Filtered by None</span> <span> • </span></p>
+                </div>
+                
+                <!--Filter Button-->
+                <div aura:id="filterMenu" class="slds-dropdown-trigger slds-dropdown-trigger--click ">
+                    <button id="filerIcon" class="slds-button slds-button--icon-border" aria-haspopup="true" style="fill: currentColor;" onclick="{!c.filterToggle}">
+                        <lightning:icon iconName="utility:filterList" size="x-small" variant="bare-inverse" alternativeText="filterList"></lightning:icon>
+                        <span class="slds-assistive-text">Filer Actions</span>
+                    </button>
+                    
+                    <!--Drop Down Menu-->
+                    <div id="filerPanel"  class="slds-dropdown slds-dropdown--right">
+                        
+                        <!-- SLDS Panel-->
+                        <div class="slds-panel">
+                            <div class="slds-form--stacked slds-grow slds-grid slds-grid--vertical">
+                                <div class="slds-filters">
+                                    <div class="slds-filters__header slds-grid slds-has-divider--bottom-space">
+                                        <h4 class="slds-align-middle slds-text-heading--small">Filter</h4>
+                                        <button onclick="{!c.filter}"  class="slds-button slds-col--bump-left slds-button--icon slds-button--icon-small">
+                                            <lightning:icon iconName="utility:forward" size="x-small" variant="bare-inverse" alternativeText="forward"></lightning:icon>
+                                            <span class="slds-assistive-text">Close Filter Panel</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- SLDS Panel BODY-->
+                                    <div class="slds-filters__body" >
+                                      
+                                        <p class="slds-text-body--medium slds-m-vertical--x-small">Matching all these filters</p>
+                                        <ol class="slds-list--vertical slds-list--vertical-space"> 
+                                            <li class="slds-item slds-hint-parent">
+                                                <div class="slds-filters__item slds-grid slds-grid--vertical-align-center ">
+                                                    <div class="slds-grow slds-has-blur-focus"  data-popoverid="projectFilterPop" data-praid="projectFiler" onclick="{!c.showPopover}">
+                                                        <p class="slds-text-body--medium">Project</p>
+                                                        <p id="projectFiler">Any Project</p>
+                                                    </div>
+                                                    
+                                                    <!--Project Selection panel-->	 
+                                                    <div id="projectFilterPop" class=" slds-dropdown-trigger slds-dropdown-trigger--click slds-popover slds-popover--panel slds-nubbin--right rightPopover" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                            <dl class="slds-popover__body-list">
+                                                                <dt class="slds-m-bottom--small">
+                                                                    <div class="slds-media__body">
+                                                                        <p class="slds-text-heading--small slds-hyphenate">Select Project</p>
+                                                                    </div>
+                                                                </dt>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list">
+                                                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-bottom--x-small">
+                                                                    <dl>
+                                                                        <dd>
+                                                                            <Select id="projectSelList" class="slds-select" >
+                                                                                <Option value="all">All</Option>
+                                                                                <aura:iteration items="{!v.ProjectsList}" var="Project" indexVar="rowIndex">
+                                                                                    <Option value="{!Project.Id}">{!Project.Name}</Option>
+                                                                                </aura:iteration>
+                                                                            </Select>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list" style="text-align:right">
+                                                                <button class="slds-button slds-button--neutral" id="ProjectDone">Done</button>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="slds-item slds-hint-parent">
+                                                <div class="slds-filters__item slds-grid slds-grid--vertical-align-center ">
+                                                    <div class="slds-grow slds-has-blur-focus"  data-popoverid="SprintFilterPop" data-praid="SprintFiler" onclick="{!c.showPopover}">
+                                                        <p class="slds-text-body--medium">Sprint</p>
+                                                        <p id="SprintFiler">None</p>
+                                                    </div>
+                                                    <!--Sprint Selection panel-->	 
+                                                    <div id="SprintFilterPop" class=" slds-dropdown-trigger slds-dropdown-trigger--click slds-popover slds-popover--panel slds-nubbin--right rightPopover" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                            <dl class="slds-popover__body-list">
+                                                                <dt class="slds-m-bottom--small">
+                                                                    <div class="slds-media__body">
+                                                                        <p class="slds-text-heading--small slds-hyphenate">Select Sprint</p>
+                                                                    </div>
+                                                                </dt>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list">
+                                                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-bottom--x-small">
+                                                                    <dl>
+                                                                        <dd>
+                                                                            <Select id="SprintSelList" class="slds-select" >
+                                                                                <Option value="all">None</Option>
+                                                                                <aura:iteration items="{!v.SprintsList}" var="Sprint" indexVar="rowIndex">
+                                                                                    <Option value="{!Sprint.Id}">{!Sprint.Name}</Option>
+                                                                                </aura:iteration>
+                                                                            </Select>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list" style="text-align:right">
+                                                                <button class="slds-button slds-button--neutral" id="SprintDone">Done</button>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="slds-item slds-hint-parent">
+                                                <div class="slds-filters__item slds-grid slds-grid--vertical-align-center ">
+                                                    <div class="slds-grow slds-has-blur-focus"  data-popoverid="epicFilterPop" data-praid="epicFiler" onclick="{!c.showPopover}">
+                                                        <p class="slds-text-body--medium">Epic</p>
+                                                        <p id="EpicFiler">None</p>
+                                                    </div>
+                                                    <!--Project Selection panel-->	 
+                                                    <div id="epicFilterPop" class=" slds-dropdown-trigger slds-dropdown-trigger--click slds-popover slds-popover--panel slds-nubbin--right rightPopover" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                            <dl class="slds-popover__body-list">
+                                                                <dt class="slds-m-bottom--small">
+                                                                    <div class="slds-media__body">
+                                                                        <p class="slds-text-heading--small slds-hyphenate">Select Epic</p>
+                                                                    </div>
+                                                                </dt>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list">
+                                                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-bottom--x-small">
+                                                                    <dl>
+                                                                        <dd>
+                                                                            <Select id="epicSelList" class="slds-select" >
+                                                                                <Option value="all">None</Option>
+                                                                                <aura:iteration items="{!v.EpicsList}" var="Epic" indexVar="rowIndex">
+                                                                                    <Option value="{!Epic.Id}">{!Epic.Name}-{!Epic.Epic_Name__c}</Option>
+                                                                                </aura:iteration>
+                                                                            </Select>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list" style="text-align:right">
+                                                                <button class="slds-button slds-button--neutral" id="EpicDone">Done</button>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="slds-item slds-hint-parent">
+                                                <div id="showMeFilterMenu" class="slds-dropdown-trigger slds-dropdown-trigger--click slds-filters__item slds-grid slds-grid--vertical-align-center" >
+                                                    <div class="slds-grow slds-has-blur-focus" data-popoverid="showMeFilterPop" data-praid="storiesFiler" onclick="{!c.showPopover}">
+                                                        <p class="slds-text-body--medium">Stories</p>
+                                                        <p id="storiesFiler">All Stories</p>
+                                                    </div>
+                                                    <!--show me panel-->
+                                                    <div id="showMeFilterPop" class="slds-dropdown-trigger slds-dropdown-trigger--click slds-popover slds-popover--panel slds-nubbin--right rightPopover" role="dialog" style="">
+                                                        <div class="slds-popover__body">
+                                                            <dl class="slds-popover__body-list">
+                                                                <dt class="slds-m-bottom--small">
+                                                                    <div class="slds-media__body">
+                                                                        <p class="slds-text-heading--small slds-hyphenate">Show Me</p>
+                                                                    </div>
+                                                                </dt>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list">
+                                                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-bottom--x-small">
+                                                                    <dl>
+                                                                        <dd>
+                                                                            <fieldset class="slds-form-element">
+                                                                                <div class="slds-form-element__control">
+                                                                                    <span class="slds-radio">
+                                                                                        <input type="radio" id="allStories" name="options" checked="checked" />
+                                                                                        <label class="slds-radio__label" for="allStories">
+                                                                                            <span class="slds-radio--faux"></span>
+                                                                                            <span class="slds-form-element__label">All Stories</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    <span class="slds-radio">
+                                                                                        <input type="radio" id="funOwner" name="options" checked="" />
+                                                                                        <label class="slds-radio__label" for="funOwner">
+                                                                                            <span class="slds-radio--faux"></span>
+                                                                                            <span class="slds-form-element__label">My Stories - Functional Owner</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    <span class="slds-radio">
+                                                                                        <input type="radio" id="delOwner" name="options" checked="" />
+                                                                                        <label class="slds-radio__label" for="delOwner">
+                                                                                            <span class="slds-radio--faux"></span>
+                                                                                            <span class="slds-form-element__label">My Stories - Delivery Owner</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                    <span class="slds-radio">
+                                                                                        <input type="radio" id="qaOwner" name="options" checked="" />
+                                                                                        <label class="slds-radio__label" for="qaOwner">
+                                                                                            <span class="slds-radio--faux"></span>
+                                                                                            <span class="slds-form-element__label">My Stories - QA Owner</span>
+                                                                                        </label>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </fieldset>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list" style="text-align:right">
+                                                                <button class="slds-button slds-button--neutral" id="ShowMeDone">Done</button>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>                                                
+                                            <li class="slds-item slds-hint-parent">
+                                                <div class="slds-filters__item slds-grid slds-grid--vertical-align-center" >
+                                                    <div class="slds-grow slds-has-blur-focus" data-popoverid="statusFilterPop" data-praid="statusFiler" onclick="{!c.showPopover}">
+                                                        <p class="slds-text-body--medium">Status</p>
+                                                        <p id="statusFiler">Any Status</p>
+                                                    </div>
+                                                    <!--Status panel-->	 
+                                                    <div id="statusFilterPop" class=" slds-dropdown-trigger slds-dropdown-trigger--click slds-popover slds-popover--panel slds-nubbin--right rightPopover" role="dialog" >
+                                                        <div class="slds-popover__body">
+                                                            <dl class="slds-popover__body-list">
+                                                                <dt class="slds-m-bottom--small">
+                                                                    <div class="slds-media__body">
+                                                                        <p class="slds-text-heading--small slds-hyphenate">Story Status</p>
+                                                                    </div>
+                                                                </dt>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list">
+                                                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-bottom--x-small">
+                                                                    <dl>
+                                                                        <dd>
+                                                                            <aura:iteration items="{!v.StatusList}" var="Status" indexVar="rowIndex">
+                                                                                <div class="slds-form-element">
+                                                                                    <div class="slds-form-element__control">
+                                                                                        <span class="slds-checkbox">
+                                                                                            <input type="checkbox" data-value1="{!Status}" name="options" id="{!'check' + rowIndex}" checked="" />
+                                                                                            <label class="slds-checkbox__label" for="{!'check' + rowIndex}">
+                                                                                                <span class="slds-checkbox--faux"></span>
+                                                                                                <span class="slds-form-element__label">{!Status}</span>
+                                                                                            </label>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </aura:iteration>                            
+                                                                        </dd>
+                                                                        <dd>
+                                                                            <a id="clearCheckBox" href="javascript:void(0);" style="padding-top:10px">Clear</a>   
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </dl>
+                                                            <dl class="slds-popover__body-list" style="text-align:right">
+                                                                <button class="slds-button slds-button--neutral" id="StatusDone">Done</button>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>                                                
+                                            
+                                        </ol>
+                                    </div>
+                                    <!--END SLDS Panel BODY-->
+                                    <div class="slds-filters__footer slds-grid slds-shrink-none">
+                                        <button class="slds-button slds-button--brand" onclick="{!c.filter}">Apply Filters</button>
+                                        <div class="slds-col--bump-left">
+                                            <button class="slds-button slds-button--brand " onclick="{!c.removeFiler}">Remove All</button>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                            
+                    </div>
+                    <!-- END SLDS Panel-->
+                </div>
+            </div>  
+            <!--END sub header-->
+        </div> 
+        
+        <!-- Body -->
+        <div class="slds-grid">   
+            <div class="slds-col  slds-large-size--1-of-1">
+                <div class="slds-notify_container" style="position:inherit" >
+                    <div id="notify"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+                        <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+                            <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <span class="slds-assistive-text">Error</span>
+                        <span>
+                            {!v.ErrorMessge}
+                        </span>
+                    </div>
+                </div>
+            </div>         
+        </div>
+        <div class="slds-grid">
+            <div id="outerDiv" class="slds-col  slds-large-size--1-of-1" style="overflow-y: auto;height: 550px !important;">
+                <div id="innerDiv">
+                <table class="slds-table slds-table--bordered slds-table--striped fixHeaderDiv" role="grid" style="table-layout: fixed;" id="fixHeaderDiv">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th class="slds-cell-shrink" scope="col" style="width:4%">
+                                
+                            </th>
+                            <th class="slds-cell-shrink" scope="col" style="width:4%">
+                                
+                            </th>
+                            <th class="slds-is-sortable" scope="col" style="width: 12%;">
+                                <div id="NameUp" class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="NameDown" style="display:none"  class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <!--added on 2/11/2016-->
+                            <th class="slds-is-sortable" scope="col" style="width: 10%;">
+                                <div id="Epic__r_NameUp" class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Epic__r_NameDown" style="display:none"  class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col" style="width: 23%;">
+                                <div id="Story_Name__cUp" class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+                                    <button   class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div  id="Story_Name__cDown"  style="display:none"  class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+                                    <button   class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="width: 15%;">
+                                <div id="Status__cUp" data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Status__cDown" style="display:none"   data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <!--Added on 2/11/2016-->
+                            <th class="slds-is-sortable"  scope="col" style="width: 14%;">
+                                <div id="Functional_Owner__r_NameUp" data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Functional_Owner__r_NameDown" style="display:none"   data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="width: 10%;">
+                                <div id="Priority__cUp" data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Priority__cDown" style="display:none"   data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="">
+                                <div id="Level_of_Effort__cUp" data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Level_of_Effort__cDown" style="display:none"   data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="slds-table slds-table--bordered slds-table--striped" role="grid" style="table-layout: fixed;">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th class="slds-cell-shrink" scope="col" style="width:4%">
+                                
+                            </th>
+                            <th class="slds-cell-shrink" scope="col" style="width:4%">
+                                
+                            </th>
+                            <th class="slds-is-sortable" scope="col" style="width: 12%;">
+                                <div id="NameUp" class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="NameDown" style="display:none"  class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <!--added on 2/11/2016-->
+                            <th class="slds-is-sortable" scope="col" style="width: 10%;">
+                                <div id="Epic__r_NameUp" class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Epic__r_NameDown" style="display:none"  class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+                                    <button  class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col" style="width: 23%;">
+                                <div id="Story_Name__cUp" class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+                                    <button   class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div  id="Story_Name__cDown"  style="display:none"  class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+                                    <button   class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="width: 15%;">
+                                <div id="Status__cUp" data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Status__cDown" style="display:none"   data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <!--Added on 2/11/2016-->
+                            <th class="slds-is-sortable"  scope="col" style="width: 14%;">
+                                <div id="Functional_Owner__r_NameUp" data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Functional_Owner__r_NameDown" style="display:none"   data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="width: 10%;">
+                                <div id="Priority__cUp" data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Priority__cDown" style="display:none"   data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                            <th class="slds-is-sortable"  scope="col" style="">
+                                <div id="Level_of_Effort__cUp" data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                                <div id="Level_of_Effort__cDown" style="display:none"   data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+                                    <button class="slds-button slds-button--icon">
+                                        <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <aura:iteration items="{!v.StoriesList}" var="strylst" indexVar="rowIndex">
+                            <tr class="readMode" id="{!'readMode' + rowIndex}">
+                                <td>
+                                    <img  class="imgIcon" src="{!$Resource.edit}" data-id="{!strylst.Id}" data-edit="true" data-index="{!rowIndex}"  onclick="{!c.expand}"></img>
+                                </td>
+                                <td>{!rowIndex + 1}</td>
+                                <th role="gridcell" data-label="Story Number">
+                                    <div class="tblCellData" title="Story Number">
+                                        <ui:outputURL target="_blank" 
+                                                      value="{!'/10kcommunity/s/detail/' + strylst.Id}" 
+                                                      label="{!strylst.Name}"/>
+                                    </div>
+                                </th>
+                                <!--added on 02/11/2016-->
+                                <td role="gridcell" data-label="Epic Number">
+                                    <div class="tblCellData" title="Epic Number">
+                                        <ui:outputURL target="_blank" 
+                                                      value="{!'/10kcommunity/s/detail/' + strylst.Epic__c}" 
+                                                      label="{!strylst.Epic__r.Name}"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" data-label="Story Name">
+                                    <div class="tblCellData" title="{!strylst.Story_Name__c}">{!strylst.Story_Name__c}</div>
+                                </td>
+                                <td role="gridcell" data-label="Status">
+                                    <div class="tblCellData" title="Status">{!strylst.Status__c}</div>
+                                </td>
+                                <!--Added on 2/11/2016-->
+                                <td role="gridcell" data-label="Functional Owner">
+                                    <div class="tblCellData" title="Functional Owner"> 
+                                        <ui:outputURL target="_blank" 
+                                                      value="{!'/10kcommunity/s/detail/' + strylst.Functional_Owner__c}" 
+                                                      label="{!strylst.Functional_Owner__r.Name}"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" data-label="Priority">
+                                    <div class="tblCellData" title="Priority">{!strylst.Priority__c}</div>
+                                </td>
+                                <td role="gridcell" data-label="Level of Effort">
+                                    <div class="tblCellData" title="Level of Effort">{!strylst.Level_of_Effort__c}</div>
+                                </td>
+                            </tr>  
+                            <tr id="{! 'expandMode' + rowIndex}" style="display:none">
+                                <td style="vertical-align: top;"> 
+                                    <img style="cursor: pointer;" class="collapse"  src="{!$Resource.collapse}" data-id="{!strylst.Id}" data-edit="false" data-index="{!rowIndex}"  onclick="{!c.expand}"></img>
+                                </td>
+                                <td style="vertical-align: top;">{!rowIndex + 1}</td>
+                                <td colspan="7">
+                                    <div class="slds-grid" >
+                                        <div class="slds-col" style="width:50%">
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                </div>             
+            </div>
+        </div>
+        <div id="deleteModal" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-close">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" data-modalid="deleteModal" title="Close" onclick="{!c.cancelDetele}">
+                        <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Delete Story</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div style="text-align: center;">
+                        <p>Are you sure you want to delete this story?</p>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" data-modalid="deleteModal"  onclick="{!c.cancelDetele}">Cancel</button>
+                    <button class="slds-button slds-button--brand" data-modalid="deleteModal" onclick="{!c.confirmDetele}">Delete</button>
+                </div>
+            </div>
+        </div>
+        
+        <!--Modal Box-->        
+        <div role="dialog" aura:id="createStoryModal" id="createStoryModal"  aria-hidden="true"  aria-labelledby="Story" class="slds-modal slds-fade-in-close slds-modal--large">            
+            <div class="slds-modal__container"> 
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button--icon-inverse slds-modal__close slds-button__icon--large" data-modalid="createStoryModal" onclick="{!c.cancelCreate}">                                
+                        <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Create Story2</h2>
+                </div>
+                
+                <div class="slds-modal__content slds-p-around--small">   
+                    <div class="slds-notify_container" style="position:inherit" >
+                        <div id="notify1"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+                            <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+                                <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <span class="slds-assistive-text">Error</span>
+                            <span>
+                                {!v.ErrorMessge}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newStory_Name__c">Story Name</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputText aura:id="newStory_Name__c" 
+                                                  class="field slds-input" 
+                                                  value="{!v.newStory.Story_Name__c}"/>                                            
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newStatus__c">Story Status</label>                                                                                                
+                                <div class="slds-form-element__control">
+                                    <ui:inputSelect aura:id="newStatus__c" 
+                                                    multiple="false" 
+                                                    class="field slds-input" 
+                                                    value="{!v.newStory.Status__c}">
+                                        <aura:iteration items="{!v.StatusList}" var="Status1" indexVar="rowIndex">
+                                            <ui:inputSelectOption text="{!Status1}"  />
+                                        </aura:iteration>
+                                    </ui:inputSelect>                                         
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newPriority__c">Priority</label>                                                                                                
+                                <div class="slds-form-element__control">
+                                    <ui:inputSelect aura:id="newPriority__c" 
+                                                    multiple="false" 
+                                                    class="field slds-input" 
+                                                    value="{!v.newStory.Priority__c}">
+                                        <ui:inputSelectOption text="Low"  />  
+                                        <ui:inputSelectOption text="Medium"  />   
+                                        <ui:inputSelectOption text="High"  />   
+                                    </ui:inputSelect>                                                                               
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newLevel_of_Effort__c">Level of Effort</label>                                                                                                
+                                <div class="slds-form-element__control">
+                                    <ui:inputNumber aura:id="newLevel_of_Effort__c" 
+                                                    class="field slds-input" 
+                                                    value="{!v.newStory.Level_of_Effort__c}"/>                                                                                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-2">
+                            <c:LookupSObject value="{!v.newStory.Project__c}"
+                                             aura:id="newProject__c"
+                                             label="Project"
+                                             pluralLabel="Projects" 
+                                             sObjectAPIName="Project__c"
+                                             listIconSVGPath="standard:account"
+                                             listIconClass="slds-icon-standard-account" 
+                                             fieldAPIName="Project__c"
+                                             />
+                            
+                        </div>  
+                        <div class="slds-p-horizontal--small slds-size--1-of-2">
+                            <c:LookupSObject value="{!v.newStory.Sprint__c}"
+                                             aura:id="newSprint__c"
+                                             where="{! ' where Project__c = \'' + v.newStory.Project__c + '\''}"                                                                 
+                                             label="Sprint"
+                                             pluralLabel="Sprints"
+                                             sObjectAPIName="Sprint__c"
+                                             listIconSVGPath="standard:recent"
+                                             listIconClass="slds-icon-standard-account" 
+                                             fieldAPIName="Sprint__c"
+                                             />
+                            
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-2">
+                            <!-- Lookup component -->
+                            <c:LookupSObject value="{!v.newStory.Epic__c}"
+                                             aura:id="newEpic__c"
+                                             label="Epic"
+                                             pluralLabel="Epics"
+                                             sObjectAPIName="Epic__c"
+                                             listIconClass="slds-icon-standard-account" 
+                                             fieldAPIName="Epic__c"
+                                             listIconSVGPath="standard:home"
+                                             where="{! ' where Project__c = \'' + v.newStory.Project__c + '\''}" 
+                                             />
+                            
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-2">                                            
+                            <c:LookupSObject value="{!v.newStory.Functional_Owner__c}"
+                                             aura:id="newFunctional_Owner__c"
+                                             label="Functional Owner"
+                                             pluralLabel="Users"
+                                             sObjectAPIName="User"
+                                             listIconSVGPath="standard:people"
+                                             listIconClass="slds-icon-standard-account" 
+                                             fieldAPIName="Functional_Owner__c"
+                                             />
+                            
+                        </div>
+                        
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newDescription__c">Description</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputTextArea value="{!v.newStory.Description__c}"
+                                                      aura:id="newDescription__c" 
+                                                      class="field slds-input" 
+                                                      rows="3"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newTechnical_Design_Notes__c">Technical Design Notes</label>
+                                <div class="slds-form-element__control">
+                                    <ui:inputTextArea value="{!v.newStory.Technical_Design_Notes__c}"
+                                                      aura:id="newTechnical_Design_Notes__c" 
+                                                      class="field slds-input" 
+                                                      rows="3"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-1">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="newTest_Scenarios__c">Test Scenarios</label>
+                                <div class="slds-form-element__control">  
+                                    <ui:inputTextArea value="{!v.newStory.Test_Scenarios__c}"
+                                                      aura:id="newTest_Scenarios__c"  
+                                                      class="field slds-input" 
+                                                      rows="3"/>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" data-modalid="createStoryModal" onclick="{!c.cancelCreate}">Cancel</button>
+                    <button class="slds-button slds-button--neutral" data-modalid="createStoryModal" onclick="{!c.saveStory}">Save</button>  
+                </div> 
+            </div>
+        </div>
+        <!--End Modal-->
+        <!-- StoryRecordView Modal Start-->
+            <div role="dialog" aura:id="storyRecordEdit" id="storyRecordEdit" style="max-width : 1250px; margin : auto;"  aria-hidden="true"  aria-labelledby="Story" class="slds-modal slds-fade-in-close slds-modal--large"> 
+                           
+                <div class="slds-modal__container">
+                    
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close slds-button__icon--large" data-modalid="storyRecordEdit" onclick="{!c.hidestoryRecordView}">                                
+                            <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close Error" size="small"/>                                
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <div class="slds-grid">   
+                            <div class="slds-col  slds-large-size--1-of-1">
+                                <div class="slds-notify_container" style="position:inherit" >
+                                    <div id="notify3"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+                                        <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+                                            <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        <span class="slds-assistive-text">Error</span>
+                                        <span>
+                                            {!v.ErrorMessge}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>         
+                        </div>
+                        <h2 id="header43" class="slds-text-heading--medium">{!v.tempStory.Name}</h2>
+                    </div>
+                    <c:StoryRecordEdit recID="{!v.recID}" StatusList="{!v.StatusList}" storyRec="{!v.tempStory}" priority="{!v.priority}"/>
+                </div>
+            </div>
+        <!-- StoryRecordView Modal End-->   
+          
+        <div id="backdrop" class="slds-backdrop slds-backdrop--close"></div>
+    </div>    
+</aura:component>

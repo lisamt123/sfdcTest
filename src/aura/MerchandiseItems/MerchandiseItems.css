@@ -1,0 +1,58 @@
+.THIS hr {
+    display: block;
+    margin: 0rem 0;
+    border-top: 5px solid #f4f4f4;
+    height: 1px;
+    clear: both;
+}
+.THIS .itemDesc{
+	text-align: left !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    margin-top: 0.3rem;
+    max-height: 74px !important;
+}
+.THIS .itemHead{
+    min-height: 58px;
+    max-height: 58px;
+    text-align: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    font-size: .88rem !important;
+}
+.THIS .itemHead >h4{
+    text-align:center;
+    font-size: smaller;
+}
+.THIS div>p>img{
+	max-width:100%;
+    max-height:100%;
+    vertical-align: middle;
+}
+.THIS div .imageContainer >p{
+	width: 100%;
+    height: 160px !important;
+    line-height: 160px !important;
+    text-align: center;
+}
+.THIS div .imageContainer >img{
+    height: 160px !important;
+    line-height: 160px !important;
+    width: auto !important;
+}
+.THIS .imageContainer{
+	width: 100%;
+    text-align: center;
+    min-height: 160px;
+}
+.THIS .slds-text-longform >p{
+    margin-bottom: 0rem !important;
+    font-size: .88rem;
+}
+.THIS .slds-text-longform {
+    font-size: .88rem !important;
+}

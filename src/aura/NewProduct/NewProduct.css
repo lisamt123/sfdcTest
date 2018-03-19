@@ -1,0 +1,57 @@
+.THIS .hideThis{
+	display: none;
+}
+@media(max-width:870px) {
+	.THIS .slds-modal__container{
+		width: 95% !important;
+	    max-width: 100% !important;
+	}
+}
+@media(min-width:870px) {
+	.THIS .slds-modal__container{
+		width: 50% !important;
+	    max-width: 50% !important;
+	}
+}
+.THIS .inputFieldClass {
+	margin-bottom: .7rem !important;
+}
+.THIS .uiInput {
+	margin-bottom: .7rem !important;
+	min-height: 30px !important;
+    height: 30px !important;
+}
+.THIS .listPriceClass > .slds-form-element__label {
+	display: none !important;
+}
+.THIS .priceActiveCheckClass > .slds-form-element__control > .slds-checkbox > .slds-checkbox__label > .slds-form-element__label {
+	display: none !important;
+}
+.THIS .activeCheckClass > .slds-form-element__control > .slds-checkbox > .slds-checkbox__label > .slds-form-element__label {
+	display: none !important;
+}
+.THIS .activeCheckClass {
+	text-align: center !important;
+}
+.THIS .fixHeaderDiv{
+    position: absolute;
+    z-index: 2;
+}
+.THIS .slds-cell-fixed {
+    background-color: transparent !important;
+    top: 2% !important;
+    padding-left: 0rem !important;
+    padding-top: .5rem;
+}
+.THIS .slds-section-title_divider, .THIS .slds-section-title--divider {
+    font-size: 1rem;
+    line-height: 1.25;
+    color: rgb(0, 0, 0);
+    text-transform: none;
+    letter-spacing: .0625rem;
+    padding: .50rem .75rem;
+    background: rgb(250, 250, 249);
+}
+.THIS .padBot {
+	padding-bottom: 1rem;
+}

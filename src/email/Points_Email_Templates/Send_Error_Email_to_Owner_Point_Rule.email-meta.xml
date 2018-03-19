@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Send Error Email to Owner Point Rule</name>
+    <style>freeForm</style>
+    <subject>Error with Points Rule &quot;{!Points_Rule__c.Name}&quot;</subject>
+    <textOnly>Hi {!Points_Rule__c.OwnerFullName},
+
+An error was just encountered with one of your Points Rule. Please have a look:
+
+{!Points_Rule__c.Link}</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,79 @@
+<aura:component controller="LookupSObjectController" >
+    <!-- Required Scripts/Styles -->
+    <!-- Salesforce Lightning Design System : https://www.lightningdesignsystem.com/ -->
+    <ltng:require scripts="{!$Resource.jqueryLatest}" />
+    
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> -->
+    <aura:handler name="render" value="{!this}" action="{!c.doInit}"/>
+    <!-- <aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/> -->
+    <!-- <aura:handler name="change" value="{!v.value}" action="{!c.doInit}"/> -->
+    <aura:method name="clear1" action="{!c.clear}" />
+    <!-- Attributes -->    
+    <aura:attribute name="where" default="none" type="String" required="true"
+                    description="The where cluse the SObject to search" />
+    <aura:attribute name="sObjectAPIName" type="String" required="true"
+                    description="The API name of the SObject to search" />
+    <aura:attribute name="fieldAPIName" type="String" required="true"
+                    description="The Field API name of the SObject to search" />
+    <aura:attribute name="label" type="String" required="true"
+                    description="The label to assign to the lookup, eg: Account" />
+    <aura:attribute name="pluralLabel" type="String" required="true"
+                    description="The plural label to assign to the lookup, eg: Accounts" />
+    <aura:attribute name="listIconSVGPath" type="String" default="custom:record"
+                    description="The static resource path to the svg icon to use." />
+    <aura:attribute name="listIconClass" type="String" default="slds-icon-custom-11"
+                    description="The SLDS class to use for the icon." />
+    <aura:attribute name="searchString" type="String"
+                    description="The search string to find." />
+    <aura:attribute name="value" type="String"
+                    description="The search value to find." />
+    <aura:attribute name="isInit" type="Boolean" default="true" />
+
+    <!-- Events -->
+    <aura:registerEvent name="updateLookupIdEvent" type="c:UpdateLookupId"/>    
+    <aura:registerEvent name="clearLookupIdEvent" type="c:ClearLookupId"/>    
+    
+    <!-- Lookup Markup : See https://www.lightningdesignsystem.com/components/lookups -->
+    <div class="slds"> 
+        <input type="hidden" id="valueID" aura:id="valueID" />
+        <div aura:id="lookup-div" class="slds-lookup" data-select="single" data-scope="single" data-typeahead="true">
+            <!-- This is the Input form markup -->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="lookup">{!v.label}</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <lightning:icon iconName="utility:search" size="x-small" variant="bare-inverse" alternativeText="search" class="slds-input__icon"></lightning:icon>
+                    <!-- This markup is for when an item is currently selected -->
+                    <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                        <span class="slds-pill slds-pill--bare" style="width:100%;">
+                            <span class="slds-pill__label">
+                                 <lightning:icon iconName="{!v.listIconSVGPath}" variant="bare-inverse" size="small" class="{!v.listIconClass}" /> &nbsp;&nbsp;&nbsp;{!v.searchString}   
+                            </span>
+                            <button class="slds-button slds-button--icon-bare" onclick="{!c.clear}">
+                                <lightning:icon iconName="utility:close" variant="bare-inverse" alternativeText="Close window." size="x-small"/>                                
+                                <span class="slds-assistive-text">Remove</span>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- This markup is for when searching for a string -->
+                    <ui:inputText aura:id="lookup" value="{!v.searchString}" class="slds-input" updateOn="keyup" keypress="{!c.search}" />
+                </div>
+            </div>
+            <!-- This is the lookup list markup. Initially it's hidden -->
+            <div aura:id="lookuplist" class="slds-lookup__menu slds-hide" role="listbox">
+                <div class="slds-lookup__item">
+                    <button class="slds-button" style="width:90% !important;">
+                        <lightning:icon iconName="utility:search" size="x-small" variant="bare-inverse" alternativeText="search" class="slds-icon slds-icon-text-default"></lightning:icon>
+                        &quot;{!v.searchString}&quot; in {!v.pluralLabel}
+                    </button>
+                    <button class="slds-button slds-button--icon-bare" onclick="{!c.clearSelection}" style="width:10% !important; float:right; top: 3px; right: 0px; position: absolute;">
+                        <lightning:icon iconName="utility:close" variant="bare-inverse" alternativeText="Close window." size="x-small"/>                                
+                        <span class="slds-assistive-text">Remove</span>
+                    </button>
+                </div>
+                <ul aura:id="lookuplist-items" class="lookuplist slds-lookup__list" role="presentation">
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

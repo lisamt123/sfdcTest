@@ -1,0 +1,190 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="ProjectRequestOverrideController">
+
+    <aura:handler event="c:AddRow" action="{!c.refreshTable}"/>
+	<!-- component attributes-->   
+    <aura:attribute type="string[]" name="RolePickValues"/>
+    <aura:attribute type="user" name="loggedUser"/>
+    <aura:attribute type="Project__C[]" name="lstActiveProjectsForCurrentUser"/>
+    <aura:attribute type="String" name="ProjectName"/>
+    <aura:attribute type="Date" name="startDate"/>
+    <aura:attribute type="Date" name="EndDate"/>
+    <aura:attribute name="Project" type="Project__c" default="{ 'sobjectType': 'Project__c' }"/>
+    <aura:attribute type="Project_Request_Detail__c[]" name="ProjectRD"/>
+    <aura:attribute type="Boolean[]" name="rowValidationList"/>
+    <aura:attribute type="Boolean" name="isDisable"/>
+    <aura:attribute type="String" name="pRDescription" default=" "/>
+    <aura:attribute type="String" name="context"/>
+    
+    <div class="slds">
+        <ui:button class="slds-button slds-button--neutral slds-float--right" label=" New " press="{!c.showModalBox}"/>           
+    </div>
+    
+    <div aria-hidden="false" aura:id = "BackgroundfirstBlock" id="newProjectRequestSectionId" role="dialog" class="slds slds-modal slds-modal--large slds-fade-in-open" style="display:none;">
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+            <div aura:id="pageMessageId" class="slds-notify slds-notify--alert slds-theme--error customMessage slds-hide" >Please select a Project record</div>
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">                    
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" onclick="{!c.hideModalBox}">
+                        X <span class="slds-assistive-text">Close</span>
+                    </button> 
+                    <h2 id="header43" class="slds-text-heading--medium">Create Work Request</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div>
+                        
+                        <!--Project Field -->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size--1-of-1"> 
+                                <div class="slds-form--inline slds-p-around--large">
+                                    <div class="slds-form-element picklistDiv">
+                                        <ui:inputSelect class="slds-form-element slds-form-element__control slds-select projectWidth" label="Project" aura:id="projectSelectedID" change="{!c.projectChange}" labelClass="slds-form-element__label">
+                                            <ui:inputSelectOption text="idNone" label="--None--" value="true"></ui:inputSelectOption>
+                                            <ui:inputSelectOption text="idNewProject" label="Add a new Project"></ui:inputSelectOption>
+                                            <aura:iteration items="{!v.lstActiveProjectsForCurrentUser}" var="selectedProject">
+                                                <ui:inputSelectOption text="{!selectedProject.Id}" label="{!selectedProject.Name}" />
+                                            </aura:iteration>                        
+                                        </ui:inputSelect> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project Field --> 
+                        <!--new Project Section -->
+                        <div class="slds-grid slds-wrap slds-hide" aura:id="block2ID" mode="edit">
+                            <div class="">
+                                <section class="slds-p-around--large">
+                                    <fieldset class="fSet">
+                                        <legend>Request Details</legend>
+                                        <div class="slds-form--inline slds-size--1-of-1" aura:id="ProjectDetails">
+                                            <div class="slds-form-element projectForm projectmargins">
+                                                <label class="slds-form-element__label slds-float--left projectLabel labelSpace">Project Name</label>
+                                                <div class = "required">*</div>
+                                                <div class="slds-form-element__control projectField">
+                                                    <ui:inputText value="{!v.Project.Name}" class="slds-input " aura:id="theProjectName"/>
+                                                    
+                                                </div>
+                                            </div>   
+                                            <!-- Datepicker -->
+                                            <div class="slds-form-element projectInput" id="myPickerWrapper">
+                                                <label class="slds-form-element__label slds-float--left" for="inputSample2">Start Date</label>
+                                                <div class = "required">*</div>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                        <ui:inputDate class="slds-input" blur="{!c.setPrdDates}" value="{!v.Project.Start_Date__c}" aura:id="theStartProjectDate" displayDatePicker="true" />
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            
+                                            <!-- Datepicker -->
+                                            <div class="slds-form-element projectInput" id="myPickerWrapper">
+                                                <label class="slds-form-element__label slds-float--left" for="inputSample2">End Date</label>
+                                                <div class = "required">*</div>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                        <ui:inputDate class="slds-input" blur="{!c.setPrdDates}" value="{!v.Project.End_Date__c}" aura:id="theEndProjectDate" displayDatePicker="true"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+
+                                            
+                                            
+                                        </div>
+                                        <div class="slds-size--1-of-1 slds-m-top--small slds-p-left--x-small " aura:id="ProjectDescription">
+                                        	<!-- ProjectRequest Description -->
+                                            <div class="slds-form-element projectRequestInput descMarginLeft" id="PRdescription">
+                                                <label class="slds-form-element__label slds-float--left" for="inputSample3">Description</label>
+                                                <div class = "required">*</div>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                        <ui:inputTextArea rows="4" class="slds-input" value="{!v.pRDescription}"/> 
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </fieldset>
+                                </section>
+                            </div>
+                        </div>
+                        
+                        <!--new Project Section --><br/><br/>
+                        <button id = "ShowExpertsBtn" class="slds-button slds-button--brand" style="margin-left:2%" onclick="{!c.showExperts}">Add Experts</button>
+                        <!--PRD -->
+						<div id="opPanel" style="width: 100%;"> 
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size--1-of-1">
+                                    <section class="slds-p-around--large">
+                                        <fieldset class="fSet pDetails">
+                                            <legend class="pDetailsLg">Requested Experts</legend>
+                                                <section class="slds-card__body mt5M">
+                                                    <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal" >
+                                                        <thead>
+                                                            <tr class="slds-text-heading--label " >
+                                                                <th scope="col" class="customTDH colWidth">
+                                                                    <div class="slds-truncate slds-float--left" title="Role">Role</div>
+                                                                    <div class = "required">*</div>
+                                                                </th>
+                                                                <th scope="col" class="customTDH colWidth">
+                                                                    <div class="slds-truncate slds-float--left" title="Start Date">Start Date</div>
+                                                                    <div class = "required">*</div>
+                                                                </th>
+                                                                <th scope="col" class="customTDH colWidth">
+                                                                    <div class="slds-truncate slds-float--left" title="End Date">End Date</div>
+                                                                    <div class = "required">*</div>
+                                                                </th>
+                                                                <th scope="col" class="customTDH colWidth">
+                                                                    <div class="slds-truncate slds-float--left" title="Allocation">Allocation</div>
+                                                                    <div class = "required">*</div>
+                                                                </th>
+                                                                <!-- Commented out the Request Rate field as per the story: S-0024-->
+                                                                <!-- if uncommented the Request Rate,please do the same changes in Helper.Js & ProjectRequestDetail.cmp -->
+                                                                <!--<th scope="col" class="customTDH colWidth">
+                                                                    <div class="slds-truncate" title="Start Date">Requested Rate</div>
+																	<div class = "required">*</div>
+                                                                </th>-->
+                                                                
+                                                                <th scope="col" class="customTDH DescWidth">
+                                                                    <div class="slds-truncate slds-float--left" title="Skills Required">Skills Required</div>
+                                                                    <div class = "required">*</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <aura:iteration items="{!v.ProjectRD}" var="projectRequestDetailObj" indexVar="i">
+                                                                <c:ProjectRequestDetail ProjectRD="{!projectRequestDetailObj}" RolePickValues="{!v.RolePickValues}" index="{!i}"/>
+                                                            </aura:iteration>
+                                                        </tbody>
+                                                    </table>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                </div>
+                            </div>
+                    	</div>
+                        <br /> 
+                        <!--PRD-->
+                        <!-- Slds Toast-->
+                        <div aura:id="Message" class="slds-hide " >
+                            <div >
+                            <div class="slds-notify_container ">
+                                <div class="slds-notify slds-notify--toast" role="alert">
+                                <span class="slds-assistive-text">Info</span>
+                                <div class="notify__content">
+                                    <h2 class="slds-text-heading--small ">Changes Saved Successfully</h2> 
+                                </div>
+                                </div>
+                            </div></div>
+                        </div>
+                        <!--End-->                           
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.hideModalBox}">Cancel</button>
+                    <button class="slds-button slds-button--neutral slds-button--brand" disabled="{!v.isDisable}" onclick="{!c.save}" >Save</button>
+                </div>
+            </div>            
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+    <div class="slds-backdrop slds-backdrop--open" aura:id = "backgroundSeconBlock" id="backGroundSectionId" style="display:none;"></div>    
+</aura:component>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Share_Trekbin_Projects_With_Trekbin</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Share Trekbin Projects With Trekbin</label>
+        <sharedTo>
+            <role>Trekbin</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Shared_with_Trekbin__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

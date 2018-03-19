@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Achievement</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Achievements</value>
+    </caseValues>
+    <fields>
+        <label><!-- Achievement Category --></label>
+        <name>Achievement_Category__c</name>
+        <picklistValues>
+            <masterLabel>Climb Achievement</masterLabel>
+            <translation><!-- Climb Achievement --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hidden --></label>
+        <name>Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Internal --></label>
+        <name>Is_Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Logo --></label>
+        <name>Logo__c</name>
+    </fields>
+    <fields>
+        <help><!-- Overriding the completed status will make the Achievement Assignments go to the defined &quot;override status&quot; instead of &quot;Acquired&quot;. It&apos;s up to you move to the &quot;Acquired&quot; status once this feature is used. --></help>
+        <label><!-- Override Completed Status --></label>
+        <name>Override_Completed_Status__c</name>
+        <picklistValues>
+            <masterLabel>In Review</masterLabel>
+            <translation><!-- In Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Specify a value if you want users to go to this URL when clicking the Achievement Image. This can be used to redirect to a custom page where you manage additional steps before changing the status of the Achievement to &quot;Acquired&quot;. --></help>
+        <label><!-- Override URL --></label>
+        <name>Override_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Certification Logo URL --></label>
+        <name>Salesforce_Certification_Logo_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Logo Url --></label>
+        <name>Trailhead_Logo_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Badge Image URL --></label>
+        <name>Work_Badge_Image_URL__c</name>
+    </fields>
+    <layouts>
+        <layout>Climb Achievement</layout>
+        <sections>
+            <label><!-- Custom Badge --></label>
+            <section>Custom Badge</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- Optional Assignment Information --></label>
+            <section>Optional Assignment Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Work.com Badge --></label>
+            <section>Work.com Badge</section>
+        </sections>
+        <sections>
+            <label><!-- Work.com Badge Information --></label>
+            <section>Work.com Badge Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Salesforce Certification Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Logo --></label>
+            <section>Logo</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Trailhead Badge Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Logo --></label>
+            <section>Logo</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Climb Achievement --></label>
+        <name>Climb_Achievement</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Salesforce Certification --></label>
+        <name>Salesforce_Certification</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Trailhead Badge --></label>
+        <name>Trailhead_Badge</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

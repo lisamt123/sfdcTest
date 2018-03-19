@@ -1,0 +1,210 @@
+<apex:page standardController="Status_Report__c" extensions="GenerateStatusReportPDFController" renderAs="pdf" showHeader="false" applyHtmlTag="false" standardStylesheets="false">
+    <html>
+        <head>
+             <style>
+                 
+                @page:first {
+                    margin :0.5in 0.5in 0.5in 0.5in;
+                    size:portrait;
+                    @top-center {
+                        content: element(header);
+                    }
+                    @PageBreak{
+                        page-break:always;
+                        page-break-inside:avoid;
+                    }                   
+                }
+                @page
+                {
+                    @bottom-center{
+                       content: element(footer);
+                       content: "Page " counter(page) " of " counter(pages);
+                    }
+                }
+                 div.footer {
+                     display: block;
+                     position: running(footer);
+                 }
+                div.header { 
+                    display: block; 
+                    margin-top:50px;                  
+                    position: running(header);
+                }
+                
+                div.footer {
+                    display: block;
+                    padding: 5px;
+                    position: running(footer);
+                }
+                body {
+                  font-family: Arial;
+                }
+                p{
+                    font-weight: 100;
+                }
+                .Table{
+                    display: table;
+                    width: 100%;
+                    
+                }
+                label{
+                    font-weight: bold;
+                }
+                .tableBorder td{
+                    border: solid;
+                    border-width: thin;
+                    border-collapse: collapse;
+                }
+                .Title{
+                    display: table-caption;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: larger;
+                }
+                .Heading{
+                    display: table-row;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size:14px;
+                }
+                .Row{
+                    display: table-row;
+                }
+                .Cell{
+                    display: table-cell;
+                    border: solid;
+                    border-width: thin;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                .billingcell{
+                    display: table-cell;
+                    padding-left: 5px;
+                    padding-right: 3px;
+                }
+                .celltext{
+                    font-weight: normal;
+                    font-size:14px;
+                    margin-bottom:5px;
+                    margin-top:5px;
+                }
+                .pagebreak{
+                    page-break-after: always;
+                }
+                /*
+                @page
+                {
+                    size:landscape;
+                } 
+                */
+                html
+                {
+                    font-family: "Salesforce Sans", Arial, sans-serif;
+                }
+                table.table101 table.table102 
+                {
+                    width:100%;
+                    font-size: 70%;
+                }
+                .dummyLink a{
+                    text-decoration: none !important;
+                    color: black !important;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Header Section -->
+            <div id="headersection" >
+                <table width="100%" >
+                    <tr>
+                        <td style="width:50%" rowspan="6">
+                            <apex:image url="{!$Resource.x10KLogo125x125}" height="100px"  />
+                        </td>
+                        <td style="font-size:14px;text-align:left">Weekly Status Report for: </td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left">
+                            <apex:outputText value="{0,date, MMM dd, YYYY}" >
+                                <apex:param value="{!selectedStatusReport.Start_Date__c}"/> 
+                            </apex:outputText>
+                            &nbsp;-&nbsp;
+                            <apex:outputText value="{0,date, MMM dd, YYYY}">
+                                <apex:param value="{!selectedStatusReport.End_Date__c}"/>
+                            </apex:outputText>     
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">Client:</td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left" class="dummyLink">   
+                            <apex:outputField value="{!selectedStatusReport.Project__r.Account_Name__c}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">Project:</td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <a href="{!projectDetailUrl}">{!selectedStatusReport.Project__r.Name}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">Report date:</td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{0,date, MMM dd, YYYY}">
+                                <apex:param value="{!selectedStatusReport.CreatedDate}"/>
+                            </apex:outputText>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">Primary Client Contact:</td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left" class="dummyLink">   
+                            <apex:outputField value="{!selectedStatusReport.Project__r.Primary_Client_Contact_Name__c}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">10K Project Lead:</td>
+                        <td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{!selectedStatusReport.Project_Lead__c}"></apex:outputText>                           
+                        </td>
+                    </tr>
+                    
+                    <!-- <tr>
+                        <td style="font-size:15px;text-align:left;color: #1A2046;" rowspan='3'>
+                            <apex:outputText >10K Advisors, LLC</apex:outputText><br />
+                            14009 Broadripple Pl<br />
+                            Louisville, KY 40299<br />
+                        </td>
+                    </tr> -->
+                </table>
+            </div>
+            <hr/>
+            <!-- Invoice Line Item Section -->
+            <div id="invoicelineitem"> 
+                <apex:outputLabel value="Project Health:"  /> &nbsp;&nbsp;
+                <apex:image url="{!CASE( selectedStatusReport.Project_Health__c, 'Yellow', '/resource/ProjectHealthStatusImages/yellow.png', 
+                    'Red', '/resource/ProjectHealthStatusImages/red.png', '/resource/ProjectHealthStatusImages/green.png' )}" height="15"/> <br/><br/>
+                <apex:outputLabel value="Key items completed last week:"  /><br/>
+                    <apex:outputField value="{!selectedStatusReport.Key_Items_Completed_Last_Week__c}"/><br/>                                   
+                <apex:outputLabel value="Key items scheduled for this week:"  /><br/>
+                    <apex:outputField value="{!selectedStatusReport.Key_Items_Scheduled_for_This_Week__c}"/><br/>
+                <apex:outputLabel value="Questions, Concerns:"  /><br/>
+                    <apex:outputField value="{!selectedStatusReport.Questions_Concerns__c}" /><br/>
+                <apex:outputLabel value="Upcoming holidays/PTO:"  /><br/>
+                    <apex:outputField value="{!selectedStatusReport.Upcoming_Holidays_PTO__c}" /><br/>
+
+                To view detailed time entries for this week, please visit the <a href="https://10k.force.com/10kcommunity/login">10K Community</a>.
+
+
+            </div>            
+            <br /> 
+            <!-- Invoice Line Item Section -->
+            
+            <!-- Billing Details -->
+            <div id="billingdetails">
+                <!-- <p>Billing Details:</p> -->
+            </div>
+        </body>
+    </html>  
+</apex:page>

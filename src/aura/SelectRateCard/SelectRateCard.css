@@ -1,0 +1,32 @@
+.THIS .slds-modal__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important; 
+    max-height: 100% !important;
+}
+.THIS .slds-modal-close{
+    font-size: 20px;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    right: -.01rem;
+}
+.THIS .priceBook {
+    width:100%;
+    height: 5rem;
+}
+.THIS .priceBookSelected {
+    width:100%;
+    height: 5rem;
+    background: green;
+}
+.THIS .slds-section-title_divider, .THIS .slds-section-title--divider {
+    font-size: 1rem;
+    line-height: 1.25;
+    color: rgb(0, 0, 0);
+    text-transform: none;
+    letter-spacing: .0625rem;
+    padding: .50rem .75rem;
+    background: #E0E0E0;;
+}

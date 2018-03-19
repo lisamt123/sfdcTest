@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Requested Expert</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Requested Experts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assigned Allocation --></label>
+        <name>Assigned_Allocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned End Date --></label>
+        <name>Assigned_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned Expert --></label>
+        <name>Assigned_Expert__c</name>
+        <relationshipLabel><!-- Requested Experts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Assigned Hours --></label>
+        <name>Assigned_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned Start Date --></label>
+        <name>Assigned_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assignment --></label>
+        <name>Assignment__c</name>
+        <relationshipLabel><!-- Requested Experts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Skills Required --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity Product ID --></label>
+        <name>Opportunity_Product_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Request --></label>
+        <name>Project_Request__c</name>
+        <relationshipLabel><!-- Requested Experts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Allocation --></label>
+        <name>Requested_Allocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested End Date --></label>
+        <name>Requested_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Hours --></label>
+        <name>Requested_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Rate --></label>
+        <name>Requested_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Start Date --></label>
+        <name>Requested_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Detail --></label>
+        <name>Status_Detail__c</name>
+        <picklistValues>
+            <masterLabel>Client Cancelled</masterLabel>
+            <translation><!-- Client Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Rejected</masterLabel>
+            <translation><!-- Client Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fulfilled</masterLabel>
+            <translation><!-- Fulfilled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partially Fulfilled</masterLabel>
+            <translation><!-- Partially Fulfilled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unfulfilled</masterLabel>
+            <translation><!-- Unfulfilled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Client</masterLabel>
+            <translation><!-- Ready for Client --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Working</masterLabel>
+            <translation><!-- Working --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Requested Expert Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Fulfillment Details --></label>
+            <section>Fulfillment Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Assigned Allocation is required in order to fulfill a Project Request --></errorMessage>
+        <name>Assign_Allocation_Required_If_Fulfilled</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Assigned End Date is required in order to fulfill a Project Request Detail --></errorMessage>
+        <name>Assigned_End_Date_Required_If_Fulfilled</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Assigned Expert is required in order to fulfill a Project Request Detail --></errorMessage>
+        <name>Assigned_Expert_Required_If_Fulfilled</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Assigned Hours must be greater than 1, and in increments of quarter hours. --></errorMessage>
+        <name>Assigned_Hours_Must_Be_In_Quarter_Hours</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Assigned Hours is required in order to fulfill a Project Request Detail --></errorMessage>
+        <name>Assigned_Hours_Required_If_Fulfilled</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Assigned Start Date is required in order to fulfill a Project Request Detail --></errorMessage>
+        <name>Assigned_StartDate_Required_If_Fulfilled</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Requested Hours must be greater than 1, and in increments of quarter hours. --></errorMessage>
+        <name>Requested_Hours_Must_Be_In_Quarter_Hours</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to solicit potential interview days/times when Lead is in validating stage</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Lead Interview Date/Time</name>
+    <style>freeForm</style>
+    <subject>Can we chat about 10K?</subject>
+    <textOnly>Hello {!Lead.FirstName},
+
+Thank you so much for providing us with information that has helped us pre-qualify you for a role as a 10K Expert! The next step in the process is to talk with you about who we are, what we do and what that means for our Experts. And of course, we want to hear all about you!
+
+Using this link, can you please provide us with up to three date/time ranges that work best for you? We&apos;ll need 30-45 minutes. Once we&apos;ve found a mutual agreeable time (hopefully within 24 hours) we will respond with an invitation to talk.
+
+We look forward to speaking with you!
+
+10K Leadership Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

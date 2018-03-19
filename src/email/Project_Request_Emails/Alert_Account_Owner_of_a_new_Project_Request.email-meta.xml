@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Alert Account Owner of a new Project Request</name>
+    <style>freeForm</style>
+    <subject>New Project Request from {!Project_Request__c.Account__c}</subject>
+    <textOnly>Hi {!Project_Request__c.OwnerFirstName},
+
+{!Project_Request__c.Account__c} has submitted a new Project Request:
+
+{!Project_Request__c.Link}
+
+Please follow up with them to initiate the intake and staffing process.</textOnly>
+    <type>html</type>
+</EmailTemplate>

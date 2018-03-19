@@ -1,0 +1,48 @@
+<apex:page showHeader="true" sidebar="true" standardController="Invoice__c" extensions="SendInvoiceController">
+	<apex:form >
+		<apex:actionFunction name="returnBackAF" action="{!returnBack}" />
+        <div class="waitingSearchDiv" id="el_loading" style="background-color: #E6EBF5; height: 100%;opacity:0.85;width:100%;z-index: 9999999;position: fixed;top: 0;left: 0;"> 
+            <div class="waitingHolder" >
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..."/>
+                <span class="waitingDescription" >Please Wait...</span>
+            </div>          
+        </div>   
+	</apex:form>
+	<script>
+		var type = "{!Invoice__c.Type__c}"; 
+		var res; 
+		if(type == 'Draft')
+		{ 
+			res = confirm('Are you sure you\'re ready to finalize this invoice and send it to the client?'); 
+		} 
+		else
+		{ 
+			res = confirm('Are you sure you want to email this invoice to the client?'); 
+		} 
+		if(res)
+		{ 
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SendInvoiceController.sendInvoice}','{!Invoice__c.Id}', handleResult);
+		}
+		else 
+		{
+			returnBackAF();
+		}
+
+		function handleResult(result,event) {
+			if(result == "Updated")
+			{
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SendInvoiceController.sendUpdatedInvoice}','{!Invoice__c.Id}', handleResult1);
+			}
+			else
+			{
+				alert(result);
+				returnBackAF();
+			}
+		}
+
+		function handleResult1(result,event){
+			alert(result);
+			returnBackAF();
+		}
+	</script>
+</apex:page>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Generic follow up email with link to schedule a call.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Delivery - Follow Up</name>
+    <style>freeForm</style>
+    <subject>10K Expert Community - Follow Up Conversation</subject>
+    <textOnly>Hello {!Lead.FirstName},
+
+Thank you again for expressing interest as an Expert with the 10K Community.
+
+Based on your profile, I would like to schedule a call with you where we can talk about the 10K Community and I can learn more about your background and how we can help.
+
+Please let me know a few times that will work for us to talk over the next 2 weeks, or you can visit and schedule a conversation here - calendly.com/jared-10k.
+
+Thanks again and I look forward to speaking with you!
+
+Jared
+
+
+Jared Miller | Vice President, Service Delivery
+813-957-1665
+Jared@10kview.com</textOnly>
+    <type>html</type>
+</EmailTemplate>

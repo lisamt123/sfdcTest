@@ -1,0 +1,217 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" controller="ManageProductController" >
+	<ltng:require styles="{!$Resource.lightningCss}" />
+	<aura:attribute name="recordId"             type="Id" />
+    <aura:attribute name="requestedExpert"      type="Project_Request_Detail__c"    default="{ 'sobjectType' : 'Project_Request_Detail__c' }"  />
+    <aura:attribute name="lastEditedRec"        type="Project_Request_Detail__c"    default="{ 'sobjectType' : 'Project_Request_Detail__c' }"  />
+    <aura:attribute name="workRequest"          type="Project_Request__c"           default="{ 'sobjectType' : 'Project_Request__c' }"  />
+    <aura:attribute name="rolePickValues"       type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="regionPickValues"     type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="statusPickValues"     type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="ratePickValues"       type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="requestedExpertList"  type="ManageProductController.RequestedExpertRateWrap[]" />
+    <aura:attribute name="deleteRecId"          type="String" />
+    <aura:attribute name="isRecChanged"         type="Boolean"                      default="false"  />
+    <aura:attribute name="editComponent"        type="Aura.Component"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- <aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>-->
+    <div class="slds-notify_container slds-notify_container--inline">
+        <div class="slds-modal" aria-hidden="false" role="dialog" aura:id="delModal">
+            <div class="slds-modal__container" style="width:0% !important;">
+                <div class="slds-modal__header">
+                    <h2 class="slds-text-heading--medium">Delete Requested Expert</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--small">
+                    <div>
+                        <p>Are you sure you want to delete this Requested Expert?</p>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelDelete}"/>
+                    <lightning:button variant="brand" label="Delete" onclick="{!c.removeExpert}" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop" aura:id="delBackdrop" />
+    </div>
+    <div class="slds-notify_container slds-notify_container--inline">
+        <div class="slds-modal" aria-hidden="false" role="dialog" aura:id="recChangedModal">
+            <div class="slds-modal__container" style="width:0% !important;">
+                <div class="slds-modal__header">
+                    <h2 class="slds-text-heading--medium">Requested Expert Modified</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--small">
+                    <div>
+                        <p>You have made changes to this record, do you want to save or abandon those changes?</p>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Abandon" onclick="{!c.abandonChanges}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.saveChanges}" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop" aura:id="recChangedBackdrop" />
+    </div>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Manage Requested Experts</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="12">
+                        <h3 class="slds-section-title--divider">Enter New Requested Expert</h3>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <table class="slds-table slds-table--bordered">
+                            <thead>
+                                <tr class="headerRow">
+                                    <th scope="col" ></th>
+                                    <th scope="col" >Role</th>
+                                    <th scope="col" >Region</th>
+                                    <th scope="col" >Status</th>
+                                    <th scope="col" >Requested Hours</th>
+                                    <th scope="col" >Requested Allocation</th>
+                                    <th scope="col" >Rate</th>
+                                    <th scope="col" >Requested Start Date</th>
+                                    <th scope="col" >Requested End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" >
+                                        <lightning:buttonIcon alternativeText="approval" iconName="utility:approval" onclick="{!c.approveRequestedExpert}" />
+                                    </th>
+                                    <td>
+                                        <lightning:select aura:id="role" name="role" label="Role" value="{!v.requestedExpert.Role__c}" class="inputFieldClass"  onchange="{!c.handleRoleChange}" >
+                                            <aura:iteration items="{!v.rolePickValues}" var="item">
+                                                <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                             </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>
+                                        <lightning:select aura:id="region" name="region" label="Region" value="{!v.requestedExpert.Region__c}" class="inputFieldClass" onchange="{!c.handleRoleChange}">
+                                            <aura:iteration items="{!v.regionPickValues}" var="item">
+                                                <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                             </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>
+                                        <lightning:select aura:id="status" name="status" label="Status" value="{!v.requestedExpert.Status__c}" class="inputFieldClass" >
+                                            <aura:iteration items="{!v.statusPickValues}" var="item">
+                                                <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                             </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>
+                                        <lightning:input type="number" name="requestedHours" label="Requested Hours" value="{!v.requestedExpert.Requested_Hours__c}" class="inputFieldClass" />
+                                    </td>
+                                    <td>
+                                        <lightning:input type="number" name="requestedAllocation" label="Requested Allocation" value="{!v.requestedExpert.Requested_Allocation__c}" formatter="percent-fixed" class="inputFieldClass" />
+                                    </td>
+                                    <td style="max-width: 200px;">
+                                        <lightning:select aura:id="rate" name="rate" label="Rate" value="{!v.requestedExpert.Requested_Rate__c}" class="inputFieldClass" >
+                                            <aura:iteration items="{!v.ratePickValues}" var="item">
+                                                <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                             </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>
+                                        <ui:inputDate aura:id="startDate" label="Start Date" value="{!v.requestedExpert.Requested_Start_Date__c}" displayDatePicker="true" />
+                                    </td>
+                                    <td>
+                                        <ui:inputDate aura:id="endDate" label="End Date" value="{!v.requestedExpert.Requested_End_Date__c}" displayDatePicker="true" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <h3 class="slds-section-title--divider">Requested Expert</h3>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <table class="slds-table slds-table--bordered">
+                            <thead>
+                                <tr class="headerRow">
+                                    <th scope="col" ></th>
+                                    <th scope="col" >Role</th>
+                                    <th scope="col" >Region</th>
+                                    <th scope="col" >Status</th>
+                                    <th scope="col" >Requested Hours</th>
+                                    <th scope="col" >Requested Allocation</th>
+                                    <th scope="col" >Rate</th>
+                                    <th scope="col" >Requested Start Date</th>
+                                    <th scope="col" >Requested End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.requestedExpertList}" var="reWrapp" indexVar="index" >
+                                    <tr>
+                                        <th scope="row" >
+                                            <lightning:buttonIcon alternativeText="delete" iconName="utility:delete" name="{!reWrapp.requestedExpert.Id}" onclick="{!c.deleteRequestedExpert}" accesskey="{!index}" />
+                                            <lightning:buttonIcon alternativeText="edit" iconName="utility:edit" name="{!reWrapp.requestedExpert.Id}" onclick="{!c.editRequestedExpert}" accesskey="{!index}" />
+                                        </th>
+                                        <td>
+                                            <lightning:select aura:id="rrole" name="role" label="Role" value="{!reWrapp.requestedExpert.Role__c}" class="inputFieldClass" disabled="true" >
+                                                <aura:iteration items="{!v.rolePickValues}" var="item">
+                                                    <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                                 </aura:iteration>
+                                            </lightning:select>
+                                        </td>
+                                        <td>
+                                            <lightning:select aura:id="rregion" name="region" label="Region" value="{!reWrapp.requestedExpert.Region__c}" class="inputFieldClass" disabled="true">
+                                                <aura:iteration items="{!v.regionPickValues}" var="item">
+                                                    <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                                 </aura:iteration>
+                                            </lightning:select>
+                                        </td>
+                                        <td>
+                                            <lightning:select aura:id="rstatus" name="status" label="Status" value="{!reWrapp.requestedExpert.Status__c}" class="inputFieldClass" disabled="true">
+                                                <aura:iteration items="{!v.statusPickValues}" var="item">
+                                                    <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                                 </aura:iteration>
+                                            </lightning:select>
+                                        </td>
+                                        <td>
+                                            <lightning:input type="number" name="requestedHours" label="Requested Hours" value="{!reWrapp.requestedExpert.Requested_Hours__c}" class="inputFieldClass" disabled="true"/>
+                                        </td>
+                                        <td>
+                                            <lightning:input type="number" name="requestedAllocation" label="Requested Allocation" value="{!reWrapp.requestedExpert.Requested_Allocation__c}" formatter="percent-fixed" class="inputFieldClass" disabled="true"/>
+                                        </td>
+                                        <td style="max-width: 200px;">
+                                            <lightning:select aura:id="rrate" name="rate" label="Rate" value="{!reWrapp.requestedExpert.Requested_Rate__c}" class="inputFieldClass" disabled="true">
+                                                <aura:iteration items="{!reWrapp.rate}" var="item">
+                                                    <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                                 </aura:iteration>
+                                            </lightning:select>
+                                        </td>
+                                        <td>
+                                            <ui:inputDate aura:id="rstartDate" label="Start Date" value="{!reWrapp.requestedExpert.Requested_Start_Date__c}" displayDatePicker="true" disabled="true"/>
+                                        </td>
+                                        <td>
+                                            <ui:inputDate aura:id="rendDate" label="End Date" value="{!reWrapp.requestedExpert.Requested_End_Date__c}" displayDatePicker="true" disabled="true"/>
+                                        </td>
+                                    </tr>
+                                    <tr aura:id="editMode">
+                                        
+                                    </tr> 
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+           
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="UpdateButton" variant="brand"  label="Save" onclick="{!c.saveOppProduct}"  />
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" variant="neutral"  label="Cancel"/>
+            </footer>
+        </div>
+    </section>
+</aura:component>

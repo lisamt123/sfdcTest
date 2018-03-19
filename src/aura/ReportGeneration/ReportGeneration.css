@@ -1,0 +1,67 @@
+.THIS .projectName 
+{
+    /*cursor: pointer;*/
+    background: #efefef;
+    font-weight: bold;
+}
+.THIS .assignmentName
+{
+	/*cursor: pointer;*/
+    background: #e4dada;
+	font-weight: bold;
+}
+.THIS label
+{
+	color: black !important;
+}
+.THIS input
+{
+	color: black !important;
+}
+.THIS select
+{
+	color: black !important;
+    border: 1px solid #d4d4d4;
+    border-radius: .25rem;
+    width: 100%;
+    padding: 0 1rem 0 .75rem;
+    min-height: calc(2.125rem + 2px);
+}
+.THIS button
+{
+    color: black !important;
+    border-radius: .25rem !important;
+    min-height: calc(2.125rem + 2px);
+    margin-top: 19px;
+}
+.THIS a
+{
+    color: black !important;
+}
+.THIS .slds-cell-wrap
+{
+    white-space: pre-line;
+}
+.THIS  .hideLoader{
+    
+    display: none;
+}
+.THIS .uiSpinner.spinner{
+    z-index:9999;
+    float: right;
+    position: fixed;
+    left: 47%;
+    text-align: left;
+    top:25%;
+}
+
+.THIS  .buttonCls{
+    float: right;
+    margin-top: auto;
+}
+.THIS  .footerCls{
+    height: 7%;
+}
+.THIS  .titleCls{
+    float: left;
+}

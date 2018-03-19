@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Event template" >
+	<aura:attribute name="notifyid" type="String" required="false" description="notifyId." />
+    <aura:attribute name="err" type="String" required="false" description="The error." />
+    <aura:attribute name="isSetTime" type="Boolean" required="false" description="isSetTime." />
+    <aura:attribute name="type" type="String" required="false" description="The type." />
+</aura:event>

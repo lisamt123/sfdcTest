@@ -1,0 +1,169 @@
+<apex:page standardController="Account" extensions="InvoiceBarChartController" showHeader="true" sidebar="true">
+	<apex:includeScript value="{!$Resource.jqueryLatest}"/>
+	<apex:includeScript value="{!$Resource.ChartJS}"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<style type="text/css">
+		@media only screen and (max-width: 599px) and (min-width: 0px)  {
+			.chartdiv
+			{
+			    border-style: solid;
+			    border-color: gainsboro;
+			    height: 220px;
+			    width: 280px;
+			    margin-left: 24%;
+			    border-width: thin;
+			}
+		}
+		@media only screen and (max-width: 785px) and (min-width: 600px)  {
+			.chartdiv
+			{
+			    border-style: solid;
+			    border-color: gainsboro;
+			    height: 220px;
+			    width: 280px;
+			    margin-left: 16%;
+			    border-width: thin;
+			}
+		}
+		@media only screen and (min-width: 786px)  {
+			.chartdiv
+			{
+			    border-style: solid;
+			    border-color: gainsboro;
+			    height: 220px;
+			    width: 280px;
+			    margin-left: 8%;
+			    border-width: thin;
+			}
+		}
+		.chartdivslds
+        {
+            border-style: solid;
+            border-color: gainsboro;
+            border-width: thin;
+            border-radius: 10px;
+        }
+		.charthead
+		{
+			background-color: gainsboro;
+		    height: 13%;
+		    text-align: center;
+		    line-height: 2.5;
+		    margin-bottom: 2%;
+		}
+		
+	</style>
+	<center>
+		<apex:outputPanel styleClass="chartdiv" layout="block" rendered="{!!isLightningExperience}">
+			<div class="charthead"><b>Invoice Amount by Year</b></div>
+			<apex:chart data="{!yearData}" height="210" width="100%">
+			    <apex:axis type="Numeric" position="left" title="Total Amount (USD)" grid="true"
+			        fields="invoiceAmount" dashSize="2">
+			        <apex:chartLabel />
+			    </apex:axis>
+			    <apex:axis type="Category" position="bottom" fields="year" title="Years">
+			        <apex:chartLabel rotate="315"/>
+			    </apex:axis>
+			    <apex:barSeries orientation="vertical" axis="left" stacked="true"
+			        xField="year" yField="invoiceAmount" title="Amount" tips="false">
+			        <apex:chartTips height="26" width="100" trackMouse="true" valueField="invoiceAmount"/>
+			    </apex:barSeries>
+			</apex:chart>
+		</apex:outputPanel>
+		<apex:outputPanel styleClass="chartdivslds" style="margin-top: -10px;" layout="block" rendered="{!isLightningExperience}">
+	        <div style="width: 100%;">
+            	<canvas id="barchart" height="260" width="575" style="padding: 10px;"></canvas>
+            </div>
+	    </apex:outputPanel>
+	</center>
+	<script>
+        var yearNameArray = [];
+        var amountArray = [];
+        var yearDataList = JSON.parse('{!yearDataWrapperString}');
+        for(var index in yearDataList)
+        {
+            if(index < yearDataList.length)
+            {
+                yearNameArray.push(yearDataList[index].year);
+                amountArray.push(yearDataList[index].invoiceAmount);
+            }
+        }
+        var barChartData = {
+            labels: yearNameArray,
+            datasets: [{
+                backgroundColor: '#00A1E0',
+                data: amountArray
+            }]
+
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("barchart").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    responsiveAnimationDuration: 500,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                       mode: 'index',
+                       displayColors: false,
+                       label: 'mylabel',
+                       callbacks: {
+                           label: function(tooltipItem, data) {
+                               return '$' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }, },
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function(label, index, labels) {
+                                    label = label.toString();
+                                    label = label.split(/(?=(?:...)*$)/);
+                                    label = label.join(',');
+                                    return '$' + label;
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Total Amount',
+                                fontStyle : 'bold'
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Years',
+                                fontStyle : 'bold'
+                            }
+                        }]
+                    }
+                }
+            });
+
+        };
+    </script>
+	<script type="text/javascript">
+	    var $j = jQuery.noConflict();
+
+	    SfdcApp.Visualforce.chart.VFChartMgrInst.afterMethod('load', function()
+	    {
+	        var xAxis = $j( ".vf-surface");
+	        var allTexts = xAxis[0].getElementsByTagName('svg')[0].getElementsByTagName('text');
+	        for(var i=0; i<allTexts.length; i++){
+        		allTexts[i].style.fontSize = '11px';
+        		var textval = parseInt(allTexts[i].getElementsByTagName('tspan')[0].innerHTML);
+        		var attrVal = allTexts[i].getAttribute('transform');
+                if (!(isNaN(textval)) && attrVal === 'matrix(1,0,0,1,0,0)') {
+                    allTexts[i].getElementsByTagName('tspan')[0].innerHTML = '$'+textval.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                }
+                if(allTexts[i].getElementsByTagName('tspan')[0].innerHTML === 'Years') {
+                	allTexts[i].getElementsByTagName('tspan')[0].setAttribute("dy", "-10");
+                }
+	        }
+	    });
+	</script>
+</apex:page>

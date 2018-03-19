@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Announcing 2017 DF 10K Inaugural Event</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>DF 2017 Save the Date</name>
+    <style>freeForm</style>
+    <subject>SAVE THE DATE! Inaugural 10K Dreamforce Kick-off Event</subject>
+    <textOnly>Hi {!CampaignMember.FirstName}!
+
+We&apos;d like to invite you to start your Dreamforce 2017 off with a bang at the inaugural 10K Dreamforce kick-off party. We are hosting an exclusive event that will include wine, cocktails, and appetizers as well as a very limited tasting of a number of rare bourbons from the 1950s to the 1990s that you won&apos;t want to miss! This event is limited to 10K clients and experts and will be a great opportunity to interact with 10K community members from around the world.
+
+Register for 10K Dreamforce Kick-off Party
+
+We will be mingling at a secret (for now) location in San Francisco on Monday, November 6th from 6:30 - 9:30 PM. We are trying our best to ensure we give all invitees an opportunity to taste from our selection of rare bourbons, so please let us know if you&apos;ll be able to attend so that we can accommodate accordingly. There will be more details to come as Dreamforce approaches.
+
+Thank you for your continued support, and we hope to see you at Dreamforce!</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,71 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="TimecardGridController" access="global" >
+	
+    <!--Reuqired Resources-->
+    <ltng:require scripts="/resource/Resources/Resources/js/jquery-1.11.3.min.js" afterScriptsLoaded="{!c.jsLoaded}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    <aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/>
+    <aura:method name="setOutput" action="{!c.setOutput}" access="PUBLIC"/> 
+    <!--Attributes-->
+    <aura:attribute name="toDayDate" type="Date" access="global"/>
+    <aura:attribute name="selDate" type="String" default="" access="global"/>
+    <aura:attribute name="AssignmentLst" type="TimecardGridController.AssigAndTimeWrapper[]" access="global"/>
+    <aura:attribute name="weekLst" type="TimecardGridController.weekWrapper[]" access="global"/>
+    
+    <!--Section Header-->
+    <div class="slds">
+        <div class="slds-page-header" role="banner" style="background-color:white">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:event" size="large" variant="inverse-bare" alternativeText="event"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title--caps slds-line-height--reset">Time Entries</p>
+                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">Manage Time Entries</h1>
+                        </div>
+                    </div>
+                </div>
+                
+            </div> 
+        </div>
+        <div class="slds-grid slds-grid--align-end" style="padding:10px">
+            <div class="slds-col--padded slds-form--inline">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="date">Week Ending</label>
+                    <div class="slds-form-element__control" onclick="{!c.movePrev}">
+                        <button class="slds-button slds-button--icon-more grey-back" aria-haspopup="true" >
+                            <lightning:icon iconName="utility:chevronleft" size="small" variant="inverse-bare" alternativeText="chevronleft"></lightning:icon>
+                            <span class="slds-assistive-text">Move Previous</span>
+                        </button>
+                    </div>
+                    <div class="slds-form-element__control">
+                        <ui:inputdateTime aura:id="date" 
+                                          class="slds-input"
+                                          displayDatePicker="true"
+                                          select="{!c.setOutput}"
+                                          change="{!c.mouseOver}"/>
+                    </div>
+                    <div class="slds-form-element__control" onclick="{!c.moveNext}">
+                        <button class="slds-button slds-button--icon-more grey-back" aria-haspopup="true">
+                            <lightning:icon iconName="utility:chevronright" size="small" variant="inverse-bare" alternativeText="chevronleft"></lightning:icon>
+                            <span class="slds-assistive-text">Move Next</span>
+                        </button>
+                    </div>&nbsp;&nbsp;&nbsp;
+                    <div class="slds-form-element__control" onclick="{!c.onToday}">
+                        <button class="slds-button slds-button--icon-more grey-back" aria-haspopup="true">TODAY</button>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.selDate != ''}">
+            <aura:if isTrue="{!v.selDate != null}">
+                <aura:if isTrue="{!v.selDate != undefined}">
+                	<c:TimeEntryGrid theDate="{!v.selDate}" aura:id="cmp"/>
+                </aura:if>
+            </aura:if>
+        </aura:if>
+    </div>
+</aura:component>

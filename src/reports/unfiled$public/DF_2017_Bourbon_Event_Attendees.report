@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <field>EMAIL</field>
+    </columns>
+    <description>Use for making list and identify gift bag distribution</description>
+    <filter>
+        <criteriaItems>
+            <column>MEMBER_STATUS</column>
+            <operator>equals</operator>
+            <value>Attending</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>DF 2017 Bourbon Event Attendees</name>
+    <params>
+        <name>scopeid</name>
+        <value>70136000000WFLg</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CampaignCalldown</reportType>
+    <showDetails>true</showDetails>
+    <sortColumn>FIRST_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+</Report>

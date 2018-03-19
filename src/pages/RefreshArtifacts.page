@@ -1,0 +1,53 @@
+<apex:page standardController="Connection__c" extensions="RefreshArtifactsController" showHeader="true" sidebar="true">
+	<style>
+        .custPopup{
+            background-color: white;
+            border-width: 0px;
+            border-radius:10px;
+            z-index: 9999;
+            left: 50%;
+            padding:20px;
+            position: absolute; 
+            margin-left: -100px; top:40%;
+       }
+       .popupBackground{
+            background-color:black;
+            opacity: 0.30;
+            filter: alpha(opacity = 30);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+       }
+    </style>
+    <apex:form >
+        <apex:actionFunction name="refreshArtifactsAF" action="{!refreshArtifacts}" oncomplete="validateResult('{!responseMessage}');" />
+        <apex:actionFunction name="redirectBackToConnectionAF" action="{!redirectBackToConnection}" />
+        <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block"/>
+            <apex:outputPanel styleClass="custPopup" layout="block">
+                <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    <script>
+        window.onload = function() {
+            if({!Connection__c.Created_On_Heroku__c} && '{!Connection__c.Status__c}' == 'Active')
+                refreshArtifactsAF();
+            else {
+                alert('Please authorize the connection before refreshing artifacts.');
+                redirectBackToConnectionAF();
+            }
+        }
+        validateResult = function(message) {
+        	if(message != null && message != '' && message != 'Success')
+        		alert(message);
+        	if(message == 'Success') {
+        		alert('Request to refresh Artifacts for this connection has been placed successfully.');
+        		redirectBackToConnectionAF();
+        	}
+        }
+    </script>
+</apex:page>

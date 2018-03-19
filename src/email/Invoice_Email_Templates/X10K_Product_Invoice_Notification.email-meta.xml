@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Product Invoice Notification</name>
+    <style>freeForm</style>
+    <subject>10K Advisors DoubleClick for Salesforce Invoice - {!Invoice__c.Billing_Period_Start_Date__c} through {!Invoice__c.Billing_Period_End_Date__c}</subject>
+    <textOnly>Hi {!Invoice__c.Billing_Contact_First_Name__c},
+
+Attached you&apos;ll find the 10K invoice for the DoubleClick for Salesforce product subscription from {!Invoice__c.Billing_Period_Start_Date__c} through {!Invoice__c.Billing_Period_End_Date__c}.
+
+Please don&apos;t hesitate to contact me if you have any questions.
+
+Cheers,
+
+{!User.Name}
+{!User.Title}
+10K Advisors
+{!User.Email}
+{!User.Phone}</textOnly>
+    <type>html</type>
+</EmailTemplate>

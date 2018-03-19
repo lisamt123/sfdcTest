@@ -1,0 +1,141 @@
+<apex:page controller="ExportTimeEntryDataController" showHeader="false" sidebar="false" renderas="pdf" applyHtmlTag="false" applyBodyTag="false">
+<html>
+<head>
+    <style>
+    	@page {
+			size:landscape;
+		} 
+        html {
+            font-family: "Salesforce Sans", Arial, sans-serif;
+        }
+    	table {
+    		width:100%;
+            font-size: 75%;
+    	}
+    	.projectName {
+		    cursor: pointer;
+		    background: #efefef;
+		    font-weight: bold;
+		}
+		.assignmentName {
+			background: #e4dada;
+			font-weight: bold;
+		}
+		.headerRow {
+			background: #cadfe0;
+		}
+        .headerRow th {
+            min-width: 110px;
+        }
+        .labelCol {
+            padding-top: 2px;
+            padding-right: 10px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+            text-align: right;
+            font-size: 91%;
+            font-weight: bold;
+            color: #333;
+            width: 25%;
+        }
+        .dataCol {
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 10px;
+            text-align: left;
+        }
+        .lastCol {
+            text-align: right;
+            min-width: 0 !important;
+        }
+        .slds-cell-wrap {
+            white-space: pre-line;
+        }
+    </style>
+    </head>
+    <div>
+    	<table>
+    		<tr>
+    			<th class="labelCol">
+    				<label>Start Date </label>
+    			</th>
+    			<td class="dataCol">
+    				<output type="text" >{!$CurrentPage.parameters.sDate}</output>
+    			</td>
+    			<th class="labelCol">
+    				<label>End Date </label>
+    			</th>
+    			<td class="dataCol">
+    				<output type="text" >{!$CurrentPage.parameters.eDate}</output>
+    			</td>
+    			<th class="labelCol">
+    				<label>Project </label>
+    			</th>
+    			<td>
+    				<output type="text" >{!$CurrentPage.parameters.project}</output>
+    			</td>
+    		</tr>
+    	</table>
+    </div><br/>
+    <table > 
+        <thead>
+            <tr class="headerRow">
+                <th><b>Project</b></th>
+                <th><b>Assignment</b></th>
+                <th><b>Assignment Role</b></th>
+                <th><b>Assignment Type</b></th>
+                <th><b>Expert Name</b></th>
+                <th class="lastCol"><b>Hours</b></th>
+            </tr>
+        </thead>
+        <tbody id="tBodyId">
+            <apex:outputpanel rendered="{!IF(allData.size > 0 , false , true )}">
+                <tr>
+                    <td colspan="7">
+                        No records found.
+                    </td>
+                </tr>
+            </apex:outputpanel>
+            <apex:repeat value="{!allData}" var="all" rendered="{!IF(allData.size > 0 , true , false )}">
+                <tr id="{!all.project.Id}" class="projectName" >
+                    <td>{!all.project.Name} </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="lastCol">{!all.totalTime}</td>
+                </tr>
+                <apex:repeat value="{!all.wrappList}" var="wrapp">
+                    <tr class="assignmentName" >
+                        <td></td>
+                        <td>{!wrapp.assignment.Name} </td>
+                        <td>{!wrapp.assignment.Role__c} </td>
+                        <td>{!wrapp.assignment.Assignment_Type__c}</td>
+                        <td>{!wrapp.assignment.Resource_Name__c}</td>
+                        <td class="lastCol">{!wrapp.totalTime}</td>
+                    </tr>
+                    <tr style="display : {!if($CurrentPage.parameters.Expended == 'true', '' , 'none')};">
+                        <th><b>Time Entry Name</b></th>
+                        <th><b>Story Name</b></th>
+                        <th><b>Task Name</b></th>
+                        <th><b>Date</b></th>
+                        <th><b>Description</b></th>
+                        <th><b>Hours</b></th>
+                     </tr>
+                 	<apex:repeat value="{!wrapp.entryList}" var="assign" rendered="{!$CurrentPage.parameters.Expended}">
+                        <tr>
+                            <td> {!assign.Name}</td>
+                            <td> {!assign.Story__r.Name}</td>
+                            <td> {!assign.Task__r.Name}</td>
+                            <td> <apex:outputField value="{!assign.Date__c}"/></td>
+                            <td class="slds-cell-wrap" > {!assign.Description__c}</td>
+                            <td> {!assign.Hours__c}</td>
+                         </tr>
+                    </apex:repeat>
+                </apex:repeat>
+            </apex:repeat>
+        </tbody>
+    </table>
+    </html>
+</apex:page>

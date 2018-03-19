@@ -1,0 +1,32 @@
+.THIS .required {
+    width : 3%;
+    float: left;
+    padding-right: 10px;
+    color: rgb(194, 57, 52);
+    font-family: Montserrat;
+}
+.THIS .starRequired{
+    color: red;
+    font-size: large;
+}
+.THIS .RoleWidth{
+    width : 18%;
+}
+.THIS .colWidth{
+    width : 16%;
+}
+.THIS .inputFieldWidth{
+    width : 97%
+}
+.THIS .hoursWidth{
+    width:60%;
+}
+.THIS .descWidth{
+    width:94%;
+}
+.THIS .hoursInput{
+    display: none;
+}
+.THIS .hoursInputShow{
+    display: inline;
+}

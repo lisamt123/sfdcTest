@@ -1,0 +1,92 @@
+<aura:component controller="ManageRatesUIController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride" access="global">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"  />
+
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    <aura:attribute name="PriceBookId" type="String" default=""  />
+    <aura:attribute name="PriceBookRec" type="PriceBook2" access="global" default="{'sobjectType':'PriceBook2'}" />
+    <aura:attribute name="PriceBookEntriesList" type="PriceBookEntry[]" access="global"  />
+    <aura:attribute name="AccountTierPickValues" type="ManageRatesUIController.PickListValue[]" access="global"  />
+
+	<div aria-hidden="false" role="dialog" class="slds-modal slds-slide-up-open" style="top:9rem !important;z-index:9993;">
+		<div class="slds-modal__container">
+			<div class="slds-modal__header">
+				<h2 class="slds-text-heading--medium">New Price Book</h2>
+				<aura:if isTrue="{!v.closable}">
+					<lightning:buttonIcon iconName="utility:close" size="large" class="slds-modal__close" variant="bare-inverse" onclick="{!c.defaultCloseAction}" alternativeText="Close window." />
+				</aura:if>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium contentHigh" id="modal-content-id-1">
+				<lightning:layout multipleRows="true"  >
+					<lightning:layoutItem size="6" padding="around-small">
+						<lightning:Input aura:id="priceb1" name="name" label="Name" type="text" value="{!v.PriceBookRec.Name}" required="true" messageWhenValueMissing="Name is required." />
+					</lightning:layoutItem>
+					<lightning:layoutItem size="6" padding="around-small">
+						<ui:outputText value="Active"  />
+						<lightning:Input aura:id="priceb2" name="isActive" label="Active" type="checkbox" checked="{!v.PriceBookRec.IsActive}" value="{!v.PriceBookRec.IsActive}" class="priceActiveCheckClass"/>
+					</lightning:layoutItem>
+					<lightning:layoutItem size="6" padding="around-small">
+						<lightning:select aura:id="priceb3" name="accountTier" label="Account Tier" value="{!v.PriceBookRec.Account_Tier__c}" >
+					        <aura:iteration items="{!v.AccountTierPickValues}" var="item">
+					            <option text="{!item.text}" value="{!item.val}" selected="{!item.isSel}" />
+					         </aura:iteration>
+					    </lightning:select>
+					</lightning:layoutItem>
+					<lightning:layoutItem size="12">
+						<h3 class="slds-section-title--divider">Description</h3>
+					</lightning:layoutItem>
+					<lightning:layoutItem size="12" padding="around-small">
+						<lightning:input type="text" aura:id="priceb4" name="desc" label="Description" value="{!v.PriceBookRec.Description}" messageWhenValueMissing="Description is required."/>
+					</lightning:layoutItem>
+					<lightning:layoutItem size="12" class="padBot" >
+						<h3 class="slds-section-title--divider">Products</h3>
+					</lightning:layoutItem>
+				</lightning:layout>
+				<aura:if isTrue="{!v.PriceBookEntriesList.length == 0}">
+					<lightning:card title="No Products Found." class="emptyCart"></lightning:card>
+					<aura:set attribute="else">
+						<div class="slds-table- -header-fixed_container" style="border-top-left-radius: 0rem;border-top-right-radius: 0rem;border-bottom-left-radius: .25rem;border-bottom-right-radius: .25rem;">
+					        <div class="slds-scrollable_y" style="height:100%;background: white;">
+							    <table class="slds-table slds-table_bordered slds-table- -header-fixed" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+							    	<thead>
+							    		<tr class="slds-text-title_caps" style="height:2rem;">
+							    			<th scope="col" style="width:45%;">
+							    				<div class="slds-truncate slds-cell-fixed" title="Product Name">Product Name</div>
+							    			</th>
+							    			<th scope="col" style="width:45%;">
+							    				<div class="slds-truncate slds-cell-fixed" title="List Price">List Price</div>
+							    			</th>
+							    			<th scope="col" style="width:10%;">
+							    				<div class="slds-truncate slds-cell-fixed"  title="Active">Active</div>
+							    			</th>
+							    		</tr>
+							    	</thead>
+							    	<tbody>
+							    		<aura:iteration items="{!v.PriceBookEntriesList}" var="priceBookEnt" indexVar="index"  >
+								    		<tr>
+								    			<th scope="row" data-label="Product Name" style="width:45%;">
+								    				<ui:outputText value="{!priceBookEnt.Product2.Name}"  />
+								    			</th>
+								    			<td data-label="List Price" style="width:45%;">
+								    				<lightning:input type="number" name="ListPrice" label="ListPrice" value="{!priceBookEnt.UnitPrice}" formatter="currency" class="listPriceClass" step="0.01"/>
+								    			</td>
+								    			<td data-label="Active" style="width:10%;">
+								    				<lightning:Input aura:id="prodAct" name="{!index}"  label="Active" type="checkbox" checked="{!priceBookEnt.Product2.IsActive}" value="{!priceBookEnt.Product2.IsActive}" onchange="{!c.changeValue}" class="activeCheckClass" />
+								    			</td>
+								    		</tr>
+							    		</aura:iteration>
+							    	</tbody>
+							    </table>
+							</div>
+						</div>
+					</aura:set>
+				</aura:if>
+			</div>
+			<div class="slds-modal__footer">
+				<lightning:button class="slds-button slds-button_neutral" label="Cancel" onclick="{!c.defaultCloseAction}"/>
+				<lightning:button class="slds-button slds-button_brand" label="Save" onclick="{!c.saveWithProducts}"/>
+			</div>
+		</div>
+	</div>
+	<div class="slds-modal-backdrop slds-modal-backdrop--open" style="z-index:9992;"></div>
+</aura:component>

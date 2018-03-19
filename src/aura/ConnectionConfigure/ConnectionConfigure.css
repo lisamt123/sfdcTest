@@ -1,0 +1,7 @@
+.THIS .slds-modal__content {
+    box-shadow: 0 0px 1px 0 rgba(0, 0, 0, 0.16);
+}
+.THIS .slds-modal__header {
+    background-color: rgb(249, 249, 250);
+    box-shadow: 0 0px 1px 0 rgba(0, 0, 0, 0.16);
+}

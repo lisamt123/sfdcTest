@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>matt@10kview.com</contactEmail>
+    <label>10K Release Management</label>
+    <oauthConfig>
+        <callbackUrl>https://10k--dev.cs68.my.salesforce.com/apex/AuthorizeSalesforceOrg
+https://dev-10k.cs68.force.com/10kcommunity/AuthorizeSalesforceOrg</callbackUrl>
+        <consumerKey>3MVG9U_dUptXGpYJA8.J2FzMC.u0Bmi_LvJmOyNJ17rRtwE_wLDV6CVWbgujippmkg3Wft7036IGDhikEdVLq</consumerKey>
+        <scopes>Api</scopes>
+        <scopes>RefreshToken</scopes>
+    </oauthConfig>
+</ConnectedApp>

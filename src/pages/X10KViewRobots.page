@@ -1,0 +1,7 @@
+<apex:page contentType="text/plain" showHeader="false">
+	User-agent: *
+	Disallow: /css/
+	Disallow: /fonts/
+	Disallow: /js/
+	Disallow: /js/font-awesome-4.6.3
+</apex:page>

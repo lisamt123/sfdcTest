@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Learning__c$Name</field>
+    </columns>
+    <columns>
+        <field>Learning__c.Quizzes__r$Name</field>
+    </columns>
+    <columns>
+        <field>Learning__c.Quizzes__r.Question_Lines__r$Name</field>
+    </columns>
+    <columns>
+        <field>Learning__c.Quizzes__r.Question_Lines__r$Id</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Quiz with Question Lines</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Learnings_with_Quizzes_with_Question_Lines__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Learning__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

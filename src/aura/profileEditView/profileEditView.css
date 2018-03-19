@@ -1,0 +1,27 @@
+.THIS .slds-input
+{
+    margin-bottom: 10px;
+}
+.THIS  .outerDiv
+{
+    margin-left: 5%;
+}
+.THIS .slds-form-element__label 
+{
+    line-height: 1.375;
+    margin-right: 0px !important;
+    margin-bottom: .25rem;
+    font-family: Lato;
+    font-size: 14px;
+    color: #333;
+    display: block;
+    padding-top: 7px;
+}
+.THIS .saveButton
+{
+    background-color: #2574a9;
+    border: none;
+    color: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+}

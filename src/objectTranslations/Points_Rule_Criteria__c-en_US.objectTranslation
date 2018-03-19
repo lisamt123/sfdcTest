@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Points Rule Criteria</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Points Rule Criteria</value>
+    </caseValues>
+    <fields>
+        <label><!-- Field API Name --></label>
+        <name>Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- For Date fields use the format dd/MM/yyyy
+For Date/Time fields use the format dd/MM/yyyy hh:mm:ss, with 24 hour military time --></help>
+        <label><!-- Field Value --></label>
+        <name>Field_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operator --></label>
+        <name>Operator__c</name>
+        <picklistValues>
+            <masterLabel>!=</masterLabel>
+            <translation><!-- != --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&lt;</masterLabel>
+            <translation><!-- &lt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&lt;=</masterLabel>
+            <translation><!-- &lt;= --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>=</masterLabel>
+            <translation><!-- = --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;</masterLabel>
+            <translation><!-- &gt; --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>&gt;=</masterLabel>
+            <translation><!-- &gt;= --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Points Rule --></label>
+        <name>Points_Rule__c</name>
+        <relationshipLabel><!-- Points Rule Criteria --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Points Rule Criteria Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

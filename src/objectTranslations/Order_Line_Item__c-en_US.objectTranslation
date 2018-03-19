@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Line Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Line Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Free Order Line Item --></label>
+        <name>Free_Order_Line_Item__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Order Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quantity Ordered --></label>
+        <name>Quantity_Ordered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Points Redeemed Text --></label>
+        <name>Total_Points_Redeemed_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Points Redeemed --></label>
+        <name>Total_Points_Redeemed__c</name>
+    </fields>
+    <layouts>
+        <layout>Order Line Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

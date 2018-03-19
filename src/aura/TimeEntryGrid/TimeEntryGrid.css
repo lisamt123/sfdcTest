@@ -1,0 +1,84 @@
+.THIS .cell:hover{
+    cursor:pointer;
+}
+.THIS .Boxhide {
+    display: none;
+}
+.THIS .Boxshow { 
+   	display: block;
+}
+.THIS .dateFormat{
+    font-size: 11px;
+    text-transform: capitalize;
+    padding-Top:5px;
+}
+.THIS .lightgrey{
+    
+    background-color : #F6F6F6;
+}
+.THIS .inputWidth{
+    width:120px;    
+}
+.THIS .error {
+    outline: 0;
+    border-color: #ee1515;
+    background-color: white;
+    box-shadow: 0 0 3px #d20000;
+}
+.THIS .typeaheadlist {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #D9E1E4;
+    padding: 0 12px;
+    vertical-align: top;
+    overflow: hidden;
+    cursor: pointer;
+}
+.THIS .typeaheadlist:hover {
+    background-color: #D9E1E4;
+    color: #343C3F;
+}
+.THIS .is-selected {
+    background-color: #009FE3;
+}
+.THIS .is-hidden {
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.THIS .typeahead {
+    width: 100%;
+    padding: 0px;
+    z-index: 9999;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-top: 1px;
+    margin-bottom: -1px;
+    padding-left: 2.5%;
+}
+.THIS .slds-dropdown {
+    max-width: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    max-height: 99px;
+    overflow: auto;
+    margin-bottom: 0;
+}
+.THIS .slds-theme--shade {
+    background-color: #f4f6f9;
+}
+.THIS .slds-box {
+    max-width: 250px;
+}
+@media screen and (max-width: 950px) {
+    .THIS .slds-box {
+        max-width: 200px;
+    }
+}
+@media screen and (max-width: 880px) {
+    .THIS .slds-box {
+        max-width: 150px;
+    }
+}

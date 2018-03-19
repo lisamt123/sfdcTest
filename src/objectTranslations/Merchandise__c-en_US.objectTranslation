@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Merchandise</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Merchandise</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Orders for Sold Out Items --></label>
+        <name>Allow_Orders_for_Sold_Out_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost --></label>
+        <name>Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Sizes --></label>
+        <name>Display_Sizes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Shipping Cost --></label>
+        <name>Estimated_Shipping_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Free Merchandise --></label>
+        <name>Free_Merchandise__c</name>
+        <relationshipLabel><!-- Merchandise --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Omit from Store --></label>
+        <name>Omit_from_Store__c</name>
+    </fields>
+    <fields>
+        <label><!-- Picture --></label>
+        <name>Picture__c</name>
+    </fields>
+    <fields>
+        <label><!-- Point Value --></label>
+        <name>Point_Value__c</name>
+    </fields>
+    <layouts>
+        <layout>Merchandise Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Picture --></label>
+            <section>Picture</section>
+        </sections>
+        <sections>
+            <label><!-- Store Controls --></label>
+            <section>Store Controls</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Free Merchandise should not be omit from store --></errorMessage>
+        <name>Free_Merchandise_Should_Not_Omit</name>
+    </validationRules>
+</CustomObjectTranslation>

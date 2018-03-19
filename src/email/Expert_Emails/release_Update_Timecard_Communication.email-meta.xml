@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce Timecard functionality in the Community</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Release Update: Timecard Communication</name>
+    <style>freeForm</style>
+    <subject>10K Community New Functionality - Timecards!</subject>
+    <textOnly>Hello!
+
+We are very excited to announce that we have created a Timecard entry screen for you to enter your time. This was built to reduce the amount of time it takes to enter your time on a daily basis.
+
+When you now login to the 10K Community, you will notice a Timecard tab:
+
+Click on this tab to access your Timecard.
+
+When you are in your Timecard, you will notice:
+-All your Active Assignments on the left hand side (in blue)
+-The ability to scroll between weeks (in orange)
+-Each cell represents a day where you can add multiple time entries per day (in red)
+
+
+Please feel free to contact me with any feedback or questions!
+
+Jared
+
+
+Jared Miller
+VP, Service Delivery</textOnly>
+    <type>html</type>
+</EmailTemplate>

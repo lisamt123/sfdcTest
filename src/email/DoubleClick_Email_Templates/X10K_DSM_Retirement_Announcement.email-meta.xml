@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K DSM Retirement Announcement</name>
+    <style>none</style>
+    <subject>Re: Google&apos;s Retirement of DSM</subject>
+    <textOnly>Valued 10K Client,
+
+As you have hopefully been made aware, Google has announced that they are halting development on DSM immediately and have set an end of life for the DSM product on 7/31/2019.
+
+If this was a surprise to you, we can relate - it was a surprise to us as well. We had no advance knowledge of this action. Our integration with DFP relies on many DSM features, so we’ve spent the past week determining our path forward with the connector.
+
+Fortunately, we had previously contemplated building our own proposal management system integrated with DFP. This news serves as a catalyst to accelerate the development of a Salesforce-native ad sales proposal application that integrates directly into DFP for order management and ad delivery. Salesforce has many native features that help support this, and we believe we can provide a much better experience than DSM by keeping users within Salesforce when generating their proposals.
+
+Our goals are to:
+
+- Continue to support our current integration between Salesforce and DFP/DSM
+- Release a Salesforce-native alternative to DSM within 12 months
+- Keep the price of the application close to current pricing
+- Build a migration utility that makes the transition seamless
+
+10K intends to have the best solution in the market for Salesforce customers, but we can’t do it without your input. We would love to hear your thoughts about how this transition impacts your business, what an ideal state solution looks like for you, or any other feedback you have. If you would like to discuss specifics about our plans, Matt and/or I would be happy to set up a short meeting.
+
+We will keep you up to date about our progress and direction. If you are interested in learning more about the beta program for the new application, please respond to this email and let us know.
+
+Thank you for your support!
+
+Cheers,
+
+Nick Hamm
+CEO, 10K Advisors
+nick@10Kview.com
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

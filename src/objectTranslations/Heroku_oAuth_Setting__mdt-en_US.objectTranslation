@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Heroku oAuth Setting</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Heroku oAuth Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Call back Url Community --></label>
+        <name>Call_back_Url_Community__c</name>
+    </fields>
+    <fields>
+        <label><!-- Callback URL --></label>
+        <name>Callback_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumer Key --></label>
+        <name>Consumer_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Consumer Secret --></label>
+        <name>Consumer_Secret__c</name>
+    </fields>
+    <fields>
+        <label><!-- Github Community Consumer Key --></label>
+        <name>Github_Community_Consumer_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Github Community Consumer Secret --></label>
+        <name>Github_Community_Consumer_Secret__c</name>
+    </fields>
+    <fields>
+        <label><!-- Github Consumer Key --></label>
+        <name>Github_Consumer_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Github Consumer Secret --></label>
+        <name>Github_Consumer_Secret__c</name>
+    </fields>
+    <fields>
+        <label><!-- Github URL --></label>
+        <name>Github_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Heroku URL --></label>
+        <name>Heroku_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsSandbox --></label>
+        <name>IsSandbox__c</name>
+    </fields>
+    <layouts>
+        <layout>Heroku oAuth Setting Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

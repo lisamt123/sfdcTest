@@ -1,0 +1,871 @@
+<apex:page controller="ProvisionCommunityUserController" action="{!SaveTokens}" tabStyle="Contact" cache="false">
+
+    <apex:includeScript value="{!$Resource.jqueryLatest}"/>
+    
+    <style>
+        .slds-scope .slds-panel__section 
+        {
+          padding: 1rem 0 !important;
+        }
+        
+        .slds-scope .slds-m-bottom--medium 
+        {
+          margin: 1rem !important;
+        }
+        
+        .slds-scope .slds-button--neutral
+        {
+          margin-left: 300px;
+          margin-top: 7px;
+        }
+        .defaultSelectList{
+            width: 60%;
+        
+        }
+        .leftButtonStyle{
+            width: 43%;
+            margin-left: 27%;
+        }
+        .rightImageStyle{
+            width: 2%;
+            margin-top: 1%;
+            margin-bottom: 2%;
+            margin-left: 4%;
+        }
+        .leftImageStyle{
+            width: 2%;
+            margin-left: -2%;
+            margin-right: 3%;
+        }
+        .slds-scope .messageText
+        {
+          color: white !important;
+        }
+        .slds-scope .messageText h4
+        {
+          display: none !important;
+        }
+        .slds-scope .message
+        {
+              background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-size: 64px 64px;
+              background-color: #c23934;
+              margin: 0px !important;
+              border-radius: 0px !important;
+              border: 0px !important;
+        }
+        .slds-scope .confirmM3
+        {
+            background-color: #04844b !important;
+        }
+        .slds-scope .message table tr td:first-child
+        {
+          display: none !important;
+        }
+        .slds-scope .messageText
+        {
+          text-align: center !important;
+        }
+        .slds-scope .lookupInput  a
+        {
+          border: 0px !important;
+          padding: 0px !important;
+          background-color: transparent !important;
+          min-height: 0px !important;
+          width: 24px !important;
+        }
+        .slds-scope td.messageCell {
+            display: block;
+        }
+        .slds-scope ul {
+            text-align: center;
+            color: white !important;
+        }
+       
+    </style>
+    <style>
+        .popUpForDesktop {
+            width: 600px;
+            height: auto;
+        }
+
+        .popUpForMobile {
+            width : 85% !important;
+            height : auto;
+            margin-top : 35px;
+            margin-left : 30px !important;
+        }
+        .popUpclose{ 
+            float: right; 
+            font-size: 21px !important; 
+            font-weight: bold !important;
+            line-height: 1 !important;
+            color: white !important;
+            text-shadow: 0 1px 0 #fff !important;
+            filter: alpha(opacity=20);
+            opacity: .2 !important;
+            -webkit-appearance: none !important;
+            padding: 0 !important;
+            cursor: pointer !important;
+            background: 0 0 !important;
+            border: 0 !important;
+        }
+        .popUpFooter{
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+        #ac-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(76, 85, 106, 0.6);
+            z-index: 999;
+        }
+        .popUPBody{
+            position: relative;
+            padding: 20px;
+            font-size: 13px;
+        }
+        .containerOfPopUP {
+            
+            width: 100%;
+            height: 100%;
+        }
+        .popUpTitle
+        {
+            color: #FFFAFA !important;
+            font-size: 17px;
+        }
+        .popUpHeader 
+        {
+            /* background-color: #5cb85c; */
+            padding: 15px ;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            min-height: 16.43px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .popUp
+        {
+            background-color: #FFFFFF !important;
+            border-radius: 6px !important;
+            webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,.5);
+            border: 1px solid rgba(0,0,0,.2);
+            margin: 0%31%;
+            -webkit-background-clip: padding-box;
+        }
+    </style>
+    
+    <script>
+        function Cancel() {
+            
+            if('{!strContactID}' != null && '{!strContactID}' != '') {
+            
+                var contactID = '{!strContactID}';
+                window.top.location.href ='/'+contactID;
+            }
+        }
+        
+        function showSpinner() {
+                
+            $('.slds-spinner_container').removeClass('slds-hide');
+            $('.slds-spinner_container').addClass('slds-show');    
+            
+            var winWidth = $(document).width();
+            var winHeight = $(document).height();
+            
+            $('.slds-spinner_container').css({ 'width': winWidth,'height': winHeight }); 
+       }
+              
+       function hideSpinner() {    
+           
+           $('.slds-spinner_container').removeClass('slds-show');
+           $('.slds-spinner_container').addClass('slds-hide');    
+       }
+    </script> 
+    
+    <script>
+    
+        function popup(type)
+        {
+            document.getElementById('popUpTitle').innerText  = "Transfer Data and Delete";
+                $("#popUpHeader").css( "background-color" , "#4F99D9" );
+                $('#ac-wrapper').toggle();
+                $("#popup").css( "margin-top" , "0%" );
+                $("#popup").animate({ "margin-top": "+=35px" }, 500);
+            
+        }
+        function checkSeletedUser(fetchId,screenType){
+            var selectedEmail = $('[id$="'+fetchId+'"]').val();
+            if(selectedEmail  != null && selectedEmail != undefined && selectedEmail != ''){
+                doDataTransferDeleteUserAF();
+            }
+            else{
+                if(screenType == 'Lightning'){
+                    document.getElementById('UserMessageLightning').innerHTML = "<span style='color:red;'>Please Select User for the Transfer and Delete functionality.</span></br></br>";   
+                }
+                else{
+                    document.getElementById('UserMessage').innerHTML = "<span style='color:red;'>Please Select User for the Transfer and Delete functionality.</span></br></br>";   
+                }
+            }
+        }
+    </script>
+    
+    <apex:sectionHeader title="Provision User" subtitle="{!strContactFullName}" rendered="{!!isLightningExperience}" />
+    
+    <apex:pagemessages id="messages" rendered="{!!isLightningExperience}"/>
+    
+    <apex:form id="FormId">
+        <apex:actionFunction name="updatePermissionsAF" action="{!savePermission}" reRender="messages,messagesInSLDS" oncomplete="completeSpinner({!isLightningExperience});"/>
+        <apex:actionFunction name="doDataTransferDeleteUserAF" action="{!doDataTransferDeleteUser}" reRender="FormId, messages" status="status" oncomplete="completeSpinner({!isLightningExperience});" />
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.3; z-index: 1000; background:#000">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="/img/loading24.gif" style="vertical-align:middle;"/>
+                    <span>Loading...</span>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <!-- classic view -->
+        <apex:outputPanel id="classicViewPanel" rendered="{!!isLightningExperience}">
+            <apex:pageBlock id="pageBlock1" mode="maindetail">
+            
+                <apex:pageBlock title="Manage 10K Email Access" rendered="{!IF(AND(displayCreateUserButton ==  false, displayDisableButton == false, displayEnableButton == false), true, false)}" mode="edit">
+                    <apex:pageBlockButtons location="top">              
+                        <apex:commandbutton id="connectToGoogle" value="Create oAuth Connection with Google" action="{!AuthorizeToGoogle}" status="status"/>                 
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+                
+                <apex:pageBlock title="Manage 10K Email Address" rendered="{!IF(displayCreateUserButton, true, false)}" mode="edit">
+                    <apex:pageBlockButtons location="top">              
+                        <apex:commandbutton id="createUser" value="Create 10K Email Account" action="{!createUser}" reRender="FormId, messages" status="status"/>        
+                        <apex:commandbutton value="Back to Contact" action="{!performCancel}" oncomplete="Cancel();" status="status"/>      
+                    </apex:pageBlockButtons>
+                    
+                    <apex:outputPanel rendered="{!IF(AND(displayCreateUserButton == true, displayInputEmailSection == true) ,true,false)}">
+                        <apex:pageBlockSection columns="2">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Email" for="theEmailEntered" /> 
+                                <apex:inputText value="{!strInputPrimaryEmailFromUI}" id="theEmailEntered" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:pageBlock>
+                 
+                <apex:pageBlock title="Manage 10K Email Access" rendered="{!IF(OR(AND(displayCreateUserButton == false, displayInputEmailSection == false, displayDisableButton == true),AND(displayCreateUserButton == false, displayInputEmailSection == false, displayEnableButton == true)), true, false)}" mode="edit">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="User's Primary Email :" for="theUserEmail" /> 
+                            <apex:outputText value="{!strUserEmailAddress}" id="theUserEmail"/>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem > 
+                            <apex:outputLabel value="Last Login :" for="theLastLogin" /> 
+                            <apex:outputText value="{!strUserLastLoginDate}" id="theLastLogin"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="top">               
+                        <apex:outputpanel rendered="{!IF(displayEnableButton == true, true, false)}">
+                            <apex:commandbutton id="enableUser" value="Enable" action="{!unSuspendUser}" reRender="FormId, messages" status="status"/> 
+                            <apex:commandbutton value="Back to Contact" action="{!performCancel}" oncomplete="Cancel();" status="status"/>
+                        </apex:outputpanel>
+                        <apex:outputpanel rendered="{!IF(displayDisableButton == true, true, false)}">
+                            <apex:commandbutton id="disableUser" value="Suspend 10K Email Address" action="{!suspendUser}" reRender="FormId, messages" status="status"/> 
+                            <apex:commandbutton id="deleteUser" value="Delete 10K Email Address" onClick="popup('info');" reRender="none"/> 
+                            <apex:commandbutton value="Back to Contact" action="{!performCancel}" oncomplete="Cancel();" status="status"/>
+                        </apex:outputpanel>    
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+
+                <!-- 10K Community User -->
+                <apex:pageBlock id="communityUser" title="Manage 10K Community Access">
+
+                    <apex:outputpanel id="newUser" rendered="{!IF(displayNewUserSection == true, true, false)}">
+
+                        <apex:pageBlockSection columns="2">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="First Name"/>
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                    <apex:inputField value="{!communityUser.FirstName}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:inputField value="{!communityUser.LastName}" />
+                            <apex:inputField value="{!communityUser.Email}" />
+                            <apex:inputField value="{!communityUser.UserName}" />
+                            <apex:pageBlockSectionItem >
+                                User Type
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                    <apex:selectList value="{!selectedUserType}" size="1" id="userTypes" style="width: 173px;height: 20px;">
+                                        <apex:selectOption itemvalue="" itemLabel="--Select--" />
+                                        <apex:selectOptions value="{!userTypes}" />
+                                    </apex:selectList>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:inputField value="{!communityUser.TimeZoneSidKey}" style="width: 173px"/>
+                            <apex:pageBlockSectionItem >
+                                Role Level
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                    <apex:selectList value="{!selectedRoleLevel}" size="1" id="roleLevels1" style="width: 173px;height: 20px;">
+                                        <apex:selectOptions value="{!roleLevels}" />
+                                    </apex:selectList>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:inputField value="{!communityUser.LocaleSidKey}" style="width: 173px"/>
+                        </apex:pageBlockSection>
+
+                    </apex:outputpanel>
+
+                    <apex:outputpanel id="existingUserInfo" rendered="{!IF(displayNewUserSection == false,true,false)}">
+
+                        <apex:pageBlockSection columns="2">
+
+                            <apex:outputField value="{!communityUser.IsActive}" />
+                            <apex:outputField value="{!communityUser.Username}" />
+                            <apex:outputField value="{!communityUser.LastLoginDate}" />
+                            <apex:outputField value="{!communityUser.Email }" />
+
+                        </apex:pageBlockSection>
+
+                    </apex:outputpanel>
+                    <!-- Pop up Classic --->
+                    <div id="ac-wrapper" style="display:none;">
+                        <div class="containerOfPopUP">
+                            <div id="popup" class="popUp popUpForDesktop">
+                                <div id="popUpHeader" class="popUpHeader">
+                                    <div class="bootstrap-dialog-close-button" style="display: block;"><button class="popUpclose" onclick="popup();return false;">×</button></div>
+                                    <div id="popUpTitle" class="popUpTitle ">Panel Title</div>
+                                </div>
+                                <div id="popUPBody" class="popUPBody">
+                                    <div id="UserMessage" class="UserMessage"></div>
+                                    <apex:pageBlockSection columns="2">
+                                        <apex:pageBlockSectionItem >
+                                            Google Users
+                                            <apex:outputPanel styleClass="requiredInput" layout="block">
+                                                <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                <apex:selectList value="{!selectedGoogleUsersCMT}" size="1" id="googleUsersCMTId" style="width: 173px;height: 20px;">
+                                                    <apex:selectOption itemvalue="" itemLabel="--Select--" />
+                                                    <apex:selectOptions value="{!googleUsersCMT}" />
+                                                </apex:selectList>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                    <br/><br/>
+                                    <div id="TransferDataDeleteUserButtons" align="center">             
+                                        <apex:commandButton value="Transfer Data and Delete" onclick="checkSeletedUser('googleUsersCMTId','Classic');" reRender="none"/>
+                                        <apex:commandButton value="Cancel" onclick="popup();" style="margin-left: 15px;" reRender="none"/>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <apex:pageBlockButtons location="top" id="createUpdateUserButtons">             
+                        
+                        <apex:commandButton value="Activate User" id="activateUser" action="{!updateCommunityUser}" status="status" reRender="newUser,communityUser,messages,permissionSetPanel" rendered="{!IF(isUserActive == false && displayNewUserSection == false,true,false)}"/>
+
+                        <apex:commandButton value="Deactivate 10K Community User" id="deactivateUser" action="{!updateCommunityUser}" status="status" reRender="newUser,communityUser,messages,permissionSetPanel" rendered="{!IF(isUserActive == true && displayNewUserSection == false,true,false)}"/>
+
+                        <apex:commandButton value="View User Record" onclick="window.open('/{!communityUser.Id}','_self'); return false;"  rendered="{!IF(displayNewUserSection == false,true,false)}"/>
+
+                        <apex:commandButton value="Save" action="{!createCommunityUser}" status="status" reRender="newUser,communityUser,messages,permissionSetPanel,pageBlock1" rendered="{!IF(displayNewUserSection == true, true, false)}"/>
+
+                    </apex:pageBlockButtons>    
+
+                </apex:pageBlock> 
+                
+    
+                <!---Assign permission set  ---->
+                <apex:outputpanel id="permissionSetPanel" >
+                    <apex:pageBlock id="permissionSet" title="Manage Permission Sets"  rendered="{!IF(AND(displayNewUserSection == false,communityUser.IsActive),true,false)}" >
+                        <apex:pageBlockButtons location="top">
+                           <apex:commandButton reRender="none" onclick="savePermisstion('rightList',{!isLightningExperience}); return false;" value="Update Permission Sets" /> 
+                        </apex:pageBlockButtons>
+                        <apex:outputPanel style="margin-left: 10%" layout="block">
+                            <c:MultiselectPicklist leftLabel="Available Permission Sets"
+                                leftOption="{!allPermisstionSet}"
+                                rightLabel="Users Permission Sets"
+                                rightOption="{!userPermisstionSet}"
+                                size="14"
+                                width="150px">
+                            </c:MultiselectPicklist>
+                        </apex:outputPanel>
+                    </apex:pageBlock>
+                </apex:outputpanel>
+            </apex:pageBlock> 
+        </apex:outputPanel>
+        
+        <!-- lightning view -->
+        <apex:outputPanel id="lightningSLDSViewPanel" rendered="{!isLightningExperience}">
+            <apex:slds />
+            <div class="slds-scope">
+                <apex:pageMessages id="messagesInSLDS" />
+                
+                <div class="slds-container">
+                    <div class="slds-spinner_container slds-hide">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                
+                    <div class="slds-page-header" role="banner">              
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-media--center slds-no-space slds-grow">
+                                    <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #38c393" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                                        <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                                            <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/standard/contact_60.png')}" class="icon " alt="Contact" title="Contact"/>
+                                        </span>
+                                    </div>   
+                                    <div class="slds-media__body">
+                                        <div style="float: left;">
+                                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Manage Rates">Provision User</p>
+                                            <p class="slds-text-body--small page-header__info">{!strContactFullName}</p>
+                                        </div>
+                                        <apex:outputPanel style="float: right;" layout="block" rendered="{!IF(AND(displayCreateUserButton ==  false, displayDisableButton == false, displayEnableButton == false), true, false)}">
+                                            <apex:commandbutton id="connectToGoogle" value="Create oAuth Connection with Google" onclick="authorizeGoogleDrive();showSpinner();" oncomplete="hideSpinner();" styleclass="slds-button slds-button--neutral slds-not-selected" rerender="none"/>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel style="float: right;" layout="block" rendered="{!IF(displayCreateUserButton, true, false)}">
+                                            <apex:commandbutton id="createUserSLDS" value="Create 10K Email Account" action="{!createUser}" onclick="showSpinner();" oncomplete="hideSpinner();" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected"  reRender="FormId, messagesInSLDS" />       
+                                            <apex:commandbutton value="Back to Contact" action="{!performCancel}" onclick="showSpinner();" oncomplete="Cancel(); hideSpinner();" styleclass="slds-button slds-button--neutral slds-not-selected" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel style="float: right;" layout="block" rendered="{!IF(OR(AND(displayCreateUserButton == false, displayDisableButton == true),AND(displayCreateUserButton == false, displayEnableButton == true)), true, false)}">
+                                            <apex:outputpanel layout="block" rendered="{!IF(displayEnableButton == true, true, false)}">
+                                                <apex:commandbutton id="enableUserSLDS" value="Enable" action="{!unSuspendUser}" onclick="showSpinner();" oncomplete="hideSpinner();" reRender="FormId, messagesInSLDS" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected" /> 
+                                                <apex:commandbutton value="Back to Contact" action="{!performCancel}" onclick="showSpinner();" oncomplete="Cancel(); hideSpinner();" styleclass="slds-button slds-button--neutral slds-not-selected" />
+                                            </apex:outputpanel>
+                                            <apex:outputpanel layout="block" rendered="{!IF(displayDisableButton == true, true, false)}">
+                                                <apex:commandbutton id="disableUserSLDS" value="Suspend 10K Email Address" action="{!suspendUser}" onclick="showSpinner();" oncomplete="hideSpinner();" reRender="FormId, messagesInSLDS" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected" /> 
+                                                <apex:commandbutton id="deleteUserSLDS" value="Delete 10K Email Address" onClick="popup('info');" reRender="none" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected"/> 
+                                                <apex:commandbutton value="Back to Contact" action="{!performCancel}" onclick="showSpinner();" oncomplete="Cancel(); hideSpinner();" styleclass="slds-button slds-button--neutral slds-not-selected" />
+                                            </apex:outputpanel>
+                                        </apex:outputPanel>
+                                    </div>             
+                                </div>
+                            </div>      
+                        </div>
+                    </div>
+
+                    <apex:outputPanel rendered="{!IF(AND(displayCreateUserButton ==  false, displayDisableButton == false, displayEnableButton == false), true, false)}">
+                        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+                            <div class="slds-form--stacked slds-grow slds-scrollable--y ">
+                                <apex:outputPanel styleclass="slds-panel__section" style="display:flex" layout="block">
+                                    <h3 class="slds-text-heading--small slds-m-bottom--medium">Manage 10K Email Access</h3>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(displayCreateUserButton, true, false)}">
+                        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+                            <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                                <apex:outputPanel styleclass="slds-panel__section" style="display:flex" layout="block">
+                                    <h3 class="slds-text-heading--small slds-m-bottom--medium">Manage 10K Email Address</h3>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <div id="ac-wrapper" style="display:none;">
+                        <div class="containerOfPopUP">
+                            <div id="popup" class="popUp popUpForDesktop">
+                                <div id="popUpHeader" class="popUpHeader">
+                                    <div class="bootstrap-dialog-close-button" style="display: block;"><button class="popUpclose" onclick="popup();return false;">×</button></div>
+                                    <div id="popUpTitle" class="popUpTitle ">Panel Title</div>
+                                </div>
+                                <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound" aria-labelledby="newaccountform">
+                                    <div class="slds-panel__section">  
+                                        <div id="UserMessageLightning" style="margin-left: 20px; ! important"></div>
+                                        <div class="form-element__group" >  
+                                            <!-- ADD ROW -->  
+                                            <div class="slds-form-element__row" style="margin-left: 20px !important;">  
+                                                <!-- ADD FIELDS -->  
+                                                <label class="slds-form-element__label" for="text-input-05">
+                                                <abbr class="slds-required" title="required">*</abbr>Google Users</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:selectList value="{!selectedGoogleUsersCMT}" size="1" id="googleUsersCMTLightningId" style="width: 173px;height: 20px;">
+                                                        <apex:selectOption itemvalue="" itemLabel="--Select--" />
+                                                        <apex:selectOptions value="{!googleUsersCMT}" />
+                                                    </apex:selectList>
+                                                </div> 
+                                            </div>
+                                            <br/>
+                                            <div style="float: right;">
+                                                <apex:commandButton value="Transfer Data and Delete" onclick="checkSeletedUser('googleUsersCMTLightningId','Lightning');" reRender="none" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected" />
+                                                <apex:commandButton value="Cancel" onclick="showSpinner();popup();" oncomplete="hideSpinner();" style="margin-right: 15px;" reRender="none" styleclass="slds-button slds-button--neutral slds-slds-button-space-left slds-not-selected" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <apex:outputPanel rendered="{!IF(OR(AND(displayCreateUserButton == false, displayDisableButton == true),AND(displayCreateUserButton == false, displayEnableButton == true)), true, false)}">
+                        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+                            <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                                <apex:outputPanel styleclass="slds-panel__section" layout="block">
+                                <div class="slds-form-element slds-size--1-of-1">
+                                    <h3 class="slds-text-heading--small slds-m-bottom--medium">Manage 10K Email Access</h3>
+                                </div>
+                                <div class="slds-form--compound" style="padding-left: 20px;">
+                                <div class="slds-form-element__row">  
+                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 9px;">
+                                        <!-- <label class="slds-form-element__label">User's Primary Email :</label> -->
+                                        <span class="slds-form-element__label" > User's Primary Email :</span>
+                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                            <span class="slds-form-element__static" >{!strUserEmailAddress}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 1px;">
+                                        <!-- <label class="slds-form-element__label">Last Login :</label> -->
+                                        <span class="slds-form-element__label" >Last Login :</span>
+                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                            <span class="slds-form-element__static" >{!strUserLastLoginDate}</span>
+                                        </div>
+                                    </div>
+                                </div></div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <!-- 10K Community User -->
+
+                    <apex:outputPanel id="communityUserLightning">
+
+                        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing" style="margin-top: 10px;">
+    
+                            <div class="slds-page-header">              
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-media--center slds-no-space slds-grow"> 
+                                            <div class="slds-media__body" style="float: left;">
+                                                <p class="slds-page-header__title slds-truncate slds-align-middle">Manage 10K Community Access
+                                                </p>
+                                            </div>
+                                            <apex:outputPanel style="float: right;" rendered="{!IF(displayNewUserSection == true, false, true)}">
+                                                <apex:commandButton value="Activate User" action="{!updateCommunityUser}" reRender="newUser2,existingUser2,messagesInSLDS,permissionSet,permissionSetLightning" rendered="{!IF(isUserActive == false && displayNewUserSection == false,true,false)}" onclick="showSpinner();" oncomplete="hideSpinner();cssChanges();" styleclass="btn slds-button slds-button--neutral slds-not-selected"/>
+    
+                                                <apex:commandButton value="Deactivate 10K Community User" action="{!updateCommunityUser}" reRender="newUser2,existingUser2,messagesInSLDS,permissionSet,permissionSetLightning" rendered="{!IF(isUserActive == true && displayNewUserSection == false,true,false)}" onclick="showSpinner();" oncomplete="hideSpinner();cssChanges();" styleclass="btn slds-button slds-button--neutral slds-not-selected"/>
+        
+                                                <apex:commandButton value="View User Record" onclick="sforce.one.navigateToSObject('{!communityUser.Id}'); return false;"  rendered="{!IF(displayNewUserSection == false,true,false)}" styleclass="btn slds-button slds-button--neutral slds-not-selected"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel style="float: right;" rendered="{!IF(displayNewUserSection == true, true, false)}">
+                                                <apex:commandButton value="Save" action="{!createCommunityUser}" reRender="newUser2,existingUser2,messagesInSLDS,communityUserLightning,permissionSetLightning" rendered="{!IF(displayNewUserSection == true, true, false)}" onclick="showSpinner();" oncomplete="hideSpinner();" styleclass="btn slds-button slds-button--neutral slds-not-selected" style="margin-left: 0px;"/>
+                                            </apex:outputPanel>          
+                                        </div>
+                                    </div>      
+                                </div>
+                            </div>
+                            <apex:outputPanel id="newUser2" >
+                                <apex:outputPanel rendered="{!IF(displayNewUserSection == true, true, false)}">
+    
+                                <div class="slds-form--compound">
+                                    <apex:outputPanel styleclass="slds-panel__section" layout="block">
+                                        
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-01">
+                                                <abbr class="slds-required" title="required">*</abbr>First Name</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField id="text-input-01" value="{!communityUser.FirstName}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-02">
+                                                <abbr class="slds-required" title="required">*</abbr>Last Name</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField id="text-input-02" value="{!communityUser.LastName}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="slds-form-element__row">
+    
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-03">
+                                                <abbr class="slds-required" title="required">*</abbr>Email</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField id="text-input-03" value="{!communityUser.Email}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+    
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-04">
+                                                <abbr class="slds-required" title="required">*</abbr>Username</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField id="text-input-04" value="{!communityUser.Username}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-05">
+                                                <abbr class="slds-required" title="required">*</abbr>User Type</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:selectList value="{!selectedUserType}" size="1" id="userTypes2" styleclass="slds-input">
+                                                        <apex:selectOption itemvalue="" itemLabel="--Select--" />
+                                                        <apex:selectOptions value="{!userTypes}" />
+                                                    </apex:selectList>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" >
+                                                <abbr class="slds-required" title="required">*</abbr>Time Zone</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField value="{!communityUser.TimeZoneSidKey}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" for="text-input-05">
+                                                <abbr class="slds-required" title="required">*</abbr>Role Level</label>
+                                                <div class="slds-form-element__control">
+                                                        <apex:selectList value="{!selectedRoleLevel}" size="1" styleclass="slds-input">
+                                                        <apex:selectOptions value="{!roleLevels}" />
+                                                    </apex:selectList>
+                                              </div>
+                                            </div>
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" >
+                                                <abbr class="slds-required" title="required">*</abbr>Locale</label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField value="{!communityUser.LocaleSidKey}" styleClass="slds-input"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:outputPanel id="existingUser2">
+                                <apex:outputPanel rendered="{!IF(displayNewUserSection == true, false, true)}">
+    
+                                <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+                                    <div class="slds-form--stacked slds-grow slds-scrollable--y ">
+                                        <apex:outputPanel styleclass="slds-panel__section" layout="block">
+    
+                                            <div class="slds-form--compound" style="padding-left: 20px;">
+    
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 9px;">
+                                                        <label class="slds-form-element__label">Active</label>
+                                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                                            <span class="slds-form-element__static"><apex:outputField value="{!communityUser.IsActive}" /></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 1px;">
+                                                        <label class="slds-form-element__label" >Username</label>
+                                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                                            <span class="slds-form-element__static"><apex:outputField value="{!communityUser.Username}" /></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 9px;">
+                                                        <label class="slds-form-element__label">Last Login</label>
+                                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                                            <span class="slds-form-element__static"><apex:outputField value="{!communityUser.LastLoginDate}" /></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element slds-size--1-of-2" style="padding: 1px;">
+                                                        <label class="slds-form-element__label" >Email</label>
+                                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                                            <span class="slds-form-element__static"><apex:outputField value="{!communityUser.Email }" /></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                            </div>
+    
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                                </apex:outputPanel> 
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <!---- Assign Permission set---->
+                    <apex:outputPanel id="permissionSetLightning">
+                        <apex:outputPanel rendered="{!IF(AND(displayNewUserSection == false, communityUser.IsActive),true,false)}">
+                            <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing" style="margin-top: 10px;">
+                                <div class="slds-page-header">              
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-has-flexi-truncate">
+                                            <div class="slds-media slds-media--center slds-no-space slds-grow"> 
+                                                <div class="slds-media__body" style="float: left;">
+                                                    <p class="slds-page-header__title slds-truncate slds-align-middle">Manage Permission Sets
+                                                    </p>
+                                                </div>
+                                                <apex:outputPanel style="float: right;">
+                                                    <button type="button" onclick="savePermisstion('rightList',{!isLightningExperience});" class="slds-button slds-button--neutral" >Update Permission Sets</button>  
+                                                </apex:outputPanel>          
+                                            </div>
+                                        </div>      
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <apex:outputPanel layout="block" >
+                                 <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+                                    <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                                        <apex:outputPanel styleclass="slds-panel__section" >
+                                            <apex:outputPanel layout="block" styleclass="slds-size--1-of-1 slds-medium-size--4-of-6 slds-large-size--4-of-12">
+                                                <c:MultiselectPicklist leftLabel="Available Permission Sets"
+                                                    leftOption="{!allPermisstionSet}"
+                                                    rightLabel="Users Permission Sets"
+                                                    rightOption="{!userPermisstionSet}"
+                                                    size="14"
+                                                    width="150px"
+                                                    isLDS="true" />
+                                            </apex:outputPanel> 
+                                            
+                                        </apex:outputPanel> 
+                                    </div>
+                                </div>
+                            </apex:outputPanel> 
+                            
+                            
+                            
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </div>
+            </div>  
+        </apex:outputPanel>
+        <apex:inputHidden value="{!permissionSets}" id="permissionSets"/>
+    </apex:form>
+
+    <script>
+        var _url ;
+        console.log(window.document.URL);
+        
+        if("{!$User.UITheme == 'Theme4d'}") {
+            //if(window.document.URL.indexOf('code') != -1)
+                //alert('hi');
+        }
+        
+        $( document ).ready(function() {
+            cssChanges();
+        });
+        
+        function selectTest(){
+            setStartEndDates('hiii', 'Got it');
+        }
+        
+        function cssChanges(){
+            $('[id$="rightOptionLightning"]').css({"width": "100%"});
+            $('[id$="leftOptionLightning"]').css({"width": "100%"});
+            
+            $('[id$="rightOptionLightning"] > option').each(function(){
+                $(this).css({"padding": "2%"});   
+            });
+            
+            $('[id$="leftOptionLightning"] > option').each(function(){
+                $(this).css({"padding": "2%"});    
+            });
+        }
+        
+        function authorizeGoogleDrive() 
+        {   
+            var code;
+            var endpoint = window.document.URL.split('?')[0];
+            _url = 'https://accounts.google.com/o/oauth2/v2/auth?'+  
+                    'client_id={!strGoogleClientID}'+
+                    '&response_type=code'+  
+                    '&scope=https://www.googleapis.com/auth/admin.directory.user'+  
+                    '&redirect_uri='+ endpoint +
+                    '&state={!$currentPage.parameters.Id}'+
+                    '&prompt=consent'+  
+                    '&login_hint=jsmith@example.com&'+  
+                    'access_type=offline'; 
+        
+            console.log('_url  : '+_url);
+            var win         =   window.open(_url, "windowname1", 'width=800, height=600');
+            
+            win.onbeforeunload = function() {
+                console.log('href : '+window.location.href);
+                console.log(window.parent.location.href);
+                window.parent.location.reload();
+            } 
+            
+            var pollTimer   =   window.setInterval(function() 
+            { 
+                try 
+                {
+                    console.log('========'+win.document.URL);
+                    if (win.document.URL.indexOf('code') != -1) 
+                    {
+                        window.clearInterval(pollTimer);
+                        var url =   win.document.URL;
+                        code =   gup(url, 'code');
+                        win.opener.location.reload();
+                        win.close();
+                        //windowClose();
+                        console.log('============'+code);
+                     }
+                } 
+                catch(e) 
+                {}
+            }, 400);
+        }
+        function gup(url, name) 
+        {
+            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var regexS = "[\\#&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec( url );
+            if( results == null )
+                return "";
+            else
+                return results[1];
+        }
+        
+        function savePermisstion(selectedId,isLightning){
+            if(isLightning){
+                showSpinner();
+            }
+            else{
+                $('[id$="status.start"] ').show();
+            }
+            var perId = '';
+            //var currentUserId = '{!communityUser.Id}';
+            $('[id$="'+selectedId+'"] > option').each(function(){
+                perId += $(this).prop('value') + '`';
+            });
+            $('[id$="permissionSets"]').val(perId);
+            updatePermissionsAF();
+            //userPermission(currentUserId,perId);
+        }
+
+        function completeSpinner(isLightning){
+            if(isLightning){
+                hideSpinner();
+            }
+            else{
+                $('[id$="status.start"] ').hide();
+            }
+        }
+        
+        
+    </script>
+    
+</apex:page>

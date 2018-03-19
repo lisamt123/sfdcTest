@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Alert ProjectRequestOwner 14 days after LastStatusChangeDate</name>
+    <style>freeForm</style>
+    <subject>Reminder: project request is unfulfilled</subject>
+    <textOnly>Hi {!Project_Request__c.OwnerFullName},
+
+Gentle remainder to notify you regarding the status value which has not been changed for 14 days and its still not closed.
+
+Thanks</textOnly>
+    <type>html</type>
+</EmailTemplate>

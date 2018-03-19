@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Merchandise --></label>
+        <name>Merchandise__c</name>
+        <relationshipLabel><!-- Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quantity On Hand --></label>
+        <name>Quantity_On_Hand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity Redeemed --></label>
+        <name>Quantity_Redeemed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XL</masterLabel>
+            <translation><!-- XL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XXL</masterLabel>
+            <translation><!-- XXL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XXXL</masterLabel>
+            <translation><!-- XXXL --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Quantity --></label>
+        <name>Total_Quantity__c</name>
+    </fields>
+    <layouts>
+        <layout>Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

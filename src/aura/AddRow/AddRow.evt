@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute type="Integer" name="incrementRow" />
+
+</aura:event>

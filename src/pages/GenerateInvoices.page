@@ -1,0 +1,144 @@
+<apex:page showHeader="true" sidebar="true" controller="GenerateInvoicesController" title="Generate Invoices">
+    <apex:form id="invoiceForm">
+        <apex:sectionHeader title="Invoices" subtitle="Manually Generate Invoices" />
+        <apex:pageMessages />
+
+        <apex:pageBlock title="Agreement Details" rendered="{!validRecordType}">
+            <apex:pageBlockSection title="Agreement Details" columns="1" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="agreementName">Agreement Name</apex:outputLabel>
+                    <apex:outputText id="agreementName">{!agreement.Name}</apex:outputText>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!isMonthly}">
+                    <apex:outputLabel for="monthPicklist">Select a Month</apex:outputLabel>
+                    <apex:selectList id="monthPicklist" value="{!selectedMonth}" multiselect="false" size="1">
+                        <apex:actionSupport event="onchange" action="{!fetchProjects}" reRender="invoiceForm" />
+                        <apex:selectOptions value="{!monthOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!!isMonthly}">
+                    <apex:outputLabel for="weeklyPeriodStartDate">Billing Period Start Date</apex:outputLabel>
+                    <apex:outputText value="{0, date, EEEE MMMM d','  yyyy}">
+                        <apex:param value="{!periodStartDate}" /> 
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!!isMonthly}">
+                    <apex:outputLabel for="endDatePicklist">Billing Period End Date</apex:outputLabel>
+                    <apex:selectList id="endDatePicklist" value="{!selectedPeriodEndDate}" multiselect="false" size="1">
+                        <apex:actionSupport event="onchange" action="{!fetchProjects}" reRender="invoiceForm" />
+                        <apex:selectOptions value="{!periodEndDateOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!monthSelected || periodEndDateSelected}">
+                    <apex:outputLabel for="projectPicklist">Select a Project</apex:outputLabel>
+                    <apex:selectList id="projectPicklist" value="{!selectedProject}" multiselect="false" size="1">
+                        <apex:actionSupport event="onchange" action="{!fetchTimeEntryData}" reRender="invoiceForm" />
+                        <apex:selectOptions value="{!projectOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <br/>
+                <br/>Agreement Start Date : {!agreementStartDate}
+                <br/>Earliest Time Entry Date : {!earliestTimeEntryDate}
+                <br/>Earliest Day Of Week : {!earliestDayOfWeek}
+                <br/>Number Of Weeks : {!numberOfWeeks}
+                <br/>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+		<apex:pageBlock title="Assignments With Missing Rates" rendered="{!assignmentsWithoutRates}">
+            <apex:pageBlockTable value="{!assignmentsWithoutValidRates}" var="assignment">
+                <apex:column headerValue="Assignment Number">
+                    <apex:outputLink value="/{!assignment.Id}" target="_blank">{!assignment.Name}</apex:outputLink>
+                </apex:column>
+				<apex:column value="{!assignment.Project__c}" />
+                <apex:column value="{!assignment.Resource__c}" />
+                <apex:column value="{!assignment.Billable__c}" />
+                <apex:column value="{!assignment.Status__c}" />
+                <apex:column value="{!assignment.Role__c}" />
+                <apex:column value="{!assignment.Assignment_Type__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>        
+
+        <apex:pageBlock title="Draft Invoice Details" rendered="{!AND(OR(monthSelected, periodEndDateSelected), projectSelected, NOT(assignmentsWithoutRates))}">
+            <apex:pageBlockButtons location="top" rendered="{!invoiceLineItemList.size > 0}">
+                <apex:commandButton action="{!saveInvoiceAndLineItems}" value="Create Invoice" title="Create Invoice" />
+            </apex:pageBlockButtons>
+
+        	<apex:pageBlockSection title="Invoice Details" columns="2" collapsible="false">
+        		<apex:pageBlockSectionItem >
+        			<apex:outputLabel for="invoiceName">Invoice Name</apex:outputLabel>
+                    <apex:outputText id="invoiceName">{!invoiceWrapper.invoice.Name}</apex:outputText>
+        		</apex:pageBlockSectionItem>
+        		<apex:pageBlockSectionItem >
+        			<apex:outputLabel for="invoiceTotal">Invoice Total</apex:outputLabel>
+        			<apex:outputText id="invoiceTotal" value="{0, Number, Currency}">
+        				<apex:param value="{!invoiceWrapper.invoiceAmount}" />
+        			</apex:outputText>
+        		</apex:pageBlockSectionItem>
+        		<apex:pageBlockSectionItem >
+        			<apex:outputLabel for="periodStartDate">Period Start Date</apex:outputLabel>
+                    <apex:outputField id="periodStartDate" value="{!invoiceWrapper.invoice.Billing_Period_Start_Date__c}" />
+        		</apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="periodStartDate">Date Raised</apex:outputLabel>
+                    <apex:outputField id="periodStartDate" value="{!invoiceWrapper.invoice.Sent_To_Customer_On__c}" />
+                </apex:pageBlockSectionItem>
+        		<apex:pageBlockSectionItem >
+        			<apex:outputLabel for="periodEndDate">Period End Date</apex:outputLabel>
+                    <apex:outputField id="periodEndDate" value="{!invoiceWrapper.invoice.Billing_Period_End_Date__c}" />
+        		</apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="periodEndDate">Due Date</apex:outputLabel>
+                    <apex:outputField id="periodEndDate" value="{!invoiceWrapper.invoice.Due_Date__c}" />
+                </apex:pageBlockSectionItem>
+        	</apex:pageBlockSection>
+        	<apex:pageBlockSection title="Invoice Line Items" columns="1" collapsible="false">
+	        	<apex:pageBlockTable value="{!invoiceLineItemList}" var="lineItem">
+	            	<apex:column value="{!lineItem.Rate__c}" />
+	                <apex:column value="{!lineItem.Hours__c}" />
+	            </apex:pageBlockTable>
+	        </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Time Entry Data" rendered="{!AND(OR(monthSelected, periodEndDateSelected), projectSelected, NOT(assignmentsWithoutRates))}">
+            <apex:pageBlockTable value="{!timeEntryList}" var="timeEntry">
+                <apex:column value="{!timeEntry.Name}" />
+                <apex:column value="{!timeEntry.Assignment__r.Resource__r.Name}" />
+                <apex:column value="{!timeEntry.Assignment__r.Assignment_Type__c}" />
+                <apex:column value="{!timeEntry.Assignment__r.Role__c}" />
+                <apex:column value="{!timeEntry.Date__c}" />
+                <apex:column value="{!timeEntry.Hours__c}" />
+                <apex:column value="{!timeEntry.Assignment__r.Billable__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+
+        <!-- <apex:pageblock title="Available Rates (shown for debugging purposes only)">
+            <apex:pageBlockTable value="{!agreementRateMap}" var="d">
+                <apex:column headerValue="Key">
+                    {!d}
+                </apex:column>
+                <apex:column headerValue="Count">
+                    {!agreementRateMap[d]}
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblock>
+
+        <apex:pageblock title="Actual Calculated Hours by Rate (shown for debugging purposes only)">
+            <apex:pageBlockTable value="{!rateKeyToHoursCount}" var="d">
+                <apex:column headerValue="Key">
+                    {!d}
+                </apex:column>
+                <apex:column headerValue="Count">
+                    {!rateKeyToHoursCount[d]}
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblock> -->
+
+    </apex:form>
+</apex:page>

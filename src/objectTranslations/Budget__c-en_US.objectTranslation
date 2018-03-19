@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Budget</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Budget</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assignment --></label>
+        <name>Assignment__c</name>
+        <relationshipLabel><!-- Budget --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Availability --></label>
+        <name>Availability__c</name>
+        <relationshipLabel><!-- Budget --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Forecasted Cost --></label>
+        <name>Forecasted_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Forecasted Earnings --></label>
+        <name>Forecasted_Earnings__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned Hours --></label>
+        <name>Forecasted_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Worked --></label>
+        <name>Hours_Worked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Week --></label>
+        <name>Week__c</name>
+        <relationshipLabel><!-- Budget --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Budget Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

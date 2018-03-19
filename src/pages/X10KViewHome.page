@@ -1,0 +1,97 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false">
+    <title>10K Advisors</title>
+    <apex:composition template="X10KViewSiteTemplate">
+        <apex:define name="header">
+            <c:X10KViewHeader seletedTab="#home"/>
+        </apex:define>
+        <apex:define name="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 carousel-row">
+          
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4500">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
+    
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="{!URLFOR($Resource.Resources, 'Resources/images/homepage_slide1.jpg')}" alt="Unlock the power of the Salesforce community"/>
+                                    <h1 class="lightshadow">Unlock the power of the Salesforce community</h1>
+                                </div>
+    
+                                <div class="item">
+                                    <img src="{!URLFOR($Resource.Resources, 'Resources/images/homepage_slide2.jpg')}" alt="Move faster than your competition"/>
+                                    <h1 class="lightshadow">Move faster than your competition</h1>
+                                </div>
+                            
+                                <div class="item">
+                                    <img src="{!URLFOR($Resource.Resources, 'Resources/images/homepage_slide3.jpg')}" alt="Take your career to new heights"/>
+                                    <h1 class="darkshadow">Take your career to new heights</h1>
+                                </div>
+                            </div>
+    
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+            <div class="container-fluid">
+                <!--
+                <div class="row text-center quotes" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/10kAdvisors_Logo_Mountain_Background.png')}')">
+                    <div class="col-md-3 col-md-offset-1-5">
+                        <img src="{!URLFOR($Resource.Resources, 'Resources/images/person_1.jpg')}" width="139" height="139" alt=""/>
+                        <div class="quote-container">
+                            <p class="text-left quote-text">“Trailhead is life-changing for many Admins who are looking to get started fast.”</p>
+                            <p class="quote-attribute text-right">Cheryl Feldman<br/>
+                            Manager, Systems Administration, Namely</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{!URLFOR($Resource.Resources, 'Resources/images/person_2.jpg')}" width="139" height="139" alt=""/>
+                        <div class="quote-container">
+                            <p class="text-left quote-text">“I wish there had been something like Trailhead when I started out with the platform 6+ years ago.”</p>
+                            <p class="quote-attribute text-right">Keir Bowden<br/>
+                            Chief Technical Officer, BrightGen</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{!URLFOR($Resource.Resources, 'Resources/images/person_3.jpg')}" width="139" height="139" alt=""/>
+                        <div class="quote-container">
+                            <p class="text-left quote-text">“With Trailhead, I get free training for my team directly from some of Salesforce's own experts.”</p>
+                            <p class="quote-attribute text-right"> Nick Hamm<br/>Managing Partner And CIO, Trekbin</p>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <div class="row expert-partner">
+                    <div class="col-md-6 text-center partner" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/partner_background.jpg')}')">
+                        <a href="/apex/X10KViewPartner" class="btn btn-lg btn-default" role="button">Partner</a>
+                        <p>I want to partner with the 10K community</p>
+                    </div>
+                    <div class="col-md-6 text-center expert" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/expert_background.jpg')}')">
+                        <a href="/apex/X10KViewExpert" class="btn btn-lg btn-default" role="button">Expert</a>
+                        <p>I am a Salesforce expert</p> 
+                    </div>
+                </div>
+            </div>
+        </apex:define>
+        <apex:define name="footer">
+            <c:X10KViewFooter />
+        </apex:define>
+    </apex:composition>
+    <site:googleAnalyticsTracking />
+</apex:page>

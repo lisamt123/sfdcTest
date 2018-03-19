@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Endorsement</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Endorsements</value>
+    </caseValues>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>10K Achievement</masterLabel>
+            <translation><!-- 10K Achievement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10K Community</masterLabel>
+            <translation><!-- 10K Community --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10K Employee</masterLabel>
+            <translation><!-- 10K Employee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Achievement</masterLabel>
+            <translation><!-- External Achievement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Achievement</masterLabel>
+            <translation><!-- Salesforce Achievement --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Endorsed By --></label>
+        <name>Endorsed_By__c</name>
+        <relationshipLabel><!-- Endorsements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Expert Achievement --></label>
+        <name>Expert_Achievement__c</name>
+        <relationshipLabel><!-- Endorsements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Expert Skill --></label>
+        <name>Expert_Skill__c</name>
+        <relationshipLabel><!-- Endorsements --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Endorsement Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

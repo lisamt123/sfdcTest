@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account_Plan__c$Current_FY_Expectation__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account_Plan__c$Revenue_Remaining_to_Target__c</field>
+    </columns>
+    <columns>
+        <field>Account_Plan__c$Easy_Opportunities__c</field>
+    </columns>
+    <columns>
+        <field>Account_Plan__c$Stretch_Opportunities__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account_Plan__c$Year__c</column>
+            <operator>equals</operator>
+            <value>2017</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account_Plan__c$Name</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Account Plans - 2017</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Account_Plans_with_without_Strategies__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account_Plan__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="selectedItem" type="String" default="Trailhead Badges"/>
+    
+    <ui:inputSelect value="{!v.selectedItem}" label="Achievement Type: " class="selectList">
+        <ui:inputSelectOption text="Salesforce Certifications" value="Salesforce Certifications"/>
+        <ui:inputSelectOption text="Trailhead Badges" value="Trailhead Badges"/>
+        <ui:inputSelectOption text="Climb Achievements" value="Climb Achievements"/>
+    </ui:inputSelect>
+    <br/>
+    <aura:if isTrue="{!v.selectedItem == 'Salesforce Certifications'}">
+        <c:CertificationAchievements />
+    </aura:if> 
+    <aura:if isTrue="{!v.selectedItem == 'Trailhead Badges'}">
+        <c:TrailheadBadges />
+    </aura:if>
+    <aura:if isTrue="{!v.selectedItem == 'Climb Achievements'}">
+        <c:ClimbBadges />
+    </aura:if> 
+</aura:component>

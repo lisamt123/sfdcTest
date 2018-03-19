@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <folderShares>
+        <accessLevel>Manage</accessLevel>
+        <sharedTo>matt@10kview.com</sharedTo>
+        <sharedToType>User</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TrekbinTechnologiesCustomerManager</sharedTo>
+        <sharedToType>PortalRole</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TrekbinTechnologiesCustomerUser</sharedTo>
+        <sharedToType>PortalRole</sharedToType>
+    </folderShares>
+    <name>Trekbin Dashboards</name>
+</DashboardFolder>

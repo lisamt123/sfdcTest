@@ -1,0 +1,31 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false">
+	<title>10K Advisors - About</title>
+    <apex:composition template="X10KViewSiteTemplate">
+        <apex:define name="header">
+            <c:X10KViewHeader seletedTab="#about"/>
+        </apex:define>
+        <apex:define name="body">
+			<div class="container-fluid">
+				<div class="row text-left about" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/about_background.jpg')}')">
+					<div class="col-md-8 col-md-offset-2">
+						<button type="button" class="btn btn-lg nohover btn-default">About</button>
+						<h1>A community of Salesforce experts from around the world</h1>
+					</div>
+				</div>
+				<div class="row text-left about-text" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/10kAdvisors_Logo_Mountain_Background.png')}')">
+					<div class="col-md-6 col-md-offset-3">
+						<p>10K Advisors is a community of the top Salesforce experts from around the world delivering innovative solutions to make Salesforce customers more successful.</p>
+						<br/>
+						<p>10K is managed by veteran Salesforce MVPs <a href="https://www.linkedin.com/in/nickhamm" target="_blank" style="text-decoration:underline; color:white;">Nick Hamm</a>, <a href="https://www.linkedin.com/in/beckymwebster" target="_blank" style="text-decoration:underline; color:white;">Becky Webster</a>, and <a href="https://www.linkedin.com/in/matthewlamb" target="_blank" style="text-decoration:underline; color:white;">Matthew Lamb</a>, each having 10+ years experience in the Salesforce ecosystem.</p>
+						<br/>
+						<p>10K Advisors is headquartered in Louisville, Kentucky.</p>
+					</div>
+				</div>
+			</div>
+		</apex:define>
+        <apex:define name="footer">
+            <c:X10KViewFooter />
+        </apex:define>
+    </apex:composition>
+    <site:googleAnalyticsTracking />
+</apex:page>

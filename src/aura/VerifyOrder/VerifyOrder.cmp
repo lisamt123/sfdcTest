@@ -1,0 +1,35 @@
+<aura:component controller="MerchandiseStoreController">
+	<aura:attribute name="allMerchandises" type="Merchandise__c[]"/>
+	<aura:attribute name="CartItems" type="Item__c[]" />
+	<aura:attribute name="CartMerchandises" type="Merchandise__c[]" />
+	<aura:attribute name="totalPoints" type="Integer" default="0"/>
+	<aura:attribute name="RemainingPoints" type="Integer" default="0"/>
+
+	<aura:if isTrue="{!v.CartItems.length == 0}">
+		<lightning:card title="Your cart is empty." class="emptyCart"></lightning:card>
+		<aura:set attribute="else">
+			<lightning:layout multipleRows="true">
+					<aura:iteration var="item" items="{!v.CartItems}" indexVar="index">
+						<aura:iteration items="{!v.CartMerchandises}" var="merchant">
+			        		<aura:if isTrue="{!item.Merchandise__c == merchant.Id}">
+			        			<aura:if isTrue="{!merchant.Free_Merchandise__c != null}">
+			        				<aura:iteration items="{!v.allMerchandises}" var="merchandise">
+							    		<aura:if isTrue="{!merchandise.Id == merchant.Free_Merchandise__c}">
+							    			<lightning:layoutItem padding="around-small" flexibility="no-grow" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12">
+												<c:CartItem freeMerchandises="{!merchandise}" merchant="{!merchant}" item="{!item}" totalPoints="{!v.totalPoints}" RemainingPoints="{!v.RemainingPoints}" CartItems="{!v.CartItems}"/>
+											</lightning:layoutItem>
+										</aura:if>
+									</aura:iteration>
+									<aura:set attribute="else">
+      									<lightning:layoutItem padding="around-small" flexibility="no-grow" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12">
+      										<c:CartItem merchant="{!merchant}" item="{!item}" totalPoints="{!v.totalPoints}" RemainingPoints="{!v.RemainingPoints}" CartItems="{!v.CartItems}"/>
+      									</lightning:layoutItem>
+      								</aura:set>
+								</aura:if>
+							</aura:if>
+						</aura:iteration>
+					</aura:iteration>
+			</lightning:layout>
+		</aura:set>
+	</aura:if>
+</aura:component>

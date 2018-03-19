@@ -1,0 +1,312 @@
+<aura:component access="global" controller="TimecardGridController">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="updateTime" event="c:updateTimeEntry" action="{!c.showModal}"/>
+
+    <aura:method name="refreshData" action="{!c.refresh1}" access="PUBLIC"/> 
+        
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    
+    <!--Spinner-->
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>    
+    <center>
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container"  style="position:fixed !important;">
+              <div class="slds-spinner slds-spinner--large" role="alert" >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+              </div>
+            </div>
+       </aura:if>      
+    </center>
+    
+    <!--Attributes-->
+    <aura:attribute name="source" type="String" access="global"/>
+    <aura:attribute name="ErrorMessge" type="String" access="global"/>
+    <aura:attribute name="activeAssignmentLst" type="TimecardGridController.AssigAndTimeWrapper[]" access="global"/>
+    <aura:attribute name="timeEntryLst" type="TimecardGridController.TimeEntryWrapper[]" access="global"/>
+    <aura:attribute name="CurrentWeek" type="TimecardGridController.weekWrapper[]" access="global"/>  
+    <aura:attribute name="toUpdateTimeEntry" type="Time_Entry__c[]" access="global"/>
+    <aura:attribute name="selectedDay" type="string" default="" access="global"/>
+    <aura:attribute name="selectedProject" type="string" default="" access="global"/>
+    <aura:attribute name="selectedAssig" type="string" default="" access="global"/>
+    <aura:attribute name="theDate" type="String" access="global"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="storyMap" type="Map" default="{label:'', value:''}" access="global"/>
+    <aura:attribute name="storyTaskMap" type="Map" access="global"/>
+    <aura:attribute name="selectedStories" type="String[]"/>
+    <aura:attribute name="selectedTasks" type="String[]"/>
+    <aura:attribute name="hasStories" type="Boolean" default="false" access="global" />
+    <aura:attribute name="isStoryRequired" type="Boolean" default="false" access="global"/>
+    
+    <!--Style-->
+    <style>
+        @media screen and (max-width: 770px) {        
+            .slds-box   {
+                float : Right;
+                width: 50%;
+            }
+        }
+        @media screen and (max-width: 1150px) {
+            .slds-box   {
+                padding-right : 10px !important;
+                padding-left : 10px !important;
+            }
+        }
+        @media screen and (max-width: 1000px) {
+            .slds-table th, .slds-table td  {
+                padding : 2px !important;
+            }
+        }
+        .custPopup{
+            left:50%;
+            top:50%;
+            z-index: 9999;
+            position:fixed;
+        } 
+        .popupBackground{ 
+            background-color:black;
+            opacity: 0.30;
+            filter: alpha(opacity = 30);
+            position:fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9999; 
+        }
+        .slds-modal__container {
+                margin: 0 auto;
+                width: 60%;
+                max-width: 90rem;
+                min-width: 20rem;
+            }      
+    </style>
+    <!--Section Header-->
+    <div class="slds-grid slds-grid--align-center  slds-theme--default" >    
+            <div class="slds-col--padded slds-size--8-of-10 slds-medium-size--8-of-10 slds-large-size--8-of-10" style="width:100% !important;">
+                <table class="slds-table slds-max-medium-table--stacked-horizontal" >
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <aura:iteration items="{!v.CurrentWeek}" var="row" indexVar="i" >                                   
+                                <th scope="col" class="slds-cell-shrink" >
+                                    <div class="slds-box  slds-theme--shade ">
+                                        {!row.Name}
+                                        <br/>
+                                        <ui:outputText value="{!row.formatedDate}" class="dateFormat"/>  &nbsp;
+                                    </div>
+                                </th>                                  
+                            </aura:iteration>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.activeAssignmentLst}" var="asslst" indexVar="rowIndex">
+                            <tr  class="slds-hint-parent">
+                                <td class="slds-cell-shrink cell" data-label="Assignment">
+                                    <div class="slds-box  slds-theme--shade" style="padding:.425rem;font-size:.75rem;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;" title="{!asslst.ass.Project__r.Name  +'&#013;'+ asslst.ass.Role__c}">{!asslst.ass.Project__r.Name} <br/> {!asslst.ass.Role__c}</div>
+                                </td>
+                                <aura:iteration items="{!asslst.TimeEntryList}" var="tymEntry" indexVar="index">
+                                    <td class="slds-cell-shrink cell" data-label="{!tymEntry.dayName}" >
+                                        <div class="{!tymEntry.dayNames}">
+                                            <c:TimeEntryCell tymEntryList="{!tymEntry.tymEnry}" totDayHours="{!tymEntry.totOfTimeEnries}" Day="{!index}"  assignment="{!rowIndex}" isEdit="{!tymEntry.isEdit}" clickedProjectName="{!asslst.ass.Project__r.Name}" clickedProject="{!asslst.ass.Project__c}" isStoryRequired="{!asslst.ass.Project__r.Require_Stories_on_Time_Entries__c}"/> 
+                                        </div>
+                                    </td>                                
+                                </aura:iteration>                           
+                            </tr>
+                        </aura:iteration> 
+                        <tr  class="slds-hint-parent Boxhide" aura:id="totalRaw" >
+                            <td class="slds-cell-shrink cell" data-label="">
+                                <div class="slds-box  slds-theme--shade" style="text-align:center">Total</div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Monday" id="Sunday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totSunday" value="0"/>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Tuesday" id="Monday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totMonday" value="0" />
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Wednesday" id="Tuesday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totTuesday" value="0"/>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Thursday" id="Wednesday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totWednesday" value="0"/>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Friday" id="Thursday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totThursday" value="0"/>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Saturday" id="Friday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center" >
+                                    <ui:outputNumber class="slds-truncate" aura:id="totFriday" value="0"/>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell " data-label="Sunday" id="Saturday" >
+                                <div class="slds-box slds-theme--shade" style="text-align:center">
+                                    <ui:outputNumber class="slds-truncate" aura:id="totSaturday" value="0"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>   
+                
+                <!--Modal Box-->
+                <div role="dialog" aura:id="modalBox" aria-hidden="true"  aria-labelledby="Time Entry" class="slds-modal slds-fade-in-open Boxhide">
+                    <div class="slds-modal__container"> 
+                        <div class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideModal}">                                
+                                <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="header43" class="slds-text-heading--medium">Log Hours for {!v.selectedProject}</h2>
+                        </div>
+                        
+                        <div class="slds-modal__content slds-p-around--small">   
+                            <div class="slds-notify_container Boxhide"  aura:id="errorBox" style="position: inherit;">
+                                <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+                                    <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.closeError}">
+                                        <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                                        <span class="slds-assistive-text" >Close</span>
+                                    </button>
+                                    <span class="slds-assistive-text">Error</span>
+                                    <p>
+                                        <lightning:icon iconName="utility:ban" variant="bare-inverse" alternativeText="Ban" size="small"/>                                
+                                        {!v.ErrorMessge}</p>
+                                </div>
+                            </div>
+                            <table>
+                                <tr style="vertical-align: top; border-bottom: #F6f6f6 solid 2px;padding: 10px; ">
+                                    <tD> 
+                                        <span class="required " style="color: #D32F2F;padding-left:10px;">*&nbsp;</span>
+                                        <label class="slds-form-element__label" for="Hours" >Hours</label>
+                                    </tD>
+                                    <aura:if isTrue="{!v.hasStories}">
+                                        <td>
+                                            <aura:if isTrue="{!v.isStoryRequired}">
+                                                <span class="required " style="color: #D32F2F;padding-left:10px;">*&nbsp;</span>
+                                                <aura:set attribute="else">
+                                                    <span style="padding-left:10px;"></span>
+                                                </aura:set>
+                                            </aura:if>
+                                            <label class="slds-form-element__label" for="Story">Related Work</label>
+                                        </td>
+                                    </aura:if>
+                                    <tD> 
+                                        <span class="required " style="color: #D32F2F;">*&nbsp;</span>
+                                        <label class="slds-form-element__label" for="Description">Description</label>
+                                    </tD>
+ 
+                                </tr>
+                                <aura:iteration items="{!v.toUpdateTimeEntry}" var="tymEntry" indexVar="index">
+                                    <tr style="vertical-align: top; border-bottom: #F6f6f6 solid 2px;padding: 10px;">
+                                        <td style="display:none">{!index+1}</td>  
+                                        <td style="padding: 10px;width:130px">
+                                            <ui:inputText aura:id="TymAssignId" class="Boxhide" value="{!tymEntry.Assignment__c}"/>
+                                            <div class="slds-form-element__control" style="width:130px">
+                                                <ui:inputNumber aura:id="TymHours"
+                                                                class="slds-input inputWidth"
+                                                                value="{!tymEntry.Hours__c}"                                                
+                                                                required="true"/>   
+                                            </div>
+                                            <div style="padding-top : 13% ; padding-left :37%">
+                                                 <lightning:buttonIcon name="{!'removeIndex'+ index}" iconName="utility:close" variant=" border-inverse" onclick="{! c.removeTimeEntry }" alternativeText="Remove" disabled="{!if(index == 0,true,false)}"/>
+                                            </div>
+                                        </td>
+                                        <aura:if isTrue="{!v.hasStories}">
+                                            
+                                            <td style="padding: 10px;width:40%;">
+                                                <div class="slds-form-element" >
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-combobox_container">
+                                                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" >
+                                                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                                    <input type="select" class="slds-input slds-combobox__input InputSelectStory" id="combobox-unique-id-story" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="--None--" readonly="readonly" onclick="{!c.toggleSelectList}"/>
+                                                                    <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                                                                        <lightning:icon iconName="utility:down" variant="bare-inverse" alternativeText="Down" size="x-small" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"/>                                
+                                                                        <span class="slds-assistive-text">Description of icon</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div id="listbox-unique-id" role="listbox">
+                                                                    <input type="text" class="slds-input typeahead slds-hide" id="typeaheadtext" placeholder="SEARCH STORIES" autofocus="autofocus" onkeyup="{!c.typeAhead}"/>
+                                                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                                                                        <li role="presentation" class="typeaheadlist" data-name="--None--" data-val="None" onclick="{!c.selectStory}">--None--</li>
+                                                                        <aura:iteration items="{!v.storyMap}" var="story">
+                                                                            <li role="presentation" class="typeaheadlist" data-name="{!story.recName}" data-val="{!story.recId}" onclick="{!c.selectStory}">{!story.recName}</li>
+                                                                        </aura:iteration>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><br/>
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-combobox_container">
+                                                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" >
+                                                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                                    <input type="select" class="slds-input slds-combobox__input InputSelectTask" id="combobox-unique-id-task" aria-activedescendant="listbox-option-unique-id-01" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="--None--" disabled="true" onclick="{!c.toggleSelectList}"/>
+                                                                    <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                                                                        <lightning:icon iconName="utility:down" variant="bare-inverse" alternativeText="Down" size="x-small" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"/>                                
+                                                                        <span class="slds-assistive-text">Description of icon</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div id="listbox-unique-id" role="listbox">
+                                                                    <input type="text" class="slds-input typeahead slds-hide" placeholder="SEARCH TASKS" autofocus="autofocus" onkeyup="{!c.typeAhead}"/>
+                                                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid InputTaskList" role="presentation">
+                                                                        <li role="presentation" class="typeaheadlist" data-name="--None--" data-val="None" onclick="{!c.selectTask}">--None--</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </aura:if>
+                                        <td style="padding-right: 10px; ">
+                                            <div class="slds-form-element__control" style="padding-top:10px;padding-bottom:10px;">
+                                                <ui:inputTextArea aura:id="TymDescription" 
+                                                                  class="slds-input"
+                                                                  value="{!tymEntry.Description__c}"
+                                                                  rows="2"
+                                                                  required="true"/> 
+                                                <div style="visibility: hidden; position: absolute;">
+                                                    <ui:inputText aura:id="typetxt" 
+                                                                  class="slds-input"
+                                                                  value="{!tymEntry.sobjectType}"
+                                                                  required="true"/> 
+                                                </div>
+                                                
+                                            </div>
+                                        </td>                                       
+                                    </tr>
+                                </aura:iteration>
+                            </table>
+                            <div class="slds-form--inline" style="padding-top:10px;padding-bottom:10px;">
+                                <button class="slds-button slds-button--neutral" onclick="{!c.addNewTimeEntry}">Add Row</button>                                 
+                            </div> 
+                        </div>
+                        <div class="slds-modal__footer">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.hideModal}">Cancel</button>
+                            <lightning:button aura:id="submitButton" variant="brand" label="Submit" onclick="{!c.createTymEntry}"  /> 
+                            <!-- <ui:button aura:id="submitButton" label="Submit" 
+                                       class="slds-button slds-button- -neutral slds-button- -brand"
+                                       labelClass="label"
+                                       press="{!c.createTymEntry}"/> -->
+                        </div> 
+                    </div>
+                </div> 
+                <div class="slds-backdrop slds-backdrop--open Boxhide" aura:id="backdrop"></div> 
+                <!--End Modal-->
+            </div>
+        </div>  
+    
+</aura:component>

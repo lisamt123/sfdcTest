@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <executionUser>matt@10kview.com.dev</executionUser>
+    <friendlyName>Salesforce</friendlyName>
+    <iconUrl>https://login.salesforce.com/icons/salesforce-black.png</iconUrl>
+    <includeOrgIdInIdentifier>true</includeOrgIdInIdentifier>
+    <providerType>Salesforce</providerType>
+    <registrationHandler>CommunitiesSsoHandler</registrationHandler>
+    <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+</AuthProvider>

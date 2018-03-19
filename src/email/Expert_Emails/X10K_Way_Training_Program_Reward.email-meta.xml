@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to announce incentive for completing training by 7/7</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Climb_Letterhead</letterhead>
+    <name>10K Way Training Program Reward</name>
+    <style>freeForm</style>
+    <subject>10K Way Progress</subject>
+    <textOnly>Hello!
+
+Since we launched last week, we’ve had 4 team members earn the 10K Way badge! Congratulations to our early adopters!
+
+I wanted to remind you that we are looking for you to complete the course by July 15 but as an extra incentive, we’re offering a special reward to all who complete the course by July 7!  Don&apos;t miss out!
+
+
+Diane
+
+VP, Client Services</textOnly>
+    <type>html</type>
+</EmailTemplate>

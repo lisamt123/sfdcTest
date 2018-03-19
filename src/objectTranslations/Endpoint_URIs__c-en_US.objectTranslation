@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Endpoint URIs</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Endpoint URIs</value>
+    </caseValues>
+    <fields>
+        <label><!-- ContactId URI Salesforce Certificate --></label>
+        <name>ContactId_URI_Salesforce_Certificate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Limit of Records Sync --></label>
+        <name>Limit_of_Records_Sync__c</name>
+    </fields>
+    <fields>
+        <label><!-- SalesforceCertificates URI --></label>
+        <name>SalesforceCertificates_URI__c</name>
+    </fields>
+    <fields>
+        <label><!-- TrailheadBadges URI Trailhead --></label>
+        <name>TrailheadBadges_URI_Trailhead__c</name>
+    </fields>
+    <fields>
+        <label><!-- 10K Community Landing Page --></label>
+        <name>X10K_Community_Landing_Page__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

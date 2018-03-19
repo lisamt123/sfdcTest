@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Releases</value>
+    </caseValues>
+    <fields>
+        <label><!-- Actual Release Date --></label>
+        <name>Actual_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allow Deletion --></label>
+        <name>Allow_Deletion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Async Result Id --></label>
+        <name>AsyncResultId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Describe Message --></label>
+        <name>CodeScan_Describe_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Status --></label>
+        <name>CodeScan_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Violation</masterLabel>
+            <translation><!-- Violation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Created On Heroku --></label>
+        <name>Created_On_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delete on Heroku --></label>
+        <name>Delete_on_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual Post-Deployment Steps --></label>
+        <name>Manual_Post_Deployment_Steps__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual Pre-Deployment Steps --></label>
+        <name>Manual_Pre_Deployment_Steps__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Releases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scan Running --></label>
+        <name>Scan_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <relationshipLabel><!-- Releases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Target Release Date --></label>
+        <name>Target_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target --></label>
+        <name>Target__c</name>
+        <relationshipLabel><!-- Releases (Target) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Validation Describe Message --></label>
+        <name>Validation_Describe_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Running --></label>
+        <name>Validation_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation Status --></label>
+        <name>Validation_Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canceling</masterLabel>
+            <translation><!-- Canceling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Succeeded</masterLabel>
+            <translation><!-- Succeeded --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Release Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Deploy / Scan Status --></label>
+            <section>Deploy / Scan Status</section>
+        </sections>
+        <sections>
+            <label><!-- Manual Steps --></label>
+            <section>Manual Steps</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Code Quality Scanning --></label>
+        <name>Code_Quality_Scanning</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Clone --></label>
+        <name>Custom_Clone</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Manage Release Artifacts --></label>
+        <name>Manage_Release_Artifacts</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Validate Deployment --></label>
+        <name>Validate_Deployment</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- View Release Metadata --></label>
+        <name>View_Release_Metadata</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Code_Quality_Scanning --></label>
+        <name>Code_Quality_Scanning</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Download_package_xml --></label>
+        <name>Download_package_xml</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Release_Artifacts --></label>
+        <name>Manage_Release_Artifacts</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Validate_Deployment --></label>
+        <name>Validate_Deployment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Release_Metadata --></label>
+        <name>View_Release_Metadata</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to send the initial survey after qualification (Nov. 2017)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>ISV Survey</name>
+    <style>freeForm</style>
+    <subject>10K ISV Enablement Survey</subject>
+    <textOnly>Hello {!Contact.FirstName},
+
+Thank you for your interest in working with 10K! As we discussed, we&apos;re evaluating a select few ISV partners who are interested in building a community of advocates and implementation experts for their products.
+
+Please use this link: https://www.getfeedback.com/r/rrIxwznN?AccountName={!Account.Name} to take a survey that is your first step in the process.
+
+Once the survey is complete, we will continue your onboarding by:
+
+Collecting and reviewing your existing product documentation
+Coordinating a demo of your app
+Reviewing your implementation methodology in more detail
+
+We are excited to be working with you! Please let us know if you have any questions.
+
+10K ISV Enablement</textOnly>
+    <type>html</type>
+</EmailTemplate>

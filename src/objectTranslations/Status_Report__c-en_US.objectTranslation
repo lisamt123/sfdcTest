@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Status Report</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Status Reports</value>
+    </caseValues>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issues / Risks --></label>
+        <name>Issues_Risks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Items Completed Last Week --></label>
+        <name>Key_Items_Completed_Last_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Items Completed This Week --></label>
+        <name>Key_Items_Completed_This_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Items Scheduled for Next Week --></label>
+        <name>Key_Items_Scheduled_for_Next_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Items Scheduled for This Week --></label>
+        <name>Key_Items_Scheduled_for_This_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Name Text --></label>
+        <name>Primary_Contact_Name_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Health Status --></label>
+        <name>Project_Health_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Health --></label>
+        <name>Project_Health__c</name>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Project Lead --></label>
+        <name>Project_Lead__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Name Text --></label>
+        <name>Project_Name_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Status Reports --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Questions / Concerns --></label>
+        <name>Questions_Concerns__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sent to Client On --></label>
+        <name>Sent_to_Client_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Report Name --></label>
+        <name>Status_Report_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Upcoming Holidays / PTO --></label>
+        <name>Upcoming_Holidays_PTO__c</name>
+    </fields>
+    <layouts>
+        <layout>Status Report Layout (External)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Status Report Details --></label>
+            <section>Status Report Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Status Report Layout (Internal)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Hours Report --></label>
+            <section>Hours Report</section>
+        </sections>
+        <sections>
+            <label><!-- Status Report Details --></label>
+            <section>Status Report Details</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Delete --></label>
+        <name>Delete</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The End Date cannot be before the Start Date --></errorMessage>
+        <name>Start_Date_End_Date_Validation</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Send_Status_Report --></label>
+        <name>Send_Status_Report</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Status_Report_PDF --></label>
+        <name>View_Status_Report_PDF</name>
+    </webLinks>
+</CustomObjectTranslation>

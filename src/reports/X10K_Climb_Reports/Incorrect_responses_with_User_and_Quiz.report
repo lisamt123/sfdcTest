@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Question__c$Name</field>
+    </columns>
+    <columns>
+        <field>Question__c.Responses__r$Name</field>
+    </columns>
+    <columns>
+        <field>Question__c$Question_Line__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Question__c.Responses__r$Correct_Response__c</column>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Question__c.Responses__r$User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Question__c$Question_Line__c.Quiz__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Incorrect responses with User and Quiz</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Responses_with_Question_Line_and_Quiz__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Question__c$Question_Line__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Question__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

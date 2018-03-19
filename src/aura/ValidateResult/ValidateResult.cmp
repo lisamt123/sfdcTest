@@ -1,0 +1,173 @@
+<aura:component controller="ValidateDeploymentLightning" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <ltng:require styles="{!$Resource.lightningCss}" />
+    <aura:attribute name="flag" type="Boolean" default="true"/>
+    <aura:attribute name="divHeight" type="String" default="350"/>
+    <aura:attribute name="divWidth" type="String" default=""/>
+    <aura:attribute name="status" type="String" default=""/>
+    <aura:attribute name="testLevel" type="String" default=""/>
+    <aura:attribute name="expand" type="Boolean" default="false"/>
+    <aura:attribute name="testClassesList" type="String[]" />
+    <aura:attribute name="validationIssueList" type="ValidateDeploymentLightning.Log_Issue[]" />
+    <aura:attribute name="metadataWrapperList" type="ValidateDeploymentLightning.MetadataWrapper[]" />
+    <aura:attribute name="validationProgress" type="ValidateDeploymentLightning.ValidationProgress" />
+       
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                    <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Validation/Deployment Result</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-2">
+                <lightning:layout horizontalAlign="start" multipleRows="true"> 
+                    <!-- Table 2 -->
+                    <lightning:layoutItem flexibility="grow" size="4" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="4" >
+                        <table class="slds-table slds-table--bordered" style="table-layout: fixed;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <c:CircularProgress themeAfterThreshold = "{!if(or(v.validationProgress.numberComponentErrors > 0 ,and( v.validationIssueList.length > 0 , v.validationIssueList[0].description != '') ), 'red','green')}"
+                                        themeBeforeThreshold = "{!if(or(v.validationProgress.numberComponentErrors > 0 ,and( v.validationIssueList.length > 0 , v.validationIssueList[0].description != '') ), 'red','green')}"
+                                        totalProgress = "{!v.validationProgress.numberComponentsTotal}" 
+                                        actualProgress = "{!v.validationProgress.numberComponentsDeployed}" 
+                                        Legend = "Deploy Artifacts"  size = "medium"  resultFormat = "Mix" threshold = "0" />
+                                    </td>
+                                    <td>
+                                        <c:CircularProgress themeAfterThreshold  = "{!if(or(v.validationProgress.numberTestErrors > 0 ,and( v.validationIssueList.length > 0 , v.validationIssueList[0].description != '') ), 'red','green')}"
+                                        themeBeforeThreshold = "{!if(or(v.validationProgress.numberTestErrors > 0 ,and( v.validationIssueList.length > 0 , v.validationIssueList[0].description != '') ), 'red','green')}"  
+                                        totalProgress = "{!v.validationProgress.numberTestsTotal}" 
+                                        actualProgress = "{!v.validationProgress.numberTestsCompleted}" 
+                                        Legend = "Run Apex Tests" resultFormat = "Mix" size = "medium" threshold = "0" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Total Artifacts</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentsTotal}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Artifacts Validated/Deployed</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentsDeployed}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Artifacts Failed to Validate/Deploy</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentErrors}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Total Test Classes </th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestsTotal}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Test Classes Succeeded</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestsCompleted}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Test Classes Failed</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestErrors}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Test Level</th>
+                                    <td style="text-align:center;">{!v.testLevel}</td>
+                                </tr>
+                                <aura:if isTrue="{!and(v.testClassesList.length > 0, v.testClassesList[0] != '' )}"  >
+                                    <tr>
+                                        <th style="white-space: initial;">Test classes selected</th>
+                                        <td style="text-align:center;">
+                                            <aura:if isTrue="{!v.expand}">
+                                                <lightning:button onclick="{!c.expandSection}" class="slds-button slds-button_neutral" aura:id="up" label="Hide"/>
+                                                <aura:set attribute="else">
+                                                    <lightning:button onclick="{!c.expandSection}" class="slds-button slds-button_neutral" aura:id="down" label="Show"/>
+                                                </aura:set>
+                                            </aura:if>
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                                <aura:if isTrue="{!v.expand}"  >
+                                    <aura:iteration items="{!v.testClassesList}" var="wrap" indexVar="index">
+                                        <tr>
+                                            <td style="background: #d8d8d8;" colspan="2">{!wrap}</td>
+                                        </tr>                                   
+                                    </aura:iteration>
+                                </aura:if>
+                            </tbody>
+                        </table>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!v.status != 'Succeeded'}"  >
+                        <lightning:layoutItem flexibility="grow" size="8" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="8" >
+                            <table class="slds-table slds-table--bordered fixHeaderDiv2" role="grid" style="{!'table-layout: fixed;width:' + v.divWidth + 'px'}" id="fixHeaderDiv2">
+                                <thead>
+                                   <tr class="headerRow">
+                                        <th style="width:100px;" id="artifactType">Type </th>
+                                        <th id="artifactName">Description </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div id="artifactsListContainer2" class="artifactsListContainer2" style="{!'height:' + v.divHeight + 'px'}">
+                                <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                    <tbody >
+                                        <aura:if isTrue="{!or(v.validationIssueList.length == 0 , and( v.validationIssueList.length == 1 , v.validationIssueList[0].description == ''))}"  >
+                                            <tr>
+                                                <td colspan="2">No violation found.</td>
+                                            </tr>
+                                        
+                                            <aura:set attribute="else" >
+                                                <aura:iteration items="{!v.validationIssueList}" var="wrap">
+                                                    <tr>
+                                                        <td style="width:100px;">{!wrap.type}</td>
+                                                        <td class="wrap" style="white-space: initial">{!wrap.description}</td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </aura:set>
+                                        </aura:if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </lightning:layoutItem>
+                        <aura:set attribute="else"  >  
+                            <lightning:layoutItem flexibility="grow" size="8" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="8" >
+                                <table class="slds-table slds-table--bordered fixHeaderDiv2" role="grid" style="{!'table-layout: fixed;width:' + v.divWidth + 'px'}" id="fixHeaderDiv2">
+                                    <thead>
+                                       <tr class="headerRow">
+                                            <th id="artifactType">Artifact Type </th>
+                                            <th id="artifactName">Artifact Name </th>
+                                            <th id="action">Action </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div id="artifactsListContainer2" class="artifactsListContainer2" style="{!'height:' + v.divHeight + 'px'}">
+                                    <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                        <tbody id="rightTable">
+                                            <aura:if isTrue="{!or(v.metadataWrapperList.length == 0 , and( v.metadataWrapperList.length == 1 , v.metadataWrapperList[0].metadataType == ''))}"  >
+                                                <tr>
+                                                    <td colspan="3">No artifacts found.</td>
+                                                </tr>
+                                            
+                                                <aura:set attribute="else" >
+                                                    <aura:iteration items="{!v.metadataWrapperList}" var="wrapOuter">
+                                                        <aura:iteration items="{!wrapOuter.metadataName}" var="wrap">
+                                                            <tr>
+                                                                <td >{!wrapOuter.metadataType}</td>
+                                                                <td class="wrap" title="{!wrap.name}">{!wrap.name}</td>
+                                                                <td >{!if(wrap.action == 'upsert' , 'Add/Update' , 'Delete')}</td>
+                                                            </tr>
+                                                        </aura:iteration>
+                                                    </aura:iteration>
+                                                </aura:set>
+                                            </aura:if>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </lightning:layoutItem>
+                        </aura:set>
+                    </aura:if>
+                </lightning:layout>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Close"/>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+</aura:component>

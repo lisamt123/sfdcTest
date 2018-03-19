@@ -1,0 +1,182 @@
+<apex:page standardController="Release__c" extensions="CodeReviewController">
+	<apex:includeScript value="{!$Resource.jqueryLatest}"/>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		.outerRow {
+			background: rgba(242, 243, 243, 0.58);
+		}
+		th {
+			background: rgba(193, 193, 193, 0.65);
+		}
+		.popupBackground{
+            background-color:black;
+            opacity: 0.30;
+            filter: alpha(opacity = 30);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+        .custPopup{
+            background-color: white;
+            border-width: 0px;
+            border-radius:10px;
+            z-index: 9999;
+            left: 50%;
+            padding:20px;
+            position: absolute; 
+            margin-left: -100px; top:40%;
+        }
+	</style>
+    <script>
+        function formatDate(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+        }
+    </script>
+	<apex:form >
+		<apex:actionStatus id="status">
+            <apex:facet name="start">
+                <apex:outputPanel id="tstpopup">
+                    <apex:outputPanel styleClass="popupBackground" layout="block"/>
+                    <apex:outputPanel styleClass="custPopup" layout="block">
+                        <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:sectionHeader title="Scan Release Artifacts" subtitle="{!release.Name}"/>
+        <apex:pageMessages />
+        <apex:pageBlock id="block" title="Logs">
+        	<apex:pageBlockButtons >
+        		<apex:outputPanel id="buttonContainer">
+        			<apex:commandButton value="Scan in Progress" disabled="true" rendered="{!release.Scan_Running__c}" reRender="buttonContainer"/>
+        			<apex:commandButton value="Scan" action="{!scanCode}" status="status" rendered="{!!release.Scan_Running__c}" oncomplete="checkStatusAF()" reRender="block" disabled="{!!releaseExists}"/>
+        		</apex:outputPanel>
+        	</apex:pageBlockButtons>
+
+        	 <table class="list">
+            	<thead>
+                	<tr class="headerRow">
+                        <th style="width:10px"></th>
+                		<th style="width:70px">Status</th>
+                		<th style="width:130px">Time</th>
+                		<th>Artifact Type</th>
+                        <th>Artifact Name</th>
+                        <th style="width:70px">Line Number</th>
+                        <th>Error Name</th>
+                	</tr>
+            	</thead>
+            	
+            	<tbody>
+            		<apex:repeat value="{!logsList}" var="log" >
+            			<tr class="dataRow outerRow">
+            				<td>
+            					<img src="{!baseUrl+'/resource/expand'}" height="13" id="{!log.logId}" onclick="toggleRows('{!log.logId}');" style="cursor:pointer;display:{!IF(log.status == 'Violation','','none')}" /> 
+                            </td>
+                            <td>
+            					{!log.status}
+            				</td>
+            				<td>
+                                <span id="span{!log.logId}"></span>
+	                            <script>
+	                                var dateFormatted = formatDate(new Date('{!log.logTime}'));
+	                                document.getElementById('span{!log.logId}').innerHTML =  dateFormatted;
+	                            </script>
+                            </td>
+            				<td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+            			</tr>
+            		</apex:repeat>
+            		<tr class="dataRow innerRow" style="display: {!IF(logsList.size > 0 ,'none','')};">
+						<td colspan="6">No validation log found for this release</td>
+					</tr>
+            	</tbody>
+            </table>
+        </apex:pageBlock>
+        <apex:actionFunction name="checkStatusAF" action="{!releaseScanStatus}" oncomplete="handleResult({!release.Scan_Running__c})" rerender="buttonContainer"/>
+        <apex:actionFunction name="retrieveAgainAF" action="{!retriveReviewLogs}" status="status" rerender="block"/>
+    </apex:form>
+    <script>
+    	window.onload = function() {
+            if({!Release__c.Scan_Running__c})
+                checkStatusAF();
+        }
+
+        handleResult = function(flag)  
+        { 
+            if(flag)
+                checkStatusAF();
+            else {
+                retrieveAgainAF();
+            }
+        }
+
+        toggleRows = function(logId) {
+            var expand;
+            var img         = document.getElementById(logId).src 
+            if (img.includes("expand")) {
+                document.getElementById(logId).src  = img.replace('expand','collapse');
+                expand = true;
+            }
+            else {
+                expand= false;
+                $('.'+logId).remove();
+                document.getElementById(logId).src  = img.replace('collapse','expand');
+            }
+            if(expand) {
+                $('[id$="start"').show();
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.CodeReviewController.scanCodeResult}',logId,function(result,event) {
+                    if (event.status) {  
+                        var retRecords = result;
+                        //console.log(JSON.stringify(result));
+                        retRecords.forEach(function(item,index)
+                        {
+
+                            var btn_clicked = document.getElementById(logId);
+                            var tr_referred = btn_clicked.parentNode.parentNode;
+
+                            var tableRow = document.createElement('tr');
+                            tableRow.setAttribute("class", "dataRow innerRow " + logId);
+
+                            var tableData = document.createElement('td');
+                            tableData.setAttribute("colspan", "3");
+                            tableRow.appendChild(tableData);
+
+                            var tableData1 = document.createElement('td');
+                            tableData1.innerHTML = item.artifactType;
+                            tableRow.appendChild(tableData1);
+
+                            var tableData2 = document.createElement('td');
+                            tableData2.innerHTML = item.artifactName;
+                            tableRow.appendChild(tableData2);
+
+                            var tableData3 = document.createElement('td');
+                            tableData3.innerHTML = item.lineNo;
+                            tableRow.appendChild(tableData3);
+
+                            var tableData4 = document.createElement('td');
+                            tableData4.innerHTML = item.violation;
+                            tableRow.appendChild(tableData4);
+
+                            tr_referred.parentNode.insertBefore(tableRow, tr_referred.nextSibling);
+                        });
+                        $('[id$="start"').hide();
+                    }                
+                });
+            }
+        }
+    </script>
+</apex:page>

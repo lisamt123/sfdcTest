@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <autoResponseRule>
+        <fullName>10K Website Form Submission</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Lead.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Expert</value>
+            </criteriaItems>
+            <senderEmail>delivery@10kview.com</senderEmail>
+            <senderName>10K Delivery</senderName>
+            <template>Lead_Email_Templates/Email_Response_to_Website_Form_Submission</template>
+        </ruleEntry>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Lead.Type__c</field>
+                <operation>equals</operation>
+                <value>Expert,SI / ISV,Customer</value>
+            </criteriaItems>
+            <senderEmail>clients@10kview.com</senderEmail>
+            <senderName>10K Clients</senderName>
+            <template>Lead_Email_Templates/Email_Response_to_Website_Form_Submission</template>
+        </ruleEntry>
+    </autoResponseRule>
+</AutoResponseRules>

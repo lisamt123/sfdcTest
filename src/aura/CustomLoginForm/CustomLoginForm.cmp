@@ -1,0 +1,82 @@
+<aura:component controller="CustomLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="usernameLabel" type="String" required="false" default="Username"/>
+    <aura:attribute name="passwordLabel" type="String" required="false" default="Password"/>
+    <aura:attribute name="loginButtonLabel" type="String" required="false" default="Log in"/>
+    
+    <aura:attribute name="forgotPasswordLabel" type="String" required="false" default="Forgot your password?"/>
+    <aura:attribute name="selfRegisterLabel" type="String" required="false" default="Not a member?"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
+    <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister"/>
+    
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isRemembered" type="Boolean" access="private" default="false"/>
+    <aura:attribute name="isProduction" type="Boolean" access="private" default="false"/>
+    <aura:attribute name="baseURL" type="String" access="private"/>
+    <aura:attribute name="orgId" type="String" access="private"/>
+    <aura:attribute name="productionbaseURL" type="String" access="private"/>
+    <aura:attribute name="sandboxbaseURL" type="String" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+   
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
+    
+    <div>
+        <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+            <div style="background: white;padding:23px;margin-bottom:12px;margin-left: auto;margin-right: auto;max-width: 380px;">
+                <span>
+                    <aura:renderIf isTrue="{!v.showError}">
+                        <div id="error">
+                            <ui:outputRichText value="{!v.errorMessage}"/>
+                        </div>
+                    </aura:renderIf>
+                </span>            
+                <div id="sfdc_username_container" class="sfdc">
+                    <span id="sfdc_user" class="login-icon" data-icon="a"></span>
+                    <ui:inputText value="" aura:id="username" placeholder="{!v.usernameLabel}" keyup="{!c.onKeyUp}" class="input sfdc_usernameinput sfdc" label="{!v.usernameLabel}"/>
+                </div>
+        
+                <div id="sfdc_password_container" class="sfdc">
+                    <span id="sfdc_lock" class="login-icon sfdc" data-icon="c"></span>
+                    <ui:inputSecret value="" aura:id="password" placeholder="{!v.passwordLabel}" keyup="{!c.onKeyUp}" class="input sfdc_passwordinput sfdc" label="{!v.passwordLabel}"/>
+                </div>
+        
+                <div class="sfdc">
+                    <ui:button aura:id="submitButton" label="{!v.loginButtonLabel}" press="{!c.handleLogin}" class="sfdc_button"/>
+                </div>
+
+                <div class="sfdc">
+                	<lightning:input aura:id="inputcheck" type="checkbox" label="Remember me" name="remember" class="rememberCheck" checked="{!v.isRemembered}"/>
+                </div><hr/>
+                
+                <div id="sfdc_forgot" class="sfdc">
+                    <span><a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">{!v.forgotPasswordLabel}</a></span>
+                    <aura:renderIf isTrue="{!v.isSelfRegistrationEnabled}">
+                        <span style="float:right" ><a href="{!if(v.communitySelfRegisterUrl == null, v.selfRegisterUrl, v.communitySelfRegisterUrl)}">{!v.selfRegisterLabel}</a></span>
+                    </aura:renderIf>                            
+                </div> 
+            </div>
+            <div id="or_use_idp" class="tc mb12">Or log in using:</div>
+            <div id="idp_section_buttons" class="mb24" style="max-width: 380px;margin-left: auto;margin-right: auto;">
+                <button class="button mb24 secondary wide" onclick="{!c.navigateToSalesforce}">
+                    <img alt="" class="thumbnail" src="https://login.salesforce.com/icons/salesforce-white.png"/>
+                    <span>Salesforce</span>
+                </button>
+            </div>
+            <aura:renderIf isTrue="{!v.isProduction}">
+                <div id="employee_login" class="tc mt24">10K Advisors employee? <a id="employee_login_link" href="{!v.productionbaseURL}">Log In</a></div>
+            </aura:renderIf>
+            <aura:renderIf isTrue="{!!v.isProduction}">
+                <div id="employee_login" class="tc mt24">10K Advisors employee? <a id="employee_login_link" href="{!v.sandboxbaseURL}">Log In</a></div>
+            </aura:renderIf>
+        </aura:renderIf>
+    </div>
+</aura:component>

@@ -1,0 +1,25 @@
+.THIS .cartOrderPic > img{
+	max-width: 100%;
+    height: 70px !important;
+    line-height: 100px;
+}
+.THIS .cartOrderPic > p >img{
+	max-width: 100%;
+    height: 70px !important;
+    line-height: 100px;
+}
+.THIS .cartOrderPic {
+	margin-left: auto;
+	margin-right: auto;
+}
+.THIS .cardHeader {
+	padding: 0px !important;
+	margin: 0px !important;
+}
+.THIS .orderLabel {
+	width: 8.5rem !important;
+	font-size: .9rem !important;
+}
+.THIS .contentHigh {
+	max-height: 500px !important;
+}

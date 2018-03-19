@@ -1,0 +1,9 @@
+.THIS .slds-table th, .THIS .slds-table td{
+	white-space: pre-wrap !important;
+}
+.THIS .slds-text-title_caps {
+	font-size: .79rem !important;
+}
+.THIS .shippingAdd{
+	font-size: large;
+}

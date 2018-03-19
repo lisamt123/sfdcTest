@@ -1,0 +1,3 @@
+<apex:page standardController="Project_Request__c"  extensions="ProjectRequestOverrideHandler" action="{!redirect}" standardStylesheets="false">
+<!-- This page override with the new button of project_request__c object and redirects to the standard page -->
+</apex:page>

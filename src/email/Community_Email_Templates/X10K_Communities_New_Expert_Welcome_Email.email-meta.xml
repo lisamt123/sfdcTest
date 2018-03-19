@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Communities: New Expert Welcome Email</name>
+    <style>freeForm</style>
+    <subject>Welcome to 10K Connect!</subject>
+    <textOnly>Hi {!Target_User.FirstName},
+
+Welcome to 10K Connect, our platform for clients and experts for delivering successful projects.
+
+
+Here is your Username: {!Target_User.Username}
+
+Use this link to quickly access 10K Connect.
+
+
+Getting started as a 10K Advisor Expert
+
+One of 10K’s core values is Knowledge. As a 10K value, providing our Experts with learning opportunities is key to you acquiring skills and abilities that are applicable within and outside the 10K Advisor ecosystem.
+
+
+10K Climb Learning Management System
+
+Climb is a platform that gives us the ability to build training that fits the needs of our business, our clients, and you! As a new expert, you will need to complete the 10K Way training program, our set of processes and best practices, prior to working on a client project. Please start this course as soon as you can so you can complete it and get your first project.
+
+
+These instructions are provided to help you access 10K Climb, the 10K Way training program, and provide you with some helpful tips and hints.
+
+
+Getting help
+
+Should you need assistance during your onboarding, you can either log a case (not time sensitive) or you can email the Delivery Management team at delivery@10kview.com
+
+
+We look forward to our journey with you at 10K!
+
+
+Thanks,
+
+10K Delivery Leadership</textOnly>
+    <type>html</type>
+</EmailTemplate>

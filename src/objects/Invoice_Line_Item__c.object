@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Billable_Hours_Total__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  RecordType.DeveloperName != &apos;X10K_Goodwill_Invoice_Line_Item&apos;,
+  Rate__r.Hourly_Rate__c * Hours__c,
+  0.00
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billable Hours Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Expense Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Expert_Names__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The Named Resources who worked on this Line Item for the given Invoice.</inlineHelpText>
+        <label>Expert Names</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goodwill_Amount__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <externalId>false</externalId>
+        <label>Goodwill Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Hourly_Rate_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>Rate__r.Hourly_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hourly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Invoice Line Items</relationshipLabel>
+        <relationshipName>Invoice_Line_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Line_Item_Total_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Line Item Total (Text)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Line_Item_Total__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  RecordType.DeveloperName = &apos;X10K_Product_Invoice_Line_Item&apos;,
+  Total_Price__c,
+  IF(RecordType.DeveloperName = &apos;X10K_Credit_Invoice_Line_Item&apos;, 
+  0  -  Credit_Amount__c , 
+  IF(RecordType.DeveloperName = &apos;X10K_Expense_Invoice_Line_Item&apos;, 
+   Expense_Amount__c ,
+  IF(    
+    AND(
+      NOT(ISBLANK(Goodwill_Amount__c)),
+      Goodwill_Amount__c &gt; 0
+    ),
+    Goodwill_Amount__c * -1,
+    IF(
+      OR(
+        ISBLANK(Manual_Line_Item_Total_Override__c),
+        ISNULL(Manual_Line_Item_Total_Override__c)
+      ),
+      MAX(
+        Minimum_Commitment__c,
+        Billable_Hours_Total__c
+      ),
+      Manual_Line_Item_Total_Override__c
+    )
+   )
+  )
+ )
+)</formula>
+        <label>Line Item Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Manual_Line_Item_Total_Override__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If necessary, an Admin can set the Line Item Total to a specific value, overriding the automatic calculations based on Rate &amp; Hours or Monthly Minimum.</inlineHelpText>
+        <label>Manual Line Item Total Override</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Migration_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Migration Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_Commitment__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+  ISPICKVAL(Invoice__r.Agreement__r.Rate_Structure__c, &quot;Monthly&quot;), 
+  Rate__r.Monthly_Rate__c, 
+  Rate__r.Weekly_Rate__c * Number_of_Weeks__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Minimum Commitment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Monthly_Rate_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>Rate__r.Monthly_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Monthly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Named_Resource__c</fullName>
+        <externalId>false</externalId>
+        <formula>CONTAINS(Rate__r.Name, &apos;Named Resource&apos;)</formula>
+        <label>Named Resource?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Weeks__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Weeks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product__r.Name</formula>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Invoice Line Items</relationshipLabel>
+        <relationshipName>Invoice_Line_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QuickBooks_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>QuickBooks Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Name_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>Rate__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Rate</label>
+        <referenceTo>Rate__c</referenceTo>
+        <relationshipLabel>Invoice Line Items</relationshipLabel>
+        <relationshipName>Invoice_Line_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>List Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sales_Price__c - Discount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Trimmed_Rate_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>TRIM(LEFT(Rate__r.Name, FIND(&quot;-&quot;, Rate__r.Name))) + &quot; &quot; + 
+TRIM(LEFT(RIGHT(Rate__r.Name, LEN(Rate__r.Name)-FIND(&quot;-&quot;, Rate__r.Name)), FIND(&quot;-&quot;, RIGHT(Rate__r.Name, LEN(Rate__r.Name)-FIND(&quot;-&quot;, Rate__r.Name)))-2))</formula>
+        <label>Trimmed Rate Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unique_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Unique Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Workato_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  OR(
+    Invoice__r.RecordType.Name = &apos;10K Services Invoice&apos;,
+    Invoice__r.RecordType.Name = &apos;Delivery Partner Invoice&apos;
+  ),
+  IF(
+    RecordType.Name = &apos;10K Services Invoice Line Item&apos;,
+    Rate__r.Name,
+    IF(
+      RecordType.Name = &apos;10K Expense Invoice Line Item&apos;,
+      IF(
+        ISBLANK(Description__c),
+        &apos;Expenses&apos;,
+        &apos;Expenses - &apos; + Description__c
+      ),
+      IF(
+        RecordType.Name = &apos;10K Goodwill Invoice Line Item&apos;,
+        IF(
+          ISBLANK(Description__c),
+          &apos;Goodwill - &apos; + Rate__r.Name,
+          &apos;Goodwill - &apos; + Rate__r.Name + &apos; - &apos; + Description__c
+        ),
+        IF(
+          RecordType.Name = &apos;10K Credit Invoice Line Item&apos;,
+          IF(
+            ISBLANK(Description__c),
+            &apos;Credit&apos;,
+            &apos;Credit - &apos; + Description__c
+          ),
+          &apos;&apos;
+        )
+      )
+    )
+  ),
+  IF(
+    Invoice__r.RecordType.Name = &apos;10K Product Invoice&apos;,
+    Product__r.Name,
+    &apos;&apos;
+  )
+)</formula>
+        <label>Workato Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Invoice Line Item</label>
+    <nameField>
+        <displayFormat>ILI-{0000}</displayFormat>
+        <label>Line Item Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invoice Line Items</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>X10K_Credit_Invoice_Line_Item</fullName>
+        <active>true</active>
+        <label>10K Credit Invoice Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>X10K_Expense_Invoice_Line_Item</fullName>
+        <active>true</active>
+        <label>10K Expense Invoice Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>X10K_Goodwill_Invoice_Line_Item</fullName>
+        <active>true</active>
+        <label>10K Goodwill Invoice Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>X10K_Product_Invoice_Line_Item</fullName>
+        <active>true</active>
+        <label>10K Product Invoice Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>X10K_Services_Invoice_Line_Item</fullName>
+        <active>true</active>
+        <label>10K Services Invoice Line Item</label>
+    </recordTypes>
+    <searchLayouts>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Invoice__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Rate__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Line_Item_Total__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Hours__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Billable_Hours_Total__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Minimum_Commitment__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Invoice__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Rate__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Line_Item_Total__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Hours__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Billable_Hours_Total__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Minimum_Commitment__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Invoice__c</searchFilterFields>
+        <searchFilterFields>Rate__c</searchFilterFields>
+        <searchFilterFields>Line_Item_Total__c</searchFilterFields>
+        <searchFilterFields>Hours__c</searchFilterFields>
+        <searchFilterFields>Billable_Hours_Total__c</searchFilterFields>
+        <searchFilterFields>Minimum_Commitment__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Disallow_Manual_Overrides_Past_Jan_2017</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+  Invoice__r.Invoice_Generated_On__c &gt; DATE(2017,01,01),
+  NOT(ISBLANK(Manual_Line_Item_Total_Override__c))
+)</errorConditionFormula>
+        <errorDisplayField>Manual_Line_Item_Total_Override__c</errorDisplayField>
+        <errorMessage>Manual Overrides have been deprecated on Invoices past Jan 1, 2017. Please use an appropriate Invoice Line Item Record Type to make any necessary adjustments to the Invoice.</errorMessage>
+    </validationRules>
+</CustomObject>

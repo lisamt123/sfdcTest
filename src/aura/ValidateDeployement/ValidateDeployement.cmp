@@ -1,0 +1,245 @@
+<aura:component controller="ValidateDeploymentLightning" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+	<!-- including static resource for css -->
+    <ltng:require styles="{!$Resource.lightningCss}" />
+    <aura:attribute name="recordId"                 type="String" />
+    <aura:attribute name="message"                  type="String"   default=" "/>
+    <aura:attribute name="messageType"              type="String"   default=" "/>
+    <aura:attribute name="messageTitle"             type="String"   default=" "/>
+    <aura:attribute name="releaseStatus"            type="String"   default=""/>
+    <aura:attribute name="testClassesNames"         type="String"   default=""/>
+    <aura:attribute name="asyncResultId"            type="String"   default=""/>
+    <aura:attribute name="actionType"               type="String"   default=""/>
+    <aura:attribute name="divWidth"                 type="String"   default=""/>
+    <aura:attribute name="divHeight"                type="String"   default="350"/>
+    <aura:attribute name="runningStatus"            type="String"   default="Waiting"/>
+    <aura:attribute name="showButtons"              type="Boolean"  default="true"/>
+    <aura:attribute name="isRefreshRunning"         type="boolean"  default="false"/>
+    <aura:attribute name="flag"                     type="Boolean"  default="true"/>
+    <aura:attribute name="runAllTests"              type="Boolean"  default="false"/>
+    <aura:attribute name="showQuickDeploy"          type="Boolean"  default="true"/>
+    <aura:attribute name="showValidate"             type="Boolean"  default="false"/>
+    <aura:attribute name="showDeploy"               type="Boolean"  default="false"/>
+    <aura:attribute name="connectionIdAndNameMap"   type="Map" />
+	<aura:attribute name="wrapperLog"               type="ValidateDeploymentLightning.Log[]"/>
+    <aura:attribute name="validationProgress"       type="ValidateDeploymentLightning.ValidationProgress" />
+
+
+	<!-- handler to call doInIt method -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<!-- lightning spinner -->
+	<lightning:spinner aura:id="Spinner" variant="brand"/> 
+    <!-- root div -->
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <!-- custom message -->
+        <aura:if isTrue="{!and(v.isRefreshRunning,v.validationProgress.pollTime > 5)}"  >
+            <div style="height: 4rem;position: absolute;width: 98%;">
+                <c:CustomToast type="warning" message="{!'We noticed the target org is running low on API calls, so we\'ve scaled back to ask for updates every ' + v.validationProgress.pollTime + ' seconds.'}" title="Warning"/>
+            </div>
+        </aura:if>
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 98%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                  X
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Validate/Deploy</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+	            <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset"><b>Test Settings</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+	            <lightning:layout horizontalAlign="start" multipleRows="true">
+                    <lightning:layoutItem flexibility="grow" size="4" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small">
+                        <div class="uiInput uiInputRadio uiInput--default uiInput--radio">
+                            <label class="uiLabel-left form-element__label uiLabel">
+                                <ui:inputRadio aura:id="r0" name="others" class="Default" change="{!c.onGroup}" />
+                                <span>Default  <lightning:icon iconName="utility:info" size="xx-small" title="Keeps the following default behavior. In sandbox, no tests are executed. In production, all local tests are executed if your change sets contain Apex classes or triggers. Local tests are all tests, except the ones that originate from managed packages. If your package doesn't contain Apex components, no tests are run." ></lightning:icon></span>
+                            </label>
+                        </div>
+                        <div class="uiInput uiInputRadio uiInput--default uiInput--radio">
+                            <label class="uiLabel-left form-element__label uiLabe">
+                                <ui:inputRadio aura:id="r1" name="others" class="Run Local Tests" change="{!c.onGroup}" />
+                                <span>Run Local Tests  <lightning:icon iconName="utility:info" size="xx-small" title="All tests in your organization are run, except the ones that originate from installed managed packages. This test level is the default for production deployments that include Apex classes or triggers." ></lightning:icon></span>
+                            </label>
+                        </div>                            
+                        <div class="uiInput uiInputRadio uiInput--default uiInput--radio">
+                            <label class="uiLabel-left form-element__label uiLabel">
+                                <ui:inputRadio aura:id="r2" name="others" class="Run All Tests" change="{!c.onGroup}"/>
+                                <span>Run All Tests  <lightning:icon iconName="utility:info" size="xx-small" title="All tests in your organization are run, including tests of managed packages." ></lightning:icon></span>
+                            </label>
+                        </div>
+                        <div class="uiInput uiInputRadio uiInput--default uiInput--radio">
+                            <label class="uiLabel-left form-element__label uiLabel">
+                                <ui:inputRadio aura:id="r3" name="others" class="Run Specified Tests" change="{!c.onGroup}" />
+                                <span>Run Specified Tests  <lightning:icon iconName="utility:info" size="x-small" title="Only the tests that you specify are run. Provide the names of test classes in a comma-separated list. Code coverage requirements differ from the default coverage requirements when using this level in production. The executed tests must cover the class or trigger in your change sets with a minimum of 76% code coverage. This coverage is computed for each class or trigger individually and is different from the overall coverage percentage." ></lightning:icon></span>
+                            </label>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="grow" size="8" smallDeviceSize="12" mediumDeviceSize="8" largeDeviceSize="8" padding="around-small" >
+                        <aura:if isTrue="{!v.runAllTests}"  >
+                            <ui:inputTextArea placeholder="Please enter test classes names (EX: Test1,Test2)." aura:id="comments" rows="3" value="{!v.testClassesNames}"/>
+                        </aura:if>
+                    </lightning:layoutItem>
+	            </lightning:layout>
+	            <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset"><b>Validation/Deployment Results</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+	            <lightning:layout horizontalAlign="start" multipleRows="true">
+	            	<lightning:layoutItem flexibility="grow" size="4" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="4" >
+                        <table class="slds-table slds-table--bordered" style="table-layout: fixed;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <c:CircularProgress themeAfterThreshold="{!v.validationProgress.colorTheme1}"
+                                        themeBeforeThreshold="{!v.validationProgress.colorTheme1}"
+                                        totalProgress="{!v.validationProgress.numberComponentsTotal}" 
+                                        actualProgress="{!v.validationProgress.numberComponentsDeployed}" 
+                                        Legend="Deploy Artifacts"  size="medium"  resultFormat="Mix" threshold="0" />
+                                    </td>
+                                    <td>
+                                        <c:CircularProgress themeAfterThreshold="{!v.validationProgress.colorTheme2}"
+                                        themeBeforeThreshold="{!v.validationProgress.colorTheme2}"
+                                        totalProgress="{!v.validationProgress.numberTestsTotal}" 
+                                        actualProgress="{!v.validationProgress.numberTestsCompleted}" 
+                                        Legend="Run Apex Tests" resultFormat="Mix" size="medium" threshold="0" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Total Artifacts</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentsTotal}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Artifacts Validated/Deployed</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentsDeployed}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Artifacts Failed to Validate/Deploy</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberComponentErrors}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Total Test Classes</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestsTotal}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Test Classes Succeeded</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestsCompleted}</td>
+                                </tr>
+                                <tr>
+                                    <th style="white-space: initial;">Test Classes Failed</th>
+                                    <td style="text-align:center;">{!v.validationProgress.numberTestErrors}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </lightning:layoutItem>
+	                <lightning:layoutItem flexibility="grow" size="8" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="8" >
+	                	<table class="slds-table slds-table--bordered slds-max-medium-table_stacked-horizontal " role="grid" style="{!'table-layout: fixed;width:' + v.divWidth + 'px'}" >
+                            <thead>
+                                <tr class="tableThead" >
+                                    <th style="width: 6%;">Show</th>
+                                    <th >Status</th>
+                                    <th >Action</th>
+                                    <th >Source</th>
+                                    <th >Target</th>
+                                    <th >Time</th>
+								</tr> 
+                            </thead>
+                        </table>
+                        <div id="artifactsListContainer" class="artifactsListContainer" aura:id="artifactsListContainer" style="{!'height:' + v.divHeight + 'px'}">
+                            <table data-reactroot="" class="slds-table slds-table--bordered slds-max-medium-table_stacked-horizontal" role="grid" style="{!'table-layout: fixed;width:' + v.divWidth + 'px'}">
+                                <tbody class="tbodyStyle">
+									<!--Rendered if wrapperLog List has no record -->
+                                    <aura:if isTrue="{!v.isRefreshRunning}">
+                                        <tr class="mainLogRow" >
+
+                                            <td title="" class="wrapColumn" style="width: 6%;"></td>
+                                            <td title="status" data-label="status" class="wrapColumn" >{!v.runningStatus}</td>
+                                            <td title="Action" data-label="Action" class="wrapColumn" ></td>
+                                            <td title="Source" data-label="Source" class="wrapColumn" ></td>
+                                            <td title="Target" data-label="Target" class="wrapColumn" ></td>
+                                            <td title="Time" data-label="Time" class="wrapColumn" ></td>
+                                            
+                                        </tr>
+                                    </aura:if>
+									<aura:if isTrue="{!or(v.wrapperLog.length == 0 , and(v.wrapperLog.length == 1 , v.wrapperLog[0].logId == ''))}">
+                                        <aura:if isTrue="{!!v.isRefreshRunning}">
+    										<tr class="mainLogRow" >
+                                                <td ></td>
+                                                <td >
+                                                    No validation log found for this release.
+                                                </td>
+    											
+    										</tr>
+                                        </aura:if>
+										<aura:set attribute="else" >
+											<aura:iteration items="{!v.wrapperLog}" var="wrap" indexVar="index">
+												<tr class="mainLogRow" >
+
+                                                    <td class="wrapColumn" title="" style="width: 6%;">
+                                                        <img id="{!wrap.logId}" class="{!wrap.status}" src="{!wrap.communityUrl+'/resource/ExpandIcon'}" style="cursor:pointer;height: 15px;"  onclick="{!c.toggel}"/>
+                                                        <!-- </aura:if> -->
+                                                    </td>
+                                                    <td class="wrapColumn" title="{!wrap.status}" data-label="Status" >
+                                                        {!wrap.status}
+                                                    </td>
+                                                    <td class="wrapColumn" title="{!wrap.action}" data-label="Action" >{!wrap.action}</td>
+                                                    <td class="wrapColumn" data-label="Source" >
+                                                        <c:MapKeyIterationComp map="{!v.connectionIdAndNameMap}" key="{!wrap.sourceConnection}"/>
+                                                    </td>
+                                                    <td class="wrapColumn" data-label="Target" >
+                                                        <c:MapKeyIterationComp map="{!v.connectionIdAndNameMap}" key="{!wrap.targetConnection}"/>
+                                                    </td>
+                                                    <td class="wrapColumn" data-label="Time" >
+                                                        <!-- <ui:outputDateTime value="{!wrap.logTime}"/> -->
+                                                        <lightning:formattedDateTime value="{!wrap.logTime}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZone="{!$Locale.timezone}" title="{!wrap.logTime}"/>
+                                                    </td>
+												</tr>									
+											</aura:iteration>
+			                            </aura:set>
+									</aura:if>
+								</tbody>
+                            </table>
+                        </div>
+	                </lightning:layoutItem>
+	            </lightning:layout>
+	            <div aura:id="validationresult" />
+	        </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <!-- Buttons -->
+  				<aura:if isTrue="{!v.showButtons}">
+                	<aura:if isTrue="{!v.isRefreshRunning}"  >
+					  	<lightning:button label="{!v.actionType + ' in Progress'}" disabled="true"  variant="brand" />
+                        <aura:if isTrue="{!if(and(or(v.runningStatus == 'InProgress' , v.runningStatus == 'Pending'), v.asyncResultId != '', v.releaseStatus != 'Canceling') , true , false)}"  >
+                            <lightning:button label="{!'Cancel '+ v.actionType}" onclick="{!c.cancelDeploy}" variant="brand" />
+                        </aura:if>
+					    <aura:set attribute="else" >
+                            <lightning:button label="Validate" onclick="{!c.validate}" variant="brand" disabled="{!!v.showValidate}"  />
+					    	<lightning:button label="Deploy" onclick="{!c.deploy}" variant="brand" disabled="{!!v.showDeploy}"  />
+					    	<lightning:button label="Quick Deploy" onclick="{!c.quickDeploy}" variant="brand" disabled="{!v.showQuickDeploy}"/>
+                        </aura:set>
+					</aura:if>
+				</aura:if>
+            </footer>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work Requests</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Work Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Age --></label>
+        <name>Age__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed Date --></label>
+        <name>Closed_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created by Current User --></label>
+        <name>Created_by_Current_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Status Change Date --></label>
+        <name>Last_Status_Change_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- MSA In Place --></label>
+        <name>MSA_In_Place__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <lookupFilter>
+            <errorMessage><!-- This Opportunity does not belong to the selected Account. Please select another Opportunity. --></errorMessage>
+            <informationalMessage><!-- Only Opportunities for the selected Account are shown. --></informationalMessage>
+        </lookupFilter>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Work Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Project_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Work Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recalculate Sharing on Save --></label>
+        <name>Recalculate_Sharing_on_Save__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Contact --></label>
+        <lookupFilter>
+            <errorMessage><!-- This Contact does not belong to the selected Account. Please select another Contact. --></errorMessage>
+            <informationalMessage><!-- Only Contacts for the selected Account are shown. --></informationalMessage>
+        </lookupFilter>
+        <name>Request_Contact__c</name>
+        <relationshipLabel><!-- Work Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Detail --></label>
+        <name>Status_Detail__c</name>
+        <picklistValues>
+            <masterLabel>10K Rejected</masterLabel>
+            <translation><!-- 10K Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Cancelled</masterLabel>
+            <translation><!-- Client Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Rejected</masterLabel>
+            <translation><!-- Client Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fulfilled</masterLabel>
+            <translation><!-- Fulfilled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partially Fulfilled</masterLabel>
+            <translation><!-- Partially Fulfilled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unfulfilled</masterLabel>
+            <translation><!-- Unfulfilled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Staffing</masterLabel>
+            <translation><!-- Ready for Staffing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resource Plan Complete</masterLabel>
+            <translation><!-- Resource Plan Complete --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Work Request Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Project Description --></label>
+            <section>Project Description</section>
+        </sections>
+        <sections>
+            <label><!-- Requested Dates --></label>
+            <section>Requested Dates</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Manage Requested Experts --></label>
+        <name>Manage_Requested_Experts</name>
+    </quickActions>
+    <sharingReasons>
+        <label><!-- Customer --></label>
+        <name>Customer</name>
+    </sharingReasons>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Create_Opportunity --></label>
+        <name>Create_Opportunity</name>
+    </webLinks>
+</CustomObjectTranslation>

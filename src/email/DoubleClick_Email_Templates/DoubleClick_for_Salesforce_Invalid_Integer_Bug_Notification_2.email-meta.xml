@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>DoubleClick for Salesforce - Invalid Integer Bug Notification 2</name>
+    <style>freeForm</style>
+    <subject>10K DoubleClick for Salesforce - Invalid Integer Bug Notification</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+We were able to patch the Invalid Integer bug last night, and have upgraded your sandbox with the latest version of the connector, version 1.82. This version contains all the Summer &apos;17 (1.80) features, as well as specific fixes for:
+
+Properly handling 10-digit Company Ids, avoiding the Invalid Integer error
+Reverting the inadvertent change where the Unit Price on CPM Line Items was coming across as 1000x what it previously was.
+
+Unit Price for CPM line items will now show the individual unit cost, as it did in all prior version of the connector.
+Additionally, we&apos;ve introduced a new CPM Amount field on the Opportunity Line Items which will, for CPM Line Items, show the Unit Price * 1000.
+
+
+The one outstanding issue in 1.82 is the fix for the Cost Adjustment sync in cases where the Opportunity Line Item has standard Revenue Schedule lines. The fix we put in place for this in 1.82 did not work in sandbox as it did in our testing, so we have some more work to do there on Monday.
+
+In the mean time, we&apos;ve included a bypass switch for this feature in 1.82 so you&apos;ll be able to test the Invalid Integer fix since that is a higher priority issue.
+
+Unless you&apos;re using standard Revenue Scheduled lines on Opportunity Line Items that are synced with DFP, this outstanding item does not affect you.
+
+Please keep me posted as your testing of 1.82 progresses. If all goes well with testing and you give the green light to go to Production, we&apos;ll be able to upgrade Production as soon as Monday during India&apos;s day, overnight US time.
+
+Matthew Lamb
+VP, Technology
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

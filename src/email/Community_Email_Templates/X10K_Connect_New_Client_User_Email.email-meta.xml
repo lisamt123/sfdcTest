@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Connect - New Client User Email</name>
+    <style>freeForm</style>
+    <subject>Welcome to 10K Connect!</subject>
+    <textOnly>Hi  {!Receiving_User.FirstName},
+
+Welcome to 10K Connect Community!
+
+To get started, go to https://10k.force.com/10kcommunity
+Your user name is: {!Receiving_User.Username}
+
+
+Thank you,
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ManagedTopics xmlns="http://soap.sforce.com/2006/04/metadata">
+    <managedTopic>
+        <fullName>10K Community.Navigational:10K Way</fullName>
+        <managedTopicType>Navigational</managedTopicType>
+        <name>10K Way</name>
+        <parentName></parentName>
+        <position>0</position>
+        <topicDescription> </topicDescription>
+    </managedTopic>
+    <managedTopic>
+        <fullName>10K Community.Navigational:10K Way - Clients</fullName>
+        <managedTopicType>Navigational</managedTopicType>
+        <name>10K Way - Clients</name>
+        <parentName>10K Way</parentName>
+        <position>0</position>
+        <topicDescription> </topicDescription>
+    </managedTopic>
+    <managedTopic>
+        <fullName>10K Community.Navigational:10K Way - Experts</fullName>
+        <managedTopicType>Navigational</managedTopicType>
+        <name>10K Way - Experts</name>
+        <parentName>10K Way</parentName>
+        <position>1</position>
+        <topicDescription> </topicDescription>
+    </managedTopic>
+    <managedTopic>
+        <fullName>10K Community.Navigational:DoubleClick For Salesforce</fullName>
+        <managedTopicType>Navigational</managedTopicType>
+        <name>DoubleClick For Salesforce</name>
+        <parentName></parentName>
+        <position>1</position>
+        <topicDescription> </topicDescription>
+    </managedTopic>
+    <managedTopic>
+        <fullName>10K Community.Navigational:Release Notes</fullName>
+        <managedTopicType>Navigational</managedTopicType>
+        <name>Release Notes</name>
+        <parentName>DoubleClick For Salesforce</parentName>
+        <position>0</position>
+        <topicDescription> </topicDescription>
+    </managedTopic>
+</ManagedTopics>

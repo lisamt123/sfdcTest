@@ -1,0 +1,205 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader"  controller="ExpertAvailabilityController" access="global">
+	<lightning:spinner aura:id="Spinner" variant="brand"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute type="ExpertAvailabilityController.AvailabilityWrapper[]" name="availabilityListLeft"  />
+	<aura:attribute type="ExpertAvailabilityController.AvailabilityWrapper[]" name="availabilityListRight"  />
+    <aura:attribute type="Boolean" name="disableNext" default="true"  />
+    <aura:attribute type="Boolean" name="disablePrevious" default="true"  />
+	<aura:attribute type="String" name="direction" />
+	<aura:attribute type="String" name="startDateString"/>
+	<aura:attribute type="String" name="endDateString"/>
+	<aura:attribute type="Integer" name="weekNumber"/>
+	<aura:attribute type="Integer" name="yearNumber"/>
+
+	<!-- <aura:handler name="refreshCalendar" event="c:RefreshCalendar" action="{!c.doInit}"/> -->
+
+	<lightning:layout horizontalAlign="start" multipleRows="true" >
+		<lightning:layoutItem flexibility="auto" padding="arround-small" >
+			<div class="slds-page-header" role="banner" style="background-color:white">
+		        <div class="slds-grid">
+		            <div class="slds-col slds-has-flexi-truncate">
+		                <div class="slds-media slds-no-space slds-grow">
+		                    <div class="slds-media__figure">
+		                        <lightning:icon iconName="custom:custom71" size="large" alternativeText="Point Summary" variant="inverse"/>
+		                    </div>
+		                    <div class="slds-media__body" style="padding: .9rem 0rem 0rem 0rem;">
+		                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">Availability</h1>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		        </div> 
+		    </div>
+		</lightning:layoutItem>
+    </lightning:layout>
+    <lightning:layout horizontalAlign="start" >
+		<lightning:layoutItem flexibility="grow" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+	        <table class="slds-table fixHeaderDiv" role="grid" style="table-layout: fixed;">
+	            <thead>
+	                <tr class="headerRow">
+	                    <th class="slds-cell-shrink cell" style="width:60%">
+	                    	<div class="slds-box  slds-theme--shade">
+	                    		<aura:if isTrue="{!!v.disablePrevious}"  >
+                                    <span style="float:right;">
+                                        <i class="arrow right" onclick="{!c.nextWeeks}"/>
+                                    </span>
+                                </aura:if>
+                                <aura:if isTrue="{!!v.disableNext}"  >
+                                    <span style="float:left;">
+                                        <i class="arrow left" onclick="{!c.previousWeeks}"/>
+                                    </span>
+                                </aura:if>
+	                    		<center><span>Weeks </span></center>
+	                    	</div>
+	                  	</th>
+	                    <th class="slds-cell-shrink cell" style="Width:20%;text-align:center;">
+	                    	<div class="slds-box slds-theme--shade" style="padding: .5rem;">Hours Available for 10K</div>
+	                    </th>
+	                </tr>
+	            </thead>
+            </table>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="grow" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+            <table class="slds-table fixHeaderDiv" role="grid" style="table-layout: fixed;">
+                <thead>
+                    <tr class="headerRow">
+                        <th class="slds-cell-shrink cell" style="width:60%">
+                            <div class="slds-box  slds-theme--shade">
+                                <aura:if isTrue="{!!v.disablePrevious}"  >
+                                    <span style="float:right;">
+                                        <i class="arrow right" onclick="{!c.nextWeeks}"/>
+                                    </span>
+                                </aura:if>
+                                <aura:if isTrue="{!!v.disableNext}"  >
+                                    <span style="float:left;">
+                                        <i class="arrow left" onclick="{!c.previousWeeks}"/>
+                                    </span>
+                                </aura:if>
+                                <center><span>Weeks </span></center>
+                            </div>
+                        </th>
+                        <th class="slds-cell-shrink cell" style="Width:20%;text-align:center;">
+                            <div class="slds-box slds-theme--shade" style="padding: .5rem;">Hours Available for 10K</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <lightning:layout horizontalAlign="start" multipleRows='true'>
+        <lightning:layoutItem flexibility="grow" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+            <table class="slds-table fixHeaderDiv" role="grid" style="table-layout: fixed;">
+                <tbody id="leftTable">
+                	<aura:iteration items="{!v.availabilityListLeft}" var="row" >
+                		<tr>
+                			<td class="slds-cell-shrink cell"  style="width:60%">
+        						<div class="slds-box  slds-theme--shade" style="{!'padding: .4rem !important;background:' + if(row.monthNumber % 2 == 0 , '#E0E0E0' , '#b0d4e4' ) + ' !important;'}"> 
+        							<table style="table-layout: fixed;">
+        								<tr>
+        									<td style="padding:0rem !important"><b>{!row.avail.Week__r.Year__c} - Week {!row.avail.Week__r.Week_Number__c} </b></td>
+        									<td style="padding:0rem !important">
+        										<table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="padding:0rem !important;width:70%;text-align:right;">
+                                                            Assigned Hours : 
+                                                        </td>
+                                                        <td style="padding:0rem !important;width:30%;">
+                                                            <b>
+                                                                &nbsp;<ui:outputNumber value="{!row.avail.Forecasted_Hours__c}" ></ui:outputNumber>
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+        									</td>
+        								</tr>
+        								<tr>
+        									<td style="padding:0rem !important">
+        										<ui:outputDate value="{!row.avail.Week__r.Week_Starts_On__c}" format="MMMM dd"  /> - <ui:outputDate value="{!row.avail.Week__r.Week_Ends_On__c}" format="MMMM dd" /></td>
+        									<td style="padding:0rem !important">
+        										<table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="padding:0rem !important;width:70%;text-align:right;">
+                                                            Unassigned Hours : 
+                                                        </td>
+                                                        <td style="padding:0rem !important;width:30%;">
+                                                            <b>
+                                                                &nbsp;<ui:outputNumber value="{!row.avail.Available_Hours__c - row.avail.Forecasted_Hours__c }" />
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+        									</td>
+        								</tr>
+        							</table>
+                				</div>
+                			</td>
+                			<td class="slds-cell-shrink cell"  style="Width:20%;text-align:right;">
+                				<div class="slds-box " style="padding:.5rem;"> 
+                                    <c:AvailableHoursAvailibility availability="{!row.avail}"/>
+                                </div>
+                			</td>
+                		</tr>
+                	</aura:iteration>
+                </tbody>
+            </table>
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="grow" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+            <table class="slds-table fixHeaderDiv" role="grid" style="table-layout: fixed;">
+                <tbody id="leftTable">
+                    <aura:iteration items="{!v.availabilityListRight}" var="row" >
+                        <tr>
+                            <td class="slds-cell-shrink cell"  style="width:60%">
+                                <div class="slds-box  slds-theme--shade" style="{!'padding: .4rem !important;background:' + if(row.monthNumber % 2 == 0 , '#E0E0E0' , '#b0d4e4' ) + ' !important;'}"> 
+                                    <table style="table-layout: fixed;">
+                                        <tr>
+                                            <td style="padding:0rem !important"><b>{!row.avail.Week__r.Year__c} - Week {!row.avail.Week__r.Week_Number__c} </b></td>
+                                            <td style="padding:0rem !important">
+                                                <table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="padding:0rem !important;width:70%;text-align:right;">
+                                                            Assigned Hours : 
+                                                        </td>
+                                                        <td style="padding:0rem !important;width:30%;">
+                                                            <b>
+                                                                &nbsp;<ui:outputNumber value="{!row.avail.Forecasted_Hours__c}" ></ui:outputNumber>
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="padding:0rem !important">
+                                                <ui:outputDate value="{!row.avail.Week__r.Week_Starts_On__c}" format="MMMM dd"  /> - <ui:outputDate value="{!row.avail.Week__r.Week_Ends_On__c}" format="MMMM dd" /></td>
+                                            <td style="padding:0rem !important">
+                                                <table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="padding:0rem !important;width:70%;text-align:right;">
+                                                            Unassigned Hours : 
+                                                        </td>
+                                                        <td style="padding:0rem !important;width:30%;">
+                                                            <b>
+                                                                &nbsp;<ui:outputNumber value="{!row.avail.Available_Hours__c - row.avail.Forecasted_Hours__c }" />
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td class="slds-cell-shrink cell"  style="Width:20%;text-align:right;">
+                                <div class="slds-box " style="padding:.5rem;"> 
+                                    <c:AvailableHoursAvailibility availability="{!row.avail}"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+	    </lightning:layoutItem>
+	</lightning:layout>
+</aura:component>

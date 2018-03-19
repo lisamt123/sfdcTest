@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_$Contact.Full_Name__c</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Learning__c</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Evaluation_Score__c</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Evaluation_Times_Taken__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Learning_Assignment__c.Progress__c</column>
+            <operator>equals</operator>
+            <value>In Progress</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Learning Assignment Progress on Quizzes</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Learning_Assignment__c@Learning_Assignment__c.Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Learning_Assignment__c.Completed_On__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

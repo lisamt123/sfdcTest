@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Project_Request__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Project_Request__c.Opportunity__c</field>
+    </columns>
+    <columns>
+        <field>Project_Request__c.Project_Name__c</field>
+    </columns>
+    <columns>
+        <field>Project_Request__c.Description__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Project_Request__c.Status__c</column>
+            <operator>equals</operator>
+            <value>New,Under Review,Pending Contract</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Open Work Requests</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Project_Request__c@Project_Request__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project_Request__c.Closed_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

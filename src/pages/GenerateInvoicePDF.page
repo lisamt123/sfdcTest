@@ -1,0 +1,674 @@
+<apex:page standardController="Invoice__c" extensions="GenerateInvoicePDFController" renderAs="pdf" showHeader="false" applyHtmlTag="false" standardStylesheets="false">
+    <html>
+        <head>
+             <style>
+                 
+                @page:first {
+                    margin :0.5in 0.5in 0.5in 0.5in;
+                    size:portrait;
+                    @top-center {
+                        content: element(header);
+                    }
+                    @PageBreak{
+                        page-break:always;
+                        page-break-inside:avoid;
+                    }                   
+                }
+                @page
+                {
+                    @bottom-center{
+                       content: element(footer);
+                       content: "Page " counter(page) " of " counter(pages);
+                    }
+                }
+                table.invoicelineitemtable {
+                    width: 100%;
+                    border-width: 1px;
+                    border-spacing: 0.2px;
+                    -fs-table-paginate: paginate;
+                }
+                table.invoicelineitemtable th {
+                    border-width: 1px;
+                    padding-top: 2px;
+                    padding-left: 8px;
+                    border-style: solid;
+                    font-weight:bold;
+                    font-size:14px;
+                    margin-top: 2px;
+                }
+                table.invoicelineitemtable td {
+                    border-width: 1px;
+                    padding-top: 2px;
+                    padding-left: 8px;
+                    border-style: solid;
+                    font-size:14px;
+                    margin-bottom: 2px;
+                 }
+                 div.footer {
+                     display: block;
+                     position: running(footer);
+                 }
+                div.header { 
+                    display: block; 
+                    margin-top:50px;                  
+                    position: running(header);
+                }
+                
+                div.footer {
+                    display: block;
+                    padding: 5px;
+                    position: running(footer);
+                }
+                body {
+                  font-family: Arial;
+                }
+                p{
+                    font-weight: 800;
+                }
+                .Table{
+                    display: table;
+                    width: 100%;
+                    
+                }
+                .tableBorder td{
+                    border: solid;
+                    border-width: thin;
+                    border-collapse: collapse;
+                }
+                .Title{
+                    display: table-caption;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: larger;
+                }
+                .Heading{
+                    display: table-row;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size:14px;
+                }
+                .Row{
+                    display: table-row;
+                }
+                .Cell{
+                    display: table-cell;
+                    border: solid;
+                    border-width: thin;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                .billingcell{
+                    display: table-cell;
+                    padding-left: 5px;
+                    padding-right: 3px;
+                }
+                .celltext{
+                    font-weight: normal;
+                    font-size:14px;
+                    margin-bottom:5px;
+                    margin-top:5px;
+                }
+                .pagebreak{
+                    page-break-after: always;
+                }
+                
+                
+                
+                /*
+                @page
+                {
+                    size:landscape;
+                } 
+                */
+                html
+                {
+                    font-family: "Salesforce Sans", Arial, sans-serif;
+                }
+                table.table101 table.table102 
+                {
+                    width:100%;
+                    font-size: 70%;
+                }
+                table.table103
+                {
+                    width:100%;
+                }
+                .projectName {
+                    cursor: pointer;
+                    background: #efefef;
+                    font-weight: bold;
+                }
+                .assignmentName {
+                    background: #e4dada;
+                    font-weight: bold;
+                }
+                .headerRow {
+                    background: #cadfe0;
+                }
+                .headerRow th {
+                    min-width: 110px;
+                }
+                .labelCol {
+                    padding-top: 2px;
+                    padding-right: 10px;
+                    padding-bottom: 2px;
+                    padding-left: 2px;
+                    text-align: right;
+                    font-size: 91%;
+                    font-weight: bold;
+                    color: #333;
+                    width: 25%;
+                }
+                .dataCol {
+                    padding-top: 2px;
+                    padding-right: 2px;
+                    padding-bottom: 2px;
+                    padding-left: 10px;
+                    text-align: left;
+                }
+                .lastCol {
+                    text-align: right;
+                    min-width: 0 !important;
+                }
+                .slds-cell-wrap {
+                    white-space: pre-line;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Header Section -->
+            <div id="headersection" >
+                <table width="100%" >
+                    <tr>
+                        <td colspan="3"></td>
+                        <td style="font-size:18px;text-align:right;color: #1A2046;">INVOICE</td>
+                    </tr>
+                    <tr>
+                        <td style="width:57%" rowspan="8">
+                            <apex:image rendered="{!NOT(Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin')}" url="{!$Resource.x10KLogo125x125}" height="100px"  />
+                            <apex:image rendered="{!Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin'}" url="{!$Resource.trekbin_logo}" height="100px"  />
+                        </td>
+                        <td style="font-size:14px;text-align:left">Invoice Date: </td><td></td>
+                        <td style="font-size:15px;text-align:left">
+                            <apex:outputText value="{0, date, MMM dd, yyyy}">
+                                <apex:param value="{!Invoice__c.Sent_To_Customer_On__c}"/>
+                            </apex:outputText>       
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td style="font-size:14px;text-align:left;">Invoice Due Date:</td><td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{0, date, MMM dd, yyyy}">
+                                <apex:param value="{!Invoice__c.Due_Date__c}"/>
+                            </apex:outputText>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left">
+                            <apex:outputText rendered="{!isProductInvoice}" value="Subscription Period:"/>
+                            <apex:outputText rendered="{!NOT(isProductInvoice)}" value="Invoice Period:"/>
+                        </td><td></td>
+                        <td style="font-size:15px;text-align:left">
+                            <apex:outputText value="{0, date, MMM dd, yyyy}" >
+                                <apex:param value="{!Invoice__c.Billing_Period_Start_Date__c}"/> 
+                            </apex:outputText>
+                            &nbsp;-&nbsp;
+                            <apex:outputText value="{0, date, MMM dd,  yyyy}">
+                                <apex:param value="{!Invoice__c.Billing_Period_End_Date__c}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr><td colspan='2'></td></tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;"><apex:outputText value="Bill To:"></apex:outputText></td><td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{!accountName}"></apex:outputText>                                                      
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;"></td><td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{!addressLine1}"></apex:outputText>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;"></td><td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{!addressLine2}"></apex:outputText>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;text-align:left;"></td><td></td>
+                        <td style="font-size:15px;text-align:left">   
+                            <apex:outputText value="{!addressLine3}"></apex:outputText>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:15px;text-align:left;color: #1A2046;" rowspan='3'>
+                            <apex:outputText rendered="{!NOT(Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin')}">10K Advisors, LLC</apex:outputText><br />
+                            <apex:outputText rendered="{!Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin'}" >Trekbin, LLC</apex:outputText><br />
+                            14009 Broadripple Pl<br />
+                            Louisville, KY 40299<br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Details right above the table -->
+            <div id="preTableDetails" >
+                <p>Invoice Number:&nbsp;{!Invoice__c.Name}</p>
+                                
+                <apex:outputtext rendered="{!if(Invoice__c.PO_Number__c !=null,true,false)}">
+                    <p>PO Number:&nbsp;{!Invoice__c.PO_Number__c}</p>
+                </apex:outputtext>
+                
+                <apex:outputtext rendered="{!NOT(isProductInvoice)}">
+                    <p>Expert Name(s):&nbsp;{!Invoice__c.Expert_Names__c}</p>
+                </apex:outputtext>
+            </div>
+
+            <!-- Invoice Line Item Section -->
+            <div id="invoicelineitem">   
+                <apex:outputText rendered="{!NOT(isProductInvoice)}">
+                    <!-- The table used when we're generating a Services invoice -->
+                    <table class="invoicelineitemtable">
+                        <thead>
+                            <!--<tr>
+                                <th colspan="3" style="border-left: 0px;border-bottom: 0px;border-right: 0px; border-top: 0px; padding-left:0px;">
+                                    <p>Invoice Number:&nbsp;{!Invoice__c.Name}</p>
+                                    
+                                    <apex:outputtext rendered="{!if(Invoice__c.PO_Number__c !=null,true,false)}">
+                                        <p>PO Number:&nbsp;{!Invoice__c.PO_Number__c}</p>
+                                    </apex:outputtext>
+                                    
+                                    <apex:outputtext rendered="{!AND(NOT(isProductInvoice),Invoice__c.Agreement__r.List_Experts_On_Invoices__c)}">
+                                        <p>Expert Name(s):&nbsp;{!Invoice__c.Expert_Names__c}</p>
+                                    </apex:outputtext>
+                                </th> 
+                            </tr>-->
+                            <tr>
+                                <th width="50%">
+                                    <p>Description</p>
+                                </th>
+                                <th width="20%">
+                                    <p>Rate</p>
+                                </th>
+                                <th width="18%">
+                                    <p>Quantity</p>
+                                </th>
+                                <th width="12%">
+                                    <p>Cost (USD)</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                        <apex:repeat value="{!invoiceLineItemList}" var="item">
+                        
+                        <tr>
+                            <td>
+                                <p class="celltext">
+                                    <apex:outputText rendered="{!IF(item.RecordType.Name = '10K Expense Invoice Line Item' || item.RecordType.Name = '10K Credit Invoice Line Item', TRUE, FALSE)}">
+                                        {!item.Description__c}
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!IF(item.RecordType.Name != '10K Expense Invoice Line Item' && item.RecordType.Name != '10K Credit Invoice Line Item', TRUE, FALSE)}">
+                                        {!IF(item.Goodwill_Amount__c != null && item.Goodwill_Amount__c>0,'Goodwill - ','')}
+                                        <!--{!item.Trimmed_Rate_Name__c}&nbsp;-->{!IF(item.Rate__r.Role__c != null && item.Rate__r.Role__c != '',item.Rate__r.Role__c+' - ','')}
+                                        {!IF(item.invoice__r.Invoice_Generated_On__c >= billingPeriodForRegion && item.Rate__r.Region__c != null && item.Rate__r.Region__c != '',item.Rate__r.Region__c+' - ','')}
+                                        {!IF(item.Rate__r.Assignment_Type__c != null && item.Rate__r.Assignment_Type__c != '',item.Rate__r.Assignment_Type__c,'')}
+                                        {!IF(item.Expert_Names__c != null && item.Expert_Names__c != '', '(' + item.Expert_Names__c + ')', '')}
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                            <td>
+                                <p class="celltext">
+                                    <apex:outputText rendered="{!IF(item.RecordType.Name != '10K Expense Invoice Line Item' && item.RecordType.Name != '10K Credit Invoice Line Item', True, False)}">
+                                        <apex:outputText rendered="{!item.Named_Resource__c}" value="{0, number, $###,###,###,###,##0.00}">
+                                            <apex:param value="{!item.Monthly_Rate_Text__c}"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!item.Named_Resource__c}">
+                                            per month
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!NOT(item.Named_Resource__c)}" value="{0, number, $###,###,###,###,##0.00}">
+                                            <apex:param value="{!item.Hourly_Rate_Text__c}"/> 
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!NOT(item.Named_Resource__c)}">
+                                            per hour
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                            <td>
+                                <p class="celltext">
+                                    <apex:outputText rendered="{!IF(item.RecordType.Name != '10K Expense Invoice Line Item' && item.RecordType.Name != '10K Credit Invoice Line Item', True, False)}">
+                                        {!IF(item.Named_Resource__c, '1 Expert', IF(OR(AND(item.Goodwill_Amount__c != null, item.Goodwill_Amount__c != 0), AND(item.Hours__c != null, item.Hours__c != 0)), item.Hours__c, '-'))}
+                                        {!IF(item.Named_Resource__c, '', IF(OR(AND(item.Goodwill_Amount__c != null, item.Goodwill_Amount__c != 0), AND(item.Hours__c != null, item.Hours__c != 0)), ' Hours', ''))}
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                            <td style="white-space: nowrap;">
+                               <p class="celltext" >
+                                    <apex:outputText >
+                                        <apex:outputtext rendered="{!item.Line_Item_Total__c<0}">
+                                            (                                
+                                            <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                                <apex:param value="{!item.Line_Item_Total__c * -1}"/>
+                                            </apex:outputText>
+                                            )
+                                        </apex:outputtext>
+                                        <apex:outputText value="{0, number, $###,###,###,###,##0.00}" rendered="{!item.Line_Item_Total__c>=0}">
+                                            <apex:param value="{!item.Line_Item_Total__c}"/>
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                        </tr>  
+                                         
+                        </apex:repeat>
+                        </tbody>
+                        <tr style="display: {!IF( Invoice__c.Total_Amount_Paid__c > 0 , '' , 'none')}">
+                            <td style="text-align:right;border-bottom: 0px;border-left: 0px;" colspan="3">
+                                <p class="celltext"><b>Less Payments Applied:</b></p>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <p class="celltext">
+                                    (
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!Invoice__c.Total_Amount_Paid__c }"/>
+                                    </apex:outputText>
+                                    )
+                                </p>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;border-bottom: 0px;border-left: 0px;border-top: 0px;" colspan="3">
+                                <p class="celltext"><b>Total:</b></p>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <p class="celltext">
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!Invoice__c.Outstanding_Balance__c}"/>
+                                    </apex:outputText>
+                                </p>
+                           </td>
+                        </tr>
+                    </table>
+                </apex:outputText>
+
+                <apex:outputText rendered="{!isProductInvoice}">
+                    <!-- The table used when we're generating a Product invoice -->
+                    <table class="invoicelineitemtable">
+                        <thead>
+                            <tr>
+                                <th width="55%">
+                                    <p>Product Name</p>
+                                </th>
+                                <th width="15%">
+                                    <p>List Price</p>
+                                </th>
+                                <th width="15%">
+                                    <p>Discount</p>
+                                </th>
+                                <th width="15%">
+                                    <p>Total Price</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                        <apex:repeat value="{!invoiceLineItemList}" var="item">
+                        
+                        <tr>
+                            <td>
+                                <p class="celltext">
+                                    {!item.Product__r.Name}
+                                </p>
+                            </td>
+                            <td align="right" style="padding-right: 5px">
+                                <p class="celltext">
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!item.Sales_Price__c}"/>
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                            <td align="right" style="padding-right: 5px">
+                                <p class="celltext">
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!item.Discount__c}"/>
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                            <td align="right" style="padding-right: 5px">
+                               <p class="celltext">
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!item.Line_Item_Total__c}"/>
+                                    </apex:outputText>
+                                </p>
+                            </td>
+                        </tr>  
+                                         
+                        </apex:repeat>
+                        </tbody>
+                        <tr style="display: {!IF( Invoice__c.Total_Amount_Paid__c > 0 , '' , 'none')}">
+                            <td style="text-align:right;border-bottom: 0px;border-left: 0px;" colspan="3">
+                                <p class="celltext"><b>Less Payments Applied:</b></p>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <p class="celltext">
+                                    (
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!Invoice__c.Total_Amount_Paid__c }"/>
+                                    </apex:outputText>
+                                    )
+                                </p>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;border-bottom: 0px;border-left: 0px;border-top: 0px;" colspan="3">
+                                <p class="celltext"><b>Total:</b></p>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <p class="celltext">
+                                    <apex:outputText value="{0, number, $###,###,###,###,##0.00}">
+                                        <apex:param value="{!Invoice__c.Outstanding_Balance__c}"/>
+                                    </apex:outputText>
+                                </p>
+                           </td>
+                        </tr>
+                    </table>   
+                </apex:outputText>
+            </div>            
+            <br /> 
+            <!-- Invoice Line Item Section -->
+            
+            <!-- Billing Details -->
+            <div id="billingdetails">
+                <!-- <p>Billing Details:</p> -->
+                <div class="Table">
+                   
+                    <div class="Row">      
+                         <apex:outputtext rendered="{!if(Invoice__c.Invoice_Notes__c!=null,true,false)}">
+                            <table class="table101"  Width="100%">
+                                <tr>
+                                    <td style="vertical-align:top;">
+                                        <div style="width:100px;">
+                                            Invoice Notes:
+                                        </div>  
+                                    </td>
+                                    <td style="Width :100%">        
+                                        <apex:outputfield value="{!Invoice__c.Invoice_Notes__c}" />           
+                                    </td>
+                                </tr>
+                            </table>        
+                           <!-- <div style="width:100px;float:left;">
+                                Invoice Notes:
+                            </div>      
+                            <div>    
+                                <apex:outputfield value="{!Invoice__c.Invoice_Notes__c}" />     
+                            </div>  -->
+                            <br/>   
+                        </apex:outputtext>    
+                    </div>
+                    
+                    <div class="Row">
+                        <div class="billingcell">
+                            Banking information required to process payments via ACH:
+                        </div>
+                    </div> 
+                </div>
+                <br/>
+                <div>
+                    <div class="Row">
+                        <div class="billingcell">
+                            Beneficiary Name:
+                        </div>
+                        <div class="billingcell">
+                            <apex:outputText rendered="{!NOT(Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin')}">10K Advisors, LLC</apex:outputText>
+                            <apex:outputText rendered="{!Invoice__c.Agreement__r.Invoice_Branding__c = 'Trekbin'}" >Trekbin, LLC</apex:outputText><br />
+                        </div>
+                    </div> 
+                    <div class="Row">
+                        <div class="billingcell">
+                            Beneficiary Address:
+                        </div>
+                        <div class="billingcell">
+                            14009 Broadripple Pl
+                        </div>
+                    </div>
+                    <div class="Row">
+                        <div class="billingcell">
+                            
+                        </div>
+                        <div class="billingcell">
+                            Louisville, KY 40299 &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="Row">
+                        <div class="billingcell">
+                            Bank Name:
+                        </div>
+                        <div class="billingcell">
+                            JPMorgan Chase Bank, N.A.
+                        </div>
+                    </div> 
+                    <div class="Row">
+                        <div class="billingcell">
+                            Bank Account #:
+                        </div>
+                        <div class="billingcell">
+                            713869316
+                        </div>
+                    </div>
+                    <div class="Row">
+                        <div class="billingcell">
+                            Routing #:
+                        </div>
+                        <div class="billingcell">
+                            083000137
+                        </div>
+                    </div>
+                    <div class="Row">
+                        <div class="billingcell">
+                            Swift Code:
+                        </div>
+                        <div class="billingcell">
+                            CHASUS33
+                        </div>
+                    </div>             
+                </div>
+            </div>
+            <br /> <br /> <br />
+            <!-- Created By Trekbin on 19-Aug, 2016 -->
+            
+            <apex:outputPanel rendered="{!AND(NOT(isProductInvoice), displaySection)}" style="page-break-before:always;" layout="block">
+                <!--
+                <div>
+                    <br /> <br /> <br />
+                    <table class="table102">
+                        <tr>
+                            <td >
+                                <th style="width:15%" class="labelCol">
+                                    <label>Start Date </label>
+                                </th>
+                                <td style="width:15%" class="dataCol">
+                                    <output type="text" >{!strBillableStartDate}</output>
+                                </td>
+                            </td>
+                            <td >
+                                <th style="width:15%" class="labelCol">
+                                    <label>End Date </label>
+                                </th>
+                                <td style="width:15%" class="dataCol">
+                                    <output type="text" >{!strBillableEndDate}</output>
+                                </td>
+                            </td>
+                            <td >
+                                <th style="width:15%" class="labelCol">
+                                    <label>Project </label>
+                                </th>
+                                <td style="width:15%">
+                                    <output type="text" >{!strDisplayProjectNames}</output>
+                                </td>
+                            </td>
+                        </tr>
+                    </table>
+                </div><br/>
+                -->
+                <table class="table103"> 
+                    <thead>
+                        <tr class="headerRow">
+                            <th style="width:30%"><b>Project</b></th>
+                            <th style="width:10%"><b>Assignment</b></th>
+                            <th style="width:10%"><b>Role</b></th>
+                            <th style="width:20%"><b>Assignment Type</b></th>
+                            <th style="width:20%"><b>Expert Name</b></th>
+                            <th style="width:10%" class="lastCol"><b>Hours</b></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBodyId">
+                        <apex:outputpanel rendered="{!IF(allData.size > 0 , false , true )}">
+                            <tr>
+                                <td colspan="7">
+                                    No records found.
+                                </td>
+                            </tr>
+                        </apex:outputpanel>
+                        <apex:repeat value="{!allData}" var="all" rendered="{!IF(allData.size > 0 , true , false )}">
+                            <tr id="{!all.project.Id}" class="projectName" >
+                                <td style="width:30%">{!all.project.Name} </td>
+                                <td style="width:10%"></td>
+                                <td style="width:10%"></td>
+                                <td style="width:20%"></td>
+                                <td style="width:20%"></td>
+                                <td style="width:10%" class="lastCol">{!all.totalTime}</td>
+                            </tr>
+                            <apex:repeat value="{!all.wrappList}" var="wrapp">
+                                <tr class="assignmentName" id="{!wrapp.assignment.Id}" >
+                                    <td style="width:30%"></td>
+                                    <td style="width:10%">{!wrapp.assignment.Name} </td>
+                                    <td style="width:10%">{!wrapp.assignment.Role__c} </td>
+                                    <td style="width:20%">{!wrapp.assignment.Assignment_Type__c}</td>
+                                    <td style="width:20%">{!wrapp.assignment.Resource_Name__c}</td>
+                                    <td style="width:10%" class="lastCol">{!wrapp.totalTime}</td>
+                                </tr>
+                                <!--
+                                <apex:repeat value="{!wrapp.entryList}" var="assign" rendered="{!$CurrentPage.parameters.Expended}">
+                                    <tr class="{!wrapp.childRowClass}">
+                                        <td style="width:30%"></td>
+                                        <td style="width:10%"></td>
+                                        <td style="width:10%"> {!assign.Name}</td>
+                                        <td style="width:20%"> <apex:outputfield value="{!assign.Date__c}"/></td>
+                                        <td style="width:20%" class="slds-cell-wrap" > {!assign.Description__c}</td>
+                                        <td style="width:10%" class="lastCol"> {!assign.Hours__c}</td>
+                                    </tr>
+                                </apex:repeat>
+                                -->
+                            </apex:repeat>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+        </body>
+    </html>  
+</apex:page>

@@ -1,0 +1,209 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false" applyBodyTag="false">
+
+    <head>
+        <title>10K Advisors</title>
+    </head>
+    <style type="text/css">
+        @media (max-width:840px){
+            .footerPadding{
+                padding-bottom: 256px !important;
+            }
+        }
+        @media (min-width:840px){
+            .footerPadding{
+                padding-bottom: 138px !important;
+            }
+        }
+    </style>
+
+    <apex:composition template="X10KViewSiteTemplate">
+    
+        <apex:define name="body">
+            <section class="hero">
+            
+                <h1 class="hero__logo">
+                    <a class="hero__logo-link" href="{!URLFOR($Page.home)}"><img class="masthead__logo__svg" src="{!URLFOR($Resource.X10KViewResources, 'logo-white.svg')}" /></a>
+                </h1>
+                
+                <div class="hero__text">
+                    <h2 class="hero__title">The New Way to Access World-Class Salesforce Expertise</h2>
+                </div>
+            
+                <div class="chevron--white">
+                    <svg viewBox="0 899 1440 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <defs></defs>
+                        <path d="M0,939 C0,939 347.039951,899 711.234947,899 C1075.42994,899 1440,939 1440,939 L1440,954 L0,954 L0,939 Z" id="concave-horizon--white" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+            
+            </section>
+
+            <section class="audience">
+            <div class="cards os-animation-wrapper">
+              <div class="cards__wrapper">
+                <a class="cards__card os-animation" data-os-animation="fadeInUp" data-os-animation-delay="0s" href="{!URLFOR($Page.clients)}" title="">
+                  <figure class="card__thumbnail">
+                    <img class="card__img" src="{!URLFOR($Resource.X10KViewResources, 'stock/sfdc_lightning_chart.png')}" />
+                  </figure>
+                  <h2 class="card__headline"><strong>Salesforce Customers</strong>Get the most out of your investment in the Salesforce platform</h2>
+                  <span class="card__button">Learn More</span>
+                </a>
+              </div>
+              <div class="cards__wrapper">
+                <a class="cards__card os-animation" data-os-animation="fadeInUp" data-os-animation-delay="250ms" href="{!URLFOR($Page.partners)}" title="">
+                  <figure class="card__thumbnail">
+                    <img class="card__img" src="{!URLFOR($Resource.X10KViewResources, 'stock/sfdc_apexcode.jpg')}" />
+                  </figure>
+                  <h2 class="card__headline"><strong>Salesforce Partners</strong>Take on new challenges with specialized skills and additional capacity</h2>
+                  <span class="card__button">Learn More</span>
+                </a>
+              </div>
+              <div class="cards__wrapper">
+                <a class="cards__card os-animation" data-os-animation="fadeInUp" data-os-animation-delay="500ms" href="{!URLFOR($Page.experts)}" title="">
+                  <figure class="card__thumbnail">
+                    <img class="card__img" src="{!URLFOR($Resource.X10KViewResources, 'stock/achievements.png')}" />
+                  </figure>
+                  <h2 class="card__headline"><strong>Salesforce Experts</strong>Gain opportunities for personal and professional growth</h2>
+                  <span class="card__button">Learn More</span>
+                </a>
+              </div>              
+            </div>
+            </section>
+            <section class="testimonials os-animation-wrapper">
+            <div class="testimonials__wrapper">
+              <div class="testimonials__col">
+                <blockquote class="testimonial os-animation" data-os-animation="fadeInUp" data-os-animation-delay="0s">
+                  <figure class="testimonial__avatar">
+                    <img class="testimonial__img" src="{!URLFOR($Resource.X10KViewImgTestimonials, 'charles-cox.png')}" />
+                  </figure>
+                  <h4 class="testimonial__quotation">"10K is a valuable extension to our team, helping us tackle complex challenges and take our usage of Salesforce to the next level."</h4>
+                  <cite class="testimonial__citation">Charles Cox<br />Corporate Manager, Kindred Healthcare</cite>
+                </blockquote>
+              </div>
+              <div class="testimonials__col">
+                <blockquote class="testimonial os-animation" data-os-animation="fadeInUp" data-os-animation-delay="250ms">
+                  <figure class="testimonial__avatar">
+                    <img class="testimonial__img" src="{!URLFOR($Resource.X10KViewImgTestimonials, 'pete-chalmers.png')}" />
+                  </figure>
+                  <h4 class="testimonial__quotation">"We needed a partner that could help us scale but more importantly understood our business and customers. We would not be where we are without the support of 10K."</h4>
+                  <cite class="testimonial__citation">Peter Chalmers<br />Founder, Morphate, Salesforce MVP</cite>
+                </blockquote>
+              </div>
+              <div class="testimonials__col">
+                <blockquote class="testimonial os-animation" data-os-animation="fadeInUp" data-os-animation-delay="500ms">
+                  <figure class="testimonial__avatar">
+                    <img class="testimonial__img" src="{!URLFOR($Resource.X10KViewImgTestimonials, 'becka-dente.png')}" />
+                  </figure>
+                  <h4 class="testimonial__quotation">"With 10K, I have the flexibility of being my own boss, plus the security of having an amazing team of people behind me. It's the best of both worlds!"</h4>
+                  <cite class="testimonial__citation">Becka Dente, Salesforce MVP</cite>
+                </blockquote>
+              </div>
+            </div>
+            </section>
+          
+          
+          <!--<section class="news">
+            <div class="news__wrapper">
+                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi aliquam distinctio vero iusto cum minima labore, illo quaerat maiores dicta consequuntur, enim, perspiciatis in repellendus quis temporibus est, at qui!</p>
+            </div>
+          </section>-->
+          
+        
+            <section class="panel panel--gray footerPadding" style="display:block; position:relative;z-index:100;">
+          
+                <h2 class="panel__title">Some of our successful client partnerships</h2>
+                
+                <div class="clients" style="display: flex; flex-wrap: wrap;">
+              
+                    <div class="clients__row">
+                        <div class="clients__item">
+                            <a href="http://www.7summitsinc.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, '7summits.png')}" alt="7summits"></img>
+                            </a>
+                        </div> 
+                        <div class="clients__item">
+                            <a href="http://www.agentpartner.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'agentpartner.png')}" alt="Agent Partner"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://www.allenium.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'allenium.png')}" alt="Allenium"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://appirio.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'appirio.png')}" alt="Appirio"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://bloomreach.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'bloomreach.png')}" alt="BloomReach"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://cloudkettle.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'cloud-kettle.png')}" alt="Cloud Kettle"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://endiem.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'endiem.png')}" alt="Endiem"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://gigster.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'gigster.png')}" alt="gigster"></img>
+                            </a>
+                        </div>
+
+                        <div class="clients__item">
+                            <a href="http://www.hanleywood.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'hanleywood.png')}" alt="Hanley Wood"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://www.idlewildinc.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'idlewild.png')}" alt="Idlewild"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://www.kindredhealthcare.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'kindred.png')}" alt="Kindred Healthcare"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://www.mckinsey.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'mckinsey.png')}" alt="McKinsey and Company"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://www.mrahis.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'mra.png')}" alt="MRA HIS"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://www.namely.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'namely.png')}" alt="Namely"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="http://www.qsrautomations.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'qsr.png')}" alt="QSR Automations"></img>
+                            </a>
+                        </div>
+                        <div class="clients__item">
+                            <a href="https://www.samtec.com/" target="_blank" class="dim">
+                                <img src="{!URLFOR($Resource.X10KViewVendors, 'samtec.png')}" alt="Samtec"></img>
+                            </a>
+                        </div>    
+                    </div> 
+                </div>
+                <p>&nbsp;</p>
+            </section>
+        </apex:define>
+    
+    </apex:composition>
+    
+</apex:page>

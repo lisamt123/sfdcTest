@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Time Entry</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Time Entries</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assignment &amp; Budget Mismatch --></label>
+        <name>Assignment_Budget_Mismatch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assignment --></label>
+        <name>Assignment__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Current Portal User Flag --></label>
+        <name>Current_Portal_User_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Late --></label>
+        <name>Days_Late__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Partner Invoice --></label>
+        <name>Delivery_Partner_Invoice__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Goodwill Hours --></label>
+        <name>Expert_Goodwill_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Partner External Id --></label>
+        <name>Expert_Partner_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Falls Outside Agreement Dates --></label>
+        <name>Falls_Outside_Agreement_Dates__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goodwill Hours --></label>
+        <name>Goodwill_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hourly Cost Rate --></label>
+        <name>Hourly_Cost_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hourly Billable Rate --></label>
+        <name>Hourly_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours --></label>
+        <name>Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice --></label>
+        <name>Invoice__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Margin Billable Amount --></label>
+        <name>Margin_Billable_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin Cost Amount --></label>
+        <name>Margin_Cost_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Billing Code --></label>
+        <name>Project_Billing_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Id --></label>
+        <name>Project_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Name --></label>
+        <name>Resource_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Story --></label>
+        <name>Story__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Task --></label>
+        <name>Task__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Billable Amount --></label>
+        <name>Total_Billable_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Cost Amount --></label>
+        <name>Total_Cost_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Expert Goodwill Amount --></label>
+        <name>Total_Expert_Goodwill_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goodwill Amount --></label>
+        <name>Total_Goodwill_Amount__c</name>
+    </fields>
+    <layouts>
+        <layout>Time Entry Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+        <sections>
+            <label><!-- Goodwill Details --></label>
+            <section>Goodwill Details</section>
+        </sections>
+        <sections>
+            <label><!-- Work Details --></label>
+            <section>Work Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You cannot modify a Time Entry that has already been included in a finalized Invoice --></errorMessage>
+        <name>Cannot_Edit_an_Invoiced_Time_Entry</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You cannot log time in a prior billing period. Contact a 10K Admin for more information. --></errorMessage>
+        <name>Dont_Allow_TEs_Earlier_Than_Last_Invoice</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Hours must be greater than 0 --></errorMessage>
+        <name>Hours_Must_Be_Greater_Than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You may only manage time against your own Assignments --></errorMessage>
+        <name>Only_Enter_Time_For_Your_Assignments</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You cannot log time against an Assignment with an expired Agreement. Please contact a 10K Admin if you need assistance. --></errorMessage>
+        <name>Prevent_New_Time_Entry_for_Expired_Rate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can only create new Time Entries against an Active Assignment --></errorMessage>
+        <name>Prevent_New_Time_For_Closed_Assignment</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can only enter time in quarter-hour increments. --></errorMessage>
+        <name>Time_Entires_Must_Be_In_Quarter_Hours</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Time Entries must be made within the Start and End Dates of the Assignment. Please check the Assignment Dates and try again. --></errorMessage>
+        <name>Time_Entry_Must_Be_In_Assignment_Dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Time Entries must be made within the Start and End Dates of the Project. Please check the Project Dates and try again. --></errorMessage>
+        <name>Time_Entry_Must_Be_Within_Project_Dates</name>
+    </validationRules>
+</CustomObjectTranslation>

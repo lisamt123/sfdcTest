@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K BourbonTrail Attendee Thank You</name>
+    <style>none</style>
+    <subject>We loved seeing you at 10K Bourbon Trail Dreamforce Event!</subject>
+    <textOnly>{!CampaignMember.FirstName}!
+
+Thank you so much for joining us are our 10K Bourbon Trail event! We hope you enjoyed tasting those rare bourbons!
+
+
+The event gave us a great opportunity to catch up and put faces to names in some cases. 2018 is going to be an exciting year and we are very much looking forward to working with you!
+
+
+Cheers!
+
+The 10K Team
+
+
+P.S. If you did not get one of our gift bags on departure from the event, let us know and we&apos;ll get that out to you as soon as we can.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

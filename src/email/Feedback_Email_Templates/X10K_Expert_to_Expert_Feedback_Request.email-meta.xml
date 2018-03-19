@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Expert to Expert Feedback Request</name>
+    <style>freeForm</style>
+    <subject>Your Feedback is Requested on {!Feedback__c.Expert__c} for {!Feedback__c.Project_Name__c} Project</subject>
+    <textOnly>Hello {!Feedback__c.Submitter__c},
+
+Recently {!Feedback__c.Expert__c} completed work on {!Feedback__c.Project_Name__c} project. As a colleague, we&apos;d like to ask for your feedback on how {!Feedback__c.Expert__c} performed and ask for your thoughts on how to improve on future projects.
+
+The survey will only take 2-3 minutes and is totally confidential. Results will be used to identify performance trends, training needs, experts who have subject matter expertise and help us improve our project assignment process.
+
+Click on this link to take the survey.
+
+Take care when filling in the form as you will not be able to change your input after you&apos;ve clicked on Submit.
+
+Thank you for your help!
+10K Delivery Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

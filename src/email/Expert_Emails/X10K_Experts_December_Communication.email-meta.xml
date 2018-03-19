@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used for December 2016 10K Expert Expectations</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Experts - December Communication</name>
+    <style>freeForm</style>
+    <subject>10K December Update - Communication Expectations</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+What an exciting time to be part of the 10K Community! We are halfway through December and getting ready to close out the year with a bang - I can&apos;t begin to tell you how grateful we are for your hard work to ensure the success of our projects
+
+There are a few items I would like to make sure you remain focused on now and going into 2017:
+
+-10K Community Client Communication - make sure that you are logging into the community daily and checking your Projects and Chatter feed. If you see a post from your client or another team member, acknowledge it with a comment or even a &quot;like.&quot;
+
+-Email/Google Drive Client Communication - all client communication needs to be from your 10K email address. If there are documents that you are collaborating on with the client or other team members, please make sure client comments do not go unacknoweldged.
+
+-Time Entries - time entries should be entered daily. We want to make sure that your project is running smoothly and our clients can access the information they need. Many of our clients login frequently and it is important that they are seeing your hours as near to real-time as you can get.
+
+These quick and easy items make a positive impact to our clients and will continue to highlight the great work you do.
+
+Thank you again for your hard work and I look forward to sharing future updates with you.
+
+Jared
+
+
+Jared Miller | Vice President, Service Delivery
+813-957-1665
+Jared@10kview.com</textOnly>
+    <type>html</type>
+</EmailTemplate>

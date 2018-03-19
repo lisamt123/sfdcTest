@@ -1,0 +1,21 @@
+<aura:component controller="BadgesDetails" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="certificationURL" type="Object[]"/>
+	<aura:attribute name="TotalBadges" type="Integer"/>
+    <aura:attribute name="ErrorMsg" type="String"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.onLoad}" defaul=""/>
+    
+    <aura:if isTrue="{!v.ErrorMsg != ''}">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded ">
+            <aura:iteration items="{!v.certificationURL}" var="cert">
+                <aura:iteration items="{!cert.certifications }" var="certName">
+                    <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-3 bodyClass" >
+                        <img src="{!cert.communityPrefix + certName.Achievement__r.Salesforce_Certification_Logo_URL__c}" class="ImgClass"/><br/>
+                        <!-- <div class="nameContainerDiv"><p><ui:outputText value="{!certName.Achievement__r.Name}"/></p><br/><br/></div> -->
+                    </div>
+                </aura:iteration>
+            </aura:iteration>
+        </div>
+    </aura:if> 
+    <label class="errorClass" style="padding: 2%;font-size: large;">{!v.ErrorMsg}</label>
+</aura:component>

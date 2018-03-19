@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project Agreement</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Project Agreements</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agreement Expiration Warning --></label>
+        <name>Agreement_Expiration_Warning__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agreement --></label>
+        <name>Agreement__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Days Until Agreement Expiration --></label>
+        <name>Days_Until_Agreement_Expiration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration Id --></label>
+        <name>Migration_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Agreements --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Project Agreement Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Expiration Details --></label>
+            <section>Expiration Details</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Information --></label>
+            <section>Financial Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Agreement and the Project must both be tied to the same Account. --></errorMessage>
+        <name>Ensure_Accounts_Match</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You cannot assign an Expired Agreement to a Project that is Open or Projected. Please choose another Agreement. --></errorMessage>
+        <name>No_Expired_Agreements_on_Open_Projects</name>
+    </validationRules>
+</CustomObjectTranslation>

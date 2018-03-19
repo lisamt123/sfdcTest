@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>DoubleClick for Salesforce - New Version Notification - Summer &apos;17</name>
+    <style>freeForm</style>
+    <subject>10K DoubleClick for Salesforce - New Version Notification - Summer &apos;17</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+I&apos;m pleased to announce that we&apos;re wrapping up testing on the next release of the DoubleClick for Salesforce connector. This release contains several key enhancements, including:
+
+ - Stabilize the Proposal and Proposal Line Item sync services, reducing the likelihood of the jobs halting and restarting in the middle of a sync unexpectedly
+ - Upgrades to the scheduled sync jobs so they can restart themselves if they fail unexpected
+ - Remove deleted Proposal Line Items from Salesforce during the scheduled sync
+ - Sync Cost Adjusted Proposal Line Items as $0 Opportunity Line Items
+
+The full release notes are available at the link below, as well as in the 10K Community under the Knowledge tab.
+
+https://docs.google.com/document/d/1Dpv8br9hYPavE18VJTiMz7cXEFiM17_VTrQz6ydkQ38/edit#
+
+Our target timeline for the upgrade is:
+
+ - Sandboxes on or before May 28th
+ - Production on or before June 11th
+
+When the final testing of the release is wrapped up in the next couple of days, we&apos;ll create a Case in the 10K Community to notify you that the package is ready to go, and to coordinate a time when we can upgrade your Sandbox.
+
+In the mean time, please review the release notes, and let me know of any feedback or questions.
+
+Thanks,
+Matt
+
+Matthew Lamb
+VP, Technology
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

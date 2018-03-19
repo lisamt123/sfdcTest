@@ -1,0 +1,65 @@
+<aura:component controller="ConnectionConfigureLightning" implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global">
+	
+	<ltng:require styles="{!$Resource.lightningCss}" />
+	<lightning:spinner aura:id="Spinner" variant="brand"/>
+
+
+	<aura:attribute name="recordId" 		type="Id" />
+	<aura:attribute name="accessToken" 		type="String" default=" "/>
+	<aura:attribute name="message" 			type="String" default=" "/>
+	<aura:attribute name="messageType" 		type="String" default=" "/>
+    <aura:attribute name="messageTitle" 	type="String" default=" "/>
+    <aura:attribute name="selectedRepo" 	type="String" default=""/>
+    <aura:attribute name="repoList" 		type="ConnectionConfigureLightning.RepoResponseWrapper[]" />
+
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <!-- custom message -->
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 98%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container" id="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+	                X
+	                <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Configure Connection</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate" style="padding-top: .5rem;">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset">
+                                        Select a github repository.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <lightning:layout horizontalAlign="start" multipleRows='true'  class="topPart">
+                	<aura:iteration var="repo" items="{!v.repoList}"  >
+                		<lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+                			<div class="uiInput uiInputRadio uiInput--default uiInput--radio">
+	                            <label class="uiLabel-left form-element__label uiLabel">
+	                                <ui:inputRadio aura:id="r0" name="others" class="{!repo.url}" labelClass="{!repo.full_name}" change="{!c.onGroup}" />
+	                                <span title="{!repo.full_name}">{!repo.full_name}</span>
+	                            </label>
+	                        </div>
+                		</lightning:layoutItem>
+                	</aura:iteration>
+                	
+                </lightning:layout>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <lightning:button onclick="{!c.updateConnection}" variant="brand" label="Save and Close" disabled="{!v.selectedRepo == ''}"  />
+            </footer>
+        </div>
+    </section>
+</aura:component>

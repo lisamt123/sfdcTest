@@ -1,0 +1,96 @@
+<aura:component controller="AdditionalCaseContactController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+	<aura:attribute name="caseRec" type="Case" access="global"/>
+	<aura:attribute name="recID" type="String" access="global"/>
+	<aura:attribute name="bool" type="Boolean" default="true"/>
+
+	<aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleContactIdUpdate}"/>    
+    <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleContactIdClear}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-page-header" role="banner" style="background-color:white; margin-bottom:5px;">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:case" size="large" variant="bare" alternativeText="case"></lightning:icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-title--caps slds-line-height--reset"></p>
+                        <h2 class="slds-m-right--small slds-align-middle slds-truncate" title="Additional Case Contacts">Additional Case Contacts</h2>
+                    </div>
+                </div>
+            </div>
+            <div style="float:right;">
+            	<button class="slds-button slds-button--brand" onclick="{!c.updateAdditionalContacts}">Save</button>
+            </div>
+        </div> 
+    </div>
+    <div class="slds-grid slds-wrap">
+		<div class="slds-p-horizontal--small slds-size--1-of-2">
+	        <c:LookupSObject aura:id="Contact__1"
+	                         label="Additional Case Contact 1"
+	                         value="{!v.caseRec.Additional_Case_Contact_1__r.Name}"
+	                         searchString="{!v.caseRec.Additional_Case_Contact_1__r.Name}"
+	                         pluralLabel="Contacts"
+	                         sObjectAPIName="Contact"
+	                         listIconClass="slds-icon-standard-contact" 
+	                         fieldAPIName="Contact__1"
+	                         listIconSVGPath="standard:contact"
+	                         where="{! ' where AccountId = \'' + v.caseRec.AccountId + '\''}"
+	                         />                                  
+	    </div>
+	    <div class="slds-p-horizontal--small slds-size--1-of-2">
+	        <c:LookupSObject aura:id="Contact__2"
+	                         label="Additional Case Contact 2"
+	                         value="{!v.caseRec.Additional_Case_Contact_2__r.Name}"
+	                         searchString="{!v.caseRec.Additional_Case_Contact_2__r.Name}"
+	                         pluralLabel="Contacts"
+	                         sObjectAPIName="Contact"
+	                         listIconClass="slds-icon-standard-contact" 
+	                         fieldAPIName="Contact__2"
+	                         listIconSVGPath="standard:contact"
+	                         where="{! ' where AccountId = \'' + v.caseRec.AccountId + '\''}"
+	                         />                                  
+	    </div>
+	    <div class="slds-p-horizontal--small slds-size--1-of-2">
+	        <c:LookupSObject aura:id="Contact__3"
+	                         label="Additional Case Contact 3"
+	                         value="{!v.caseRec.Additional_Case_Contact_3__r.Name}"
+	                         searchString="{!v.caseRec.Additional_Case_Contact_3__r.Name}"
+	                         pluralLabel="Contacts"
+	                         sObjectAPIName="Contact"
+	                         listIconClass="slds-icon-standard-contact" 
+	                         fieldAPIName="Contact__3"
+	                         listIconSVGPath="standard:contact"
+	                         where="{! ' where AccountId = \'' + v.caseRec.AccountId + '\''}"
+	                         />                                  
+	    </div>
+	    <div class="slds-p-horizontal--small slds-size--1-of-2">
+	        <c:LookupSObject aura:id="Contact__4"
+	                         label="Additional Case Contact 4"
+	                         value="{!v.caseRec.Additional_Case_Contact_4__r.Name}"
+	                         searchString="{!v.caseRec.Additional_Case_Contact_4__r.Name}"
+	                         pluralLabel="Contacts"
+	                         sObjectAPIName="Contact"
+	                         listIconClass="slds-icon-standard-contact" 
+	                         fieldAPIName="Contact__4"
+	                         listIconSVGPath="standard:contact"
+	                         where="{! ' where AccountId = \'' + v.caseRec.AccountId + '\''}"
+	                         />                                  
+	    </div>
+	    <div class="slds-p-horizontal--small slds-size--1-of-2">
+	        <c:LookupSObject aura:id="Contact__5"
+	                         label="Additional Case Contact 5"
+	                         value="{!v.caseRec.Additional_Case_Contact_5__r.Name}"
+	                         searchString="{!v.caseRec.Additional_Case_Contact_5__r.Name}"
+	                         pluralLabel="Contacts"
+	                         sObjectAPIName="Contact"
+	                         listIconClass="slds-icon-standard-contact" 
+	                         fieldAPIName="Contact__5"
+	                         listIconSVGPath="standard:contact"
+	                         where="{! ' where AccountId = \'' + v.caseRec.AccountId + '\''}"
+	                         />                                  
+	    </div>
+	</div>
+</aura:component>

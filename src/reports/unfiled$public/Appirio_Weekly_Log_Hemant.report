@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Project__c.Assignments__r.Time_Entries__r$Hours__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Project__c$Name</column>
+            <operator>contains</operator>
+            <value>Appirio</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Week</dateGranularity>
+        <field>Project__c.Assignments__r.Time_Entries__r$Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Project__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Project__c.Assignments__r.Time_Entries__r$Resource_Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Appirio Weekly Log - Hemant</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Projects_with_Assignments_with_Time_Entries__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project__c.Assignments__r.Time_Entries__r$Date__c</dateColumn>
+        <interval>INTERVAL_CURRENTQ</interval>
+    </timeFrameFilter>
+</Report>

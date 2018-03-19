@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Account Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Account Plans</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Annual Invoiced Total --></label>
+        <name>Annual_Invoiced_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Annual Margin --></label>
+        <name>Annual_Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Annual Paid Total --></label>
+        <name>Annual_Paid_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current FY Expectation --></label>
+        <name>Current_FY_Expectation__c</name>
+        <picklistValues>
+            <masterLabel>Drop off</masterLabel>
+            <translation><!-- Drop off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grow</masterLabel>
+            <translation><!-- Grow --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintain</masterLabel>
+            <translation><!-- Maintain --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Current FY Revenue Target --></label>
+        <name>Current_FY_Revenue_Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Tier --></label>
+        <name>Current_Tier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Easy Opportunities --></label>
+        <name>Easy_Opportunities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Revenue Remaining to Target --></label>
+        <name>Revenue_Remaining_to_Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stretch Opportunities --></label>
+        <name>Stretch_Opportunities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <layouts>
+        <layout>Account Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Finances --></label>
+            <section>Finances</section>
+        </sections>
+        <sections>
+            <label><!-- Strategy --></label>
+            <section>Strategy</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please enter only a 4 digit Year --></errorMessage>
+        <name>Year_Validation</name>
+    </validationRules>
+</CustomObjectTranslation>

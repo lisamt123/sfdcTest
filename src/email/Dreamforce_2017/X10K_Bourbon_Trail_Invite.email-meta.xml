@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K Bourbon Trail Invite</name>
+    <style>none</style>
+    <subject>10K Dreamforce Bourbon Trail Invitation</subject>
+    <textOnly>Hi {!CampaignMember.FirstName}!
+
+It’s official - 10K is throwing THE party to attend at Dreamforce! Start your Trailhead adventure on the 10K Bourbon Trail, an ultra-exclusive peek into some historical Kentucky Straight Bourbon Whiskey bottled in the 60s, 70s, 80s, and 90s. These bottles are very rare and like time capsules into the past, and we couldn’t be more excited to share them with our biggest supporters. The Barrel Room’s speakeasy-esque atmosphere will provide the perfect backdrop to an evening of tasting rare bourbons from bygone eras. H&apos;orderves will be served to complement the bourbon and cocktails crafted exclusively for this event.
+
+The attendance is limited, and so is the bourbon, so we respectfully request your response to this invitation by October 23rd so that we may plan appropriately. Whether you can or cannot attend, please let us know by clicking here: https://www.getfeedback.com/r/DNdlQHwB?CAMPAIGNID=70136000000WFLg&amp;CONTACTID={!CampaignMember.ContactId}&amp;CONTACTFIRSTNAME={!CampaignMember.FirstName}.
+
+If you plan to attend, please read your confirmation email for more details about the event.
+
+Happy Trails to you!
+
+The 10K Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>

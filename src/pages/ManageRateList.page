@@ -1,0 +1,808 @@
+<apex:page standardController="Rate__c" extensions="ManageRateListController" docType="html-5.0">
+  
+  <!-- script to show to make table mobile compatible -->
+  <script>
+       
+        window.onload = function(){
+            addTagtoTable();
+        }    
+        
+        function addTagtoTable(){
+        
+            try{
+                var tableData1 = document.getElementsByClassName("rwd-table")[0];
+                var alltd1 = tableData1.getElementsByTagName("td");
+                var tableData2 = document.getElementsByClassName("rwd-table")[1];
+                var alltd2 = tableData2.getElementsByTagName("td");
+                var tableData3 = document.getElementsByClassName("rwd-table")[2];
+                var alltd3 = tableData3.getElementsByTagName("td");
+                
+                for(var i=0; i<alltd1.length; i=i+7){
+    
+                    var td1 = alltd1[i];
+                    td1.setAttribute("data-th", "Action");
+                    var td2 = alltd1[i+1];
+                    td2.setAttribute("data-th", "Role");
+                    var td3 = alltd1[i+2];
+                    td3.setAttribute("data-th", "Hours Per Month");
+                    var td4 = alltd1[i+3];
+                    td4.setAttribute("data-th", "Monthly Rate");
+                    var td5 = alltd1[i+4];
+                    td5.setAttribute("data-th", "Number of Months");
+                }
+                
+                for(var i=0; i<alltd2.length; i=i+6){
+    
+                    var td1 = alltd2[i];
+                    td1.setAttribute("data-th", "Action");
+                    var td2 = alltd2[i+1];
+                    td2.setAttribute("data-th", "Role");
+                    var td3 = alltd2[i+2];
+                    td3.setAttribute("data-th", "Hours Per Month");
+                    var td4 = alltd2[i+3];
+                    td4.setAttribute("data-th", "Hourly Rate");
+                }
+                
+                for(var i=0; i<alltd3.length; i=i+3){
+    
+                    var td1 = alltd3[i];
+                    td1.setAttribute("data-th", "Action");
+                    var td2 = alltd3[i+1];
+                    td2.setAttribute("data-th", "Role");
+                    var td3 = alltd3[i+2];
+                    td3.setAttribute("data-th", "Region");
+                    var td4 = alltd3[i+3];
+                    td4.setAttribute("data-th", "Hourly Rate");
+                }
+            }
+            catch(ex){
+            
+            }
+        }
+    
+   </script>
+   
+   <style>
+       .custPopup{
+           background-color: white;
+           border-width: 0px;
+           border-radius:10px;
+           z-index: 9999;
+           left: 50%;
+           padding:20px;
+           position: fixed; /* These are the 3 css properties you will need to change so
+           the popup displays in the center of the screen. First set the width.
+           Then set margin-left to negative half of what the width is.
+           You can add the height property for a fixed size pop up if you want.*/
+           margin-left: -100px; top:40%;
+       }
+       .popupBackground{
+           background-color:black;
+           opacity: 0.30;
+           filter: alpha(opacity = 30);
+           position: fixed;
+           width: 100%;
+           height: 100%;
+           top: 0;
+           left: 0;
+           z-index: 9998;
+       }
+       
+       .btnCls{
+       
+           margin-left:40% !important;
+       }
+       .removeBtn{
+           background-image: url('{!Urlfor($Resource.closebutton)}') !important;
+           height: 22px !important;
+           width: 22px !important;
+           /* background-size: 100%; */
+           background-size: 20px 20px!important;
+           background-repeat: no-repeat !important;
+           border-radius: 50% !important;
+           cursor: pointer !important;
+           border : none !important;
+           background-color: transparent !important;
+       }
+       .bPageBlock .requiredInput .requiredBlock {
+         top: -2px !important ; 
+       }
+       body
+       {
+          padding: 0px !important;
+       }
+       .slds-input 
+       {
+        width: 90% !important;
+       }
+       .slds-select
+       {
+        width: auto !important;
+       }
+        .slds-scope .slds-panel__section 
+        {
+          padding: 1rem 0 !important;
+        }
+        .slds-scope .slds-m-bottom--medium 
+        {
+          margin: 1rem !important;
+        }
+        .slds-scope .requiredBlock 
+        {
+          background-color: #c00;
+          position: absolute;
+          left: -1px;
+          width: 3px;
+          height: 30px !important;
+        }
+        .slds-scope .messageText
+        {
+          color: white !important;
+        }
+        .slds-scope .messageText h4
+        {
+          display: none !important;
+        }
+        .slds-scope .message
+        {
+              background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-size: 64px 64px;
+              background-color: #c23934;
+              margin: 0px !important;-0px !important
+              border-radius: 0px !important;
+        }
+        .slds-scope .confirmM3
+        {
+            background-color: #04844b !important;
+        }
+        .slds-scope .message table tr td:first-child
+        {
+          display: none !important;
+        }
+        .slds-scope .messageText
+        {
+          
+          text-align: center !important;
+        }
+        .slds-scope .slds-form-element
+        {
+          overflow-x: auto;
+          overflow-y: visible;
+        }
+        .slds-scope .dateFormat
+        {
+          display: none;
+        }
+        
+        /* style for table responsive which will apply in Salesforce1 */
+        
+         @media (max-width: 450px) {
+            
+            .plannedHoursClass{
+                width: 150px!important;
+            }
+            .rwd-table {
+              margin: 1em 0;
+              border-collapse: collapse;
+              -webkit-appearance: none;
+            }
+            .rwd-table tr {
+              border-top: 5px solid #ccc;
+              border-bottom: 5px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table th {
+              display: none;
+              border: 1px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table td {
+              display: block;
+              color: black;
+              white-space: initial!important;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:first-child {
+              padding-left: 0.5rem!important;
+              padding-top: .5em;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:last-child {
+              padding-bottom: .5em;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:before {
+              content: attr(data-th) ": ";
+              font-weight: bold;
+              width: 8.1em;
+              display: inline-block;
+              -webkit-appearance: none;
+            }
+            .rwd-table th, .rwd-table td {
+              text-align: left;
+              -webkit-appearance: none;
+            }
+            
+            .rwd-table {
+              overflow: hidden;
+              border-collapse: collapse;
+              border: 1px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table tr {
+              border-color: #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table th, .rwd-table td {
+              margin: .5em 1em;
+              -webkit-appearance: none;
+            }
+            
+            .rwd-table th, .rwd-table td:before {
+              color: black;
+              -webkit-appearance: none;
+            }
+        
+        }
+        
+        @media (min-width: 450px) {
+            .rwd-table td:before {
+                display: none;
+                -webkit-appearance: none;
+            }
+        
+          .rwd-table th, .rwd-table td {
+            display: table-cell;
+            padding: .25em .5em;
+            
+            -webkit-appearance: none;
+          }
+          .rwd-table th:first-child, .rwd-table td:first-child {
+            padding-left: 0;
+            -webkit-appearance: none;
+          }
+          .rwd-table th:last-child, .rwd-table td:last-child {
+            padding-right: 0;
+            -webkit-appearance: none;
+          }
+        }
+        
+   </style>
+   <script>
+       function temp(idx){
+           alert(idx);
+       }
+       
+       function changingRole(indx,type,lastRow,size){
+           //alert(type +'---' + lastRow);
+           console.log('lastRow - '+lastRow+' size - '+size);
+           if(lastRow == size ){
+               changeRole(indx,type);
+               console.log('here');
+
+           }    
+       }
+   </script>  
+   <apex:sectionHeader subtitle="Manage Rates" title="{!agreementName }" rendered="{!!isLightningExperience}"/>
+   <apex:form id="frm">
+      <apex:outputPanel id="msg" >
+          
+        <script> 
+            try{
+                addTagtoTable(); 
+            }
+            catch(err){
+            
+            }
+        </script>
+      
+        <apex:actionFunction name="addRow" action="{!addNewRow}"  status="status" reRender="msg">
+              <apex:param value="" name="rowType" assignTo="{!rowType}"/>
+          </apex:actionfunction>
+          <apex:actionFunction name="removeRow" action="{!removeRow}" status="status" rerender="msg">
+              <apex:param value="" name="index" assignTo="{!removingIndex}"/>
+              <apex:param value="" name="secType" assignTo="{!deletingSectionType}"/>
+          </apex:actionFunction>
+          <!-- ----------------------------- selecting role ----------------------- -->
+          <apex:actionFunction name="changeRole" action="{!roleSelected}" status="status" rerender="msg,rateWrapperList">
+              <apex:param value="" name="index" assignTo="{!removingIndex}"/>
+              <apex:param value="" name="secType" assignTo="{!deletingSectionType}"/>
+          </apex:actionFunction>
+          <!-- -------------------------------------------------------------- -->
+           <apex:actionStatus id="status">
+             <apex:facet name="start">
+              <apex:outputPanel id="tstpopup">
+               <apex:outputPanel styleClass="popupBackground" layout="block"/>
+                <apex:outputPanel styleClass="custPopup" layout="block">
+                 <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+                </apex:outputPanel>
+               </apex:outputPanel>
+             </apex:facet>
+           </apex:actionStatus>
+   
+       <apex:outputPanel rendered="{!!isLightningExperience}">
+            
+           <apex:pageBlock Title="Rate Management" mode="edit">
+              <apex:pageBlockButtons >
+                  <apex:commandButton value="Save" action="{!save}"/>
+                  <apex:commandButton value="Cancel" action="{!cancel}"/>
+              </apex:pageBlockButtons>
+              <apex:pageMessages />
+              <!-- ------------------ named resource section -------------------------- -->
+              <apex:pageBlockSection columns="1" title="{!NRSectionTitle}" rendered="{!showAll}">
+                  <!--<apex:commandButton value="Add Row" onClick="addRow('NR'); return false;" styleClass="btnCls" /> -->
+                  <apex:variable var="i" value="{!0}"/>
+                   <apex:pageblockTable value="{!rateNRWrapperList}" var="mod" styleclass="rwd-table1">
+                       <apex:column headerValue="Action">
+                           <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">  
+                               <input type="button" onClick="removeRow('{!mod.index}','NR'); return false;" Class="removeBtn"/>
+                           </Apex:outputPanel>     
+                       </apex:column> 
+
+                       <apex:column headerValue="Role">
+                           <apex:variable var="i" value="{!i + 1}"/>
+                           <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                               <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Role__c}" onChange="changingRole('{!mod.index}','NR',{!i},{!rateNRWrapperList.size});"  />
+                           </apex:outputpanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                           </apex:outputpanel>    
+                       </apex:column>
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Hours Per Month', 'Hours Per Week')}">
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Month__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Month__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Week__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Week__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Monthly Rate', 'Weekly Rate')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Monthly_Rate__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Monthly_Rate__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Weekly_Rate__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Weekly_Rate__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Number of Months', 'Number of Weeks')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Number_of_Months__c}"   />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Number_of_Months__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Number_of_Weeks__c}"   />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Number_of_Weeks__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>
+
+                       <apex:column headerValue="Rate Specific Effective Date" rendered="{!!isSalesforceOne}">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="Rate Specific Valid Through" rendered="{!!isSalesforceOne}">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>              
+                    </apex:pageblockTable>
+                    
+              </apex:pageBlockSection>
+               <!-- ------------------retained capacity section -------------------------- -->
+              <apex:pageBlockSection columns="1"  Title="{!RCSectionTitle}" rendered="{!showAll}">
+                  <!--<apex:commandButton value="Add Row" onClick="addRow('RC'); return false;" styleClass="btnCls" /> -->
+                  <apex:variable var="i" value="{!0}"/>
+                  <apex:pageblockTable value="{!rateRCWrapperList }" var="mod" styleclass="rwd-table1">
+                       <apex:column headerValue="Action"> 
+                          <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">                    
+                              <input type="button" onClick="removeRow('{!mod.index}','RC'); return false;" Class="removeBtn" />
+                          </Apex:outputPanel>     
+                       </apex:column>
+
+                       <apex:column headerValue="Role">
+                           <apex:variable var="i" value="{! i + 1 }"/>
+                           <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                               <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Role__c}" onChange="changingRole('{!mod.index}','RC',{!i},{!rateRCWrapperList.size});" />
+                           </apex:outputpanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                           </apex:outputpanel>    
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Hours Per Month', 'Hours Per Week')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Month__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Month__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Week__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Week__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="Hourly Rate">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hourly_Rate__c }" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Hourly_Rate__c }"/>
+                           </apex:outputpanel>
+                       </apex:column>
+
+                       <apex:column headerValue="Rate Specific Effective Date" rendered="{!!isSalesforceOne}" >
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+                       <apex:column headerValue="Rate Specific Valid Through" rendered="{!!isSalesforceOne}">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>    
+                   </apex:pageblockTable>
+                   
+              </apex:pageBlockSection>
+               <!-- ------------------ T&M section -------------------------- -->
+              <apex:outputPanel id="TM"> 
+                  <apex:pageBlockSection columns="1"  Title="{!TMSectionTitle}" >
+                      <!--<apex:commandButton value="Add Row" onClick="addRow('TM'); return false;" styleClass="btnCls"/> -->
+                      <apex:variable var="i" value="{!0}"/>
+                      <apex:pageblockTable id="rateWrapperList" value="{!rateTMWrapperList }" var="mod" styleclass="rwd-table1">
+                          
+                           <apex:column headerValue="Action" >
+                               <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">
+                                   <input class="removeBtn" type="button" onclick="removeRow('{!mod.index}','TM'); return false;" />
+                               </Apex:outputPanel>                      
+                           </apex:column>
+                           <apex:column headerValue="Role"  >
+                               <apex:variable var="i" value="{! i + 1 }"/>
+                               <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                                   <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                                  
+                                   <apex:inputField value="{!mod.rateObj.Role__c}" onChange="changingRole('{!mod.index}','TM',{!i},{!rateTMWrapperList.size} );" />
+                               </apex:outputpanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                           <apex:column headerValue="Region"  >
+                               <Apex:outputpanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                                   <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                                   
+                                   <apex:inputField value="{!mod.rateObj.Region__c}" onChange="" />
+                               </apex:outputpanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Region__c}"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                           <apex:column headerValue="Hourly Rate" >
+                               <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                                   <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                                   <apex:inputField value="{!mod.rateObj.Hourly_Rate__c}" />
+                               </apex:outputPanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Hourly_Rate__c }"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                       </apex:pageblockTable>
+                       
+                  </apex:pageBlockSection>
+              </apex:outputPanel>  
+           </apex:pageblock>
+        </apex:outputPanel> 
+
+        <!-- ----------------------------- Lightning Experience ----------------------- -->
+        <apex:outputPanel id="msg2" rendered="{!isLightningExperience}">
+          <apex:slds />
+          <div class="slds-scope">
+            <apex:pageMessages />
+            <div class="slds-page-header" role="banner">
+              
+              <div class="slds-grid">
+              <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-media--center slds-no-space slds-grow">
+                  <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #67a5e7" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                    <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                      <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/custom/custom46_120.png')}" class="icon " alt="Rates" title="Rates"/>
+                    </span>
+                  </div>
+                <div class="slds-media__body">
+                  <p class="slds-page-header__title slds-truncate slds-align-middle" title="Manage Rates">Manage Rates</p>
+                  <p class="slds-text-body--small page-header__info">{!agreementName}</p>
+                </div>
+              </div>
+              </div>
+              <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Save" action="{!save}"/>
+                <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Cancel" action="{!cancel}"/>
+              </div>
+            </div>
+
+            </div>
+            <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+              <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                <apex:outputPanel styleclass="slds-panel__section" rendered="{!showAll}" layout="block">
+                  <h3 class="slds-text-heading--small slds-m-bottom--medium">{!NRSectionTitle}</h3>
+                  <div class="slds-form-element">
+                    <apex:variable var="i" value="{!0}"/>
+                    <apex:dataTable styleclass="slds-table slds-table--bordered slds-table--cell-buffer rwd-table" value="{!rateNRWrapperList}" var="mod">
+                       <apex:column headerValue="Action">
+                           <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">  
+                               <input type="button" onClick="removeRow('{!mod.index}','NR'); return false;" Class="removeBtn"/>
+                           </Apex:outputPanel>     
+                       </apex:column> 
+
+                       <apex:column headerValue="Role">
+                           <apex:variable var="i" value="{!i + 1}"/>
+                           <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                               <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Role__c}" styleClass="slds-select plannedHoursClass" onChange="changingRole('{!mod.index}','NR',{!i},{!rateNRWrapperList.size});"  />
+                           </apex:outputpanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                           </apex:outputpanel>    
+                       </apex:column>
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Hours Per Month', 'Hours Per Week')}">
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Month__c}" styleClass="slds-input plannedHoursClass"/>
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Month__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Week__c}"  styleClass="slds-input plannedHoursClass"/>
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Week__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Monthly Rate', 'Weekly Rate')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Monthly_Rate__c}"  styleClass="slds-input plannedHoursClass"/>
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Monthly_Rate__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Weekly_Rate__c}" styleClass="slds-input plannedHoursClass"/>
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Weekly_Rate__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Number of Months', 'Number of Weeks')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Number_of_Months__c}" styleClass="slds-input plannedHoursClass"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Number_of_Months__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Weekly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Number_of_Weeks__c}" styleClass="slds-input plannedHoursClass"  />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Number_of_Weeks__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>
+
+                       <apex:column headerValue="Rate Specific Effective Date"  rendered="{!!isSalesforceOne}">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Effective_Date__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+                           
+                       <apex:column headerValue="Rate Specific Valid Through" rendered="{!!isSalesforceOne}" >
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Valid_Through__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>              
+                    </apex:dataTable>
+                  </div>
+                </apex:outputPanel>
+                <apex:outputPanel styleclass="slds-panel__section" rendered="{!showAll}" layout="block">
+                  <h3 class="slds-text-heading--small slds-m-bottom--medium">{!RCSectionTitle}</h3>
+                  <div class="slds-form-element">
+                    <apex:variable var="i" value="{!0}"/>
+                    <apex:dataTable styleclass="slds-table slds-table--bordered slds-table--cell-buffer rwd-table" value="{!rateRCWrapperList }" var="mod">
+                       <apex:column headerValue="Action"> 
+                          <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">                    
+                              <input type="button" onClick="removeRow('{!mod.index}','RC'); return false;" Class="removeBtn" />
+                          </Apex:outputPanel>     
+                       </apex:column>
+
+                       <apex:column headerValue="Role">
+                           <apex:variable var="i" value="{! i + 1 }"/>
+                           <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                               <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Role__c}" styleClass="slds-select plannedHoursClass" onChange="changingRole('{!mod.index}','RC',{!i},{!rateRCWrapperList.size});" />
+                           </apex:outputpanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                           </apex:outputpanel>    
+                       </apex:column> 
+
+                       <apex:column headerValue="{!IF(isMonthly, 'Hours Per Month', 'Hours Per Week')}" >
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Month__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Month__c}"/>
+                           </apex:outputpanel>
+
+                           <!-- Monthly Field -->
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded && !mod.isMonthly}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hours_Per_Week__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly && !mod.isMonthly}">
+                               <apex:outputfield value="{!mod.rateObj.Hours_Per_Week__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+
+                       <apex:column headerValue="Hourly Rate">
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                               <apex:inputField value="{!mod.rateObj.Hourly_Rate__c }" styleClass="slds-input plannedHoursClass"/>
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Hourly_Rate__c }"/>
+                           </apex:outputpanel>
+                       </apex:column>
+
+                       <apex:column headerValue="Rate Specific Effective Date" rendered="{!!isSalesforceOne}" >
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Effective_Date__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Effective_Date__c}"/>
+                           </apex:outputpanel>
+                       </apex:column> 
+                       <apex:column headerValue="Rate Specific Valid Through" rendered="{!!isSalesforceOne}" >
+                           <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}">
+                               <apex:inputField value="{!mod.rateObj.Rate_Specific_Valid_Through__c}" styleClass="slds-input plannedHoursClass" />
+                           </apex:outputPanel>
+                           <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                               <apex:outputfield value="{!mod.rateObj.Rate_Specific_Valid_Through__c}"/>
+                           </apex:outputpanel>
+                       </apex:column>    
+                   </apex:dataTable>
+                  </div>
+                </apex:outputPanel>
+                <apex:outputPanel styleclass="slds-panel__section" layout="block">
+                  <h3 class="slds-text-heading--small slds-m-bottom--medium">{!TMSectionTitle}</h3>
+                  <div class="slds-form-element">
+                      <apex:variable var="i" value="{!0}"/>
+                      <apex:dataTable styleclass="slds-table slds-table--bordered slds-table--cell-buffer rwd-table" value="{!rateTMWrapperList }" var="mod">
+                          
+                           <apex:column headerValue="Action" >
+                               <Apex:outputPanel rendered="{!!mod.isReadOnly && !mod.hasAssignments && !mod.isNewlyAdded}">
+                                   <input class="removeBtn" type="button" onclick="removeRow('{!mod.index}','TM'); return false;" />
+                               </Apex:outputPanel>                      
+                           </apex:column>
+                           <apex:column headerValue="Role"  >
+                               <apex:variable var="i" value="{! i + 1 }"/>
+                               <Apex:outputpanel rendered="{!!mod.isReadOnly}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                                   <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                                   
+                                   <apex:inputField value="{!mod.rateObj.Role__c}" styleclass="slds-select plannedHoursClass" onChange="changingRole('{!mod.index}','TM',{!i},{!rateTMWrapperList.size} );" />
+                               </apex:outputpanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Role__c}"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                           <apex:column headerValue="Region"  >
+                               <Apex:outputpanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 17px;">
+                                   <apex:OutputPanel styleClass="{!if(mod.isNewlyAdded == true,'','requiredBlock')}" layout="Block" style="height: 17px;"/> 
+                                   
+                                   <apex:inputField value="{!mod.rateObj.Region__c}" styleclass="slds-select plannedHoursClass" onChange="" />
+                               </apex:outputpanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Region__c}"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                           <apex:column headerValue="Hourly Rate" >
+                               <apex:outputPanel rendered="{!!mod.isReadOnly && !mod.isNewlyAdded}" styleClass="requiredInput" layout="Block" style="height: 18px;">
+                                   <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                                   <apex:inputField value="{!mod.rateObj.Hourly_Rate__c}" styleClass="slds-input plannedHoursClass"/>
+                               </apex:outputPanel>
+                               <Apex:outputpanel rendered="{!mod.isReadOnly}">
+                                   <apex:outputfield value="{!mod.rateObj.Hourly_Rate__c }"/>
+                               </apex:outputpanel>
+                           </apex:column>
+                       </apex:dataTable>
+                  </div>
+                </apex:outputPanel>
+              </div>
+            </div>
+          </div>
+          
+        </apex:outputPanel> 
+      </apex:outputpanel>   
+    </apex:form>  
+</apex:page>

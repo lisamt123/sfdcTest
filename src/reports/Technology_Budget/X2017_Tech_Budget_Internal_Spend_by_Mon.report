@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>10000</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <downGroupingContext>Project__c.Assignments__r.Time_Entries__r$Date__c</downGroupingContext>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Internal Tech Budget (Monthly)</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_59820650</developerName>
+        <masterLabel>Onshore / Offshore</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Project__c.Assignments__r.Time_Entries__r$Resource_Name__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Mike Gill</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Matt Brown</sourceValue>
+            </sourceValues>
+            <value>Onshore</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Gaurav Nirwal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rajesh Kamath</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Devendra Saran</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Saurav Nirwal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tara Chand</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lokesh Pareek</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Amit Jayaswal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Akshat Agarwal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Avon Gracias</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ravikant Kedia</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ravikant Saini</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ankit Sharma</sourceValue>
+            </sourceValues>
+            <value>Offshore</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Project__c.Assignments__r.Time_Entries__r$Name</field>
+    </columns>
+    <columns>
+        <field>Project__c.Assignments__r.Time_Entries__r$Hours__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Project__c.Assignments__r.Time_Entries__r$Total_Cost_Amount__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Project__c$Name</column>
+            <operator>contains</operator>
+            <value>10K Advisors - Internal App Development</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>Project__c.Assignments__r.Time_Entries__r$Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_59820650</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Project__c.Assignments__r$Resource_Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>2017 Tech Budget - Internal Spend by Mon</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Projects_with_Assignments_with_Time_Entries__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project__c.Assignments__r.Time_Entries__r$Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2017-01-01</startDate>
+    </timeFrameFilter>
+</Report>

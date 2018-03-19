@@ -1,0 +1,80 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false">
+	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+	
+	<form action="https://login.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+		<input type="hidden" name="oid" value="00D36000000v5KY" />
+		<input type="hidden" name="retURL" value="http://10kview.force.com/" />
+		<input type="hidden" id="00N3600000Okmkl" name="00N3600000Okmkl" value="Expert" />
+		<input type="hidden" id="lead_source" name="lead_source" value="10kview.com" />
+
+		<title>10K Advisors - Expert</title>
+	    <apex:composition template="X10KViewSiteTemplate">
+	        <apex:define name="header">
+	            <c:X10KViewHeader seletedTab="#expert"/>
+	        </apex:define>
+	        <apex:define name="body">
+				<div class="container-fluid">
+					<div class="row text-left expert" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/salesforce_expert_background.jpg')}')">
+						<div class="col-md-8 col-md-offset-2">
+							<button type="button" class="btn btn-lg nohover btn-default">Expert</button>
+							<h1>Join the 10K community and take your career to the next level</h1>
+						</div>
+					</div>
+					<div class="row text-left expert-form" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/10kAdvisors_Logo_Mountain_Background.png')}')">
+						<div class="col-md-6 col-md-offset-3">
+							<button type="button" class="btn btn-lg nohover btn-default">Sign Up</button>
+							<p class="form-instructions">Please complete the form, fields marked with * are required.</p>
+							<form role="form" action="#" class="form-horizontal" data-toggle="validator">
+									<div class="form-group">
+										<label class="sr-only" for="firstname">First Name:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="firstname" class="form-control" id="first_name" name="first_name" placeholder="First Name *" required="true"/>
+									</div>
+									<label class="sr-only" for="lastname">Last Name:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="lastname" class="form-control" id="last_name" name="last_name" placeholder="Last Name *" required="true"/>
+									</div>
+									<label class="sr-only" for="email">Email Address:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="email" class="form-control" id="email" name="email" placeholder="Email Address *" required="true"/>
+									</div>
+									<label class="sr-only" for="about-me">About Me:</label>
+									<div class="col-sm-12 add-margin">
+										<textarea type="about-me" class="form-control" id="description" name="description" placeholder="About Me *" required="true"></textarea>
+									</div>
+									<label class="sr-only" for="company">Company Name:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="company" class="form-control" id="company" name="company" placeholder="Company Name"/>
+									</div>
+									<label class="sr-only" for="twitter">Twitter Username:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="twitter" class="form-control" id="00N3600000OknP1" name="00N3600000OknP1" placeholder="Twitter Username"/>
+									</div>
+									<label class="sr-only" for="webassessor-email">Webassessor Email Address:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="email" class="form-control" id="00N3600000Ok8sh" name="00N3600000Ok8sh" placeholder="Webassessor Email Address"/>
+									</div>
+									<label class="sr-only" for="trailhead-link">Trailhead Profile Link:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="url" class="form-control" id="00N3600000OknP0" name="00N3600000OknP0" placeholder="Trailhead Profile Link"/>
+									</div>
+									<label class="sr-only" for="website-blog">Website/Blog Link:</label>
+									<div class="col-sm-12 add-margin">
+										<input type="url" class="form-control" id="00N3600000OknP2" name="00N3600000OknP2" placeholder="Website/Blog Link"/>
+									</div>
+									<div class="col-sm-4 add-margin">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</apex:define>
+	        <apex:define name="footer">
+	            <c:X10KViewFooter />
+	        </apex:define>
+	    </apex:composition>
+	    <site:googleAnalyticsTracking />
+	</form>
+</apex:page>

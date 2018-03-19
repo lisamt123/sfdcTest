@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce July 2017 release functionality in the Community</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Release Update: July 2017</name>
+    <style>freeForm</style>
+    <subject>10K Community July 2017 Release Notes - Revised</subject>
+    <textOnly>Hello!
+
+We are very excited to share July 2017 Release notes! There&apos;s a lot of new and cool functionality at your disposal to help you be the best 10K Expert possible and provide our Clients with outstanding quality and service.
+
+Some quick highlights are below but check out the full set of information in the July 2017 Release Notes Knowledge Article.
+
+Time Cards
+
+
+You are now able to associate your time entries with a specific Story and Task from the Timecard page.
+
+
+
+Expert to Expert Feedback Launch!
+
+
+10K Way now provides the ability for our experts to provide feedback on colleagues.
+
+
+
+10K Way Training Program
+
+Now available for all Experts including new team members. Let us know if there is a team member who does not have access and we&apos;ll set them up. We&apos;re looking for 100% of 10K Experts to complete the course.
+
+
+
+Bug fix on profiles
+
+
+We’ve fixed a bug in the Community around Profiles that did not allow Experts to edit.
+
+
+
+Let us know your thoughts and questions. We truly appreciate your feedback!
+
+
+
+Thanks,
+
+Diane
+
+
+
+Diane Shotton
+
+VP Client Services
+
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

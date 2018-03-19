@@ -1,0 +1,458 @@
+<apex:page standardController="Project__c" extensions="ManageCostRatesController" showHeader="true" sidebar="true">
+  
+        <!-- script to show to make table mobile compatible -->
+        <script>
+        
+        window.onload = function(){
+            addTagtoTable();
+        }    
+        
+        function addTagtoTable(){
+        
+            try{
+                var tableData = document.getElementsByClassName("rwd-table")[0];
+                var alltd = tableData.getElementsByTagName("td");
+                
+                for(var i=0; i<alltd.length; i=i+8){
+    
+                    var td1 = alltd[i];
+                    td1.setAttribute("data-th", "Expert");
+                    var td2 = alltd[i+1];
+                    td2.setAttribute("data-th", "Agreement");
+                    var td3 = alltd[i+2];
+                    td3.setAttribute("data-th", "Role");
+                    var td4 = alltd[i+3];
+                    td4.setAttribute("data-th", "Region");
+                    var td5 = alltd[i+4];
+                    td5.setAttribute("data-th", "Cost Rate");
+                    /*var td5 = alltd[i+4];
+                    td5.setAttribute("data-th", "Role");
+                    var td6 = alltd[i+5];
+                    td6.setAttribute("data-th", "Assignment Type");
+                    var td7 = alltd[i+6];
+                    td7.setAttribute("data-th", "Rate");
+                    var td8 = alltd[i+7];
+                    td8.setAttribute("data-th", "Planned Hours");  */
+                }
+            }
+            catch(ex){
+            
+            }
+        }
+    
+    </script>
+  
+    <style>
+       .custPopup{
+           background-color: white;
+           border-width: 0px;
+           border-radius:10px;
+           z-index: 9999;
+           left: 50%;
+           padding:20px;
+           position: absolute; /* These are the 3 css properties you will need to change so
+           the popup displays in the center of the screen. First set the width.
+           Then set margin-left to negative half of what the width is.
+           You can add the height property for a fixed size pop up if you want.*/
+           margin-left: -100px; top:40%;
+       }
+       .popupBackground{
+           background-color:black;
+           opacity: 0.30;
+           filter: alpha(opacity = 30);
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           top: 0;
+           left: 0;
+           z-index: 9998;
+       }
+       .removeBtn{
+           background-image: url('{!Urlfor($Resource.closebutton)}') !important;
+           height: 22px !important;
+           width: 22px !important;
+           /* background-size: 100%; */
+           background-size: 20px 20px!important;
+           background-repeat: no-repeat !important;
+           border-radius: 50% !important;
+           cursor: pointer !important;
+           border : none !important;
+           background-color: transparent !important;
+       }
+       .bPageBlock .requiredInput .requiredBlock {
+         top: -2px !important ; 
+       }
+       body
+       {
+          padding: 0px !important;
+       }
+       .slds-input 
+       {
+        width: 90% !important;
+       }
+       .slds-select
+       {
+        width: auto !important;
+       }
+        .slds-scope .slds-panel__section 
+        {
+          padding: 1rem 0 !important;
+        }
+        .slds-scope .slds-m-bottom--medium 
+        {
+          margin: 1rem !important;
+        }
+        .slds-scope .requiredBlock 
+        {
+          background-color: #c00;
+          position: absolute;
+          left: -1px;
+          width: 3px;
+          height: 30px !important;
+        }
+        .slds-scope .messageText
+        {
+          color: white !important;
+        }
+        .slds-scope .messageText h4
+        {
+          display: none !important;
+        }
+        .slds-scope .message
+        {
+              background-image: -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+              background-size: 64px 64px;
+              background-color: #c23934;
+              margin: 0px !important;
+              border-radius: 0px !important;
+              border: 0px !important;
+        }
+        .slds-scope .confirmM3
+        {
+            background-color: #04844b !important;
+        }
+        .slds-scope .message table tr td:first-child
+        {
+          display: none !important;
+        }
+        .slds-scope .messageText
+        {
+          
+          text-align: center !important;
+        }
+        .slds-scope .lookupInput  a
+        {
+          border: 0px !important;
+          padding: 0px !important;
+          background-color: transparent !important;
+          min-height: 0px !important;
+          width: 24px !important;
+        }
+        
+        /* style for table responsive which will apply in Salesforce1 */
+        
+         @media (max-width: 450px) {
+            
+            .plannedHoursClass{
+                width: 150px!important;
+            }
+            .rwd-table {
+              margin: 1em 0;
+              border-collapse: collapse;
+              -webkit-appearance: none;
+            }
+            .rwd-table tr {
+              border-top: 5px solid #ccc;
+              border-bottom: 5px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table th {
+              display: none;
+              border: 1px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table td {
+              display: block;
+              color: black;
+              white-space: initial!important;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:first-child {
+              padding-left: 0.5rem!important;
+              padding-top: .5em;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:last-child {
+              padding-bottom: .5em;
+              -webkit-appearance: none;
+            }
+            .rwd-table td:before {
+              content: attr(data-th) ": ";
+              font-weight: bold;
+              width: 8.1em;
+              display: inline-block;
+              -webkit-appearance: none;
+            }
+            .rwd-table th, .rwd-table td {
+              text-align: left;
+              -webkit-appearance: none;
+            }
+            
+            .rwd-table {
+              overflow: hidden;
+              border-collapse: collapse;
+              border: 1px solid #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table tr {
+              border-color: #ccc;
+              -webkit-appearance: none;
+            }
+            .rwd-table th, .rwd-table td {
+              margin: .5em 1em;
+              -webkit-appearance: none;
+            }
+            
+            .rwd-table th, .rwd-table td:before {
+              color: black;
+              -webkit-appearance: none;
+            }
+        
+        }
+        
+        @media (min-width: 450px) {
+            .rwd-table td:before {
+                display: none;
+                -webkit-appearance: none;
+            }
+        
+          .rwd-table th, .rwd-table td {
+            display: table-cell;
+            padding: .25em .5em;
+            
+            -webkit-appearance: none;
+          }
+          .rwd-table th:first-child, .rwd-table td:first-child {
+            padding-left: 0;
+            -webkit-appearance: none;
+          }
+          .rwd-table th:last-child, .rwd-table td:last-child {
+            padding-right: 0;
+            -webkit-appearance: none;
+          }
+        }
+        
+        
+    
+    </style>
+    <script>
+        function resourceSelectedByUser(indx, obj ,isNewlyAdded){
+            if(obj.value !='' && isNewlyAdded){  
+                resourceSelected(indx);
+            }
+        }
+        
+        function agreementSelected1(indx,id){
+            agreementSelected(indx,id);
+        }
+    
+    </script>
+    <apex:sectionHeader title="{!projectName}" subtitle="Manage Cost Rates" rendered="{!!isLightningExperience}"/>
+    <apex:form id="frm">
+    
+        <script> 
+            try{
+                addTagtoTable(); 
+            }
+            catch(err){
+            
+            }
+        </script>
+        
+        <apex:pageMessages rendered="{!!isLightningExperience}"/>
+        <apex:actionStatus id="status">
+          <apex:facet name="start">
+           <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block"/>
+             <apex:outputPanel styleClass="custPopup" layout="block">
+               <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+             </apex:outputPanel>
+            </apex:outputPanel>
+          </apex:facet>
+        </apex:actionStatus>
+    
+        <Apex:actionFunction name="agreementSelected" action="{!agreementSelected}" status="status" rerender="frm">
+           <apex:param name="p6" value="" assignTo="{!selectedIndex}" /> 
+           <apex:param name="p7" value="" assignTo="{!selectedAgreementId}" /> 
+           
+        </Apex:actionFunction>
+        
+    
+        <Apex:actionFunction name="populateRate" action="{!populateRateValue}" status="status" rerender="frm">
+             <apex:param name="p3" value="" assignTo="{!selectedIndex}" /> 
+             <apex:param name="p4" value="" assignTo="{!flag}" / >
+        </Apex:actionFunction>
+        
+        <apex:outputPanel rendered="{!!isLightningExperience}">
+          <apex:pageBlock mode="edit" title="Assignment Management" >
+              <apex:pageBlockButtons >
+                  <apex:commandButton value=" Save " action="{!save}"/>
+                  <apex:commandButton value=" Cancel " action="{!cancel}" />
+              </apex:pageBlockButtons>
+              <apex:pageBlockSection columns="1">
+                  <apex:pageBlockTable value="{!assignmentWrapperList}" var="wrapperObj">
+                      <apex:column headerValue="Expert">
+                              {!wrapperObj.assignmentObj.Resource__r.name}
+                              <!--<apex:outputfield value="{!wrapperObj.assignmentObj.Resource__c}" /> -->
+                      </apex:column>
+                      <apex:column headerValue="Status">
+                          <apex:outputPanel styleClass="requiredInput" layout="Block" style="height: 18px;">
+                             <apex:outputField value="{!wrapperObj.assignmentObj.Status__c}" styleClass="plannedHoursClass"/>
+                          </apex:outputPanel>   
+                      </apex:column>
+                      <!-- newly added -->
+                      <apex:column headerValue="Agreement" >
+                         
+                          <apex:outputPanel styleClass="requiredInput" layout="Block" style="height: 18px;">
+                             <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                             <apex:selectList size="1" onChange="agreementSelected1('{!wrapperObj.index}',this.value);" value="{!wrapperObj.selectedAgreementId}">
+                                 <apex:selectOptions value="{!wrapperObj.agreementOptions}"/>
+                             </apex:selectList> 
+                         </apex:OutputPanel>
+                         <!--
+                          <apex:outputPanel rendered="{!wrapperObj.hasTimeEntry}"  styleClass="requiredInput" layout="Block" style="height: 18px;">  
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                              <apex:selectList size="1" disabled="true" value="{!wrapperObj.selectedAgreementId}">
+                                 <apex:selectOptions value="{!wrapperObj.agreementOptions}"/>
+                             </apex:selectList>                   
+                         </apex:outputPanel>   
+                         -->
+                      </apex:column>
+                       <!-- newly added -->
+                       
+                      <apex:column headerValue="Role">
+                          <apex:outputPanel >             
+                              <apex:outputtext value="{!wrapperObj.assignmentObj.Role__c}" />
+                          </apex:outputPanel>  
+                      </apex:column>
+                      <apex:column headerValue="Region">
+                          <apex:outputPanel >             
+                              <apex:outputtext value="{!wrapperObj.assignmentObj.Region__c}" />
+                          </apex:outputPanel>  
+                      </apex:column>
+                      <apex:column headerValue="Cost Rate">
+                          <apex:outputPanel styleClass="requiredInput" layout="Block" style="height: 18px;">
+                            <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                            <apex:selectList value="{!wrapperObj.assignmentObj.Cost_Rate__c}" size="1" styleClass="slds-select plannedHoursClass">
+                              <apex:selectOptions value="{!wrapperObj.rateOptions}"/>
+                            </apex:selectList>
+                          </apex:outputPanel>
+                          <!--
+                          <Apex:outputPanel rendered="{!wrapperObj.hasTimeEntry}">             
+                              <apex:outputfield value="{!wrapperObj.assignmentObj.Cost_Rate__c}"/> 
+                           </Apex:outputPanel>  
+                           -->
+                      </apex:column>
+                      <!-- <apex:column headerValue="Planned Hours">
+                          <apex:inputField value="{!wrapperObj.assignmentObj.Planned_Hours__c}" Rendered="{!!wrapperObj.isNewlyAdded}" styleClass="plannedHoursClass"/>
+                      </apex:column> -->
+                  </apex:pageBlockTable>
+              
+              </apex:pageBlockSection>
+          </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="msg2" rendered="{!isLightningExperience}">
+          <apex:slds />
+          <div class="slds-scope">
+            <apex:pageMessages />
+            <div class="slds-page-header" role="banner">
+              
+              <div class="slds-grid">
+              <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-media--center slds-no-space slds-grow">
+                  <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #38c393" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                    <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                      <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/custom/custom32_120.png')}" class="icon " alt="Rates" title="Rates"/>
+                    </span>
+                  </div>
+                <div class="slds-media__body">
+                  <p class="slds-page-header__title slds-truncate slds-align-middle" title="Manage Rates">Manage Cost Rates</p>
+                  <p class="slds-text-body--small page-header__info">{!projectName}</p>
+                </div>
+              </div>
+              </div>
+              <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Save" action="{!save}"/>
+                <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Cancel" action="{!cancel}"/>
+              </div>
+            </div>
+
+            </div>
+            <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-is-editing">
+              <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                <apex:outputPanel styleclass="slds-panel__section" layout="block">
+                  <h3 class="slds-text-heading--small slds-m-bottom--medium">Assignment Management</h3>
+                  <div class="slds-form-element" style="overflow-x: auto;overflow-y: visible;">
+
+                    <apex:dataTable styleclass="slds-table slds-table--bordered slds-table--cell-buffer rwd-table"  value="{!assignmentWrapperList}" var="wrapperObj">
+                      <apex:column headerValue="Expert">
+                          {!wrapperObj.assignmentObj.Resource__r.name}
+                      </apex:column>
+                      <apex:column headerValue="Status">
+                          <apex:outputPanel styleClass="requiredInput" layout="Block" style="height: 18px;">
+                             <apex:outputField value="{!wrapperObj.assignmentObj.Status__c}" styleClass="plannedHoursClass"/>
+                          </apex:outputPanel>      
+                      </apex:column>
+                      <!-- newly added -->
+                      <apex:column headerValue="Agreement" >
+                         
+                          <apex:outputPanel styleClass="requiredInput" layout="Block" style="height: 18px;">
+                             <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                             <apex:selectList size="1" onChange="agreementSelected1('{!wrapperObj.index}',this.value);addTagtoTable();" styleClass="slds-select" value="{!wrapperObj.selectedAgreementId}">
+                                 <apex:selectOptions value="{!wrapperObj.agreementOptions}"/>
+                             </apex:selectList> 
+                         </apex:OutputPanel>       
+                         <!--
+                          <Apex:outputPanel rendered="{!wrapperObj.hasTimeEntry}"  styleClass="requiredInput" layout="Block" style="height: 18px;">  
+                               <apex:OutputPanel styleClass="requiredBlock" layout="Block" style="height: 18px;"/> 
+                              <apex:selectList size="1" disabled="true" value="{!wrapperObj.selectedAgreementId}" styleClass="slds-select plannedHoursClass">
+                                 <apex:selectOptions value="{!wrapperObj.agreementOptions}"/>
+                             </apex:selectList>                   
+                         </Apex:outputPanel>
+                          -->
+                      </apex:column>
+                       <!-- newly added -->
+                       
+                      <apex:column headerValue="Role">
+                          <!-- if multiple agreement -->
+                          <apex:outputPanel >             
+                              <apex:outputtext value="{!wrapperObj.assignmentObj.Role__c}" />
+                          </apex:outputPanel>  
+                      </apex:column>
+                      <apex:column headerValue="Region">
+                          <!-- if multiple agreement -->
+                          <apex:outputPanel >             
+                              <apex:outputtext value="{!wrapperObj.assignmentObj.Region__c}" />
+                          </apex:outputPanel>  
+                      </apex:column>
+                      <apex:column headerValue="Cost Rate">
+                          <apex:selectList value="{!wrapperObj.assignmentObj.Cost_Rate__c}" size="1" styleClass="slds-select plannedHoursClass">
+                              <apex:selectOptions value="{!wrapperObj.rateOptions}"/>
+                          </apex:selectList>
+                          <!--
+                          <Apex:outputPanel rendered="{!wrapperObj.hasTimeEntry}">             
+                              <apex:outputfield value="{!wrapperObj.assignmentObj.Cost_Rate__c}"/> 
+                           </Apex:outputPanel>  
+                           -->
+                      </apex:column>
+                  </apex:dataTable>
+                  </div>
+                </apex:outputPanel>
+                
+              </div>
+            </div>
+          </div>
+        </apex:outputPanel> 
+    </apex:form>
+</apex:page>

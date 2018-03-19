@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Rate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Rates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agreement --></label>
+        <name>Agreement__c</name>
+        <relationshipLabel><!-- Rates --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Assignment Type --></label>
+        <name>Assignment_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hourly Rate --></label>
+        <name>Hourly_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Per Month --></label>
+        <name>Hours_Per_Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Per Week --></label>
+        <name>Hours_Per_Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration Id --></label>
+        <name>Migration_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monthly Rate --></label>
+        <name>Monthly_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Months --></label>
+        <name>Number_of_Months__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Weeks --></label>
+        <name>Number_of_Weeks__c</name>
+    </fields>
+    <fields>
+        <help><!-- By default, all Rates have the same Effective Date and Valid Through date as their Agreement. If this Rate is bound by a date range that is a subset of the overall Agreement date range, specify that Rate-specific date range here. --></help>
+        <label><!-- Rate Specific Effective Date --></label>
+        <name>Rate_Specific_Effective_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- By default, all Rates have the same Effective Date and Valid Through date as their Agreement. If this Rate is bound by a date range that is a subset of the overall Agreement date range, specify that Rate-specific date range here. --></help>
+        <label><!-- Rate Specific Valid Through --></label>
+        <name>Rate_Specific_Valid_Through__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <help><!-- An automatically generated sequence for the Retainer rates that helps differentiate them from one another on a given Agreement --></help>
+        <label><!-- Retainer Sequence Number --></label>
+        <name>Retainer_Sequence_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <help><!-- A unique identifier that prevents more than one Retained Capacity or Time &amp; Materials Rate from being assigned to the same Agreement --></help>
+        <label><!-- Unique Key --></label>
+        <name>Unique_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid Through --></label>
+        <name>Valid_Through__c</name>
+    </fields>
+    <fields>
+        <label><!-- Weekly Rate --></label>
+        <name>Weekly_Rate__c</name>
+    </fields>
+    <layouts>
+        <layout>Named Resource Rate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Monthly Retainer Info --></label>
+            <section>Monthly Retainer Info</section>
+        </sections>
+        <sections>
+            <label><!-- Weekly Retainer Info --></label>
+            <section>Weekly Retainer Info</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Retained Capacity Rate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Monthly Retainer Info --></label>
+            <section>Monthly Retainer Info</section>
+        </sections>
+        <sections>
+            <label><!-- Weekly Retainer Info --></label>
+            <section>Weekly Retainer Info</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Time &amp; Materials Rate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Named Resource Rate --></label>
+        <name>Named_Resource_Rate</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Retained Capacity Rate --></label>
+        <name>Retained_Capacity_Rate</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Time &amp; Materials Rate --></label>
+        <name>Time_Materials_Rate</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- If you specify a date range for this Rate, it must be a subset of the Agreement&apos;s date range. --></errorMessage>
+        <name>Ensure_Rate_Specific_Dates_Are_A_Subset</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- If you&apos;re going to set a Rate specific date range, you must provide both an Effective Date and Valid Through date. --></errorMessage>
+        <name>Rate_Specific_Dates_Are_All_Or_Nothing</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Valid Through date must be greater than the Effective Date --></errorMessage>
+        <name>Valid_Through_Must_Be_GT_Effective_Date</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Manage_Rates --></label>
+        <name>Manage_Rates</name>
+    </webLinks>
+</CustomObjectTranslation>

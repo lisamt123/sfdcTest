@@ -1,0 +1,39 @@
+.THIS .forcePageBlockSectionRow
+{
+    width: 100%;
+    display: flex;
+}
+.THIS .myButton {
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:1px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+	margin-bottom: 10px;
+}
+.THIS .myButton:hover {
+	
+}
+.THIS .myButton:active {
+	position:relative;
+	top:1px;
+}
+.THIS .share-button{
+	color: white;
+}
+.THIS .twitterButton{
+	background-color:#50ABF1 !important;
+}
+.THIS .facebookButton{
+	background-color:#3A559F !important;
+}
+.THIS .linkedinButton{
+	background-color:#0084B1 !important;
+}

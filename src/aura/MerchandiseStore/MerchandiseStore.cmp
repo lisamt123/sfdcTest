@@ -1,0 +1,113 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="MerchandiseStoreController" >
+	<aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+	<center><lightning:spinner aura:id="Spinner" class="slds-hide" variant="brand" size="large" alternativeText="Please Wait."/></center>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="allMerchandise" type="Merchandise__c[]" />
+	<aura:attribute name="CartItems" type="Item__c[]" />
+	<aura:attribute name="CartMerchandises" type="Merchandise__c[]" />
+	<aura:attribute name="ContactRec" type="Object" />
+	<aura:attribute name="FreeMerchandiseLineItemWrapper" type="Object[]" />
+	<aura:attribute name="UpdatedMerchandise" type="Merchandise__c[]" />
+	<aura:attribute name="buttonBoolean" type="Boolean" default="false" />
+	<aura:attribute name="submitBoolean" type="Boolean" default="false" />
+	<aura:attribute name="submitDisabled" type="Boolean" default="false" />
+	<aura:attribute name="cartPoints" type="Integer" default="0" />
+	<aura:attribute name="availablePoints" type="Integer" default="0" />
+
+	<div class="slds-path-coach">
+		<div class="slds-grid">
+			<div class="slds-tabs_path" role="application">
+				<ul class="slds-tabs_path__nav" role="listbox" aria-orientation="horizontal">
+					<li class="slds-tabs_path__item slds-is-current" role="presentation" aura:id="firstStage">
+						<a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-1" role="option" tabindex="-1" style="cursor: default;" >
+							<span class="slds-tabs_path__stage">
+								<lightning:icon iconName="utility:check" size="small" alternativeText="Done" variant="inverse"  />
+								<span class="slds-assistive-text">First Stage</span>
+							</span>
+							<span class="slds-tabs_path__title">Select Merchandise</span>
+						</a>
+					</li>
+					<li class="slds-tabs_path__item slds-is-incomplete" role="presentation" aura:id="secondStage">
+						<a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-2" role="option" tabindex="-1" style="cursor: default;">
+							<span class="slds-tabs_path__stage">
+								<lightning:icon iconName="utility:check" size="small" alternativeText="Done" variant="inverse"/>
+								<span class="slds-assistive-text">Second Stage</span>
+							</span>
+							<span class="slds-tabs_path__title">View Cart</span>
+						</a>
+					</li>
+					<li class="slds-tabs_path__item slds-is-incomplete" role="presentation" aura:id="thirdStage">
+						<a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-2" role="option" tabindex="-1" style="cursor: default;">
+							<span class="slds-tabs_path__stage">
+								<lightning:icon iconName="utility:check" size="small" alternativeText="Done" variant="inverse"/>
+								<span class="slds-assistive-text">Second Stage</span>
+							</span>
+							<span class="slds-tabs_path__title">Verify Order Details</span>
+						</a>
+					</li>
+					<li class="slds-tabs_path__item slds-is-incomplete" role="presentation" aura:id="fourthStage">
+						<a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-3" role="option" tabindex="-1" style="cursor: default;">
+							<span class="slds-tabs_path__stage">
+								<lightning:icon iconName="utility:check" size="small" alternativeText="Done" variant="inverse"/>
+								<span class="slds-assistive-text">Final Stage</span>
+							</span>
+							<span class="slds-tabs_path__title">Order Completed</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="slds-page-header" style="border:0px;" >
+		<div class="slds-media" style="margin-top: -9px;">
+			<div class="slds-media__figure">
+				<span class="slds-icon_container slds-icon_container--circle slds-icon-action-share-thanks" title="User Points">
+					<lightning:icon iconName="action:share_thanks" size="small" alternativeText="Point Summary" variant="inverse"/>
+				</span>
+			</div>
+			<div class="slds-media__body">
+				<h2 class="slds-page-header__title slds-truncate slds-align-middle" style="margin-top: 0px;" title="Point Summary">Point Summary</h2>
+				<div>
+					<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Total Points</strong> • 
+						<ui:outputNumber value="{!v.availablePoints}" format="###,###,###" ></ui:outputNumber>
+					</span>
+					<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Cart Total</strong> • 
+						<ui:outputNumber value="{!v.cartPoints}" format="###,###,###" ></ui:outputNumber>
+					</span>
+					<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Points Remaining</strong> • 
+						<ui:outputNumber value="{!v.availablePoints - v.cartPoints}" format="###,###,###" ></ui:outputNumber>
+					</span>
+				</div>
+			</div>
+			<div style="float:right;margin-top:7px;">
+				<aura:if isTrue="{!v.submitBoolean}">
+					<button class="slds-button slds-button--brand" style="border-radius: 1rem;" onclick="{!c.backToMerchandiseStore}" aura:id="returnStoreBtn">Return To Cart</button>&nbsp;
+					<button class="slds-button slds-button--brand" disabled="{!v.submitDisabled}" style="border-radius: 1rem;" onclick="{!c.submitOrder}" aura:id="submitOrderBtn">Submit  Order</button>
+					<aura:set attribute="else">
+						<aura:if isTrue="{!v.buttonBoolean}">
+							<button class="slds-button slds-button--brand" style="border-radius: 1rem;" onclick="{!c.backToStore}">Return To Store</button>&nbsp;
+							<button class="slds-button slds-button--brand" disabled="{!v.CartItems.length == 0}" style="border-radius: 1rem;" onclick="{!c.completeOrder}">Checkout</button>
+							<aura:set attribute="else">
+								<button class="slds-button slds-button--brand" style="border-radius: 1rem;" onclick="{!c.verifyOrder}">View Cart</button>
+							</aura:set> 
+						</aura:if>
+					</aura:set> 
+				</aura:if>
+            </div>
+		</div>
+	</div>
+	<div aura:id="component-container" id="container" style="padding: 0.01em 16px;color: #000!important;height: 100%;overflow-y: auto;">
+		<aura:if isTrue="{!v.submitBoolean}">
+			<c:CompleteOrder FreeMerchandiseLineItemWrapper="{!v.FreeMerchandiseLineItemWrapper}" CartItems="{!v.CartItems}" billTotal="{!v.cartPoints}" ContactRec="{!v.ContactRec}" CartMerchandises="{!v.CartMerchandises}"/>			
+			<aura:set attribute="else">
+				<aura:if isTrue="{!v.buttonBoolean}">
+					<c:VerifyOrder allMerchandises="{!v.allMerchandise}" CartItems="{!v.CartItems}" totalPoints="{!v.cartPoints}" CartMerchandises="{!v.CartMerchandises}" RemainingPoints="{!v.availablePoints - v.cartPoints}"/> 
+					<aura:set attribute="else">
+						<c:MerchandiseItems CartItems="{!v.CartItems}" availablePoints="{!v.availablePoints - v.cartPoints}" ContactRec="{!v.ContactRec}" cartPoints="{!v.cartPoints}" CartMerchandises="{!v.CartMerchandises}"/>
+					</aura:set> 
+				</aura:if>
+			</aura:set>
+		</aura:if>
+	</div>
+</aura:component>

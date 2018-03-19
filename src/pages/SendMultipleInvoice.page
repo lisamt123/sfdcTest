@@ -1,0 +1,176 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" extensions="SendMultipleInvoiceController">
+    <style>
+       .custPopup{
+           background-color: white;
+           border-width: 0px;
+           border-radius:10px;
+           z-index: 9999;
+           left: 50%;
+           padding:20px;
+           position: absolute; 
+           margin-left: -100px; top:40%;
+       }
+       .popupBackground{
+           background-color:black;
+           opacity: 0.30;
+           filter: alpha(opacity = 30);
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           top: 0;
+           left: 0;
+           z-index: 9998;
+       }
+    </style>
+    <apex:actionStatus id="status">
+          <apex:facet name="start">
+           <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block"/>
+             <apex:outputPanel styleClass="custPopup" layout="block">
+               <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+             </apex:outputPanel>
+            </apex:outputPanel>
+          </apex:facet>
+    </apex:actionStatus>
+    <apex:form >
+        <apex:outputPanel id="classicViewPanel" rendered="{!!isLightningExperience}"> 
+            <apex:sectionHeader title="Related Invoices" subtitle="Send Related Invoice On Demand"/>
+            <apex:pageMessages />           
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="2" showHeader="false" >
+                    <apex:pageBlockSectionItem dataStyle="align: left;">
+                        <apex:outputLabel value="Invoice Type" for="types" style="font-weight:600;"></apex:outputLabel>
+                        <apex:selectList id="types" value="{!selectedType}" size="1" title="Invoice Type">
+                            <apex:selectOptions value="{!types}"></apex:selectOptions>
+                            <apex:actionSupport event="onchange" action="{!fetchTypeBasedInvoice}" reRender="PBT1" status="status"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem dataStyle="align: left;">
+                        <apex:outputLabel value="Invoice Billing Period" for="billingPeriods" style="font-weight:600;"></apex:outputLabel>
+                        <apex:selectList id="billingPeriods" value="{!selectedDateOption}" size="1" title="Invoice Billing Period">
+                            <apex:selectOptions value="{!dateOptions}"></apex:selectOptions>
+                            <apex:actionSupport event="onchange" action="{!retrieveInvoices}" reRender="PBT1" status="status"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <br/>
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton value="Back to Account" action="{!returnBack}" status="status" />
+                    <apex:commandButton value="Send Selected Invoices" rerender="none" status="status" onclick="processInvoice();"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!wrapinvoiceList}" var="wrapObj" id="PBT1">
+                    <apex:column headerValue="Action"> <apex:inputCheckbox value="{!wrapObj.isSelected}"/></apex:column>
+                    <apex:column headervalue="Invoice">
+                        <a href="/{!wrapObj.invoice.Id}" target="_blank">{!wrapObj.invoice.Name}</a>
+                    </apex:column>
+                    <apex:column headervalue="Agreement">
+                        <a href='/{!wrapObj.invoice.Agreement__r.Id}' target="_blank">{!wrapObj.invoice.Agreement__r.Name}</a>
+                    </apex:column>
+                    <apex:column value="{!wrapObj.invoice.Total_Invoice_Amount__c}"/>
+                    <apex:column value="{!wrapObj.invoice.Type__c}"/>
+                    <apex:column value="{!wrapObj.invoice.Invoice_Generated_On__c}"/>
+                    <apex:column value="{!wrapObj.invoice.Sent_To_Customer_On__c}"/>
+                    <apex:column value="{!wrapObj.invoice.Due_Date__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="lightningViewPanel" rendered="{!isLightningExperience}"><!--rendered-"{!isLightningExperience}"-->
+            <apex:slds />
+            <div class="slds-scope">
+                <div class="slds-page-header" role="banner">              
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-media--center slds-no-space slds-grow">
+                                <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #38c393" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                                    <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                                        <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/custom/custom18_60.png')}" class="icon " alt="Invoice" title="Invoice"/>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <div style="float: left;">
+                                        <p class="slds-page-header__title slds-truncate slds-align-middle" title="Run Invoice Generation">Related Invoices</p>
+                                        <p class="slds-text-body--small page-header__info">Send Related Invoice On Demand</p>
+                                    </div> 
+                                    <apex:outputPanel style="float: right;" layout="block">
+                                        <apex:commandButton value="Back to Account" action="{!returnBack}" status="status" styleclass="slds-button slds-button--neutral"/>
+                                        <apex:commandButton value="Send Selected Invoices" rerender="none" status="status" styleclass="slds-button slds-button--neutral" onclick="processInvoice();"/>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Invoice Types</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList size="1" value="{!selectedType}" styleClass="slds-select">
+                                <apex:selectOptions value="{!Types}" />
+                                <apex:actionSupport event="onchange" action="{!fetchTypeBasedInvoice}" reRender="DT1" status="status"/>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Invoice Billing Period</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList size="1" value="{!selectedDateOption}" styleClass="slds-select">
+                                <apex:selectOptions value="{!dateOptions}" />
+                                <apex:actionSupport event="onchange" action="{!retrieveInvoices}" reRender="DT1" status="status"/>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <apex:dataTable value="{!wrapinvoiceList}" var="wrapObj" styleClass="slds-table slds-table--bordered slds-table--striped" id="DT1">
+                    <apex:column headerValue="Action">
+                        <div class="slds-form-element slds-align">
+                            <label class="slds-checkbox">
+                                <apex:inputCheckbox styleClass="slds-input" value="{!wrapObj.isSelected}"/>
+                                <span class="slds-checkbox--faux"></span>   
+                            </label>
+                        </div>
+                    </apex:column>
+                    
+                    <apex:column headervalue="Invoice">
+                        <a href="/{!wrapObj.invoice.Id}'" target="_blank">{!wrapObj.invoice.Name}</a>
+                    </apex:column>
+                    <apex:column headervalue="Agreement">
+                        <a href='/{!wrapObj.invoice.Agreement__r.Id}' target="_blank">{!wrapObj.invoice.Agreement__r.Name}</a>
+                    </apex:column>
+                    <apex:column headerValue="Total Invoice Amount" value="{!wrapObj.invoice.Total_Invoice_Amount__c}"/>
+                    <apex:column headerValue="Type" value="{!wrapObj.invoice.Type__c}"/>
+                    <apex:column headerValue="Billing Period" value="{!wrapObj.invoice.Invoice_Generated_On__c}"/>
+                    <apex:column headerValue="Finalized On" value="{!wrapObj.invoice.Sent_To_Customer_On__c}"/>
+                    <apex:column headerValue="Due Date" value="{!wrapObj.invoice.Due_Date__c}"/>
+                </apex:dataTable>
+            </div>
+        </apex:outputPanel>
+        <apex:actionFunction name="sendInvoiceAF" action="{!sendInvoice}" oncomplete="finalProcess('{!processResult}');" reRender="none" status="status"/><!-- reRender-"PBT1,DT1" -->
+        <apex:actionFunction name="sendUpdatedInvoiceAF" action="{!sendUpdatedInvoice}" oncomplete="resultProcess('{!processResult}');" reRender="PBT1,DT1" status="status"/><!-- reRender-"PBT1,DT1" -->
+        <apex:actionFunction name="returnBackAF" action="{!returnBack}" status="status"/>
+    </apex:form>
+    <script>
+        function processInvoice(){
+            var res;
+            res = confirm('Are you sure you want to email these invoices to the client?'); 
+            if(res){ 
+                var v1 = sendInvoiceAF();
+            }
+        }  
+          
+        function finalProcess(v1){
+
+            if(v1 == 'Updated') 
+                sendUpdatedInvoiceAF();
+            else
+                alert(v1);
+        }
+        function resultProcess(v1){
+            alert(v1);
+            returnBackAF();
+        }
+    </script>
+</apex:page>

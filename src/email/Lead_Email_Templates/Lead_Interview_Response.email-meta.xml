@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Use to alert Delivery that a Lead has responded to survey about interview date/times</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Lead Interview Response</name>
+    <style>freeForm</style>
+    <subject>Interview Dates/Times for {!Lead.Name}</subject>
+    <textOnly>Hey Delivery Team!
+
+A response for interview dates/times has been received!
+
+Here are some details:
+Name: {!Lead.Name}
+Email: {!Lead.Email}
+
+
+First Choice: {!Lead.Interview_Availability_1__c}
+Second Choice: {!Lead.Interview_Availability_2__c}
+Third Choice: {!Lead.Interview_Availability_3__c}
+
+Check your calendar and send an invite to {!Lead.Name} within 24 hours.
+
+Link: {!Lead.Link}</textOnly>
+    <type>html</type>
+</EmailTemplate>

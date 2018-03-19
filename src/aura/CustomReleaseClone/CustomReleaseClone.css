@@ -1,0 +1,9 @@
+.THIS .slds-modal__container {
+    display: none;
+}
+.THIS .slds-modal-close{
+    display: none;
+}
+.THIS .forceModal {
+    z-index: 9999 ;
+}

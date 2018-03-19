@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Google Auth Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Google Auth Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- API Key --></label>
+        <name>API_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Access Token --></label>
+        <name>Access_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoogleClientID --></label>
+        <name>GoogleClientID__c</name>
+    </fields>
+    <fields>
+        <label><!-- GoogleClientSecret --></label>
+        <name>GoogleClientSecret__c</name>
+    </fields>
+    <fields>
+        <label><!-- Refresh Token --></label>
+        <name>Refresh_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- 10K Domain --></label>
+        <name>X10K_Domain__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

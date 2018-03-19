@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>KnowledgeViewEventHistory$Channel</field>
+    </columns>
+    <columns>
+        <field>KnowledgeViewEventHistory$DeltaCount</field>
+    </columns>
+    <columns>
+        <field>KnowledgeViewEventHistory$CumulativeCount</field>
+    </columns>
+    <columns>
+        <field>KnowledgeViewEventHistory$AsOfDate</field>
+    </columns>
+    <columns>
+        <field>KnowledgeViewEventHistory$Duration</field>
+    </columns>
+    <columns>
+        <field>KnowledgeViewEventHistory$Related</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Knowledge Article Views</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Knowledge_Article_Views__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>KnowledgeViewEventHistory$AsOfDate</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>KnowledgeViewEventHistory$AsOfDate</dateColumn>
+        <endDate>2017-06-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2017-05-11</startDate>
+    </timeFrameFilter>
+</Report>

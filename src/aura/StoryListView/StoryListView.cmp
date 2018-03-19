@@ -1,0 +1,258 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="StoryListViewController">
+	<!--Reuqired Resources-->
+    <ltng:require scripts="{!$Resource.jqueryLatest}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="StoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="recID" type="String" access="global"/>
+    <aura:attribute name="tempStoriesList" type="Story__c[]" access="global"/>
+    <aura:attribute name="CurrUserId" type="String" access="global"/>
+    <aura:attribute name="StatusList" type="String[]" access="global"/>
+
+    <center>
+        <div aura:id="Spinner"  class="slds-spinner_container hide"  style="position:fixed !important;">
+            <div class="slds-spinner slds-spinner--large" role="alert" >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </center>
+
+    <!--Section Header-->
+    <div class="slds" style="min-width:850px">
+        <div class="slds-page-header" role="banner" >
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:article" size="large" variant="bare" class="IconbgColor"></lightning:icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title--caps slds-line-height--reset">Stories</p>
+                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title" id="pageHeader">All Stories</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom--xx-small">
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button--neutral" data-modalid="createStoryModal" onclick="{!c.showModel}">New</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!--sub header-->
+            <div class="slds-grid">
+                <div class="slds-col slds-align-bottom">
+                    <p class="slds-text-body--small"><span id="totItems"></span><span> • </span><span id="sortedBy">Sorted by None</span> <span> • </span><span id="filterBy">Filtered by None</span> <span> • </span></p>
+                </div>
+                
+                <!--Filter Button-->
+                <div aura:id="filterMenu" class="slds-dropdown-trigger slds-dropdown-trigger--click ">
+                    <button id="filerIcon" class="slds-button slds-button--icon-border" aria-haspopup="true" style="fill: currentColor;" onclick="{!c.filter}">
+                        <lightning:icon iconName="utility:filterList" size="x-small" variant="bare-inverse" alternativeText="filterList"></lightning:icon>
+                        <span class="slds-assistive-text">Filer Actions</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-grid">   
+        <div class="slds-col  slds-large-size--1-of-1">
+            <div class="slds-notify_container" style="position:inherit" >
+                <div id="notify"  style="display:none" class="slds-notify slds-notify--alert  slds-theme--alert-texture" role="alert">
+                    <button class="slds-button slds-notify__close slds-button--icon-inverse" onclick="{!c.hideNotify}">
+                        <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <span class="slds-assistive-text">Error</span>
+                    <span>
+                        {!v.ErrorMessge}
+                    </span>
+                </div>
+            </div>
+        </div>         
+    </div>
+
+    <div class="slds-grid">
+        <div id="outerDiv" class="slds-col  slds-large-size--1-of-1" style="overflow-y: auto;height: 460px !important;">
+            <div id="innerDiv">
+	            <table class="slds-table slds-table--bordered slds-table--striped" role="grid" style="table-layout: fixed;">
+	                <thead>
+	                    <tr class="slds-text-title--caps">
+	                        <th class="slds-cell-shrink" scope="col" style="width:4%">
+	                            
+	                        </th>
+	                        <th class="slds-cell-shrink" scope="col" style="width:4%">
+	                            
+	                        </th>
+	                        <th class="slds-is-sortable" scope="col" style="width: 12%;">
+	                            <div id="NameUp" class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+	                                <button  class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="NameDown" style="display:none"  class="slds-truncate" title="Story Number" data-header="Name" data-lable="Story Number" onclick="{!c.sortLst}">Story Number
+	                                <button  class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <!--added on 2/11/2016-->
+	                        <th class="slds-is-sortable" scope="col" style="width: 10%;">
+	                            <div id="Epic__r_NameUp" class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+	                                <button  class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="Epic__r_NameDown" style="display:none"  class="slds-truncate" title="Epic Number" data-header="Epic__r.Name" data-lable="Epic Number" onclick="{!c.sortLst}">Epic Number
+	                                <button  class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <th class="slds-is-sortable" scope="col" style="width: 23%;">
+	                            <div id="Story_Name__cUp" class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+	                                <button   class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div  id="Story_Name__cDown"  style="display:none"  class="slds-truncate" data-header="Story_Name__c" data-lable="Story Name" onclick="{!c.sortLst}" title="Story Name">Story Name
+	                                <button   class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <th class="slds-is-sortable"  scope="col" style="width: 15%;">
+	                            <div id="Status__cUp" data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="Status__cDown" style="display:none"   data-header="Status__c" onclick="{!c.sortLst}" data-lable="Status" class="slds-truncate" title="Story Status">Story Status
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <!--Added on 2/11/2016-->
+	                        <th class="slds-is-sortable"  scope="col" style="width: 14%;">
+	                            <div id="Functional_Owner__r_NameUp" data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="Functional_Owner__r_NameDown" style="display:none"   data-header="Functional_Owner__r.Name" onclick="{!c.sortLst}" data-lable="Functional Owner" class="slds-truncate" title="Functional Owner">Functional Owner
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <th class="slds-is-sortable"  scope="col" style="width: 10%;">
+	                            <div id="Priority__cUp" data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="Priority__cDown" style="display:none"   data-header="Priority__c" onclick="{!c.sortLst}" data-lable="Priority" class="slds-truncate" title="Priority">Priority
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                        <th class="slds-is-sortable"  scope="col" style="">
+	                            <div id="Level_of_Effort__cUp" data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowup" size="x-small" variant="bare-inverse" alternativeText="arrowup"></lightning:icon>
+										<span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                            <div id="Level_of_Effort__cDown" style="display:none"   data-header="Level_of_Effort__c" onclick="{!c.sortLst}" data-lable="Level of Effort" class="slds-truncate" title="Level of Effort">Level of Effort
+	                                <button class="slds-button slds-button--icon">
+	                                    <lightning:icon iconName="utility:arrowdown" size="x-small" variant="bare-inverse" alternativeText="arrowdown"></lightning:icon>
+                                        <span class="slds-assistive-text">Sort</span>
+	                                </button>
+	                            </div>
+	                        </th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    
+	                    <aura:iteration items="{!v.StoriesList}" var="strylst" indexVar="rowIndex">
+	                        <tr class="readMode" id="{!'readMode' + rowIndex}">
+	                            <td>
+	                                <img  class="imgIcon" src="{!$Resource.expand}" data-edit="true" data-index="{!rowIndex}"  onclick="{!c.expand}"></img>
+	                            </td>
+	                            <td>{!rowIndex + 1}</td>
+	                            <th role="gridcell" data-label="Story Number">
+	                                <div class="tblCellData" title="Story Number">
+	                                    <ui:outputURL target="_blank" 
+	                                                  value="{!'/10kcommunity/s/detail/' + strylst.Id}" 
+	                                                  label="{!strylst.Name}"/>
+	                                </div>
+	                            </th>
+	                            <!--added on 02/11/2016-->
+	                            <td role="gridcell" data-label="Epic Number">
+	                                <div class="tblCellData" title="Epic Number">
+	                                    <ui:outputURL target="_blank" 
+	                                                  value="{!'/10kcommunity/s/detail/' + strylst.Epic__c}" 
+	                                                  label="{!strylst.Epic__r.Name}"/>
+	                                </div>
+	                            </td>
+	                            <td role="gridcell" data-label="Story Name">
+	                                <div class="tblCellData" title="Story Name">{!strylst.Story_Name__c}</div>
+	                            </td>
+	                            <td role="gridcell" data-label="Status">
+	                                <div class="tblCellData" title="Status">{!strylst.Status__c}</div>
+	                            </td>
+	                            <!--Added on 2/11/2016-->
+	                            <td role="gridcell" data-label="Functional Owner">
+	                                <div class="tblCellData" title="Functional Owner"> 
+	                                    <ui:outputURL target="_blank" 
+	                                                  value="{!'/10kcommunity/s/detail/' + strylst.Functional_Owner__c}" 
+	                                                  label="{!strylst.Functional_Owner__r.Name}"/>
+	                                </div>
+	                            </td>
+	                            <td role="gridcell" data-label="Priority">
+	                                <div class="tblCellData" title="Priority">{!strylst.Priority__c}</div>
+	                            </td>
+	                            <td role="gridcell" data-label="Level of Effort">
+	                                <div class="tblCellData" title="Level of Effort">{!strylst.Level_of_Effort__c}</div>
+	                            </td>
+	                        </tr>  
+	                        <tr id="{! 'expandMode' + rowIndex}" style="display:none">
+	                            <td style="vertical-align: top;"> 
+	                                <img style="cursor: pointer;" class="collapse"  src="{!$Resource.collapse}" data-edit="false" data-index="{!rowIndex}"  onclick="{!c.expand}"></img>
+	                            </td>
+	                            <td style="vertical-align: top;">{!rowIndex + 1}</td>
+	                            <td colspan="7">
+	                                <div class="slds-grid" >
+	                                    <div class="slds-col" style="width:50%">
+	                                        Component will be called here.
+	                                    </div>
+	                                </div>
+	                            </td>
+	                        </tr>
+	                    </aura:iteration>
+	                </tbody>
+	            </table>
+            </div>             
+        </div>
+    </div>
+	
+</aura:component>

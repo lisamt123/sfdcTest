@@ -1,0 +1,132 @@
+<apex:component controller="AccountRelatedInvoicesController" access="global">
+  <apex:attribute name="accIds" assignTo="{!accId}" type="String" description="Account id"/>
+  <apex:attribute name="status" assignTo="{!statusValue}" type="Boolean" description="Status"/>
+  <apex:attribute name="ascRecId" assignTo="{!ascentRecordId}" type="Id" description="Ascent Id"/>
+  <apex:attribute name="ascRec"  type="Ascent_Metrics__c" description="Ascent Record"/>
+  <apex:attribute name="recipientName" type="String" description="Recipient Name"/>
+
+   <apex:outputPanel rendered="{!statusValue}">
+   <br/>
+    <table width="700px">      
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div style="padding: 12px;background-color: #87CEFA;" title="Ascent Tier"><b>Ascent Tier</b></div>
+                    </th>
+                    <th scope="col">
+                        <div style="padding: 12px;background: #7fffd4;" title="Ascent Target"><b>Ascent Target</b></div>
+                    </th>
+                    <th scope="col">
+                        <div style="padding: 12px;background: #7fffd4;"  title="YTD Spend"><b>YTD Spend</b></div>
+                    </th>
+                    <th scope="col" >
+                        <div style="padding: 12px;background: #7fffd4;" title="Amount Remaining"><b>Amount Remaining</b></div>
+                    </th>
+                    <th scope="col">
+                        <div style="padding: 12px;background-color: #87CEFA;" title="Ascent Period Ending"><b>Ascent Period Ending</b></div>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody> 
+              <tr style="text-align:right">
+                <td style="padding:8px;background-color: #87CEFA;">
+                  {!ascRec.Account__r.Current_Tier__c}
+                </td>
+                <td style="padding:8px;background: #7fffd4">
+                  <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!asentTargetMap[ascRec.Next_Tier__c]}" /> 
+                  </apex:outputText>
+                </td>
+                <td style="padding:8px;background: #7fffd4">
+                  <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!ascRec.Amount_Invoiced_YTD__c}" /> 
+                  </apex:outputText>
+                </td>
+                <td style="padding:8px;background: #7fffd4">
+                  <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!amountRemaining}" /> 
+                  </apex:outputText>
+                </td>
+                <td style="padding:8px;background-color: #87CEFA;">
+                  <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                    <apex:param value="{!ascRec.Month_End_Date__c}" />
+                  </apex:outputText>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br/>
+
+          Hi {!recipientName}
+          <br/><br/>
+          Here is your monthly Ascent Report.<br/><br/>
+
+
+          <div style="width:700px;height:30px;outline:0px solid black;margin:0;">  
+            <div style="max-height:0;max-width:0;overflow: visible;">
+              <div style="width: 700px;height: 30px;margin-top: 0px;margin-left: 0px;display: inline-block;outline: 0px solid red;text-align: right;line-height: 5.7;font-size: 14px;background: #191970;">
+                <span>
+                  <apex:outputPanel rendered = "{!IF(AND(NOT(ISBLANK(amountRemaining)),amountRemaining > 0),'true','false')}" >
+                    <apex:outputText value="{0, number, currency}">
+                      <apex:param value="{!amountRemaining}" /> 
+                    </apex:outputText>
+                    to {!ascRec.Next_Tier__c}
+                  </apex:outputPanel>
+                </span>
+              </div>
+            </div>
+            <div style="max-height:0;max-width:0;overflow: visible;">
+              <div style="width: {!TEXT(data)+'px'};height: 30px;margin-top: 0px;margin-left: 0px;display: inline-block;outline: 0px solid green;text-align: right;line-height: {!If(data <= 175, 5.7, 2)};font-size: 14px;background: #1E90FF;">
+               <span >
+                  <apex:outputText value="{0, number, currency}">
+                    <apex:param value="{!ytdSpend}" /> 
+                  </apex:outputText>
+              </span>
+              </div>
+            </div>
+            <div style="max-height:0;max-width:0;overflow: visible;">
+              <div style="width: {!TEXT(verticleLinedata)+'px'};height: 30px;margin-top: 0px;margin-left: 0px;display: inline-block;outline: 0px solid blue;text-align: center;line-height: 1;font-size: 33px;border-right: 2px solid red;">
+              </div>
+            </div>
+            
+          </div>
+
+<br/><br/>
+        <p>
+          Based on your current utilization levels, we project you will need to spend ${!amountPerMonth} per month for the remaining {!monthsRemaining} months to hit your Ascent Target.
+          <br/><br/>
+
+          We would also like to note the following outstanding invoices for your account:
+
+        </p>
+  </apex:outputPanel>
+
+  
+
+<apex:outputPanel rendered="{!InvoiceList.size > 0}">
+ <apex:variable var="count" value="{!1}"/>
+        <apex:variable var="totalBalance" value="{!0}"/>
+        <apex:repeat value="{!InvoiceList}" var="inv">
+            <apex:outputText >
+
+            {!count})<b> Invoice: </b>{!inv.Name} &nbsp;&nbsp;
+            <ul>
+                <li><b>Invoice Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                            <apex:param value="{!inv.Invoice_Generated_On__c}" /> 
+                                          </apex:outputText> </li>
+                <li><b>Due Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                          <apex:param value="{!inv.Due_Date__c}" /> 
+                                      </apex:outputText> </li>
+                <li><b>Outstanding Balance: </b> <apex:outputText value="{0, number, currency}">
+                                          <apex:param value="{!inv.Outstanding_Balance__c}" /> 
+                                      </apex:outputText> </li>
+            </ul>
+
+            <apex:variable var="count" value="{!count+1}"/>
+            <apex:variable var="totalBalance" value="{!totalBalance+inv.Outstanding_Balance__c}"/>
+            </apex:outputText>
+        </apex:repeat>
+</apex:outputPanel>
+
+</apex:component>

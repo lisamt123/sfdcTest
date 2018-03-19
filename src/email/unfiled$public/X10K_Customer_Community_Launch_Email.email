@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+{!Contact.FirstName},
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+I'm excited to let you know that you'll soon have an active account for the 10K Community!
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+We have been working over the past few months to build a central location for our clients and delivery partners to work better together. This work has resulted in a collaborative community where as a client you will be able to:
+<ul>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Get an overview of all of the projects where you have 10K experts engaged</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Collaborate with your delivery experts and the 10K team</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">View real-time assignment and time entry data for your projects</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">View and print invoices related to your account</li>
+</ul>
+</p>
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+And this is just the beginning! This community will be the hub for all aspects of your relationship with 10K. We are working on much more functionality including lots of real-time reporting, Project/Expert Requests, Expert Reviews, agile project management tools, code repository integration and release tools, as well as more tools for our Delivery Experts that will help us easily find the right people at the right time for your project needs.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+You should expect to receive community login credentials at {!Contact.Email} in the next day or so. Invoices for this month will be delivered via email as normal, however in the future you should expect that you'll receive an email alert when your invoice is ready to view via the community. There will be no time sheets delivered with the invoice this month or in the future. There is a Time Entry Report tab in the community that will allow you to do detailed or summary time reporting for any period you would like as well as export the report to PDF.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+We are constantly striving to provide the best experience possible for our clients. If you have any questions, concerns, or feedback, please email me directly. I would love to hear from you!
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Cheers!
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Nick Hamm<br>
+CEO<br>
+<a href="http://www.10kview.com/" target="_blank">10K Advisors</a><br>
+nick@10Kview.com
+</p>
+</td>
+</tr>
+<tr>
+ <td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+</td>
+</tr>
+</table>
+</body>
+</html>

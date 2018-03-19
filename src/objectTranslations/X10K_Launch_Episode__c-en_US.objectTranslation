@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>10K Launch Episode</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>10K Launch Episodes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Episode Description --></label>
+        <name>Episode_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Episode Id --></label>
+        <name>Episode_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Episode Number --></label>
+        <name>Episode_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>10K Launch Episode Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Descriptions --></label>
+            <section>Descriptions</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

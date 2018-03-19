@@ -1,0 +1,82 @@
+.THIS .fillIcon {
+    fill: inherit;
+    width: 13px;
+}
+.THIS #filerIcon{
+    fill: #0070d2;
+}
+.THIS .imgIcon{
+     cursor: pointer;
+}
+.THIS .slds-icon--small{
+    margin: 1px;
+}
+.THIS .slds-page-header{
+    background-color: white;
+}
+.THIS .serialCol{
+    width: 5%;
+}
+.THIS .tableHeader{
+    
+}
+.THIS .tblCellData{
+    /*font-family: "Trebuchet MS", Tahoma, Verdana, Arial, sans-serif;
+    font-size: 1.1em;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.THIS #filerPanel{
+    width: 240px;
+}
+.THIS .slds-popover {
+    position: absolute !important;
+}
+.THIS .slds-popover--panel{
+    position: absolute !important;
+} 
+.THIS .slds-nubbin--right{
+    position: absolute !important;
+}
+.THIS th{
+    height: 35px;
+}
+.THIS .rightPopover{
+    position: absolute !important; 
+    left: auto; right: 111%; 
+    display:none;
+}
+.THIS th.slds-is-sortable {
+    cursor: pointer;
+    padding: 7px !important;
+}
+.THIS .slds-table--bordered tbody td {
+    white-space: normal !important;
+}
+.THIS .slds-table--bordered tbody th {
+    white-space: normal !important;
+}
+.THIS .editMode{
+    
+    display:none;
+}
+.THIS .show{
+    display: block;    
+}
+.THIS .hide{
+    display: none !important;    
+}
+.THIS .Boxhide {
+    display: none;
+}
+.THIS .Boxshow { 
+   	display: block;
+}
+.THIS .fixHeaderDiv{
+    position: absolute;
+    z-index: 2;
+}
+.THIS .IconbgColor{
+    background-color:dodgerblue;
+}

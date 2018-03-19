@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Expert Role by Month Data</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Expert Role by Month Data</value>
+    </caseValues>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Experts --></label>
+        <name>Number_of_Experts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reporting Snapshot Name --></label>
+        <name>Report_Snapshot_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reporting Snapshot Running Id --></label>
+        <name>Reporting_Snapshot_Running_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <layouts>
+        <layout>Expert Role Reporting Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>To Contact when Order is created</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>To Contact when Order is created</name>
+    <style>freeForm</style>
+    <subject>Order Submitted To 10K Store</subject>
+    <textOnly>Hello {!Contact.Name}:
+
+Thank you for your order from the 10K Store.
+
+
+{!Order__c.Name}
+
+
+You can expect shipment for your order at the end of the calendar quarter.
+
+Should you wish to cancel your order, please contact Delivery@10kview.com
+
+
+10K Delivery</textOnly>
+    <type>html</type>
+</EmailTemplate>

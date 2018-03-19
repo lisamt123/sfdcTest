@@ -1,0 +1,48 @@
+.THIS .slds-col {
+    width: 50%;
+}
+.THIS .slds-modal-close{
+    font-size: 20px;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    right: -.01rem;
+}
+.THIS .slds-modal__content {
+    height: 100% !important;
+}
+.THIS .slds-modal__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important; 
+    max-height: 100% !important;
+}
+.THIS i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 5px;
+}
+
+.THIS .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.THIS .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.THIS .artifactsListContainer2 {
+    overflow: auto;
+}
+.THIS .shortable{
+    white-space: normal
+}
+.THIS .wrapColumn{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

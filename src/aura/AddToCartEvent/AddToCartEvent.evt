@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT" description="Event template" >
+    <aura:attribute name="freeGiftItemWrapper" type="String" />
+    <aura:attribute name="CartMerchandiseItem" type="Item__c" />
+	<aura:attribute name="CartMerchandise" type="Merchandise__c"   />
+	<aura:attribute name="freeMerchandiseItem" type="Item__c" />
+	<aura:attribute name="freeMerchandise" type="Merchandise__c"   />
+	<aura:attribute name="remainingPoints" type="Integer"/>
+</aura:event>

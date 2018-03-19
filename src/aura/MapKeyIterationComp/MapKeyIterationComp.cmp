@@ -1,0 +1,8 @@
+<aura:component >
+ <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="map" type="Map"/>
+    <aura:attribute name="key" type="String"/>
+    <aura:attribute name="value" type="String"/>
+    
+    <ui:outputText value="{!v.value}" title="{!v.value}"  />
+</aura:component>

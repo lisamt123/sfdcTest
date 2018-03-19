@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" standardstylesheets="false">
+	<title>10K Advisors - Partner</title>
+    <apex:composition template="X10KViewSiteTemplate">
+        <apex:define name="header">
+            <c:X10KViewHeader seletedTab="#partner"/>
+        </apex:define>
+        <apex:define name="body">
+            <div class="container-fluid">
+				<div class="row text-left partner"  style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/10kAdvisors_Logo_Mountain_Background.png')}')">
+					<div class="col-md-8 col-md-offset-2">
+						<button type="button" class="btn btn-lg nohover btn-default">Partner</button>
+						<h1>10K helps you get the most from the best talent in the Salesforce ecosystem</h1>
+					</div>
+				</div>
+			    <div class="row salesforce-blocks">
+				   	<div class="col-md-6 text-center customer" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/customer_background.jpg')}')">
+						<a href="/apex/X10KViewPartnerCustomer" class="btn btn-lg btn-default" role="button">Salesforce Customer</a>
+						<!--<p>The Salesforce copy would go here.<br/>There could be one sentence or two.</p>-->
+				    </div>
+				    <div class="col-md-6 text-center si" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/si_background.jpg')}')">
+				      	<a href="/apex/X10KViewPartnerSI" class="btn btn-lg btn-default" role="button">Salesforce SI or ISV</a>
+						<!--<p>The Saleforce copy would go here.<br/> There could be one sentence or two.</p> -->
+					</div>
+				</div>
+			</div>
+        </apex:define>
+        <apex:define name="footer">
+            <c:X10KViewFooter />
+        </apex:define>
+    </apex:composition>
+    <site:googleAnalyticsTracking />
+</apex:page>

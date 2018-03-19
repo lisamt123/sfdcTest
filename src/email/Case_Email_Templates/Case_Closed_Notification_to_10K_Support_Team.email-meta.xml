@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Case Closed Notification to 10K Support Team</name>
+    <style>freeForm</style>
+    <subject>10K Case number {!Case.CaseNumber} has been closed</subject>
+    <textOnly>This is to confirm that {!Case.Contact}&apos;s Case number {!Case.CaseNumber} has been closed by {!Case.LastModifiedBy}.
+
+Cheers,
+10K Support Team
+10K Advisors
+
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+</EmailTemplate>

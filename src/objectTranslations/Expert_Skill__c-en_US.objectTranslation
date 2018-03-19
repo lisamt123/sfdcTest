@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Expert Skill</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Expert Skills</value>
+    </caseValues>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Expert Skills --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Lead --></label>
+        <name>Lead__c</name>
+        <relationshipLabel><!-- Expert Skills --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Number of Endorsements --></label>
+        <name>Number_of_Endorsements__c</name>
+    </fields>
+    <fields>
+        <label><!-- Skill --></label>
+        <name>Skill__c</name>
+        <relationshipLabel><!-- Expert Skills --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Expert Skill Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

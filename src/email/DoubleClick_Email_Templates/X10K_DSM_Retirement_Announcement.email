@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Valued 10K Client,
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+As you have hopefully been made aware, Google has announced that they are halting development on DSM immediately and have set an end of life for the DSM product on 7/31/2019.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+If this was a surprise to you, we can relate - it was a surprise to us as well. We had no advance knowledge of this action. Our integration with DFP relies on many DSM features, so we’ve spent the past week determining our path forward with the connector. 
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Fortunately, we had previously contemplated building our own proposal management system integrated with DFP. This news serves as a catalyst to accelerate the development of a Salesforce-native ad sales proposal application that integrates directly into DFP for order management and ad delivery. Salesforce has many native features that help support this, and we believe we can provide a much better experience than DSM by keeping users within Salesforce when generating their proposals. 
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Our goals are to:
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+<ul>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Continue to support our current integration between Salesforce and DFP/DSM</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Release a Salesforce-native alternative to DSM within 12 months</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Keep the price of the application close to current pricing</li>
+<li style="line-height:18px; font-size:12px; padding:0px 5px;">Build a migration utility that makes the transition seamless</li>
+</ul>
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+10K intends to have the best solution in the market for Salesforce customers, but we can’t do it without your input. We would love to hear your thoughts about how this transition impacts your business, what an ideal state solution looks like for you, or any other feedback you have. If you would like to discuss specifics about our plans, Matt and/or I would be happy to set up a short meeting.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+We will keep you up to date about our progress and direction. If you are interested in learning more about the beta program for the new application, please respond to this email and let us know.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Thank you for your support!
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Cheers,
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Nick Hamm<br>
+CEO, 10K Advisors<br>
+nick@10Kview.com
+</p>
+        </td>
+    </tr>
+    <tr>
+    	<td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+        </td>
+    </tr>
+</table>
+</body>
+</html>

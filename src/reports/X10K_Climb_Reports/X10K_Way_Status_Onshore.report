@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_26413371</developerName>
+        <masterLabel>Delivery Partners</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Training_Plan_Assignment__c$User__c.UserRole.Name</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Briskminds Software Solutions Pvt Ltd Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Briskminds Software Solutions Pvt Ltd Customer User</sourceValue>
+            </sourceValues>
+            <value>Briskminds</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Concretio Apps Pvt Ltd Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Concretio Apps Pvt Ltd Customer User</sourceValue>
+            </sourceValues>
+            <value>Concretio</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Trekbin Technologies Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Trekbin Technologies Customer User</sourceValue>
+            </sourceValues>
+            <value>Trekbin</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>iBirds Services Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>iBirds Services Customer User</sourceValue>
+            </sourceValues>
+            <value>iBirds</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Allenium, LLC Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alternative Solutions Consulting, LLC Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alternative Solutions Consulting, LLC Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Avid Ventures, LLC Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Bill Kerrey Consulting Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CRMified, LLC Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CatalysTech Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>CloudAva Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Comsolve Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Covidi Consulting Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Definitive Results LLC Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Edelmann Consulting Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Info-Logistics Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>JNI Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jessica M. O&apos;Steen Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jodi Wagner Customer Manager</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>KTB Structured Solutions Customer User</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Predictive Insight Ltd Customer Manager</sourceValue>
+            </sourceValues>
+            <value>Onshore</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>true</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Training_Plan_Assignment__c$User__c.Name</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Huge</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>Training_Plan_Assignment__c$Name</field>
+    </columns>
+    <columns>
+        <field>Training_Plan_Assignment__c$User__c.Profile</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Training_Plan_Assignment__c$User__c.UserRole.Name</column>
+            <operator>notContain</operator>
+            <value>concretio,ibirds,trekbin,10K,briskmind,administrator</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Training_Plan_Assignment__c$Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Training_Plan_Assignment__c$User__c.Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>10K Way Status - Onshore</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LMS_Plan_Assignments__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Training_Plan_Assignment__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

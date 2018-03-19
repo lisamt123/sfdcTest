@@ -1,0 +1,169 @@
+<apex:page standardcontroller="Invoice__c" extensions="ApplyGoodwillController"  applyBodyTag="false" docType="html-5.0">    
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">    
+
+<head>
+    <title>Apply Goodwill</title>
+</head>
+<apex:sectionHeader title="{!Invoice__c.Name}" subtitle="Apply Goodwill" rendered="{!!isLightningExperience}"/>
+<apex:form >
+    <apex:outputPanel rendered="{!!isLightningExperience}">   
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!timeEntryList}" var="timeEntryLineItem">
+                <apex:column headerValue="Expert">
+                    <apex:outputField value="{!timeEntryLineItem.Resource_Name__c}"/>
+                </apex:column>
+                <apex:column headerValue="Date">
+                    <apex:outputField value="{!timeEntryLineItem.Date__c}"/>
+                </apex:column>
+                <apex:column headerValue="Hours">
+                    <apex:outputField value="{!timeEntryLineItem.Hours__c}"/>
+                </apex:column>
+                <apex:column headerValue="Description">
+                    <apex:outputField value="{!timeEntryLineItem.Description__c}"/>
+                </apex:column>
+                <apex:column headerValue="Client Goodwill">
+                    <apex:inputField StyleClass="{!timeEntryLineItem.Id} clig" value="{!timeEntryLineItem.Goodwill_Hours__c}" onkeypress="return validateFloatKeyPress(this,event);" onkeyup="limitfieldvalue('{!timeEntryLineItem.Id}')"/>
+                </apex:column>
+                <apex:column headerValue="Expert Goodwill">
+                    <apex:inputField StyleClass="{!timeEntryLineItem.Id}-exp expg" style="String" value="{!timeEntryLineItem.Expert_Goodwill_Hours__c}" onkeypress="return validateFloatKeyPress(this,event);" onkeyup="limitfieldvalue('{!timeEntryLineItem.Id}-exp')"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="Save" action="{!saveTimeEntries}" style="margin-left: 17%;"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!isLightningExperience}">
+        <apex:slds />
+        <div class="slds-scope">    
+            <div class="slds-page-header" role="banner">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-media--center slds-no-space slds-grow">
+                            <div class="slds-media__figure slds-icon forceEntityIcon" style="background-color: #38c393" data-aura-rendered-by="97:1410;a" data-aura-class="forceEntityIcon">
+                                <span data-aura-rendered-by="100:1410;a" class="uiImage" data-aura-class="uiImage">
+                                    <img data-aura-rendered-by="98:1410;a" src="{!URLFOR($Asset.SLDS, 'assets/icons/custom/custom18_120.png')}" class="icon " alt="Rates" title="Rates"/>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__title slds-truncate slds-align-middle" title="Apply Goodwill">Apply Goodwill</p>
+                                <p class="slds-text-body--small page-header__info">{!Invoice__c.Name}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                        <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Save" action="{!saveTimeEntries}"/>
+                        <apex:commandButton styleclass="slds-button slds-button--neutral slds-not-selected" value="Cancel" action="{!cancel}"/>
+                    </div>
+                </div>
+            </div>
+            <apex:dataTable styleclass="slds-table slds-table--bordered slds-table--cell-buffer rwd-table"  value="{!timeEntryList}" var="timeEntryLineItem">
+                <apex:column headerValue="Expert">
+                    <apex:outputField value="{!timeEntryLineItem.Resource_Name__c}"/>
+                </apex:column>
+                <apex:column headerValue="Date">
+                    <apex:outputField value="{!timeEntryLineItem.Date__c}"/>
+                </apex:column>
+                <apex:column headerValue="Hours">
+                    <apex:outputField value="{!timeEntryLineItem.Hours__c}"/>
+                </apex:column>
+                <apex:column headerValue="Description">
+                    <apex:outputField value="{!timeEntryLineItem.Description__c}"/>
+                </apex:column>
+                <apex:column headerValue="Client Goodwill">
+                    <apex:inputField StyleClass="{!timeEntryLineItem.Id} clig slds-truncate slds-input" value="{!timeEntryLineItem.Goodwill_Hours__c}" onkeypress="return validateFloatKeyPress(this,event);" onkeyup="limitfieldvalue('{!timeEntryLineItem.Id}')"/>
+                </apex:column>
+                <apex:column headerValue="Expert Goodwill">
+                    <apex:inputField StyleClass="{!timeEntryLineItem.Id}-exp expg slds-truncate slds-input" value="{!timeEntryLineItem.Expert_Goodwill_Hours__c}" onkeypress="return validateFloatKeyPress(this,event);" onkeyup="limitfieldvalue('{!timeEntryLineItem.Id}-exp')"/>
+                </apex:column>
+            </apex:dataTable>
+        </div>
+    </apex:outputPanel>
+</apex:form>
+
+<script language="JavaScript">
+    function codeAddress() 
+    {
+        var clientHrs = document.getElementsByClassName("clig");
+        var expertHrs = document.getElementsByClassName("expg");
+        for(var i = 0; i < clientHrs.length; i++)
+        {
+            if(clientHrs[i].value == '' || clientHrs[i].value == null)
+            {
+                expertHrs[i].setAttribute('readonly', true);
+                expertHrs[i].setAttribute('style', "background-color: #EBEBE4 !important");
+            }
+        }
+    }
+    window.onload = codeAddress;
+    function limitfieldvalue(field)
+    {
+        console.log(field);
+        if(!field.includes("-exp"))
+        {
+            if(document.getElementsByClassName(field)[0].value.length > 18)
+            {
+                document.getElementsByClassName(field)[0].value = document.getElementsByClassName(field)[0].value.substring(0, 18);
+                document.getElementsByClassName(field+"-exp")[0].value = document.getElementsByClassName(field)[0].value.substring(0, 18);
+            }
+            else
+            {
+                document.getElementsByClassName(field+"-exp")[0].removeAttribute('readonly');
+                document.getElementsByClassName(field+"-exp")[0].removeAttribute('style');
+                document.getElementsByClassName(field+"-exp")[0].value = document.getElementsByClassName(field)[0].value;
+            }
+            if(document.getElementsByClassName(field)[0].value == '' || document.getElementsByClassName(field)[0].value == null)
+            {
+                document.getElementsByClassName(field+"-exp")[0].setAttribute('value', null);
+                document.getElementsByClassName(field+"-exp")[0].setAttribute('readonly', true);
+                document.getElementsByClassName(field+"-exp")[0].setAttribute('style', "background-color: #EBEBE4 !important");
+            }
+        }
+        else if(field.includes("-exp"))
+        {
+            if(document.getElementsByClassName(field)[0].value.length > 18)
+            {
+                document.getElementsByClassName(field)[0].value = document.getElementsByClassName(field)[0].value.substring(0, 18);
+            }
+        }
+    }
+    function validateFloatKeyPress(el, evt) 
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) 
+        {
+            return false;
+        }
+        //just one dot
+        if(number.length>1 && charCode == 46)
+        {
+             return false;
+        }
+        //get the carat position
+        var caratPos = getSelectionStart(el);
+        var dotPos = el.value.indexOf(".");
+        if( caratPos > dotPos && dotPos>-1 && (number[1].length > 1))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    function getSelectionStart(o) 
+    {
+        if (o.createTextRange) 
+        {
+            var r = document.selection.createRange().duplicate()
+            r.moveEnd('character', o.value.length)
+            if (r.text == '') return o.value.length
+            return o.value.lastIndexOf(r.text)
+        } 
+        else return o.selectionStart
+    }
+</script>
+</html>
+</apex:page>

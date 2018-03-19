@@ -1,0 +1,94 @@
+<aura:component controller="MerchandiseStoreController">
+    <aura:attribute name="title" type="String" required="true"/>
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    <aura:attribute name="CurrentMerchandiseItem" type="Merchandise__c" />
+    <aura:attribute name="FreeMerchandise" type="Merchandise__c"   />
+    <aura:attribute name="FreeMerchandiseItem" type="Item__c"   />
+    <aura:attribute name="CurrentItem" type="Item__c" />
+    <aura:attribute name="CartItems" type="Item__c[]" />
+    <aura:attribute name="CartMerchandises" type="Merchandise__c[]" />
+    <aura:attribute name="RemainingPoints" type="Integer" default="0"  />
+    <aura:attribute name="submitBoolean" type="Boolean" default="false" />
+    <aura:attribute name="selectBoolean" type="Boolean" default="false" />
+    <aura:attribute name="isDisplaySizes" type="Boolean" default="false" />
+    <aura:attribute name="isAllowOrder" type="Boolean" default="false" />
+    <aura:attribute name="isSizeSelected" type="Boolean" default="false" />
+    <aura:attribute name="sizeArray" type="String[]" />
+    <aura:registerEvent name="addToCart" type="c:AddToCartEvent" />
+    <aura:dependency resource="markup://c:FreeMerchandiseItem" />
+    <aura:handler name="init" value="this" action="{!c.doInit}"  />
+
+    <div>
+        <div aria-hidden="false" role="dialog" class="slds-modal slds-slide-up-open">
+            <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium">{!v.title}</h2>
+                        <aura:if isTrue="{!v.closable}">
+                            <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" variant="bare-inverse" onclick="{!c.defaultCloseAction}" alternativeText="Close window." />
+                        </aura:if>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    	<lightning:layout >
+                    		<lightning:layoutItem padding="around-small" size="4" flexibility="grow">
+								<ui:outputRichText value="{!v.CurrentMerchandiseItem.Picture__c}" class="pictureImage"  />
+                    		</lightning:layoutItem>
+                    		<lightning:layoutItem padding="around-small" size="8" flexibility="grow">
+                    			<lightning:layout multipleRows="true">
+                                    <aura:if isTrue="{!v.isDisplaySizes}" >
+                                        <lightning:layoutItem padding="around-small" size="12" flexibility="grow" class="sizeSelectContainer"  >
+                                            <label class="slds-form-element__label" style="float:left;">Select Size :</label>
+                                            <ui:inputSelect aura:id="sizePick" change="{!c.sizeChange}" class="sizeSelect" disabled="{!v.selectBoolean}">
+                                                <aura:iteration items="{!v.sizeArray}" var="sizeVal">
+                                                     <ui:inputSelectOption text="{!sizeVal}" label="{!sizeVal}"/>
+                                                </aura:iteration>
+                                            </ui:inputSelect>
+                                        </lightning:layoutItem>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isSizeSelected}" >
+                                        <lightning:layoutItem padding="around-small" size="12" flexibility="grow" >
+                                            <label class="slds-form-element__label">Quantity on Hand :</label>
+                                            <ui:outputNumber value="{!v.CurrentItem.Quantity_On_Hand__c}" format="###,###,###" ></ui:outputNumber>
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem padding="around-small" size="12" flexibility="grow" >
+                                            <aura:if isTrue="{!and(v.isAllowOrder, v.CurrentItem.Quantity_On_Hand__c == 0)}" >
+                                                <lightning:input type="number" name="number" label="Quantity :" value="{!v.CurrentItem.Quantity_Redeemed__c}" min="1" max="100" onchange="{!c.updateAvailablePoints}" class="quantInput" messageWhenRangeOverflow=" " messageWhenRangeUnderflow=" "/>
+                                                <aura:set attribute="else">
+                                                    <lightning:input type="number" name="number" label="Quantity :" value="{!v.CurrentItem.Quantity_Redeemed__c}" min="1" max="{!v.CurrentItem.Quantity_On_Hand__c}" onchange="{!c.updateAvailablePoints}" class="quantInput" messageWhenRangeOverflow=" " messageWhenRangeUnderflow=" "/>
+                                                </aura:set>
+                                            </aura:if>
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem padding="around-small" size="12" flexibility="grow" >
+                                            <label class="slds-form-element__label">Points :</label>
+                                            <ui:outputNumber value="{!v.CurrentMerchandiseItem.Point_Value__c}" format="###,###,###" ></ui:outputNumber>
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem padding="around-small" size="12" flexibility="grow" >
+                                            <label class="slds-form-element__label">Total Points Required :</label>
+                                            <ui:outputNumber value="{!v.CurrentMerchandiseItem.Point_Value__c * v.CurrentItem.Quantity_Redeemed__c}" format="###,###,###" ></ui:outputNumber>
+                                        </lightning:layoutItem>
+                                    </aura:if>
+                    			</lightning:layout>
+                    		</lightning:layoutItem>
+                    	</lightning:layout>
+                        <lightning:layout >
+                            <lightning:layoutItem size="12" flexibility="grow">
+                                <p class="slds-text-longform">
+                                    <aura:unescapedHtml value="{!v.CurrentMerchandiseItem.Description__c}" />
+                                </p>
+                                <!-- <ui:outputRichText value="{!v.CurrentMerchandiseItem.Description__c}"/> -->
+                            </lightning:layoutItem>
+                        </lightning:layout>
+				    </div>
+                    <div class="slds-modal__footer">
+                        <aura:if isTrue="{!v.submitBoolean}">
+                            <lightning:button class="buttonClass" label="Add to Cart" disabled="{!v.submitBoolean}"  />
+                            <aura:set attribute="else">
+                                <lightning:button class="buttonClass" label="Add to Cart" onclick="{!c.addToCart}" disabled="{!v.submitBoolean}"  />
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+        </div>
+        <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+        <div aura:id="ModalDialogPlaceholder" />
+    </div>
+</aura:component>

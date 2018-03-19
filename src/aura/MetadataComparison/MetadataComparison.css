@@ -1,0 +1,37 @@
+.THIS .slds-modal__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important; 
+    max-height: 100% !important;
+}
+.THIS .slds-modal-close{
+    font-size: 20px;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    right: -.01rem;
+}
+.THIS .slds-modal__content {
+    height: 100% !important;
+}
+.THIS .custom-card {
+    border: 1px solid rgba(0,0,0,.125) !important;
+    width: 100%;
+}
+.THIS .custom-right {
+    margin-left: auto !important;
+}
+.THIS .slds-page-header {
+	padding: .4rem;
+	width: 100%;
+}
+.THIS .topPart {
+	position: absolute;
+	width: 100%;
+	background: white;
+    z-index: 1;
+}
+.THIS .bottomPart {
+	margin-top: 5rem;
+}

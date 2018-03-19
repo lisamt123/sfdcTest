@@ -1,0 +1,41 @@
+<aura:component access="global">
+    <!--Reg Event-->
+    <aura:registerEvent name="updateTime" type="c:updateTimeEntry"/>
+    
+    <!--Attributes-->
+    <aura:attribute name="tymEntryList"  type="Time_Entry__c[]" access="global"/>
+    <aura:attribute name="Day" type="String" default="" access="global"/>
+	<aura:attribute name="tempCls" type="String" default="text " access="global"/>
+    <aura:attribute name="totDayHours" type="Integer" default="0" access="global"/>
+    <aura:attribute name="assignment" type="String" default="" access="global"/>
+    <aura:attribute name="isEdit" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="clickedProject" type="String" default="" access="global"/>
+    <aura:attribute name="clickedProjectName" type="String" default="" access="global"/>
+    <aura:attribute name="isStoryRequired" type="Boolean" default="false" access="global"/>
+    
+    <!--Body-->
+    <aura:if isTrue="{!v.isEdit}">
+        <div class="slds-box slds-theme--default"  onclick="{!c.update}">
+            <center>
+                <aura:if isTrue="{!v.totDayHours != 0}">
+                    <ui:outputText value="{!v.totDayHours}" />
+                </aura:if>
+                <aura:if isTrue="{!v.totDayHours == 0}">
+                    <ui:outputText value="-" />
+                </aura:if>
+            </center>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!(!v.isEdit)}">
+        <div class="slds-box slds-theme--shade"  >
+            <center>
+                <aura:if isTrue="{!v.totDayHours != 0}">
+                    <ui:outputText value="{!v.totDayHours}" />
+                </aura:if>
+                <aura:if isTrue="{!v.totDayHours == 0}">
+                    <ui:outputText value="-" />
+                </aura:if>
+            </center>
+        </div>
+    </aura:if>
+</aura:component>

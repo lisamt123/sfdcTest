@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>10K Delivery Partner Paid Invoice Notification</name>
+    <style>freeForm</style>
+    <subject>10K Payment Has Been Processed</subject>
+    <textOnly>Hi {!Invoice__c.Billing_Contact_First_Name__c},
+
+A {!Invoice__c.Total_Invoice_Amount__c} payment for {!Invoice__c.Name}, for the period {!Invoice__c.Billing_Period_Start_Date__c} through {!Invoice__c.Billing_Period_End_Date__c}, has been processed and should be reflected in your account in the next few days.
+
+Cheers,
+10K Accounts Receivable Team
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

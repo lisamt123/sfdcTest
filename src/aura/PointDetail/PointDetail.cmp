@@ -1,0 +1,93 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="PointDetailController" >
+	<aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+	<center><lightning:spinner aura:id="Spinner" class="slds-hide" variant="brand" size="large" alternativeText="Please Wait."/></center>
+	<aura:attribute name="PointsList" type="PointDetailController.PointsWrapper[]" access="global" />
+	<aura:attribute name="NoPoints" type="Boolean" default="false" />
+	<aura:attribute name="totalPoints" type="Integer" default="0" />
+	<aura:attribute name="redeemedPoints" type="Integer" default="0" />
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<div class="slds-page-header" role="banner" >
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="custom:custom42" size="medium" alternativeText="Points" variant="inverse"  />
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-page-header__title slds-truncate slds-align-middle" style="margin-top: 0px;" title="Point Detail">Point Detail</h2>
+						<div>
+							<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Total Points Earned</strong> • 
+								<ui:outputNumber value="{!v.totalPoints}" format="###,###,###" ></ui:outputNumber>
+							</span>
+							<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Total Points Redeemed</strong> • 
+								<ui:outputNumber value="{!v.redeemedPoints}" format="###,###,###" ></ui:outputNumber>
+							</span>
+							<span class="slds-text-body_small slds-line-height_reset" style="margin-right: 50px;"><strong>Available Points</strong> • 
+								<ui:outputNumber value="{!v.totalPoints - v.redeemedPoints}" format="###,###,###" ></ui:outputNumber>
+							</span>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.NoPoints}" > 
+    	<lightning:card title="No point history available." class="emptyOrder"></lightning:card>
+    	<aura:set attribute="else">
+    		<div class="slds-table--header-fixed_container" style="height:650px;">
+		        <div class="slds-scrollable_y" style="height:100%;">
+				    <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_striped slds-table--header-fixed">
+				    	<thead>
+				    		<tr class="slds-text-title_caps">
+				    			<th scope="col" style="width:15%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Number of Points">Number of Points</div>
+				    			</th>
+				    			<th scope="col" style="width:25%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Date Earned">Date Earned</div>
+				    			</th>
+				    			<th scope="col" style="width:40%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Points Rule Name">Points Rule Name</div>
+				    			</th>
+				    			<th scope="col" style="width:20%;">
+				    				<div class="slds-truncate slds-cell-fixed" title="Source Record Name">Source Record Name</div>
+				    			</th>
+				    		</tr>
+				    	</thead>
+				    	<tbody>
+				    		<aura:iteration var="point" items="{!v.PointsList}" indexVar="index"  >
+					    		{!point.Points_Rule__r.My_Points_Display_Name__c}
+					    		<tr>
+					    			<th scope="row" data-label="Number of Points" style="width:15%;">
+					    				<ui:outputNumber value="{!point.pointRec.Number_of_Points__c}"  />
+					    			</th>
+					    			<th data-label="Date Earned" style="width:25%;">
+					    				<lightning:formattedDateTime value="{!point.pointRec.CreatedDate}" year="numeric" month="short" day="2-digit"  hour="2-digit" minute="2-digit" />
+					    			</th>
+					    			<td data-label="Points Rule Name" style="width:40%;">
+					    				<ui:outputText value="{!point.pointRec.Points_Rule__r.Name}"  />
+					    			</td>
+
+					    			<td data-label="Source Record Name" style="width:20%;">
+					    				<aura:if isTrue="{!point.pointRec.Points_Rule__r.Hyperlink_Source_Record_Name__c}" >
+					    					<ui:outputURL value="{!'/10kcommunity/' + point.sourceRecId}" label="{!point.sourceRecName}" target="_blank"  />
+					    					<aura:set attribute="else">
+     											<ui:outputText value="{!point.sourceRecName}"   />
+    										</aura:set>
+										</aura:if>
+					    				
+
+					    				<!-- {!point.sourceRecName} -->
+					    			</td>
+					    		</tr>
+				    		</aura:iteration>
+				    	</tbody>
+				    </table>
+				</div>
+			</div>
+    	</aura:set>
+    </aura:if>
+    <div aura:id="ModalDialogOrder" />
+</aura:component>

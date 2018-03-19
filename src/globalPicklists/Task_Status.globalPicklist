@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalPicklist xmlns="http://soap.sforce.com/2006/04/metadata">
+    <globalPicklistValues>
+        <fullName>Draft</fullName>
+        <default>true</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Ready for Work</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Blocked</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Ready for Review</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Completed</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <masterLabel>Task Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalPicklist>

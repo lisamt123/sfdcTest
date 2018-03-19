@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send to a lead where achievements are &gt;0 to get additional pre-qualification information from Lead</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Lead Qualification Survey Invitation</name>
+    <style>freeForm</style>
+    <subject>Next step to becoming a 10K Expert</subject>
+    <textOnly>Hello {!Lead.FirstName},
+
+Thank you for your interest in becoming a 10K Expert! We&apos;re excited to have you start this journey with us.
+There&apos;s just one more step in the process that will help us and you determine if there&apos;s a fit. We have a short series of questions that will take about 10 minutes to complete. Please go to this link and fill out the items as best you can. After that, we will be in touch about next steps.
+Thank you in advance for your help.
+10K Leadership Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

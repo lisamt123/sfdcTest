@@ -1,0 +1,376 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormsControllerFor10KView" standardstylesheets="false" applyBodyTag="false">
+    
+    <apex:includeScript value="{!$Resource.jqueryLatest}"/>
+    <head>
+        <title>10K Advisors - Partners</title>
+    </head>
+    <style type="text/css">
+        @media (max-width:840px){
+            .footerPadding{
+                padding-bottom: 256px !important;
+            }
+        }
+        @media (min-width:840px){
+            .footerPadding{
+                padding-bottom: 138px !important;
+            }
+        }
+    </style>
+    <script>
+        
+        function resetForm(ele, message) {
+            
+            if(message != 'errorCaught') {
+                 
+               window.scrollTo(0,0);
+               
+                window.parent.location = window.parent.location.href;
+                    
+               $(ele).closest('form').find("input[type=text], textarea").val("");
+            }
+        }
+        function limitfieldvalue(obj)
+        {
+            if($(obj).val().length > 18)
+            {
+                $(obj).val($(obj).val().substring(0, 18));
+            }
+        }
+        function validateFloatKeyPress(el, evt) 
+        {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            var number = el.value.split('.');
+            if (charCode < 48 || charCode > 57) 
+            {
+                return false;
+            }
+            //just one dot
+            if(number.length>1 && charCode == 46)
+            {
+                 return false;
+            }
+            //get the carat position
+            var caratPos = getSelectionStart(el);
+            var dotPos = el.value.indexOf(".");
+            if( caratPos > dotPos && dotPos>-1 && (number[1].length > 1))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        function getSelectionStart(o) 
+        {
+            if (o.createTextRange) 
+            {
+                var r = document.selection.createRange().duplicate()
+                r.moveEnd('character', o.value.length)
+                if (r.text == '') return o.value.length
+                return o.value.lastIndexOf(r.text)
+            } 
+            else return o.selectionStart
+        }
+        window.onload = function() {
+            $($('[id$="partner_type"]').children()[0]).text('None Selected');
+            $($('[id$="partner_tier"]').children()[0]).text('None Selected');
+        }
+    </script>
+    
+    <apex:composition template="X10KViewSiteTemplate">
+        
+        <apex:define name="body">
+        
+        
+        <header class="hero hero--inner">
+            <div class="hero__text">
+                <h1 class="hero__title">On-Demand Expert Services for<strong>Salesforce SI &amp; ISV Partners</strong></h1>
+                <p class="hero__subtext">Our community of Salesforce Experts are here to give you the confidence to take on any challenge. From complex technical tasks to strategic program guidance, we can help you handle it all.</p>
+                <p><a id="action-button" class="hero-inner__button" href="#register" tabindex="2">Connect me with Salesforce Experts</a></p>
+            </div>
+            <div class="hero__testimonial">
+                <blockquote class="testimonial">
+                    <figure class="testimonial__avatar">
+                        <img class="testimonial__img" src="{!URLFOR($Resource.X10KViewImgTestimonials, 'greg-poirier.png')}" />
+                    </figure>
+                    <h4 class="testimonial__quotation">"10K has been instrumental in helping us to grow more quickly and service our clients better."</h4>
+                    <cite class="testimonial__citation">Greg Poirier<br />President, CloudKettle</cite>
+                </blockquote>
+            </div> 
+            <div class="chevron--white">
+                <svg viewBox="0 899 1440 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <defs></defs>
+                    <path d="M0,939 C0,939 347.039951,899 711.234947,899 C1075.42994,899 1440,939 1440,939 L1440,954 L0,954 L0,939 Z" id="concave-horizon--white" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                </svg>
+            </div>
+        </header>
+
+        <div class="howitworks">
+            <h1 class="howitworks__title"><img src="{!URLFOR($Resource.X10KViewResources, 'logo-artifact.svg')}" /><br />How It Works</h1>
+            <div class="howitworks__step">
+                <feature class="howitworks__img os-animation" data-os-animation="fadeInLeft" data-os-animation-delay="0s">
+                    <div class="card">
+                        <img src="{!URLFOR($Resource.X10KViewResources, 'featured/photo-1449394285330-c621ce90e208.jpeg')}" />
+                    </div>
+                </feature> 
+                <div class="howitworks__txt os-animation" data-os-animation="fadeInRight" data-os-animation-delay="0s">
+                    <h3 class="howitworks__label">Step 1.</h3>
+                    <h2 class="howitworks__action">Join the Community</h2>
+                    <p>Tell us about your company, your team structure, and why you are interested in tapping into our elite pool of Salesforce expertise. We&apos;ll work with you to understand your unique delivery processes and working style to ensure any 10K Experts who work with you will plug seamlessly into your team.</p>
+<!--                    <p>Your team will receive invitations to join the 10K Community (powered by Salesforce Communities, of course), where you will be able to request project support from our experts, manage your projects with our team, collaborate with your peers, view time logs, and manage your 10K invoices. You also have access to view your 10K team&apos;s Trailhead Badges, Salesforce Certifications, and background. We have made a significant investment in the 10K Community and we&apos;re constantly innovating to ensure that it creates a seamless experience for our clients and experts.</p> -->
+                </div>
+            </div>
+            <div class="howitworks__step">
+                <feature class="howitworks__img os-animation" data-os-animation="fadeInLeft" data-os-animation-delay="250ms">
+                    <div class="card">
+                        <img src="{!URLFOR($Resource.X10KViewResources, 'featured/photo-1448932252197-d19750584e56.jpeg')}" />
+                    </div>
+                </feature>
+                <div class="howitworks__txt os-animation" data-os-animation="fadeInRight" data-os-animation-delay="250ms">
+                    <h3 class="howitworks__label">Step 2.</h3>
+                    <h2 class="howitworks__action">Request Expertise</h2>
+                    <p>When you have a project that requires expertise from our team, simply fill out a new project request with the desired skill sets and time frame, and our matching algorithm will identify available 10K Experts based on your needs. Once identified, your 10K support team will work quickly to assign and onboard Experts with right skills and experience to your project.</p>
+                </div>  
+            </div>
+            <div class="howitworks__step">
+                <feature class="howitworks__img os-animation" data-os-animation="fadeInLeft" data-os-animation-delay="250ms">
+                    <div class="card">
+                        <img src="{!URLFOR($Resource.X10KViewResources, 'featured/photo-1427751840561-9852520f8ce8.jpeg')}" />
+                    </div>
+                </feature>
+                <div class="howitworks__txt os-animation" data-os-animation="fadeInRight" data-os-animation-delay="250ms">
+                    <h3 class="howitworks__label">Step 3.</h3>
+                    <h2 class="howitworks__action">Work with your team</h2>
+<!--                    <p>In addition to working with our elite Salesforce talent on your projects, you have the added support of US-based Salesforce MVPs and seasoned consultants who work closely with your 10K team to ensure project success - at no additional cost to you. As long as you are a member of our Community, we are here to answer questions, provide direction, and help manage the services we are providing to you.</p> -->
+                    <p>You are free to work with 10K Experts in whatever capacity is best for you and your team. Our goal is to be a seamless extension of your team, working along side you to ensure you deliver successful outcomes to your clients. Whether you need an Expert for an isolated requirement on one project or a full team for a multi-year program, the 10K team is here to support you.</p>
+                </div>  
+            </div>
+                <div class="howitworks__step">
+                    <feature class="howitworks__img os-animation" data-os-animation="fadeInLeft" data-os-animation-delay="250ms">
+                        <div class="card">
+                            <img src="{!URLFOR($Resource.X10KViewResources, 'featured/meeting.jpg')}" />
+                        </div>        
+                    </feature>
+                    
+                    <div class="howitworks__txt os-animation" data-os-animation="fadeInRight" data-os-animation-delay="250ms">
+                        <h3 class="howitworks__label"></h3>
+                        <h2 class="howitworks__action">Ensuring Your Success</h2>
+                        <p>We are dedicated to your success. Our Delivery Success team works alongside our experts to ensure that delivery quality meets your high standards, and our Client Success team works closely with you to ensure that you are getting the value you expect from our services.</p>
+                    </div>  
+                </div>
+            <div class="db cl tc"><a id="action-button" class="howitworks__button" href="#get-started">Get Started &rsaquo;</a></div>
+        </div>
+
+        <div class="panel panel--white">
+          
+            <div class="benefits">
+                <h2 class="benefits__title">Why partner with 10K Advisors?</h2>
+        
+                <div class="benefits__item">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'collective.svg')}" />   
+                    </feature>
+                    <h3 class="benefits__item-title">Work with Top Salesforce Talent</h3>
+                    <p class="benefits__item-desc">Apply the experience of some of the top Salesforce Admins, Developers, Architects, and Consultants in the world to your Salesforce program.</p>
+                </div>
+
+                <div class="benefits__item">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'professional.svg')}" />
+                    </feature>
+                    <h3 class="benefits__item-title">Trust Our Verified Expertise</h3>
+                    <p class="benefits__item-desc">Every 10K Expert goes through our unique skills verification process to ensure you get the right expertise at the right time.</p>
+                </div>
+
+                <div class="benefits__item">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'strategy.svg')}" />   
+                    </feature>
+                    <h3 class="benefits__item-title">Access Diverse Skills On-Demand</h3>
+                    <p class="benefits__item-desc">We give you access to hundreds of skills without the need for retainers or complex contracts. You only pay for what you use.</p>
+                </div>
+<!--                
+                <div class="benefits__item cb">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'stopwatch.svg')}" />    
+                    </feature>
+                    <h3 class="benefits__item-title">Consistent Delivery</h3>
+                    <p class="benefits__item-desc">We provide expertise on-demand&mdash;providing pipeline, project structure, and client management services to Salesforce delivery experts.</p>
+                </div>
+                
+                <div class="benefits__item">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'strategy.svg')}" />
+                    </feature>
+                    <h3 class="benefits__item-title">Risk Management</h3>
+                    <p class="benefits__item-desc">Hiring an independent Salesforce Expert allows your growing company to competitively price smaller projects without needing to staff a resource full time.</p>
+                </div>
+                
+                <div class="benefits__item">
+                    <feature class="benefits__item-icon">
+                        <img class="benefits__item-img" src="{!URLFOR($Resource.X10KViewIcons, 'relationship.svg')}" />
+                    </feature>
+                    <h3 class="benefits__item-title">Long-term Support</h3>
+                    <p class="benefits__item-desc">We build long-term partnerships that help our clients achieve more in a scalable and economically viable way. We are here to help you find the right people at the right time, ensure standards and quality are high, and help guide you through situations where the best solution might not be clear.</p>
+                </div>
+-->
+            </div>
+        </div>
+
+        <section class="panel panel--gray pa3 footerPadding" id="form1">
+            <a name="register"></a>
+            <h1 class="tc"><img src="{!URLFOR($Resource.X10KViewResources, 'logo-artifact.svg')}" /><br />Take the next step to becoming a better Salesforce partner</h1>
+
+            <!--   <form action="https://login.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" class="slds tabs-form mw6" style="margin: 0 auto;" id="form-sf-customer"> -->
+            
+            <apex:form style="margin: 0 auto;" id="form-sf-customer" styleclass="slds tabs-form mw6">
+                
+                <apex:pageMessages id="msgs"/>
+                <a id="get-started"/>
+                <apex:outputPanel id="message" >
+                    <div id="pageMessagePanelSLDS" style="display:{!if(isMessageToDisplay,'block','none')};">                   
+                        <div class="slds-notify_container">
+                            <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert" style="background: #00AAE4;">
+                                <div style="display:{!IF(OR(strToast == 'Lead Record Created Successfully',strToast == 'Lead Record Already Exists. To Cancel please click on the close icon present in the right corner of this section'),'block','none')};">
+                                    <button class="slds-button slds-notify__close slds-button--icon-inverse" style="width: 33px; height: 28px; background:none" title="Close" onclick="resetForm('success'); return false;"> <bold>X</bold> </button>
+                                </div>
+                                <h2 style="height: 34px; background: #00AAE4; font-size: 1.1em; padding-top: 10px;">
+                                    {!strToast}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                
+                <div class="slds-form--vertical">  
+                    <div class="slds-form-element">         
+                        <div class="slds-form-element__control">            
+                            <apex:inputText id="company" value="{!objLead.Company}" styleClass="slds-input border-box required" title="Company *" html-placeholder="Company *" maxlength="80"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">    
+                        <div class="slds-form-element__control">                
+                            <apex:inputText id="first_name" value="{!objLead.FirstName}" styleClass="slds-input border-box required" title="First Name *" html-placeholder="First Name *" maxlength="40"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">               
+                        <div class="slds-form-element__control">                
+                            <apex:inputText id="last_name" value="{!objLead.LastName}" styleClass="slds-input border-box required" title="Last Name *" html-placeholder="Last Name *" maxlength="40"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">         
+                        <div class="slds-form-element__control">            
+                            <apex:inputText id="title" value="{!objLead.Title}" styleClass="slds-input border-box required" title="Title *" html-placeholder="Title *" maxlength="80"/>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element">     
+                        <div class="slds-form-element__control">        
+                            <apex:inputText id="email" value="{!objLead.Email}" styleClass="slds-input border-box required email" title="Email Address *" html-placeholder="Email Address *"/>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element">         
+                        <div class="slds-form-element__control">            
+                            <apex:inputText id="website" value="{!objLead.Website}" styleClass="slds-input border-box required" title="Website *" html-placeholder="Website *" maxlength="100"/>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element">           
+                        <apex:outputLabel value="Partner Type *" style="color: #9ca8b9; font-weight: inherit;" for="partner_type" />     
+                        <div class="slds-select_container">             
+                            <apex:inputField id="partner_type" label="Partner Type*" value="{!objLead.Partner_Type__c}" styleClass="slds-select" required="false" html-placeholder="Partner Type *"/>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-form-element">     
+                        <apex:outputLabel value="Partner Tier *" style="color: #9ca8b9; font-weight: inherit;" for="partner_tier" />           
+                        <div class="slds-select_container">     
+                            <apex:inputField id="partner_tier" label="Partner Tier*" value="{!objLead.Partner_Tier__c}" styleClass="slds-select" required="false" html-placeholder="Partner Tier *"/>     
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element">         
+                        <div class="slds-form-element__control">            
+                            <apex:inputText id="employees" value="{!objLead.Num_of_Employees_Focused_on_Salesforce__c}" styleClass="slds-input border-box required" title="How many people are on your Salesforce team? *" html-placeholder="How many people are on your Salesforce team? *" onkeypress="return validateFloatKeyPress(this,event);" onkeyup="limitfieldvalue(this)"/>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element">         
+                        <div class="slds-form-element__control">            
+                            <apex:inputTextarea id="type-of-help" value="{!objLead.What_type_of_help_are_you_looking_for__c}" styleClass="slds-textarea required" title="What type of help are you looking for? *" html-placeholder="What type of help are you looking for? *"/>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form-element ">         
+                        <div class="slds-form-element__control">            
+                            <apex:commandButton value="Submit" styleClass="slds-button slds-button--brand submitbutton" onclick="validateFields();" rerender="none" />
+                        </div>
+                    </div>
+                    </div>
+                    <apex:actionfunction name="submitAF" action="{!submitLeadForPartners}" rerender="message"/>
+                    <apex:inputHidden id="referralCode" value="{!referralCode}" />
+                </apex:form>  
+            </section> 
+        </apex:define>    
+    </apex:composition>    
+    <script>
+        var referralCode = localStorage.getItem('_referrel_Code');
+        $('[id$="referralCode"]').val(referralCode);
+        var flag = true;
+        function validateFields() {
+            flag = true;
+            $.each($('.required'), function(index,req)
+            {
+                $(req).css('border' , '1px solid #d8dde6');
+                $($(req).parent().children()[1]).remove();
+                if($(req).val().trim() == '')
+                {
+                    $(req).css('border' , '2px solid red');
+                    $($(req).parent()).append('<div>This field is required. </div>');
+                    flag = false;
+                }
+            });
+
+            var partnerType = $('[id$="partner_type"]');
+            $(partnerType).css('border' , '1px solid #d8dde6');
+            $($(partnerType).parent().parent().children()[2]).remove();
+            if($(partnerType).val() == '' || $(partnerType).val() == null) {
+                $(partnerType).css('border' , '2px solid red');
+                $($(partnerType).parent().parent()).append('<div>Please select a partner type. </div>');
+                flag = false;
+            }
+
+            var partnerTier = $('[id$="partner_tier"]');
+            $(partnerTier).css('border' , '1px solid #d8dde6');
+            $($(partnerTier).parent().parent().children()[2]).remove();
+            if($(partnerTier).val() == '' || $(partnerTier).val() == null) {
+                $(partnerTier).css('border' , '2px solid red');
+                $($(partnerTier).parent().parent()).append('<div>Please select a partner tier. </div>');
+                flag = false;
+            }
+
+            if(flag) {
+                var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                $.each($('.email'), function(index,email)
+                {
+                    $(email).css('border' , '1px solid #d8dde6');
+                    $($(email).parent().children()[1]).remove();
+                    if (!filter.test($(email).val()) && $(email).val().trim() != '') 
+                    {
+                        $(email).css('border' , '2px solid red');
+                        $($(email).parent()).append('<div>Please fill a valid email. </div>');
+                        flag = false;
+                    }
+                });
+            }
+            if(flag) {
+                document.getElementsByClassName('submitbutton')[0].disabled = true;
+                setTimeout(function(){ document.getElementById('pageMessagePanelSLDS').style.display = "none"; }, 5000);
+                submitAF();
+            }
+        }
+    </script>
+</apex:page>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Agreement_Expiration_Warning__c</fullName>
+        <externalId>false</externalId>
+        <formula>Agreement__r.Valid_Through__c &lt; Project__r.End_Date__c</formula>
+        <label>Agreement Expiration Warning</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agreement__c</fullName>
+        <externalId>false</externalId>
+        <label>Agreement</label>
+        <referenceTo>Agreement__c</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>Project_Agreements</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Days_Until_Agreement_Expiration__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  Agreement_Expiration_Warning__c = TRUE,
+  Agreement__r.Valid_Through__c - TODAY(),
+  null
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Until Agreement Expiration</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migration_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Migration Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Project__c</fullName>
+        <externalId>false</externalId>
+        <label>Project</label>
+        <referenceTo>Project__c</referenceTo>
+        <relationshipLabel>Agreements</relationshipLabel>
+        <relationshipName>Project_Agreements</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Project Agreement</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement__c</columns>
+        <columns>Project__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PA-{0000}</displayFormat>
+        <label>PA Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Project Agreements</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Agreement__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Project__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Agreement_Expiration_Warning__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Days_Until_Agreement_Expiration__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Agreement__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Project__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Agreement_Expiration_Warning__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Days_Until_Agreement_Expiration__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Agreement__c</searchFilterFields>
+        <searchFilterFields>Project__c</searchFilterFields>
+        <searchFilterFields>Agreement_Expiration_Warning__c</searchFilterFields>
+        <searchFilterFields>Days_Until_Agreement_Expiration__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Ensure_Accounts_Match</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  Agreement__r.RecordType.DeveloperName != &apos;Delivery_Partnership&apos;,
+  Agreement__r.Account__c != Project__r.Account__c
+)</errorConditionFormula>
+        <errorMessage>The Agreement and the Project must both be tied to the same Account.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Expired_Agreements_on_Open_Projects</fullName>
+        <active>true</active>
+        <description>Prevents an Expired Agreement from being added to a Project that is either Projected or Open</description>
+        <errorConditionFormula>AND(
+  ISNEW(),
+  ISPICKVAL(Agreement__r.Status__c, &apos;Expired&apos;),
+  OR(
+    ISPICKVAL(Project__r.Status__c, &apos;Projected&apos;),
+    ISPICKVAL(Project__r.Status__c, &apos;Open&apos;)
+  )
+)</errorConditionFormula>
+        <errorMessage>You cannot assign an Expired Agreement to a Project that is Open or Projected. Please choose another Agreement.</errorMessage>
+    </validationRules>
+</CustomObject>

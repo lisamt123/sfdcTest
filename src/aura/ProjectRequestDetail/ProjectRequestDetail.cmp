@@ -1,0 +1,112 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute type="Project_Request_Detail__c" name="ProjectRD" />
+    <aura:attribute type="String[]" name="RolePickValues" />
+    <aura:attribute type="Integer" name="index" />
+    <aura:registerEvent name="AddRow" type="c:AddRow"/>
+   
+    <tr class="slds-hint-parent" > 
+        <td scope="row" data-label="Role" class = "RoleWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-truncate">
+                        <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            
+                            <ui:inputSelect value="{!v.ProjectRD.Role__c}" change="{!c.eventfire}"  class="slds-form-element slds-form-element__control slds-select inputFieldWidth" aura:id="Role1" labelClass="slds-form-element__label">
+                                <aura:iteration items="{!v.RolePickValues}" var="RoleName">
+                                    <ui:inputSelectOption text="{!(RoleName == 'None')?'':RoleName}" label="{!RoleName}" />
+                                </aura:iteration>                        
+                            </ui:inputSelect>
+                            <aura:set attribute="else">
+                                <ui:inputSelect value="{!v.ProjectRD.Role__c}" change="{!c.eventfire}"  class="slds-form-element slds-form-element__control slds-select inputFieldWidth" aura:id="Role2" labelClass="slds-form-element__label">
+                                <aura:iteration items="{!v.RolePickValues}" var="RoleName">
+                                    <ui:inputSelectOption text="{!(RoleName == 'None')?'':RoleName}" label="{!RoleName}" />
+                                </aura:iteration>                        
+                            </ui:inputSelect>
+                            </aura:set>
+                       </aura:if>
+                        
+                    </div>                                                                                
+                </div>
+            </div>
+        </td> 
+        <!--Start Date -->
+        <td data-label="Start Date" class = "colWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control"> 
+                    <div class="slds-truncate">
+                        <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            
+                            <ui:inputDate aura:id="prdStartDateID" class="slds-input inputFieldWidth"  value="{!v.ProjectRD.Requested_Start_Date__c}" displayDatePicker="true" required="true"/>                              
+                       </aura:if>
+                    </div>
+                </div>
+            </div>
+        </td>
+        
+        <!--End Date-->
+        <td data-label="End Date" class = "colWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-truncate">
+                        <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            
+                            <ui:inputDate aura:id="prdEndDateID" class="slds-input inputFieldWidth" value="{!v.ProjectRD.Requested_End_Date__c}"  displayDatePicker="true" /> 
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <!--Hours -->
+        <td data-label="Hours" class = "colWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-truncate">
+                        <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            <div>
+                                <ui:inputSelect value="{!v.ProjectRD.Requested_Allocation__c}" change="{!c.pickAllocationChange}" class="slds-form-element slds-form-element__control slds-select inputFieldWidth single pickAllocation" aura:id="pickAllocation" labelClass="slds-form-element__label" required="true">
+                                    <ui:inputSelectOption text="None" label="--None--" value="true"/>
+                                    <ui:inputSelectOption text="100" label="Full Time" />
+                                    <ui:inputSelectOption text="50" label="Half Time" />
+                                    <ui:inputSelectOption text="25" label="Quarter Time" />
+                                    <ui:inputSelectOption text="" label="Number of Hours" />
+                                </ui:inputSelect><br aura:id="br1" class="hoursInput"/><br aura:id="br2" class="hoursInput"/>
+
+                                <ui:inputNumber class="slds-input inputFieldWidth hoursWidth hoursInput" aura:id="hoursInput" value="{!v.ProjectRD.Requested_Hours__c}" required="true"/> 
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </td>
+       <!-- Commented out the Requeste Rate field as per the story: S-0024-->
+       <!--Requested Rate-->
+       <!-- <td data-label="Requested Rate" class = "colWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-truncate">
+                       <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            <div class = "required">*</div>
+                            <ui:inputNumber class="slds-input inputFieldWidth hoursWidth" value="{!v.ProjectRD.Requested_Rate__c}" required="true" /> 
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </td>-->
+        
+        <!-- Description -->
+        <td data-label="Description" class = "colWidth">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-truncate">
+                        <aura:if isTrue="{!(v.ProjectRD.Role__c != '')}">
+                            
+                            <ui:inputTextArea class="slds-input inputFieldWidth descWidth" value="{!v.ProjectRD.Description__c}" required="true"/> 
+                        </aura:if> 
+                    </div>
+                </div>
+            </div>
+        </td>
+     
+    </tr>
+    
+</aura:component>

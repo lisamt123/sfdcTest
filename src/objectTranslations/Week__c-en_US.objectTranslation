@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Week</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Weeks</value>
+    </caseValues>
+    <fields>
+        <label><!-- Week Ends On --></label>
+        <name>Week_Ends_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Week Number --></label>
+        <name>Week_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Week Starts On --></label>
+        <name>Week_Starts_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <layouts>
+        <layout>Week Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,22 @@
+.THIS  .bodyClass
+{
+    margin-top: 3%;
+    text-align: center;
+    /*background-color: deepskyblue;*/
+}
+.THIS .nameContainerDiv{
+	font-weight:700; 
+	color:white; 
+	background:deepskyblue;
+	height:60px;
+	font-size:1.3em;
+	line-height: 60px;
+	text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.THIS .nameContainerDiv span{
+	display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}

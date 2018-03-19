@@ -1,0 +1,183 @@
+<aura:component controller="BadgesDetails" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="userDetails" type="Object" />
+    <aura:attribute name="editFlag" type="boolean" default="true"/>
+    <aura:attribute name="followFlag" type="boolean" default="{!v.userDetails.isFollowing}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+   
+   <div aura:id="spinner" class="slds-spinner_container slds-hide">
+       <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+           <span class="slds-assistive-text">Loading</span>
+           <div class="slds-spinner__dot-a"></div>
+           <div class="slds-spinner__dot-b"></div>
+       </div>
+    </div>
+    <aura:handler name="init" value="{!this}" action="{!c.onLoad}" default=""/>
+
+    <div class="headerDetail_feeed">
+         <div class="userHeaderDetail">
+            <div class="userHeaderFollow">
+                <div class="userHeader">
+                    <aura:if isTrue="{!v.userDetails.userInfo.FullPhotoUrl != ''}">
+                        <span class="slds-avatar slds-avatar--large imageClass" >
+                            <aura:if isTrue="{!v.userDetails.isCurrentUser}">
+                                <img src="{!v.userDetails.userInfo.FullPhotoUrl}" alt="person name" onclick="{!c.showModel}"  style="cursor: pointer;"/>
+                                <aura:set attribute="else">
+                                    <img src="{!v.userDetails.userInfo.FullPhotoUrl}" alt="person name" />
+                                </aura:set>
+                            </aura:if>
+                            <div class="levelContainer">
+                                <img class="level" src="{!v.userDetails.levelURL}" />
+                            </div>
+                            <div class="reputationPoints" data-aura-rendered-by="10:1531;a">
+                                <span data-aura-rendered-by="11:1531;a">{!v.userDetails.memberPoint} points</span>
+                            </div>
+                        </span>
+                        <aura:set attribute="else">
+                            <img src="/resource/Salesforce_Certified" alt="person name" />
+                        </aura:set>
+                        
+                        <aura:if isTrue="{!!v.userDetails.isCurrentUser}">
+                            <aura:renderIf isTrue="{!v.followFlag}">
+                                <div class="followButton">
+                                    <ui:button press="{!c.removeFollow}" class="follow">
+                                        <span>Following</span>
+                                    </ui:button>
+                                </div>
+                                <aura:set attribute="else">
+                                    <div class="followButton">
+                                        <ui:button label="Follow" press="{!c.addFollow}"/>
+                                    </div>
+                                </aura:set>
+                            </aura:renderIf> 
+                        </aura:if>
+                        
+                    </aura:if>
+                    <div aura:id="modelshow" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header">
+                                <button class="slds-button slds-modal__close slds-button--icon-inverse" onclick="{!c.closeError}">
+                                    <lightning:icon iconName="utility:close" variant="inverse" alternativeText="Close window." size="small"/>                                
+                                    <span class="slds-assistive-text">Attach Picture</span>
+                                </button>
+                                <h2 id="header43" class="slds-text-heading--medium titleCls">Update Photo</h2>
+                            </div>
+                            <div class="slds-modal__content slds-p-around--medium" style="height: 55%;">
+                                <center>
+                                    <label class="slds-form-element__label">You can upload a JPG, GIF or PNG file. Maximum file size is 3 MB.</label>
+                                    <div class="slds-form-element">
+                                        <input type="file" aura:id="inputfile" id="file" accept="image/x-png, image/gif, image/jpeg" />
+                                        
+                                    </div>
+                                    <br></br>
+                                    <label class="slds-form-element__label" >Current Photo:</label>
+                                    <div>
+                                        <span class="slds-avatar slds-avatar--large imageClass" >
+                                            <img src="{!v.userDetails.userInfo.FullPhotoUrl}" alt="person name" />
+                                        </span>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="slds-modal__footer">
+                                <button class="slds-button slds-button--neutral" onclick="{!c.closeError}">Cancel</button>
+                                <button class="slds-button slds-button--neutral cuf-publisherShareButton qe-textPostDesktop WIDE uiButton--default uiButton--brand uiButton" id="saveId" onclick="{!c.uploadImage}">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div aura:id="bgfade" class="slds-backdrop slds-backdrop--open"></div>
+                </div>
+                <div class="userFollow">
+                </div>
+            </div>
+            <div class="userDetails">
+                <aura:if isTrue="{!v.editFlag}">
+                    <div class="profileDetailView forceCommunityUserProfileDetail">
+                        <div class="userDetailHeader" data-aura-rendered-by="60:114;a">
+                            <div class="profileName" title="Gaurav Nirwal" data-aura-rendered-by="62:114;a">
+                                <div class="username">
+                                    <div class="usernametext">{!v.userDetails.userInfo.Name}</div>
+                                </div>
+                                <div>
+                                    <aura:if isTrue="{!v.userDetails.isCurrentUser}">
+                                        <button class="slds-button slds-button--neutral slds-float--right" onclick="{!c.editRecord}">Edit</button>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                        <br/><br/>
+                        <div class="detailsData">
+                            <section>
+                                <div class="forcePageBlockSectionRow">
+                                    <div class="innerSection">
+                                        <label class="slds-form-element__label" >Name</label>
+                                         <div class="slds-form-element__control">
+                                            <ui:outputText value="{!v.userDetails.userInfo.FirstName + ' ' + v.userDetails.userInfo.LastName}" />
+                                        </div>
+                                    </div>
+                                    <aura:renderIf isTrue="{!v.userDetails.isConnectedUser}" >
+                                        <div class="innerSection">
+                                            <label class="slds-form-element__label" >Address</label>
+                                            <div class="slds-form-element__control">
+                                            	<ui:outputText value="{!v.userDetails.userStreet +' '+ v.userDetails.userCity +' '+ v.userDetails.userState+' ' + ' ' + v.userDetails.userCountry}" />
+                                            </div>
+                                        </div>
+                                    </aura:renderIf>
+                                </div>
+                            </section>
+                            <section>
+                                <aura:renderIf isTrue="{!v.userDetails.isConnectedUser}" >
+                                    <div class="forcePageBlockSectionRow">
+                                        <div class="innerSection">
+                                            <label class="slds-form-element__label" >Email</label>
+                                             <div class="slds-form-element__control">
+                                                <ui:outputText value="{!v.userDetails.userInfo.Email}" />
+                                            </div>
+                                        </div>
+                                        <div class="innerSection">
+                                            <label class="slds-form-element__label" >Skype Id</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:outputText value="{!v.userDetails.contactDetail.Skype_Id__c}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:renderIf>
+                            </section>
+                            <section>
+                                <aura:renderIf isTrue="{!v.userDetails.isCurrentUser}" >
+                                    <div class="forcePageBlockSectionRow">
+                                        <div class="innerSection">
+                                            <label class="slds-form-element__label" >Webassessor Email</label>
+                                             <div class="slds-form-element__control">
+                                                <ui:outputText value="{!v.userDetails.contactDetail.Webassessor_Email__c}" />
+                                            </div>
+                                        </div>
+                                        <div class="innerSection">
+                                            <label class="slds-form-element__label" >Trailhead User Id</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:outputText value="{!v.userDetails.contactDetail.Trailhead_User_Id__c}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:renderIf>
+                                <div class="forcePageBlockSectionRow">
+                                    <div style="margin-top:2%;">
+                                        <label class="slds-form-element__label" >About Me</label>
+                                        <div class="slds-form-element__control">
+                                            <ui:outputText value="{!v.userDetails.userInfo.AboutMe}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <div aura:id="editBtns" >
+                            <c:profileEditView userContactInfo="{!v.userDetails}" closeEdit="{!v.editFlag}"/>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+         </div>   
+    </div>
+</aura:component>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Connection</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Connections</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Deletion --></label>
+        <name>Allow_Deletion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Describe Message --></label>
+        <name>Code_Scan_Describe_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Status --></label>
+        <name>Code_Scan_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Violation</masterLabel>
+            <translation><!-- Violation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comparing Connections --></label>
+        <name>Comparing_Connections__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connection Compare Describe Message --></label>
+        <name>Connection_Compare_Describe_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created On Heroku --></label>
+        <name>Created_On_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delete on Heroku --></label>
+        <name>Delete_on_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Git Repo --></label>
+        <name>Git_Repo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Metadata Describe Error --></label>
+        <name>Metadata_Describe_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Metadata Last Described --></label>
+        <name>Metadata_Last_Described__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organization URL --></label>
+        <name>Organization_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Development Environment --></label>
+        <name>Primary_Development_Environment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Connections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Refresh Running --></label>
+        <name>Refresh_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scan Running --></label>
+        <name>Scan_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Connection Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Metadata --></label>
+            <section>Metadata</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>GitHub Repository</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Metadata --></label>
+            <section>Metadata</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Code Quality Scanning --></label>
+        <name>Code_Quality_Scanning</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Configure Connection --></label>
+        <name>Configure_Connection</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Manage Permissions --></label>
+        <name>Manage_Permissions</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Metadata Comparison --></label>
+        <name>Metadata_Comparison</name>
+    </quickActions>
+    <recordTypes>
+        <label><!-- GitHub Repository --></label>
+        <name>GitHub_Repository</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Other --></label>
+        <name>Other</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Production/Developer --></label>
+        <name>Production_Developer</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sandbox --></label>
+        <name>Sandbox</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Authorize_Connection --></label>
+        <name>Authorize_Connection</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Refresh_Artifacts --></label>
+        <name>Refresh_Artifacts</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Remove_oAuth_Connection --></label>
+        <name>Remove_oAuth_Connection</name>
+    </webLinks>
+</CustomObjectTranslation>

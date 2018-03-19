@@ -1,0 +1,21 @@
+.THIS .quantInput>label{
+    width:30%;
+    line-height: 1.9;
+    font-size: 1rem;
+}
+.THIS .quantInput{
+    width: 100%;
+    display: flex;
+}
+.THIS .slds-input{
+    border: .5px solid #2196F3;
+}
+.THIS .padSpace{
+    padding-bottom:1%;
+}
+.THIS .slds-table th, .THIS .slds-table td{
+	white-space: pre-wrap !important;
+}
+.THIS .slds-text-title_caps {
+	font-size: .79rem !important;
+}

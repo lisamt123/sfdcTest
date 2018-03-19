@@ -1,0 +1,159 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" controller="AscentMonthlyReportController">
+    <aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+	<aura:attribute name="monthList" type="String[]"/>
+    <aura:attribute name="ascendMetricList" type="AscentMonthlyReportController.AccountAscendMetricWrapper[]"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="mainCheckbx" type="Boolean" default="false"  />
+	<aura:attribute name="isEmpty" type="Boolean" default="false"  />
+    <aura:attribute name="MonthSelectAttr" type="String"  />
+    <aura:attribute name="NoMessage" type="String"  />
+    <lightning:spinner aura:id="Spinner" variant="brand" alternativeText="Spinner"/>
+    <div class="slds-page-header" role="banner" style="background-color:white; margin-bottom:5px;">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-custom-custom97" title="Ascent Monthly Reports">
+                            <lightning:icon iconName="custom:custom97" size="large" alternativeText="Ascent Monthly Reports" variant="inverse"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <lightning:layout >
+                            <lightning:layoutItem size="4" smallDeviceSize="6" mediumDeviceSize="5"  largeDeviceSize="4" >
+                                <h2 class="slds-page-header__title slds-truncate slds-align-middle" style="position: absolute;padding-top: .9rem;" title="Ascent Monthly Reports">Ascent Monthly Reports</h2>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" smallDeviceSize="6" mediumDeviceSize="6"  largeDeviceSize="4" >
+                                <lightning:select aura:id="MonthSelectId" name="Month" label="Select Month for Ascend Monthly Report" onchange="{!c.onMonthChange}" class="section3Input" messageWhenValueMissing="Role is required." >
+                                    <aura:iteration items="{!v.monthList}" var="item">
+                                        <option text="{!item}" value="{!item}" />
+                                    </aura:iteration>
+                                </lightning:select>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!!v.isEmpty}">
+            	<div style="float:right;margin-top: auto;margin-bottom: auto;">
+            		<lightning:button aura:id="UpdateButton" class="slds-button slds-button_brand" label="Send Email" onclick="{!c.sendAscentReport}"  />
+            	</div>
+            </aura:if>
+        </div> 
+    </div>
+    <br/>
+    <aura:if isTrue="{!!v.isEmpty}"> 
+    <div class="slds-scrollable_x">
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer whiteWrapClass">      
+            <thead>
+                <tr class="slds-text-title--caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Project Name"></div>
+                        <div>
+                            <label class="slds-checkbox">
+                                <ui:inputCheckbox aura:id="mainCheckbxId" change="{!c.noneSelect}" value="{!v.mainCheckbx}"/>
+                                <span class="slds-checkbox--faux" />
+                                <span class="slds-form-element__label"></span>
+                            </label>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Account Name"><b>Account Name</b></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Current Tier"><b>Current Tier</b></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Next Tier"><b>Next Tier</b></div>
+                    </th>
+                    <th scope="col" >
+                        <div class="slds-truncate whiteWrapClass" title="Hours Invoiced YTD"><b>Hours Invoiced YTD</b></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate whiteWrapClass" title="Amount Invoiced YTD"><b>Amount Invoiced YTD</b></div>
+                    </th>
+                    <th scope="col">
+                        <div title="Total Outstanding Overdue Invoices" class="whiteWrapClass"><b>Total Outstanding Overdue Invoices</b></div>
+                    </th>
+                    <th scope="col">
+                        <div title="Total Outstanding Invoices" class="slds-truncate whiteWrapClass"><b>Total Outstanding Invoices</b></div>
+                    </th>
+                    <th scope="col">
+                        <div  title="Contact Role" class="whiteWrapClass"><b>Total Draft Invoices</b></div>
+                    </th>
+                    <th scope="col">
+                        <div  title="Contact Role" class="whiteWrapClass"><b>Report Sent On</b></div>
+                    </th>
+                    <th scope="col">
+                        <div  title="Contact Role" class="whiteWrapClass"><b>Contact Roles</b></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody> 
+                      
+                    <aura:iteration items="{!v.ascendMetricList}" var="ascendMetricRec">
+                        <tr>
+                            <td>
+                               <label class="slds-checkbox">
+                                    <ui:inputCheckbox aura:id="allCheckbx" value="{!ascendMetricRec.isSelected}" text="{!ascendMetricRec.ascMetric.Account__c}" change="{!c.oneSelect}" />
+                                    <span class="slds-checkbox--faux" />
+                                    <span class="slds-form-element__label"></span>
+                                </label>
+                                <span style="padding-left:0.5rem;">
+                                    <Lightning:buttonIcon class="previewIcon" iconName="utility:preview" value="{!ascendMetricRec.ascMetric.Id}" onclick="{!c.gotoURL}" />
+                                </span>
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.ascMetric.Account__r.Name}"/>  
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.ascMetric.Current_Tier__c}"/>  
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.ascMetric.Next_Tier__c}"/>  
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.ascMetric.Hours_Invoiced_YTD__c}"/>  
+                            </td>
+                            <td>
+                                <ui:outputCurrency value="{!ascendMetricRec.ascMetric.Amount_Invoiced_YTD__c}"/>  
+                            </td>
+                            <td>
+                                <ui:outputCurrency value="{!ascendMetricRec.ascMetric.Account__r.Total_Outstanding_Overdue_Invoices__c}"/>  
+                            </td> 
+                            <td>
+                                <ui:outputCurrency value="{!ascendMetricRec.ascMetric.Account__r.Total_Outstanding_Invoices__c}"/>  
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.totalDraftInvoice}"/>
+                            </td>
+                            <td>
+                                <ui:outputText value="{!ascendMetricRec.sentDate}"/>
+                            </td>
+                            <td>
+                                <aura:iteration items="{!ascendMetricRec.contactRolesValues}" var="contactRolesValue">
+                                   <span class="slds-pill">
+                                        <lightning:icon iconName="standard:contact" size="small"  alternativeText="Contact"/>&nbsp;
+                                        {!contactRolesValue.contactName}
+                                        <!-- <button class="slds-button slds-button-icon slds-pill__remove" title="Remove">
+                                            <lightning:icon iconName="utility:close" size="x-small" class="slds-input__icon" alternativeText="Remove" />
+                                        </button>-->
+                                    </span>&nbsp;
+                                </aura:iteration>
+                            </td>
+                           <!--  <td>
+                                <Lightning:buttonIcon iconName="utility:preview" value="{!ascendMetricRec.ascMetric.Id}" onclick="{!c.gotoURL}" />
+                            </td> -->
+                        </tr>
+                    </aura:iteration>
+                    
+                
+            </tbody>
+        </table>
+    </div>
+</aura:if>
+<aura:if isTrue="{!v.isEmpty}">
+<lightning:card title="No Ascent Metric Record Found for the selected Month." class="emptyCart"></lightning:card>
+
+</aura:if>
+</aura:component>

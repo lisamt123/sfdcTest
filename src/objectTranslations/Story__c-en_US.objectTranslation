@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Story</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Stories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Acceptance Criteria --></label>
+        <name>Acceptance_Criteria__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allow Deletion --></label>
+        <name>Allow_Deletion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assumptions --></label>
+        <name>Assumptions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Describe Message --></label>
+        <name>CodeScan_Describe_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Scan Status --></label>
+        <name>CodeScan_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Violation</masterLabel>
+            <translation><!-- Violation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Created On Heroku --></label>
+        <name>Created_On_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Portal User Flag - Delivery --></label>
+        <name>Current_Portal_User_Flag_Delivery__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Portal User Flag - Functional --></label>
+        <name>Current_Portal_User_Flag_Functional__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delete on Heroku --></label>
+        <name>Delete_on_Heroku__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Owner --></label>
+        <name>Delivery_Owner__c</name>
+        <relationshipLabel><!-- Stories (Delivery Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Epic --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Story and the Epic must be associated to the same Project --></errorMessage>
+        </lookupFilter>
+        <name>Epic__c</name>
+        <relationshipLabel><!-- Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Functional Owner --></label>
+        <name>Functional_Owner__c</name>
+        <relationshipLabel><!-- Stories (Functional Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Hours Variance --></label>
+        <name>Hours_Variance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level of Effort --></label>
+        <name>Level_of_Effort__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- QA Owner --></label>
+        <name>QA_Owner__c</name>
+        <relationshipLabel><!-- Stories (QA Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Requested By --></label>
+        <name>Requested_By__c</name>
+        <relationshipLabel><!-- Stories (Requested By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scan Running --></label>
+        <name>Scan_Running__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Story and the Sprint must be associated to the same Project --></errorMessage>
+        </lookupFilter>
+        <name>Sprint__c</name>
+        <relationshipLabel><!-- Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status Notes --></label>
+        <name>Status_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Story Name --></label>
+        <name>Story_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technical Design Notes --></label>
+        <name>Technical_Design_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Scenarios --></label>
+        <name>Test_Scenarios__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Hours Logged --></label>
+        <name>Total_Hours_Logged__c</name>
+    </fields>
+    <layouts>
+        <layout>Story Layout (No RM)</layout>
+        <sections>
+            <label><!-- Assigned Users --></label>
+            <section>Assigned Users</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Quality Assurance --></label>
+            <section>Quality Assurance</section>
+        </sections>
+        <sections>
+            <label><!-- Story Details --></label>
+            <section>Story Details</section>
+        </sections>
+        <sections>
+            <label><!-- Story Information --></label>
+            <section>Story Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Details --></label>
+            <section>Technical Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Story Layout (With RM)</layout>
+        <sections>
+            <label><!-- Assigned Users --></label>
+            <section>Assigned Users</section>
+        </sections>
+        <sections>
+            <label><!-- Code Quality Scan Results --></label>
+            <section>Code Quality Scan Results</section>
+        </sections>
+        <sections>
+            <label><!-- Code Quality Scan Results (Wide) --></label>
+            <section>Code Quality Scan Results (Wide)</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Quality Assurance --></label>
+            <section>Quality Assurance</section>
+        </sections>
+        <sections>
+            <label><!-- Story Details --></label>
+            <section>Story Details</section>
+        </sections>
+        <sections>
+            <label><!-- Story Information --></label>
+            <section>Story Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Details --></label>
+            <section>Technical Details</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Add to Release --></label>
+        <name>Add_to_Release</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Code Quality Scanning --></label>
+        <name>Code_Quality_Scanning</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Manage Artifacts --></label>
+        <name>Manage_Artifacts</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Code_Quality_Scanning --></label>
+        <name>Code_Quality_Scanning</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Artifacts --></label>
+        <name>Manage_Artifacts</name>
+    </webLinks>
+</CustomObjectTranslation>

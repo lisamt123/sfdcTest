@@ -1,0 +1,12 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" controller="ForceSyncWebService" access="global">
+	<ltng:require styles="{!$Resource.lightningCss}" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+    <lightning:spinner aura:id="Spinner" variant="brand" alternativeText="Spinner"/> 
+    
+	<lightning:layout horizontalAlign="center" >
+		<ui:outputText value="Please Wait..." class="header"  />
+	</lightning:layout>
+</aura:component>

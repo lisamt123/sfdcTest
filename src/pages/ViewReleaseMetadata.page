@@ -1,0 +1,93 @@
+<apex:page standardController="Release__c" extensions="ViewReleaseMetadataController">
+	<apex:includeScript value="{!$Resource.jqueryLatest}"/>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		.outerRow {
+			background: rgba(242, 243, 243, 0.58);
+		}
+		th {
+			background: rgba(193, 193, 193, 0.65);
+		}
+	</style>
+	<apex:form >
+        <apex:sectionHeader title="Release Artifacts" subtitle="{!release.Name}"/>
+        <apex:pageBlock id="block" title="Story Artifacts">
+            <apex:variable var="counter" value="{!1}" />
+            <apex:outputPanel layout="block" style="max-height: 355px; overflow-y: auto;">
+                <table class="list">
+                	<thead>
+	                	<tr class="headerRow">
+	                		<th>Story</th>
+	                		<th>Artifact Type</th>
+	                		<th>Artifact Name</th>
+	                	</tr>
+                	</thead>
+                	<tbody>
+                		<apex:repeat value="{!releaseStoryList}" var="story" rendered="{!IF(releaseStoryList.size > 0 ,true,false)}">
+                			<tr class="dataRow outerRow">
+                				<td>
+                					<img src="{!baseUrl+'/resource/collapse'}" height="13" class="{!story.storyId}" onclick="toggleRows('{!story.storyId}');" style="cursor:pointer;display: none;"/>
+                					<img src="{!baseUrl+'/resource/expand'}" height="13" class="{!story.storyId}" onclick="toggleRows('{!story.storyId}');" style="cursor:pointer;visibility: {!IF(story.artifacts.size > 0 ,'','hidden')};"/> &nbsp; 
+                					{!storyMap[story.storyId]} 
+                				</td>
+                				<td></td>
+                				<td></td>
+                			</tr>
+                			<apex:repeat value="{!story.artifacts}" var="type"> 
+	                			<apex:repeat value="{!type.metadataName}" var="artifactc">
+	                				<tr class="dataRow innerRow {!story.storyId}" style="display: none;">
+		                				<td></td>
+		                				<td>{!type.metadataType}</td>
+		                				<td>{!artifactc.name}</td>
+		                			</tr>
+	                			</apex:repeat>
+                			</apex:repeat>
+                		</apex:repeat>
+                		<tr class="dataRow innerRow" style="display: {!IF(releaseStoryList.size > 0 ,'none','')};">
+							<td colspan="2">No related story for this release.</td>
+						</tr>
+                	</tbody>
+                </table>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:pageblock title="Release Artifacts">
+        	<table class="list">
+                	<thead>
+	                	<tr class="headerRow">
+	                		<th>Artifact Type</th>
+	                		<th>Artifact Name</th>
+	                	</tr>
+                	</thead>
+                	<tbody>
+                		<apex:repeat value="{!releaseArtifactList}" var="releaseArtifact" rendered="{!IF(releaseArtifactList.size > 0 ,true,false)}">
+            				<tr class="dataRow outerRow " >
+                				<td>
+                					<img src="{!baseUrl+'/resource/collapse'}" height="13" class="{!releaseArtifact.metadataType}" onclick="toggleRows('{!releaseArtifact.metadataType}');" style="cursor:pointer;display: none;"/>
+                					<img src="{!baseUrl+'/resource/expand'}" height="13" class="{!releaseArtifact.metadataType}" onclick="toggleRows('{!releaseArtifact.metadataType}');" style="cursor:pointer;"/> &nbsp; 
+                					{!releaseArtifact.metadataType}
+                				</td>
+                				<td></td>
+                			</tr>
+                			<apex:repeat value="{!releaseArtifact.metadataName}" var="artifact">
+                				<tr class="dataRow innerRow {!releaseArtifact.metadataType}" style="display: none;">
+	                				<td></td>
+	                				<td>{!artifact.name}</td>
+	                			</tr>
+                			</apex:repeat>
+            			</apex:repeat>
+            			<tr class="dataRow innerRow" style="display: {!IF(releaseArtifactList.size > 0 ,'none','')};">
+							<td colspan="2">No related artifacts for this release.</td>
+						</tr>
+                	</tbody>
+                </table>
+
+        </apex:pageblock>
+    </apex:form>
+    <script>
+    	function toggleRows(innerClass) {
+    		$('.'+innerClass).toggle();
+    	}
+    </script>
+</apex:page>

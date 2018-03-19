@@ -1,0 +1,13 @@
+.THIS .grey-back{
+    color: #54698d;
+    background-color: #F4F6F9;
+}
+.THIS .slds-button__icon {
+    fill: #16325c;;
+}
+.THIS .dateTime-inputTime{
+    display:none;
+}
+.THIS .uiInputDateTime .dateTime-inputDate {
+    width: 188px;
+}

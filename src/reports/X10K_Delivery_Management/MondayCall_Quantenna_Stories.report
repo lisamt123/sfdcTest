@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CHILD_NAME</field>
+    </columns>
+    <columns>
+        <field>Story__c.Story_Name__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Description__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status_Notes__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Project__c.Account_Name__c</column>
+            <operator>contains</operator>
+            <value>mondaycall</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>contains</operator>
+            <value>Quantenna</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>MondayCall-Quantenna Stories</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$Project__c$Story__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project__c.End_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

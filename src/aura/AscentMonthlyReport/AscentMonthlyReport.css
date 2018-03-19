@@ -1,0 +1,32 @@
+.THIS .slds-form-element__label{
+    font-weight: bold;
+}
+.THIS .slds-text-title_caps .slds-text-title--caps {
+    line-height: 2.25;
+}
+.THIS .slds-table th .THIS .whiteWrapClass{
+    white-space: normal;
+}
+.THIS .emptyCart{
+    text-align: center !important;
+}
+.THIS .whiteWrapClass{
+    white-space: normal;
+}
+
+.THIS .slds-card__header{
+	text-align:center !important;
+	color:red;
+}
+.THIS .slds-table th, .THIS .slds-table td {
+    
+    white-space: nowrap;
+    
+}
+.THIS .previewIcon {
+	width: 1.2rem;
+	height:1.2rem;
+}
+/*.THIS .activeCheckClass > .slds-form-element__control > .slds-checkbox > .slds-checkbox__label > .slds-form-element__label {
+	display: none !important;
+}*/

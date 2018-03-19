@@ -1,0 +1,67 @@
+<aura:component controller="OrderHistoryController">
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    <aura:attribute name="OrderId" type="String" default=""  />
+    <aura:attribute name="OrderName" type="String" default=""  />
+    <aura:attribute name="OrderLineItems" type="Order_Line_Item__c[]"/>
+
+    <aura:handler name="init" value="this" action="{!c.doInit}"  />
+
+	<div aria-hidden="false" role="dialog" class="slds-modal slds-slide-up-open">
+		<div class="slds-modal__container">
+			<div class="slds-modal__header">
+				<h2 class="slds-text-heading--medium">{!v.OrderName} Detail</h2>
+				<aura:if isTrue="{!v.closable}">
+					<lightning:buttonIcon iconName="utility:close" class="slds-modal__close" variant="bare-inverse" onclick="{!c.defaultCloseAction}" alternativeText="Close window." />
+				</aura:if>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium contentHigh" id="modal-content-id-1">
+				<lightning:layout multipleRows="true">
+					<aura:iteration items="{!v.OrderLineItems}" var="lineItem">
+					    <lightning:layoutItem padding="around-small" flexibility="no-grow" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12">
+					    	<lightning:layout >
+								<article class="slds-card" style="border: 1px solid #BDBDBD;width:100%;">
+									<div class="slds-card__header slds-grid cardHeader">
+										<lightning:layoutItem padding="around-small" flexibility="no-grow" size="2" smallDeviceSize="2" mediumDeviceSize="2" largeDeviceSize="2">
+											<header class="slds-media slds-media_center slds-has-flexi-truncate">
+												<div class="slds-media__figure slds-grid" style="height:70px;width:70px;">
+													<ui:outputRichText value="{!lineItem.Item__r.Merchandise__r.Picture__c}" class="cartOrderPic"  />
+												</div>
+											</header>
+										</lightning:layoutItem>
+										<lightning:layoutItem padding="around-small" flexibility="no-grow" size="5" smallDeviceSize="5" mediumDeviceSize="5" largeDeviceSize="5" class="leftSeparator" >
+											<div class="slds-media__body">
+												<h4 style="text-align:left;"><strong>{!lineItem.Item__r.Merchandise__r.Name}</strong>
+												<aura:if isTrue="{!lineItem.Item__r.Merchandise__r.Display_Sizes__c}" >
+						        					(Size: {!lineItem.Item__r.Size__c})
+						        				</aura:if>
+												</h4>
+											</div>
+										</lightning:layoutItem>
+										<lightning:layoutItem padding="around-small" flexibility="no-grow" size="5" smallDeviceSize="5" mediumDeviceSize="5" largeDeviceSize="5" >
+											<div >
+						    					<label class="slds-form-element__label orderLabel">Quantity Ordered :</label>
+						    					<ui:outputNumber value="{!lineItem.Quantity_Ordered__c}" format="###,###,###" ></ui:outputNumber><br/>
+						    					<label class="slds-form-element__label orderLabel">Total Points :</label>
+						    					<aura:if isTrue="{!lineItem.Total_Points_Redeemed_Text__c != 0}">
+					    							<ui:outputNumber value="{!lineItem.Total_Points_Redeemed__c}" format="###,###,###" ></ui:outputNumber><br/>
+					    							<aura:set attribute="else">
+					    								<ui:outputNumber value="{!lineItem.Total_Points_Redeemed__c}"  />
+					    							</aura:set>
+					    						</aura:if>
+						    					
+											</div>
+										</lightning:layoutItem>
+									</div>
+								</article>
+							</lightning:layout>
+						</lightning:layoutItem>
+					</aura:iteration>
+				</lightning:layout>
+			</div>
+			<div class="slds-modal__footer">
+				<lightning:button class="buttonClass" label="Close" onclick="{!c.defaultCloseAction}"/>
+			</div>
+		</div>
+	</div>
+	<div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+</aura:component>

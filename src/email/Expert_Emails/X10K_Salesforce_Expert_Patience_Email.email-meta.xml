@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce Jared to the Salesforce Experts who have registered</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K Salesforce Expert Patience  Email</name>
+    <style>none</style>
+    <subject>Thank You for Registering as a Salesforce Expert!</subject>
+    <textOnly>Hello {!Lead.FirstName},
+
+Thank you for being one of the first people to register as a Salesforce Expert!
+
+My name is Jared Miller and I will be your main point of contact at 10K Advisors.
+
+Over the next few weeks, I will be reaching out to schedule some time for us to talk. The conversation will be 15-30 minutes and we will discuss your Salesforce experience and the 10K Community. We are very excited to build this community and appreciate your patience!
+
+In the meantime, please feel free to reach out to me with any questions or comments that you have.
+
+Thank you again and I look forward to connecting.
+
+Jared
+
+
+Jared Miller
+Vice President, Service Delivery
+10K Advisors
+jared@10Kview.com
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

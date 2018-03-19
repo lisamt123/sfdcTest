@@ -1,0 +1,149 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="StoriesListViewController">
+	<aura:attribute name="storyRec" type="Story__c" access="global"/>
+	<aura:attribute name="StatusList" type="String[]" access="global"/>
+	<aura:attribute name="recID" type="String" access="global"/>
+	<aura:attribute name="ErrorMessge" type="String" access="global"/>
+	<aura:attribute name="priority" type="String" access="global"/>
+
+	<aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIdUpdate}"/>    
+    <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIdClear}"/>
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:registerEvent name="closeEditModalEvent" type="c:CloseEditModal"/>
+
+	
+	<div class="slds-modal__content slds-p-around--small">
+	    <div class="slds-grid slds-wrap">
+	        
+	        <div class="slds-p-horizontal--small slds-size--1-of-3">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Name">Name</label>
+	                <div class="slds-form-element__control">
+	                    <ui:outputText aura:id="Name" class="field slds-input" value="{!v.storyRec.Name}"/>                                            
+	                </div>
+	            </div>
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--2-of-3">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Story_Name__c">Story Name</label>
+	                <div class="slds-form-element__control">
+	                    <ui:inputText aura:id="Story_Name__c" class="field slds-input" value="{!v.storyRec.Story_Name__c}"/>                                            
+	                </div>
+	            </div>
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--1-of-3">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Status__c">Story Status</label>                                                                                                
+	                <div class="slds-form-element__control">
+	                    <ui:inputSelect aura:id="Status__c" multiple="false" class="field slds-input" value="{!v.storyRec.Status__c}">
+	                        <aura:iteration items="{!v.StatusList}" var="Status1" indexVar="rowIndex">
+	                            <ui:inputSelectOption text="{!Status1}"  />
+	                        </aura:iteration>
+	                    </ui:inputSelect>                                         
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-3">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Priority__c">Priority</label>                                                                                                
+	                <div class="slds-form-element__control">
+	                    <ui:inputSelect aura:id="Priority__c" multiple="false" class="field slds-input" value="{!v.priority}">
+	                        <ui:inputSelectOption text="Low"  />  
+	                        <ui:inputSelectOption text="Medium"  />   
+	                        <ui:inputSelectOption text="High"  />   
+	                    </ui:inputSelect>                                                                               
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-3">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Level_of_Effort__c">Level of Effort</label>                                                                                                
+	                <div class="slds-form-element__control">
+	                    <ui:inputNumber aura:id="Level_of_Effort__c" class="field slds-input" value="{!v.storyRec.Level_of_Effort__c}" />                                                                                        
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <!-- Lookup component -->
+	            <c:LookupSObject aura:id="Epic__c"
+	                             label="Epic"
+	                             value="{!v.storyRec.Epic__r.Name}"
+	                             searchString="{!v.storyRec.Epic__r.Name}"
+	                             pluralLabel="Epics"
+	                             sObjectAPIName="Epic__c"
+	                             listIconClass="slds-icon-standard-account" 
+	                             fieldAPIName="Epic__c"
+	                             listIconSVGPath="standard:home"
+	                             where="{! ' where Project__c = \'' + v.storyRec.Project__c + '\''}" 
+	                             />                                  
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">                                            
+	            <c:LookupSObject aura:id="Functional_Owner__c"
+	                             value="{!v.storyRec.Functional_Owner__r.Name}"
+	                             searchString="{!v.storyRec.Functional_Owner__r.Name}"
+	                             label="Functional Owner"
+	                             pluralLabel="Users"
+	                             sObjectAPIName="User"
+	                             listIconSVGPath="standard:people"
+	                             listIconClass="slds-icon-standard-account" 
+	                             fieldAPIName="Functional_Owner__c"
+	                             />                 
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <c:LookupSObject aura:id="Project__c"
+	                             value="{!v.storyRec.Project__r.Name}"
+	                             searchString="{!v.storyRec.Project__r.Name}"
+	                             label="Project"
+	                             pluralLabel="Projects" 
+	                             sObjectAPIName="Project__c"
+	                             listIconSVGPath="standard:account"
+	                             listIconClass="slds-icon-standard-account" 
+	                             fieldAPIName="Project__c"
+	                             />                                  
+	        </div>  
+	        <div class="slds-p-horizontal--small slds-size--1-of-2">
+	            <c:LookupSObject aura:id="Sprint__c"
+	                             where="{! ' where Project__c = \'' + v.storyRec.Project__c + '\''}"                                                                 
+	                             label="Sprint"
+	                             value="{!v.storyRec.Sprint__r.Name}"
+	                             searchString="{!v.storyRec.Sprint__r.Name}"
+	                             pluralLabel="Sprints"
+	                             sObjectAPIName="Sprint__c"
+	                             listIconSVGPath="standard:recent"
+	                             listIconClass="slds-icon-standard-account" 
+	                             fieldAPIName="Sprint__c"
+	                             />                                                                                   
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Description__c">Description</label>
+	                <div class="slds-form-element__control">
+	                    <ui:inputTextArea aura:id="Description__c" class="field slds-input" value="{!v.storyRec.Description__c}" rows="3"/>                                                                
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Technical_Design_Notes__c">Technical Design Notes</label>
+	                <div class="slds-form-element__control">
+	                    <ui:inputTextArea aura:id="Technical_Design_Notes__c" class="field slds-input" value="{!v.storyRec.Technical_Design_Notes__c}" rows="3"/>                                                                
+	                </div>
+	            </div>
+	        </div>                                                    
+	        <div class="slds-p-horizontal--small slds-size--1-of-1">
+	            <div class="slds-form-element">
+	                <label class="slds-form-element__label" for="Test_Scenarios__c">Test Scenarios</label>
+	                <div class="slds-form-element__control">  
+	                    <ui:inputTextArea aura:id="Test_Scenarios__c"  class="field slds-input" value="{!v.storyRec.Test_Scenarios__c}" rows="3"/>
+	                </div>
+	            </div>
+	        </div>
+	        
+	    </div>
+	</div>
+	<div class="slds-modal__footer">
+		<button class="slds-button slds-button--neutral" data-modalid="storyRecordSave" onclick="{!c.saveRec}">Save</button>
+		<button class="slds-button slds-button--neutral" data-modalid="storyRecordSaveClose" onclick="{!c.saveRec}">Save and Close</button>
+		<button class="slds-button slds-button--neutral" data-modalid="storyRecordEdit" onclick="{!c.closeModal}">Close</button>
+    </div>
+</aura:component>

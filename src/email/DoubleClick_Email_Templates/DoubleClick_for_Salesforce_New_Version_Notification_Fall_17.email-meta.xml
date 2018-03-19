@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>DoubleClick for Salesforce - New Version Notification - Fall &apos;17</name>
+    <style>freeForm</style>
+    <subject>10K DoubleClick for Salesforce - New Version Notification - Fall &apos;17</subject>
+    <textOnly>Hi {!Contact.FirstName},
+
+I&apos;m pleased to announce that we&apos;ve wrapped up the next version of the DoubleClick for Salesforce connector. This release contains a number of improvements, including:
+
+ - Corrected a bug which sent Account data to DFP incorrectly during mass updates in Salesforce
+ - Support for custom fields in the Proposal Line Item sync
+ - Automatically pushing Agencies when pushing a new Opportunity to DFP
+ - Allowing manual Line Item syncs even when the scheduled sync is already running
+
+The full release notes are available at the link below, as well as in the 10K Community under the Knowledge tab.
+
+https://docs.google.com/document/d/1O-PVIdkh7tqU05wXGm6jU1m52xDMa-GKTfDjbShyWJg/edit?ts=5a12889c#heading=h.gp5afmpotod7
+
+Our target timeline for the upgrade is:
+
+ - Sandboxes on or before December 8th
+ - Production on or before December 22nd
+
+I&apos;ll create a Case in the 10K Community where we can coordinate specific times to manage the upgrades in each of your environments, starting with the sandbox.
+
+Please review the release notes, and let me know of any feedback or questions.
+
+Thanks,
+Matt
+
+Matthew Lamb
+VP, Technology
+10K Advisors</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Candidate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Candidates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Available End Date --></label>
+        <name>Available_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available Hours --></label>
+        <name>Available_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available Start Date --></label>
+        <name>Available_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Client Comments --></label>
+        <name>Client_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert --></label>
+        <name>Expert__c</name>
+        <relationshipLabel><!-- Candidates --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Internal Comments --></label>
+        <name>Internal_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Expert --></label>
+        <name>Requested_Expert__c</name>
+        <relationshipLabel><!-- Candidates --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proposed</masterLabel>
+            <translation><!-- Proposed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selected</masterLabel>
+            <translation><!-- Selected --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Candidate Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

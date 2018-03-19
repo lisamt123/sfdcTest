@@ -1,0 +1,222 @@
+<apex:page controller="CustomArticleManagementController" showHeader="true" standardStylesheets="false" sidebar="true" applyHtmlTag="true" applyBodyTag="false" docType="html-5.0">    
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">    
+<head>
+    <title>Custom Article Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <apex:slds />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+</head>    
+
+<body>    
+
+    <div class="s17">  
+        <div id="notifyContainer" class="slds-notify_container slds-hide">
+            <div id="themeContainer" class="slds-notify slds-notify--toast " role="alert" style="text-align: center;">
+                <span class="slds-assistive-text">Notify</span>
+                <div class="slds-notify__content">
+                <h2 id="messageContainer" class="slds-text-heading--small"></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-page-header">
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-article" title="Description of icon when needed">
+                        <svg class="slds-icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#article')}"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Knowledge Articles">Knowledge Articles</h1>
+                    <p class="slds-text-body_small slds-line-height_reset">Knowledge Article Clone Utility</p>
+                </div>
+                <div class="slds-grid slds-grid--align-right">    
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button--brand" onclick="handleCloneBtnClick();">Clone</button>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+        <div class="slds-grid slds-grid--align-center" style="max-height: 500px;overflow-y: auto;">    
+            <table class="slds-table slds-table--bordered slds-table--fixed-layout" role="grid">
+                <thead>
+                    <tr class="slds-line-height--reset">
+                        <th scope="col" style="width:3.25rem;" class="slds-text-align--right">
+                            <div class="slds-th__action slds-th__action--form">
+                                <span class="slds-checkbox">
+                                    <!-- <input type="checkbox" name="options" id="checkbox-1732" onclick="handleSelectAllArticlesCheckboxClick();" /> -->
+                                    <label class="slds-checkbox__label" for="checkbox-1732" >
+                                        <span class=""></span>
+                                        <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </th>
+                        <th focusable="true" class="slds-is-sortable slds-is-resizable slds-text-title--caps slds-hide" scope="col">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+                                <span class="slds-truncate" title="Id">Id</span>
+                            </a>
+                        </th>
+                        <th focusable="true" class="slds-is-sortable slds-is-resizable slds-text-title--caps slds-hide" scope="col">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+                                <span class="slds-truncate" title="KnowledgeArticleId">KnowledgeArticleId</span>
+                            </a>
+                        </th>
+                        <th focusable="true" class="slds-is-sortable slds-is-resizable slds-text-title" scope="col">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0" style="cursor: default;">
+                                <span class="slds-truncate" title="Title">Title</span>
+                            </a>
+                        </th>
+                        <th focusable="true" class="slds-is-sortable slds-is-resizable slds-text-title" scope="col">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0" style="cursor: default;">
+                                <span class="slds-truncate" title="ArticleType">ArticleType</span>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="articleGridBody"></tbody>
+            </table>
+        </div>
+
+
+        <div class="slds-grid slds-grid--align-center slds-hide" id="spinner">
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner--medium slds-spinner--brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    function hideSpinner() {
+        $("#spinner").addClass("slds-hide");
+    }
+
+    function showSpinner() {
+        $("#spinner").removeClass("slds-hide");
+    }
+
+    $(document).ready(function() {
+        var lang = "en_US";
+        CustomArticleManagementController.retreiveKnowledgeArticleVersionList(
+            lang,
+            function(results, event) { 
+                if(event.type === 'exception') { 
+                    console.log("exception"); 
+                    console.log(event); 
+                } else if(event.status) { 
+                    $.each(results, function(i, result) { 
+                        var body = '<tr class="slds-hint-parent">'+
+                        '<td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">'+
+                        '<span class="slds-checkbox">'+
+                        '<input type="checkbox" name="options" id="s'+i+'" onclick="handleSelectSingleArticleCheckboxClick(this);"/>'+
+                        '<label class="slds-checkbox__label" for="s'+i+'">'+
+                        '<span class="slds-checkbox--faux"></span>'+
+                        '<span class="slds-form-element__label slds-assistive-text">Select item 1</span>'+
+                        '</label>'+
+                        '</span>'+
+                        '</td>'+
+                        '<th scope="row" class="slds-hide">'+
+                        '<div class="slds-truncate" title="Id"><a href="javascript:void(0);">'+result.Id+'</a></div>'+
+                        '</th>'+
+                        '<th role="gridcell" class="slds-hide">'+
+                        '<div class="slds-truncate" title="Knowledge Article Id">'+result.KnowledgeArticleId+'</div>'+
+                        '</th>'+
+                        '<th role="gridcell">'+
+                        '<div class="slds-truncate" title="Title">'+result.Title+'</div>'+
+                        '</th>'+
+                        '<th role="gridcell">'+
+                        '<div class="slds-truncate" title="Type">'+result.ArticleType+'</div>'+
+                        '</th>'+
+                        '</tr>';
+                        $("#articleGridBody").append(body);
+                    }); 
+                } else { 
+                    console.log(event.message); 
+                } 
+            }
+            );
+    });
+
+    var selectedArticles = [];
+
+    function handleSelectSingleArticleCheckboxClick(e) {
+        var isChecked = $(e).prop('checked');
+        console.log(isChecked);
+
+        var $row = $(e).closest("tr");
+
+        var tempArr = [];
+        $($row).find("th").each(function(i, v){
+            tempArr.push($(v).text());
+        });
+
+        var article = {
+            "kavId" : tempArr[0],
+            "kaId" : tempArr[1],
+            "aType" : tempArr[3]
+        };
+
+        if(isChecked) {
+            selectedArticles.push(article);
+        } else {
+            var toRemoveItemIndex;
+            $.each(selectedArticles, function(i, v){
+                if(v.kavId == article.kavId){
+                    toRemoveItemIndex = i;
+                }
+            });
+            selectedArticles.splice(toRemoveItemIndex, 1);
+        }
+    }
+
+    function handleCloneBtnClick() {
+        if(selectedArticles.length == 0)
+        {
+            $("#notifyContainer").removeClass("slds-hide");
+            $("#themeContainer").addClass("slds-theme--error");
+            $("#messageContainer").html("Select atleast one article to clone.");
+            setTimeout(function(){
+                $("#notifyContainer").addClass("slds-hide");
+                $("#themeContainer").removeClass("slds-theme--error");
+                $("#messageContainer").html("");
+            }, 4000);
+        }
+        else{
+        showSpinner();
+        CustomArticleManagementController.cloneKnowledgeArticleData(
+            JSON.stringify(selectedArticles),
+            function(result, event) { 
+                if(event.type === 'exception') { 
+                    console.log("exception"); 
+                    console.log(event); 
+                } 
+                else if(event.status) { 
+                    hideSpinner();
+                    $("#notifyContainer").removeClass("slds-hide");
+                    $("#themeContainer").addClass("slds-theme--success");
+                    $("#messageContainer").html("Articles have been cloned to draft successfully.");
+                    setTimeout(function(){
+                        $("#notifyContainer").addClass("slds-hide");
+                        $("#themeContainer").removeClass("slds-theme--success");
+                        $("#messageContainer").html("");
+                    }, 4000);
+                } else { 
+                    console.log(event.message); 
+                } 
+            });
+        }
+    }
+</script>
+</html>
+</apex:page>

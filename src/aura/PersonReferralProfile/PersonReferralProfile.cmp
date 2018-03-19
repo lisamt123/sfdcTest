@@ -1,0 +1,56 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="PersonReferralProfileController">
+	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="refwrap" type="PersonReferralProfileController.ReferralWrapper"/>
+    <aura:attribute name="isCurrentUser" type="Boolean" default="false" />
+
+    <center>
+        <div aura:id="Spinner"  class="slds-spinner_container hide"  style="position:fixed !important;">
+            <div class="slds-spinner slds-spinner--large" role="alert" >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </center>
+    <aura:renderIf isTrue="{!v.isCurrentUser}">
+	    <div class="slds" style="min-width:850px">
+	        <div class="slds-grid">
+	            <div class="forcePageBlockSectionRow" style="font-size:larger;">
+	                <label class="slds-form-element__label" style="font-size:1rem;" >Referral URL:</label>
+	                 <div class="slds-form-element__control">
+	                    <ui:outputURL value="{!v.refwrap.refUrl}" label="{!v.refwrap.refUrl}" target="_blank"  />
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-grid">
+	            <div class="forcePageBlockSectionRow" style="font-size:larger;">
+	                <label class="slds-form-element__label" style="font-size:1rem;">Referral Count:</label>
+	                 <div class="slds-form-element__control">
+	                    <ui:outputText value="{!v.refwrap.refCount}" />
+	                </div>
+	            </div>
+	        </div>
+	        <div class="slds-grid">
+	        	<div class="slds-col">
+	        		<div class="slds-form-element__control myButton" onclick="{!c.simulateTweetClick}">
+	                 	<img src="{!$Resource.ShareButton + '/Tweet.png'}" style="height:32px;"/>
+	                </div>
+	        	</div>
+	        	<div class="slds-col">
+	        		 <div class="slds-form-element__control myButton" onclick="{!c.simulateFacebookClick}">
+	                 	<img src="{!$Resource.ShareButton + '/Face.png'}" style="height:32px; background-color: white;" />
+	                </div>
+	        	</div>
+	        	<div class="slds-col">
+	        		<div class="slds-form-element__control myButton" onclick="{!c.simulateLinkedInClick}">
+	                 	<img src="{!$Resource.ShareButton + '/link.png'}" style="height:32px;" />
+	                </div>
+	        	</div>
+	        </div>
+	    </div>
+	    <aura:set attribute="else">
+	    	Login to your community profile to see your referral details.
+	    </aura:set>
+	</aura:renderIf>
+</aura:component>

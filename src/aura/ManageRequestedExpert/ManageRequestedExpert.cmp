@@ -1,0 +1,58 @@
+<aura:component controller="ManageProductController">
+    <aura:attribute name="requestedExpert"      type="Project_Request_Detail__c"    default="{ 'sobjectType' : 'Project_Request_Detail__c' }"  />
+    <aura:attribute name="workRequest"          type="Project_Request__c"           default="{ 'sobjectType' : 'Project_Request__c' }"  />
+    <aura:attribute name="rolePickValues"       type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="regionPickValues"     type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="statusPickValues"     type="ManageProductController.PickValWrap[]"/>
+    <aura:attribute name="ratePickValues"       type="ManageProductController.PickValWrap[]"/>
+
+	<td/>
+    <td/>
+    <td/>
+    <td colspan="4">
+        <lightning:layout multipleRows="true" >
+            <lightning:layoutItem size="6" padding="around-small"  >
+                <lightning:select aura:id="role" name="role" label="Role" value="{!v.requestedExpert.Role__c}"  onchange="{!c.handleRoleChange}" >
+                    <aura:iteration items="{!v.rolePickValues}" var="item">
+                        <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                     </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:select aura:id="rregion" name="region" label="Region" value="{!v.requestedExpert.Region__c}" onchange="{!c.handleRoleChange}" >
+                    <aura:iteration items="{!v.regionPickValues}" var="item">
+                        <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                     </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:select aura:id="rstatus" name="status" label="Status" value="{!v.requestedExpert.Status__c}"  >
+                    <aura:iteration items="{!v.statusPickValues}" var="item">
+                        <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                     </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:input type="number" name="requestedHours" label="Requested Hours" value="{!v.requestedExpert.Requested_Hours__c}"  />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:input type="number" name="requestedAllocation" label="Requested Allocation" value="{!v.requestedExpert.Requested_Allocation__c}" formatter="percent-fixed"  />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <lightning:select aura:id="rrate" name="rate" label="Rate" value="{!v.requestedExpert.Requested_Rate__c}"  >
+                    <aura:iteration items="{!v.ratePickValues}" var="item">
+                        <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                     </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <ui:inputDate aura:id="rstartDate" label="Start Date" value="{!v.requestedExpert.Requested_Start_Date__c}" displayDatePicker="true" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small" >
+                <ui:inputDate aura:id="rendDate" label="End Date" value="{!v.requestedExpert.Requested_End_Date__c}" displayDatePicker="true" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </td>
+    <td style="text-align:right;"><lightning:buttonIcon alternativeText="cancel" iconName="utility:undo" variant="bare" size="large" onclick="{!c.closeEdit}"  /></td>
+    <td><lightning:buttonIcon alternativeText="save" iconName="utility:save" variant="bare" size="large" onclick="{!c.saveEdit}"/></td>
+</aura:component>

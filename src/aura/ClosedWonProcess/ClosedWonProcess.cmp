@@ -1,0 +1,252 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" controller="ClosedWonProcessController">
+    <ltng:require styles="{!$Resource.lightningCss}" />
+    <aura:handler event="aura:waiting" action="{!c.showLoading}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideLoading}"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="accountId" type="Id" />
+    <aura:attribute name="agreementId" type="Id[]"/>
+    <aura:attribute name="closedWonOppRec" type="Opportunity" default="{ 'sobjectType' : 'Opportunity' }"/>
+    <aura:attribute name="agreementAssignment" type="ClosedWonProcessController.AssignmentWrapper[]" />
+    <aura:attribute name="section1" default="false" type="Boolean"/>
+    <aura:attribute name="section2" default="false"  type="Boolean"/>
+    <aura:attribute name="section3" default="false" type="Boolean"/>
+    <aura:attribute name="nextButton" default="false" type="Boolean"/>
+    <aura:attribute name="agreementRecList" type="ClosedWonProcessController.AgreementWrapper[]"/>
+    <aura:attribute name="oppTypePick" type="ClosedWonProcessController.PickValWrap[]"/>
+    <aura:attribute name="oppLeadSourcePick" type="ClosedWonProcessController.PickValWrap[]"/>
+    <aura:attribute name="check" type="Boolean"/>
+    <aura:attribute name="isNone" type="Boolean" default="true"  />
+    <aura:attribute name="isFirstCall" type="Boolean" default="true"  />
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="AgreementIdSet" type="String[]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:spinner aura:id="Spinner" variant="brand" alternativeText="Spinner"/> 
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 100%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Create Agreement </h2>
+                <div class="slds-progress slds-progress_shade">
+                    <ol class="slds-progress__list">
+                        <li aura:id="firstSection" class="slds-progress__item slds-is-active">
+                            <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker " title="Opportunity View">
+                                <span class="slds-assistive-text">Opportunity View</span>
+                            </button>
+                        </li>
+                        <li aura:id="secondSection" class="slds-progress__item">
+                            <button class="slds-button slds-progress__marker" title="Agreement View">
+                                <span class="slds-assistive-text">Agreement View</span>
+                            </button>
+                        </li>
+                        <li aura:id="thirdSection" class="slds-progress__item">
+                            <button class="slds-button slds-progress__marker" title="Assignment View">
+                                <span class="slds-assistive-text">Assignment View</span>
+                            </button>
+                        </li>
+                    </ol>
+                    <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">
+                        <span aura:id="progressPercent" class="slds-progress-bar__value percentProgress" >
+                            <span class="slds-assistive-text">Progress</span>
+                        </span>
+                    </div>
+                </div>
+            </header>
+<!-- Section 1 -->
+            <aura:if isTrue="{!v.section1}">
+                <div class="slds-modal__content" id="modal-content-id-1">
+                    <lightning:layout multipleRows="true">
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="12">
+                            <h3 class="slds-section-title--divider">Agreement Dates</h3>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <ui:inputDate aura:id="startDate" label="Start Date" value="{!v.closedWonOppRec.Start_Date__c}" displayDatePicker="true"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <ui:inputDate aura:id="endDate" label="End Date" value="{!v.closedWonOppRec.End_Date__c}" displayDatePicker="true"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="12">
+                            <h3 class="slds-section-title--divider">Financial Details</h3>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <c:CustomLookupComponent sObjectAPIName="Contact" label="Billing Contact" pluralLabel="Contacts" Value="{!v.closedWonOppRec.Account.Primary_Billing_Contact__c}" listIconSVGPath="standard:contact"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <lightning:select aura:id="accountTier" name="accountTier" label="Account Tier" value="{!v.closedWonOppRec.Account_Tier__c}" >
+                                <aura:iteration items="{!v.oppTypePick}" var="item">
+                                    <option text="{!item.text}" value="{!item.val}" selected="{!item.isSelected}" />
+                                 </aura:iteration>
+                            </lightning:select>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <lightning:select aura:id="paymentTerms" name="paymentTerms" label="Payment Terms" value="{!v.closedWonOppRec.Account.Payment_Terms__c}" >
+                                <aura:iteration items="{!v.oppLeadSourcePick}" var="iteml">
+                                    <option text="{!iteml.text}" value="{!iteml.val}" selected="{!iteml.isSelected}" />
+                                 </aura:iteration>
+                            </lightning:select>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto" padding="around-small" size="6">
+                            <ui:inputCurrency aura:id="budget" label="Budget" class="field" value="{!v.closedWonOppRec.Amount}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+            </aura:if>
+<!-- Section 2 -->
+            <aura:if isTrue="{!v.section2}">
+                <div class="slds-modal__content" id="modal-content-id-1">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid">      
+                        <thead>  
+                            <tr class="slds-text-title--caps">
+                                <th>
+
+                                </th>
+                                <th scope="col">
+
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Name">Agreement Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                            <tr>
+                                <th>
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox aura:id="chxNone" value="{!v.isNone}" text="None ( No Replacement )" change="{!c.noneSelect}" />
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label"></span>
+                                    </label>
+                                </th>
+                                <th>
+                                    
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate" title="None - Generate a New Agreement"><a href="javascript:void(0);">None - Generate a New Agreement</a></div>
+                                </th>
+                                <td>
+                                    <div class="slds-truncate" title="None - Generate a New Agreement">None - Generate a New Agreement</div>
+                                </td>
+                            </tr>      
+                            <aura:iteration items="{!v.agreementRecList}" var="agreement">
+                                <tr>
+                                    <th>
+                                        <label class="slds-checkbox">
+                                            <ui:inputCheckbox aura:id="chx" value="{!agreement.isSelected}" text="{!agreement.agreementRec.Id}" change="{!c.oneSelect}"/>
+                                            <span class="slds-checkbox--faux" />
+                                            <span class="slds-form-element__label"></span>
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <img id="{!agreement.agreementRec.Id}" class="{!agreement.agreementRec.Name}" src="{!$Resource.expand}" style="cursor:pointer;" onclick="{!c.toggel}"/>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate" title="{!agreement.agreementRec.Name}"><a href="javascript:void(0);">{!agreement.agreementRec.Name}</a></div>
+                                    </th>
+                                    <td>
+                                        <div class="slds-truncate" title="{!agreement.agreementRec.Status__c}">{!agreement.agreementRec.Status__c}</div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </aura:if>
+<!-- Section 3 -->
+            <aura:if isTrue="{!v.section3}">
+                <div class="slds-modal__content" id="modal-content-id-1">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid">      
+                        <thead>  
+                            <tr class="slds-text-title--caps">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Project Name">Project Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Name">Assignment Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Status">Prior Role</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Status">New Role</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="End Date">End Date</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <aura:if isTrue="{!!empty(v.agreementAssignment)}">       
+                                <aura:iteration items="{!v.agreementAssignment}" var="assign">
+                                    <tr>
+                                        <td>
+                                            <div class="slds-truncate" title="Project Name">{!assign.assignment.Project__r.Name}</div>
+                                        </td>
+                                        <th scope="row">
+                                            <div>{!assign.assignment.Name}</div>
+                                        </th>
+                                        <td>
+                                            <div class="slds-truncate" title="Role">{!assign.assignment.Role__c + ' - ' + assign.assignment.Region__c}</div>
+                                        </td>
+                                        <td>
+                                            <lightning:select aura:id="newRole" name="newRole" label="New Role" value="{!assign.selectedRole}" class="section3Input" messageWhenValueMissing="Role is required." >
+                                                <aura:iteration items="{!assign.newRole}" var="item">
+                                                    <option text="{!item}" value="{!item}" />
+                                                 </aura:iteration>
+                                            </lightning:select>
+                                        </td>
+                                        <td>
+                                            <ui:inputDate aura:id="AssignmentEffectiveDate" value="{!assign.effectiveDate}" displayDatePicker="true" class="section3Input"/>
+                                        </td>
+                                        <td>
+                                            <ui:inputDate aura:id="AssignmentExpireDate" value="{!assign.endDate}" displayDatePicker="true" class="section3Input"/>
+                                        </td>
+                                    </tr> 
+                                </aura:iteration>
+                            </aura:if>
+                        </tbody>
+                    </table>
+                </div>
+            </aura:if>
+
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <aura:renderIf isTrue="{!v.section2}">
+                    <lightning:button aura:id="backButton1" label="Back" onclick="{!c.HandleNextClick}"/>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.section3}">
+                    <lightning:button aura:id="backButton2" label="Back" onclick="{!c.HandleNextClick}"/>
+                </aura:renderIf>
+                
+                <aura:renderIf isTrue="{!v.section1}">
+                    <lightning:button aura:id="buttonSection1" class="slds-button slds-button_brand" label="Next" onclick="{!c.HandleNextClick}"/>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.section2}">
+                    <aura:renderIf isTrue="{!v.nextButton}">
+                        <lightning:button aura:id="buttonSection2" class="slds-button slds-button_brand" label="Next" onclick="{!c.HandleNextClick}"/>
+                        <aura:set attribute="else">
+                            <lightning:button aura:id="UpdateButton" class="slds-button slds-button_brand" label="Save" onclick="{!c.saveWithoutReplacement}"  />
+                        </aura:set>
+                    </aura:renderIf>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.section3}">
+                    <lightning:button aura:id="buttonSection3" class="slds-button slds-button_brand" label="Save" onclick="{!c.saveWithReplacement}"  />
+                </aura:renderIf>
+            </footer>
+        </div>
+    </section>
+</aura:component>

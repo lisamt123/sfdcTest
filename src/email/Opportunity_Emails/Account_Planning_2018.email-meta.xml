@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Use to send requests for 2018 planning meeting</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Account Planning 2018</name>
+    <style>freeForm</style>
+    <subject>{!Opportunity.Account} and 10K 2018 Planning Discussion</subject>
+    <textOnly>Hello
+
+To help us ensure we can successfully support your projects in 2018, we&apos;d like to have a quick planning meeting with you. The agenda for this meeting will be to discuss your plans for Salesforce and 10K for next year.
+
+Can you please let us know the best time over the next few weeks to have this conversation by filling in a few dates/times here? We appreciate your time and are excited to work with you in 2018!
+
+Thank you,
+Diane Shotton
+VP, Client Services
+602-574-7351
+Diane@10kview.com</textOnly>
+    <type>html</type>
+</EmailTemplate>

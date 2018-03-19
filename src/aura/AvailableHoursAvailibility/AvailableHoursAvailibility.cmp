@@ -1,0 +1,9 @@
+<aura:component controller="AvailableHoursAvailibilityController">
+
+	<aura:attribute name="availability" type="Availability__c" />
+	<aura:attribute name="isDisabled" type="Boolean" default="true"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.setIsDisabled}" />
+
+	<lightning:input type="number" aura:Id="availableHours" value="{!v.availability.Available_Hours__c}" onchange="{!c.doInit}"  step="0.25" disabled="{!v.isDisabled}"/>
+</aura:component>

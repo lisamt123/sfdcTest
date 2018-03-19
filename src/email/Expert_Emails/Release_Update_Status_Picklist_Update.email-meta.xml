@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to introduce Status picklist updates in the Community</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>Release Update: Status Picklist Update</name>
+    <style>freeForm</style>
+    <subject>10K Community Update - Story Status!</subject>
+    <textOnly>Hello!
+
+In our effort to increase our communication and visibility within the community, we have updated the &quot;Status&quot; field on Stories.
+
+If you are currently using Stories, these changes will be live for you on April 2. If you are NOT using Stories and would like to, please log a case within the community.
+
+This is the first of other changes that you will begin seeing the community around our delivery standards and processes!
+
+Below, you will find the order and definition of our new Status values.
+
+
+
+
+Draft: Story is under construction by Functional Owner or 10K Delivery Owner
+
+Backlog: Story is complete but is not yet in scope or in a sprint
+
+Ready for Work: Requirements are complete and 10K delivery starts the process of working on the story
+
+In progress: Work to fulfill the requirements is under way including task assignments.
+
+Blocked: Development cannot proceed until an item has been resolved. This is a temporary status and every effort should be made to move from this status.
+
+Ready for QA: Only used if QA Owner assigned: Story is ready for testing that development meets requirements
+
+Ready for Tech Review: Development and unit testing (and QA if applicable) have been completed and story meets Client and 10K Way standards
+
+Ready for Review: Development is complete and is ready for client review
+
+Ready for UAT: Client uses this status to indicate that the story is ready for User Acceptance Testing
+
+UAT Complete: Client updates when testing has finished and all issues are resolved.
+
+Ready for Deployment: Story has been determined to be ready for deployment based on the client deployment plan and should be readied for moving to the target org.
+
+Completed: Work has been completed and client has signed off on the work deployed in the story.
+
+Cancelled: The requirements or work outlined in the story is no longer required or relevant.
+
+
+Please feel free to contact Diane Shotton or myself with any feedback or questions!
+
+Jared
+
+
+Jared Miller
+VP, Service Delivery</textOnly>
+    <type>html</type>
+</EmailTemplate>

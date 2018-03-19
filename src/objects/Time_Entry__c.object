@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Assignment_Budget_Mismatch__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND(
+  NOT(ISBLANK(Budget__c)),
+  Assignment__c != Budget__r.Assignment__c
+)</formula>
+        <label>Assignment &amp; Budget Mismatch</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Assignment__c</fullName>
+        <externalId>false</externalId>
+        <label>Assignment</label>
+        <referenceTo>Assignment__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Budget__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Budget</label>
+        <referenceTo>Budget__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Current_Portal_User_Flag__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND(
+  NOT(ISBLANK(Assignment__r.Resource__r.Portal_User__c)),
+  Assignment__r.Resource__r.Portal_User__r.Id = $User.Id
+)</formula>
+        <label>Current Portal User Flag</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Days_Late__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE(CreatedDate) - Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Late</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery_Partner_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Delivery Partner Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.End_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expert_Goodwill_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Expert Goodwill Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expert_Partner_External_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Partner_External_Id__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Expert Partner External Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Falls_Outside_Agreement_Dates__c</fullName>
+        <externalId>false</externalId>
+        <formula>OR(
+  Date__c &lt; Assignment__r.Rate__r.Effective_Date__c,
+  Date__c &gt; Assignment__r.Rate__r.Valid_Through__c
+)</formula>
+        <label>Falls Outside Agreement Dates</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Goodwill_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Goodwill Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hourly_Cost_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Cost_Rate__r.Hourly_Rate__c</formula>
+        <label>Hourly Cost Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Hourly_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Rate__r.Hourly_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hourly Billable Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Margin_Billable_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Billable_Amount__c  -  Total_Goodwill_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Margin Billable Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Margin_Cost_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Cost_Amount__c  -  Total_Expert_Goodwill_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Margin Cost Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Project_Billing_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Project__r.Project_Billing_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Project Billing Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Project__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Project Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Project__r.Name</formula>
+        <label>Project</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Resource_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Resource__r.FirstName + &quot; &quot; + Assignment__r.Resource__r.LastName</formula>
+        <label>Expert Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Assignment__r.Role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Assignment__r.Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Story__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Story</label>
+        <referenceTo>Story__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Task__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Task</label>
+        <referenceTo>Task__c</referenceTo>
+        <relationshipLabel>Time Entries</relationshipLabel>
+        <relationshipName>Time_Entries</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Total_Billable_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Billable Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Cost_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cost Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Expert_Goodwill_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Expert Goodwill Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Goodwill_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Goodwill Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Time Entry</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Project__c</columns>
+        <columns>Assignment__c</columns>
+        <columns>Resource_Name__c</columns>
+        <columns>Hours__c</columns>
+        <columns>Date__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>My_Time_Entries</fullName>
+        <columns>NAME</columns>
+        <columns>Project__c</columns>
+        <columns>Assignment__c</columns>
+        <columns>Date__c</columns>
+        <columns>Hours__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Current_Portal_User_Flag__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Time Entries</label>
+    </listViews>
+    <listViews>
+        <fullName>Time_Entries_without_Invoices</fullName>
+        <columns>Date__c</columns>
+        <columns>NAME</columns>
+        <columns>Resource_Name__c</columns>
+        <columns>Project__c</columns>
+        <columns>Invoice__c</columns>
+        <columns>Assignment__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Invoice__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>1/1/2017</value>
+        </filters>
+        <filters>
+            <field>Project__c</field>
+            <operation>notContain</operation>
+            <value>10K Advisors,10K Doubleclick</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>lessThan</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <label>Time Entries without Invoices</label>
+        <sharedTo>
+            <group>X10K_Executive_Team</group>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <displayFormat>TE-{0000}</displayFormat>
+        <label>Time Entry Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Time Entries</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Resource_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Hours__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Resource_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Hours__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Resource_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Hours__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Resource_Name__c</searchFilterFields>
+        <searchFilterFields>Date__c</searchFilterFields>
+        <searchFilterFields>Hours__c</searchFilterFields>
+        <searchResultsAdditionalFields>Resource_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Hours__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Cannot_Edit_an_Invoiced_Time_Entry</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK(Invoice__c)),
+  ISPICKVAL(Invoice__r.Type__c, &apos;Actual&apos;),
+  OR(
+    ISCHANGED(Date__c),
+    ISCHANGED(Hours__c),
+    ISCHANGED(Description__c),
+    ISCHANGED(Assignment__c)
+  )
+)</errorConditionFormula>
+        <errorMessage>You cannot modify a Time Entry that has already been included in a finalized Invoice</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Dont_Allow_TEs_Earlier_Than_Last_Invoice</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK(Assignment__r.Project__r.Account__r.Most_Recent_Billing_Period_End_Date__c)),
+  Date__c &lt;= Assignment__r.Project__r.Account__r.Most_Recent_Billing_Period_End_Date__c,
+  $Profile.Id != &apos;00e36000001Frfx&apos;,
+  NOT(CONTAINS(Assignment__r.Project__r.Account__r.Name, &quot;Kindred&quot;))
+)</errorConditionFormula>
+        <errorMessage>You cannot log time in a prior billing period. Contact a 10K Admin for more information.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Hours_Must_Be_Greater_Than_0</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  Hours__c &lt;= 0,
+  DATEVALUE(CreatedDate) &gt;= DATE(2016,8,1)
+)</errorConditionFormula>
+        <errorDisplayField>Hours__c</errorDisplayField>
+        <errorMessage>Hours must be greater than 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Only_Enter_Time_For_Your_Assignments</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  OR(
+    $Profile.Id = &apos;00e36000000eQQq&apos;,
+    $Profile.Id = &apos;00e36000000eQQM&apos;
+  ),
+  NOT(Assignment__r.Current_Portal_User_Flag__c)
+)</errorConditionFormula>
+        <errorMessage>You may only manage time against your own Assignments</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_New_Time_Entry_for_Expired_Rate</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+  OR(
+    ISNEW(),
+    AND(
+      NOT(ISNEW()),
+      ISCHANGED(Assignment__c)
+    )
+  ),
+  OR(
+    Date__c &gt; Assignment__r.Rate__r.Valid_Through__c,
+    NOT(ISPICKVAL(Assignment__r.Rate__r.Agreement__r.Status__c, &apos;Active&apos;))
+  )
+)</errorConditionFormula>
+        <errorMessage>You cannot log time against an Assignment with an expired Agreement. Please contact a 10K Admin if you need assistance.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_New_Time_For_Closed_Assignment</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISNEW(),
+  NOT(ISPICKVAL(Assignment__r.Status__c, &quot;Active&quot;))
+)</errorConditionFormula>
+        <errorMessage>You can only create new Time Entries against an Active Assignment</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Time_Entires_Must_Be_In_Quarter_Hours</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  CONTAINS(TEXT(Hours__c), &apos;.&apos;),  
+  MID(TEXT(Hours__c), FIND(&apos;.&apos;, TEXT(Hours__c)) + 1, LEN(TEXT(Hours__c))) != &apos;0&apos;,
+  MID(TEXT(Hours__c), FIND(&apos;.&apos;, TEXT(Hours__c)) + 1, LEN(TEXT(Hours__c))) != &apos;25&apos;,
+  MID(TEXT(Hours__c), FIND(&apos;.&apos;, TEXT(Hours__c)) + 1, LEN(TEXT(Hours__c))) != &apos;5&apos;,
+  MID(TEXT(Hours__c), FIND(&apos;.&apos;, TEXT(Hours__c)) + 1, LEN(TEXT(Hours__c))) != &apos;75&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Hours__c</errorDisplayField>
+        <errorMessage>You can only enter time in quarter-hour increments.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Time_Entry_Must_Be_In_Assignment_Dates</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND( 
+NOT(ISBLANK(Assignment__r.Start_Date__c)),
+NOT(ISBLANK(Assignment__r.End_Date__c)),
+OR(
+Assignment__r.Start_Date__c &gt; Date__c, 
+Assignment__r.End_Date__c &lt; Date__c 
+))</errorConditionFormula>
+        <errorMessage>Time Entries must be made within the Start and End Dates of the Assignment. Please check the Assignment Dates and try again.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Time_Entry_Must_Be_Within_Project_Dates</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+  Assignment__r.Project__r.Start_Date__c &gt;  Date__c,
+  Assignment__r.Project__r.End_Date__c &lt; Date__c
+)</errorConditionFormula>
+        <errorMessage>Time Entries must be made within the Start and End Dates of the Project. Please check the Project Dates and try again.</errorMessage>
+    </validationRules>
+</CustomObject>

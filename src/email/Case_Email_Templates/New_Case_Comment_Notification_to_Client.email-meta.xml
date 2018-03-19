@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Main_Letterhead</letterhead>
+    <name>New Case Comment Notification to Client</name>
+    <style>freeForm</style>
+    <subject>A new Comment has been added to your 10K Case number {!Case.CaseNumber}</subject>
+    <textOnly>A client has added the following Comment to Case number {!Case.CaseNumber}:
+
+{!Case.Last_Case_Comment}
+
+Please log into the 10K Community and respond to the client.
+
+https://10k.force.com/10kcommunity/s/
+
+Cheers,
+10K Support Team
+10K Advisors
+
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+</EmailTemplate>

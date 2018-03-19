@@ -1,0 +1,32 @@
+<apex:page showHeader="true" sidebar="true">
+	<style>
+		div.question {
+			font-weight: bold;
+			font-size: 14;
+		}
+		div.answer {
+			font-weight: normal;
+			font-size: 12;
+		}
+	</style>
+	<apex:sectionHeader title="Community FAQs" />
+	<apex:pageBlock >
+		<apex:pageBlockSection title="Time Entry FAQs" collapsible="true" columns="1">
+			<div class="question">
+				How do I log my time?
+			</div>
+			<div class="answer">
+				Time Entries are logged against Assignments. To locate your Assignments, go to the Assignments tab, and use the 'My Assignments - Active' list view. Open the Assignment you want to log time against, and click the New Time Entry button on the Time Entries related list.
+			</div>
+			<br/><br/>
+
+			<div class="question">
+				Why can't I see a Project I'm working on?
+			</div>
+			<div class="answer">
+				Only Projects where you have an Assignemnt will be visible. If you can't see a Project, you'll need to have an assignment created. Email matt@10kview.com to have an Assignment created.
+			</div>
+			<br/><br/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

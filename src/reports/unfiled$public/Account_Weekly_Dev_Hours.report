@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account.Projects__r.Assignments__r$Role__c</field>
+    </columns>
+    <columns>
+        <field>Account.Projects__r.Assignments__r$Name</field>
+    </columns>
+    <columns>
+        <field>Account.Projects__r.Assignments__r.Time_Entries__r$Name</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Projects__r.Assignments__r.Time_Entries__r$Hours__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account$Name</column>
+            <operator>contains</operator>
+            <value>Kindred</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Projects__r$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Kindred - monthly dev hours</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Projects_with_Assignments_with_Time_Entries__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account.Projects__r.Assignments__r.Time_Entries__r$Date__c</dateColumn>
+        <interval>INTERVAL_THISMONTH</interval>
+    </timeFrameFilter>
+</Report>

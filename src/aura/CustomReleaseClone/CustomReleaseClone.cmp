@@ -1,0 +1,17 @@
+<aura:component access="global" controller="CustomReleaseCloneLightning" implements="flexipage:availableForRecordHome,force:hasSObjectName,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader">
+	<aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="fieldToSkip" type="String" default="Validation_Running__c,Scan_Running__c,Validation_Status__c,CodeScan_Status__c,Validation_Describe_Error__c,CodeScan_Describe_Error__c,Created_On_Heroku__c" />
+	<div class="slds-modal__container">
+		<header class="slds-modal__header" >
+            <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="" title="Close">
+                X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+                
+        </header>
+        <div class="slds-modal__content" id="modal-content-id-1">
+        	
+        </div>
+	</div>
+</aura:component>

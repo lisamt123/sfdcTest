@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Training_Plan__c</field>
+    </columns>
+    <columns>
+        <field>FK_ACC_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_$Contact.Full_Name__c</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Progress__c</field>
+    </columns>
+    <columns>
+        <field>Learning_Assignment__c.Progress_Percentage__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Training Plan Progress by Contact</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Learning_Assignment__c@Learning_Assignment__c.Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Learning_Assignment__c.Completed_On__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

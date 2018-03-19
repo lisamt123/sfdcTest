@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Feedback</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Feedback</value>
+    </caseValues>
+    <fields>
+        <help><!-- Assignment links Project and Expert that feedback is requested on. --></help>
+        <label><!-- Assignment --></label>
+        <name>Assignment__c</name>
+        <relationshipLabel><!-- Feedback --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Communication Skills --></label>
+        <name>Communication_Skills__c</name>
+    </fields>
+    <fields>
+        <label><!-- Did Well Comments --></label>
+        <name>Did_Well_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- This contact name is the Expert for which the feedback is submitted. --></help>
+        <label><!-- Expert --></label>
+        <name>Expert__c</name>
+        <relationshipLabel><!-- Expert Feedback --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Improve Comments --></label>
+        <name>Improve_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overall Performance --></label>
+        <name>Overall_Performance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Project_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Follow up</masterLabel>
+            <translation><!-- Follow up --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Received</masterLabel>
+            <translation><!-- Received --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sent</masterLabel>
+            <translation><!-- Sent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Submitted --></label>
+        <name>Submitted__c</name>
+    </fields>
+    <fields>
+        <help><!-- This contact represents the 10K team member who submitted the feedback. --></help>
+        <label><!-- Submitter --></label>
+        <name>Submitter__c</name>
+        <relationshipLabel><!-- Feedback (Submitter) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey URL --></label>
+        <name>Survey_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Teamwork --></label>
+        <name>Teamwork__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technical Skills --></label>
+        <name>Technical_Skills__c</name>
+    </fields>
+    <layouts>
+        <layout>Feedback Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Feedback --></label>
+            <section>Feedback</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

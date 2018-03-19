@@ -1,0 +1,69 @@
+.THIS .slds-icon-action-close {
+    background-color: transparent !important;
+}
+.THIS .slds-select{
+    z-index: 9;
+    display: block;
+}
+.THIS .slds-text-heading--medium{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.THIS .picDiv{
+    background: darkgrey;
+}
+.THIS .detailDiv{
+    background: dodgerblue;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+}
+.THIS .buttonClass {
+    height: 34px !important;
+    background: green !important;
+    color: white !important;
+}
+.THIS .buttonClass[disabled] {
+    background: rgb(224, 229, 238) !important;
+    border-color: rgba(0, 0, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
+}
+.THIS .pictureImage{
+    text-align: center;
+}
+.THIS .pictureImage>p>img{
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 250px !important;
+    line-height: 250px !important;
+}
+.THIS .pictureImage>img{
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 250px !important;
+    line-height: 250px !important;
+}
+.THIS .quantInput{
+    width: 80%;
+    display: flex;
+}
+.THIS .slds-radio_button__label{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.THIS .slds-form-element__label{
+    font-size: 1rem !important;
+    line-height: 1.9 !important;
+    width: 9.9rem !important;
+    margin-right: .25rem !important;
+}
+.THIS .sizeSelectContainer{
+    white-space: nowrap;
+}
+.THIS .sizeSelect{
+    max-width: 75%;
+}
+.THIS .slds-input, .THIS .uiInput--select{
+    border: .5px solid #2196F3;
+    padding: 0 1rem 0 0.3rem !important;
+    width: 200px !important;
+}

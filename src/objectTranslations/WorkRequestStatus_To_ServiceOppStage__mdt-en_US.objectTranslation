@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>WorkRequestStatus To ServiceOppStage</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>WorkRequestStatus To ServiceOppStages</value>
+    </caseValues>
+    <fields>
+        <help><!-- Service Opportunity Stage value --></help>
+        <label><!-- ServiceOpp Stage --></label>
+        <name>ServiceOpp_Stage__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

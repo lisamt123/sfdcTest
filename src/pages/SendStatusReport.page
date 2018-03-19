@@ -1,0 +1,32 @@
+<apex:page showHeader="true" sidebar="true" standardController="Status_Report__c" extensions="SendStatusReportController">
+	<apex:form >
+		<apex:actionFunction name="returnBackAF" action="{!returnBack}" oncomplete="redirectBack('{!returnURL}')"/>
+        <div class="waitingSearchDiv" id="el_loading" style="background-color: #E6EBF5; height: 100%;opacity:0.85;width:100%;z-index: 9999999;position: fixed;top: 0;left: 0;"> 
+            <div class="waitingHolder" >
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..."/>
+                <span class="waitingDescription" >Please Wait...</span>
+            </div>          
+        </div>   
+
+
+	</apex:form>
+	<script>
+		if(confirm('Are you sure?'))
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SendStatusReportController.sendStatusReport}','{!Status_Report__c.Id}', handleResult);
+		else {
+			returnBackAF();
+		}
+
+		function handleResult(result,event) {
+			alert(result);
+			returnBackAF();
+		}
+		function redirectBack(returnURL) {
+			if({!isLightningExperience}) {
+				window.parent.location = returnURL;
+			}
+			else
+				window.location = returnURL ;
+		}
+	</script>
+</apex:page>

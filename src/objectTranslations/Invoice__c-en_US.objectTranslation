@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Invoice</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Invoices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agreement --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Agreement you selected is not associated with the Account that is selected on this Invoice. --></errorMessage>
+            <informationalMessage><!-- These results have been filtered to show only Agreements for the Account selected on this Invoice. --></informationalMessage>
+        </lookupFilter>
+        <name>Agreement__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Average Blended Rate --></label>
+        <name>Average_Blended_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact First Name --></label>
+        <name>Billing_Contact_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Period End Date --></label>
+        <name>Billing_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Period Start Date --></label>
+        <name>Billing_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Partner Invoice Ready for QB --></label>
+        <name>Delivery_Partner_Invoice_Ready_for_QB__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Blended Rate --></label>
+        <name>Effective_Blended_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude From Next Past Due Notification --></label>
+        <name>Exclude_From_Next_Past_Due_Notification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Names --></label>
+        <name>Expert_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Payment Date --></label>
+        <name>First_Payment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Branding --></label>
+        <name>Invoice_Branding_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Period --></label>
+        <name>Invoice_Generated_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Notes --></label>
+        <name>Invoice_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Payment Date --></label>
+        <name>Last_Payment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Margin % --></label>
+        <name>Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration Id --></label>
+        <name>Migration_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Opportunity you selected is not associated with the Account that is selected on this Invoice. --></errorMessage>
+            <informationalMessage><!-- These results have been filtered to show only Opportunities for the Account selected on this Invoice. --></informationalMessage>
+        </lookupFilter>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Outstanding Balance --></label>
+        <name>Outstanding_Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- PO Number --></label>
+        <name>PO_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Initiated --></label>
+        <name>Payment_Initiated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profit Margin --></label>
+        <name>Profit_Margin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Project you selected is not associated with the Account that is selected on this Invoice. --></errorMessage>
+            <informationalMessage><!-- These results have been filtered to show only Projects for the Account selected on this Invoice. --></informationalMessage>
+        </lookupFilter>
+        <name>Project__c</name>
+        <relationshipLabel><!-- Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- QuickBooks Bill Id --></label>
+        <name>QuickBooks_Bill_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- QuickBooks Id --></label>
+        <name>QuickBooks_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selected To Send From Account --></label>
+        <name>Selected_To_Send_From_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Finalized On --></label>
+        <name>Sent_To_Customer_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Services Invoice Ready for QuickBooks --></label>
+        <name>Services_Invoice_Ready_for_QuickBooks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount Paid --></label>
+        <name>Total_Amount_Paid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Billable Value --></label>
+        <name>Total_Billable_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Credits Applied --></label>
+        <name>Total_Credits_Applied__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Discounts Applied --></label>
+        <name>Total_Discounts_Applied__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goodwill Applied --></label>
+        <name>Total_Goodwill_Applied__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goodwill Hours --></label>
+        <name>Total_Goodwill_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Hours Invoiced --></label>
+        <name>Total_Hours_Invoiced__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Hours --></label>
+        <name>Total_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Invoice Amount --></label>
+        <name>Total_Invoice_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Invoice Cost --></label>
+        <name>Total_Invoice_Cost__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Actual</masterLabel>
+            <translation><!-- Actual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Void</masterLabel>
+            <translation><!-- Void --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>10K Product Invoice Layout (External)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Product Invoice Layout (Internal)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Services Invoice Layout (External)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>10K Services Invoice Layout (Internal)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Delivery Partner Invoice Layout (External)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Delivery Partner Invoice Layout (Internal)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Details --></label>
+            <section>Financial Details</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Delivery Partner Invoice --></label>
+        <name>Delivery_Partner_Invoice</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Product Invoice --></label>
+        <name>X10K_Product_Invoice</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 10K Services Invoice --></label>
+        <name>X10K_Services_Invoice</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Delivery Partner Invoice cannot be marked as Actual until Account required fields are filled --></errorMessage>
+        <name>Invoice_Type_Validation_Rule</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Apply_Goodwill --></label>
+        <name>Apply_Goodwill</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Invoice --></label>
+        <name>Send_Invoice</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Invoice_PDF --></label>
+        <name>View_Invoice_PDF</name>
+    </webLinks>
+</CustomObjectTranslation>

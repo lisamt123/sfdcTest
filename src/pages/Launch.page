@@ -1,0 +1,154 @@
+<apex:page controller="Launch10KPodcastController" sidebar="false" standardStylesheets="false" showHeader="false" applyBodyTag="false" title="10K Advisors - Launch">
+
+    <apex:includeScript value="{!$Resource.jqueryLatest}"/>
+    <apex:includeScript value="{!URLFOR($Resource.WrapedBootstrap, 'WrapedBootstrap/js/bootstrap.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.WrapedBootstrap, 'WrapedBootstrap/css/bootstrap.min.css')}" />
+    
+    <style>
+        .center-justified {
+            text-align: left;
+            margin: 0 auto;
+            width: 90%;
+            font-size:16px;
+        }
+        
+        .panel-heading .accordion-toggle:after {
+            /* symbol for "opening" panels */
+            font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+            content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+            float: left;        /* adjust as needed */
+            color: #4F6A92;         /* adjust as needed */
+        }
+        
+        .panel-heading .accordion-toggle.collapsed:after {
+            /* symbol for "collapsed" panels */
+            content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+            color: #4F6A92; 
+        }
+        @media (max-width:640px){
+            .iFrames {
+                width : 90%;
+            }
+        }
+        @media (min-width:640px){
+            .iFrames {
+                width : 640px;
+            }
+        }
+        @media (max-width:640px){
+            .imgPadding{
+                padding: 0px 15px;
+            }
+        }
+        @media (min-width:640px){
+            .imgPadding{
+                padding: 0px 25px;
+            }
+        }
+        @media (max-width:840px){
+            .footerPadding{
+                padding-bottom: 256px !important;
+            }
+        }
+        @media (min-width:840px){
+            .footerPadding{
+                padding-bottom: 138px !important;
+            }
+        }
+        .top-menu{
+            font-family: "Open Sans", sans-serif;
+        }
+        .top-menu__logo{
+            width: 53px !important;
+            height: 48px !important;
+        }
+    </style>
+    
+    <apex:composition template="X10KViewSiteTemplate">
+        <apex:define name="body">
+            <header class="hero" style="padding-bottom : 2rem;">
+                <div class="hero__text center-justified">
+                    
+                    <!--
+                    <div class="hero-inner__subtext tl" style="display: flex; justify-content: center;">
+                        <img alt="" src="{!URLFOR($Resource.X10KViewPodcastIcon, 'launch_Final_logo.png')}" height="100" width="120"/>
+                    </div><br/>
+                    -->
+                    <div class="hero-inner__subtext tl" style="display: flex; justify-content: center;">
+                        <h3 class="hero__title"><strong>Welcome to the 10K Launch Podcast</strong></h3>
+                    </div>
+                    
+                    <br/>
+                    
+                    <p class="hero-inner__subtext tl center-justified" style="width:70%;">
+                        Salesforce MVP Hall of Fame members Jared Miller and Nick Hamm discuss Salesforce consulting, administration, development, and how to start and continue your journey from "Admin to Entrepreneur".
+                    </p>
+                    
+                    <br/><br/>
+                    
+                    <table align="center">
+                        <tr>
+                            <td align="center" Class="imgPadding">
+                                <a href="https://itunes.apple.com/us/podcast/id1253665928" target="_blank"><img class="team__person-avatar" alt="" src="{!URLFOR($Resource.X10KViewPodcastIcon, 'itunes-logo.png')}" height="50" width="100" /></a>
+                            </td>
+                            <td align="center" style="border-left: 1px solid #acb1d2; border-right: 1px solid #acb1d2;" Class="imgPadding">
+                                <a href="https://play.google.com/music/listen#/ps/Il7bbipmyq7nde73xrip3mbz56e" target="_blank"> <img class="team__person-avatar" alt="" src="{!URLFOR($Resource.X10KViewPodcastIcon, 'GoogleMusicIcon.png')}" height="50" width="60"/></a>
+                            </td>
+                            <td align="center" Class="imgPadding">
+                                <a href="http://10klaunch.libsyn.com/" target="_blank"> <img class="team__person-avatar" alt="" src="{!URLFOR($Resource.X10KViewPodcastIcon, 'libsyn-logo.jpg')}" height="50" width="90"/></a>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <br/>
+                </div>
+                
+            </header>
+                <div class="center-justified footerPadding" > <!-- style="overflow: auto; height:400px; position: relative;" -->
+                    <apex:outputPanel id="episodeTable">
+                        <apex:variable var="count1" value="{!1001}"/>
+                        <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                            <apex:repeat value="{!launchEpisodeList}" var="lEpisode" rendered="{!launchEpisodeList.size > 0}">
+                                <div class="panel panel-default" style="padding-left: 0;    padding-right: 0">
+                                    <div class="panel-heading" style="background-color: white;background-image: none;">
+                                        <div>
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse{!count1}" aria-expanded="true" aria-controls="collapse{!count1}" ></a>
+                                                <div style="color:rgb(0, 0, 0);" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse{!count1}" aria-expanded="true" aria-controls="collapse{!count1}">
+                                                    <span style="display: -webkit-box;margin-left: 35px;font-weight:700;" >
+                                                        {!lEpisode.Name}
+                                                    </span>
+                                                </div>
+                                                
+                                            </h4>
+                                            <div role="tab" id="heading{!count1}" data-toggle="collapse" data-parent="#accordion1" data-target="#collapse{!count1}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="collapse{!count1}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{!count1}">
+                                        <apex:outputPanel rendered="{!IF(lEpisode.Episode_Description__c != Null && lEpisode.Episode_Id__c != null,true,false)}">
+                                            <div class="panel-body fontpx">
+                                                <div style="color:rgb(0, 0, 0);">{!lEpisode.Episode_Description__c}</div>
+                                                <div style="color:rgb(0, 112, 210);text-align: center;">
+                                                    <apex:outputPanel rendered="{!lEpisode.Episode_Id__c != null}">
+                                                        <br/><br/>
+                                                        <!--<apex:variable var="urlValue" value="{!JSEncode(+'&color=00aabb&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false')}"/>-->
+                                                        <iframe id="{!lEpisode.Id}" align="middle" src="https://html5-player.libsyn.com/embed/episode/id/{!lEpisode.Episode_Id__c}/height/90/width/640/theme/custom/autonext/no/thumbnail/yes/autoplay/no/preload/no/no_addthis/no/direction/backward/render-playlist/no/custom-color/3a9ab6/" class="iFrames" height="90" scrolling="no" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"></iframe>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!If(lEpisode.Episode_Description__c != Null && lEpisode.Episode_Id__c != null,false,true)}">
+                                            No Content for this Episode
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                                <apex:variable var="count1" value="{!count1 + 1}" />
+                            </apex:repeat>
+                        </div>
+                    </apex:outputPanel> 
+                </div> 
+        </apex:define>
+    </apex:composition>
+</apex:page>

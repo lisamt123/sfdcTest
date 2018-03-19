@@ -1,0 +1,120 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global" controller="ManageArtifactsLightning">
+    <ltng:require styles="{!$Resource.lightningCss}" />
+    <!-- doInit Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- attributes -->
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="recordCount" type="Integer" default="0" />
+    <aura:attribute name="metadataNameMapList" type="List" />
+    <aura:attribute name="metadataNameMapListComplete" type="List" />
+    <aura:attribute name="selectedMetadata" type="String" default="All"/>
+    <aura:attribute name="selectedOrg" type="String" />
+    <aura:attribute name="storyName" type="String" default=""/>    
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="message" type="String" default=" "/>
+    <aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+    <aura:attribute name="isInActiveConnection" type="boolean" default="false"/>
+    <aura:attribute name="isRefreshRunning" type="boolean" default="false"/>
+    <aura:attribute name="connectionRec" type="Connection__c" />
+    <aura:attribute name="flag" type="boolean" default="true"/>
+
+    <!-- Spinner -->
+	<lightning:spinner aura:id="Spinner" variant="brand"/>
+    <!-- root div -->
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 98%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+                  X
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Manage Artifacts</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-page-header" role="banner" >
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate" style="padding-top: .5rem;">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset">
+                                        <label>Metadata Last Refreshed :&nbsp;</label>
+                                        <lightning:formattedDateTime value="{!v.connectionRec.Metadata_Last_Described__c}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZone="{!$Locale.timezone}"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <aura:if isTrue="{!v.isRefreshRunning}"  >
+                                <lightning:button aura:id="RefreshButton" onclick="{!c.refreshClick}" variant="brand" label="Refresh Currently Running" disabled="true"  />
+                                <aura:set attribute="else" >
+                                    <lightning:button aura:id="RefreshButton" onclick="{!c.refreshClick}" variant="brand" label="Refresh Artifacts" disabled="{!v.isInActiveConnection}"  />
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div> 
+                </div>
+
+                <!-- Picklists -->
+                <lightning:layout horizontalAlign="start" multipleRows='true'>
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+                        <ui:inputSelect label="Artifacts Type: " class="dynamic" aura:id="ArtifactsType" change="{!c.onChange}" />
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+                        <ui:inputSelect label="Connection: " class="dynamic" aura:id="Connections" change="{!c.refreshConnection}" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <!-- Table 1 -->
+                <lightning:layout horizontalAlign="start" multipleRows='true'>
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+                        <ui:inputText label="" placeholder="Search Artifacts (minimum 3 characters)" aura:id="searchInText" keyup="{!c.showOptFirstSec}" updateOn="keyup"/>
+                        <table class="slds-table slds-table--bordered fixHeaderDiv" role="grid" style="table-layout: fixed;border-left: 1px solid #cccccc;" id="fixHeaderDiv">
+                            <thead>
+                                <tr class="headerRow">
+                                    <th style='width:15px;'></th>
+                                    <th style='width:65%;'>Artifact</th>
+                                    <th style='width:30%;'>Type</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="outerDiv" class="artifactsListContainer">
+                            <div id="innerDiv">
+                                <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                    <tbody id="leftTable"/>
+                                </table>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    <!-- Table 2 -->
+                    <lightning:layoutItem flexibility="grow" padding="around-small" size="6" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6">
+                        <ui:inputText label="" placeholder="Search Artifacts (minimum 3 characters)" aura:id="searchInText2" keyup="{!c.showOptSecondSec}" updateOn="keyup"/>
+                        <table class="slds-table slds-table--bordered fixHeaderDiv" role="grid" style="table-layout: fixed;border-left: 1px solid #cccccc;" id="fixHeaderDiv2">
+                            <thead>
+                                <tr class="headerRow">
+                                    <th style='width:15px;'></th>
+                                    <th style='width: 50%;'>Artifact</th>
+                                    <th style='width: 20%;'>Type</th>
+                                    <th style='width:120px;'>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="artifactsListContainer" id="selectedContainer">
+                            <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                <tbody id="rightTable"/>
+                            </table>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout> 
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <lightning:button aura:id="UpdateButton" onclick="{!c.updateClick}" variant="brand" label="Save and Close" disabled="{!v.isInActiveConnection}"  />
+            </footer>
+        </div>
+    </section>
+</aura:component>

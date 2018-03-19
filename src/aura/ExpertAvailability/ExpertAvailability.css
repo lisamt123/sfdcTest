@@ -1,0 +1,44 @@
+.THIS .fc-scroller {
+	overflow-y: auto !important;
+	height: auto !important;
+}
+
+.THIS .fc-toolbar {
+    padding: 10px;
+}
+.THIS .slds-theme--shade {
+    background-color: #f4f6f9;
+}
+.THIS i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.THIS .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.THIS .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.THIS .slds-box {
+    width: 100% !important;
+    float: none !important;
+    white-space: normal;
+}
+.THIS .slds-form-element__label {
+    display: none;
+}
+@media (min-width: 687px ) and ( max-width: 1024px) {
+   .THIS .slds-box {
+        padding: 1rem !important;
+    }
+}
+.THIS  .slds-table{
+    font-size:0.825rem !important;
+}

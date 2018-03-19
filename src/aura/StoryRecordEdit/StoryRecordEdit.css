@@ -1,0 +1,8 @@
+.THIS .slds-form-element__label {
+    display: inline-block;
+    color: #54698d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-right: 0.75rem;
+    margin-bottom: 0.25rem;
+}

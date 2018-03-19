@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        body {font-family: Arial !important;}
+	table{max-width:650px!important; font-family:Arial !important;}
+	p{padding:0px 10px!important; text-align:justify!important; font-family:Arial !important; font-size:12pt; color:#000000;}
+</style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>
+			<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000003BvhL&oid=00D36000000v5KY" width="100%" border="0" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>Hi {!CampaignMember.FirstName}!</p>
+			<p>While you’re making your final preparations for Dreamforce, we wanted to remind you about the 10K Bourbon Trail event on Monday evening at the <a href="https://www.google.com/maps/place/415+Sansome+St,+San+Francisco,+CA+94111/@37.7942702,-122.4038258,17z/data=!4m13!1m7!3m6!1s0x8085808a7df3fee7:0x1d9c30611c4995c!2s415+Sansome+St,+San+Francisco,+CA+94111!3b1!8m2!3d37.7942702!4d-122.4016371!3m4!1s0x8085808a7df3fee7:0x1d9c30611c4995c!8m2!3d37.7942702!4d-122.4016371">Barrel Room San Francisco</a>.</p>
+			
+<p>We’ll have 4 very rare and special bourbons for you to sample, along with exclusive cocktails, wine, beer, and, of course, some non-alcoholic options. There will also be a variety of hearty appetizers served throughout the evening. The rare bourbons are very limited and first come, first served, so if you’re interested in trying them, please plan to arrive toward the beginning of the event. Once they’re gone, they’re gone forever!</p>
+
+<p>We want to do everything we can to make this a fun and memorable event for you, and part of that includes asking for your help with the soundtrack for the evening. If you are a Spotify user, add your favorite jams to our <a href="https://open.spotify.com/user/10klaunch/playlist/2SLS2FxiBWwcalVY2vWE0L">collaborative playlist for the event</a>. All we ask is that you keep it upbeat and fun!</p>
+
+<p>A reminder that this invitation is only good for <b>you</b>! We are at capacity for the event with a waiting list, so should your plans to attend change for any reason, please send us a note to let us know.</p>
+
+<p>We can’t wait to party with you on Monday! If there is anything else we can do to make your evening more enjoyable, please don’t hesitate to let us know!
+</p>
+
+			<p>Cheers!</p>
+			<p>The 10K Team</p>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

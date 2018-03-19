@@ -1,0 +1,84 @@
+<aura:component controller="BadgesDetails">
+	<aura:attribute name="userContactInfo" type="Object" /> 
+    <aura:attribute name="closeEdit" type="boolean" default="true"/>    
+    <div>
+
+        <label class="slds-form-element__label slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Name*</label>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >First Name</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.userInfo.FirstName}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Middle Name</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.userInfo.MiddleName}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Last Name *</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.userInfo.LastName}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Suffix</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.contactDetail.Suffix}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Skype Id</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.contactDetail.Skype_Id__c}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Webassessor Email</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.contactDetail.Webassessor_Email__c}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Trailhead User Id</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.contactDetail.Trailhead_User_Id__c}" maxlength="18"/>
+            </div>
+        </div>
+        <label class="slds-form-element__label" >Address</label>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >City</label>
+            <div class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4" style="display: flex;">
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--2-of-3" style="padding-left:0px;">
+                    <ui:inputText class="slds-input" value="{!v.userContactInfo.userCity}" />
+                </div>
+                <div style="display: flex;">
+                    <label class="slds-form-element__label" >State</label>
+                    <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--1-of-1">
+                        <ui:inputText class="slds-input" value="{!v.userContactInfo.userState}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >Country</label>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputText class="slds-input inputStyle" value="{!v.userContactInfo.userCountry}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >About Me</label>
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <ui:inputTextArea class="slds-input inputStyle" value="{!v.userContactInfo.userInfo.AboutMe}" rows="2"/>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <label class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" > </label>
+            <div class="slds-form-element__label slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+                <button class="slds-button slds-button--neutral" onclick="{!c.hideEdit}" style="width:49%">Cancel</button>
+                <button class="slds-button slds-button--neutral cuf-publisherShareButton qe-textPostDesktop WIDE uiButton--default uiButton--brand uiButton saveButton" style="width:49%" id="saveId" onclick="{!c.saveDetails}">Save</button>
+            </div>
+        </div>
+    </div>
+</aura:component>

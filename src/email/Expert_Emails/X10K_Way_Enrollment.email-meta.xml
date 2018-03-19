@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to let an Expert know they have been enrolled in 10K Way Training Program</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Climb_Letterhead</letterhead>
+    <name>10K Way Enrollment</name>
+    <style>freeForm</style>
+    <subject>You&apos;ve Been Enrolled in 10K Way Training Program!</subject>
+    <textOnly>Hello {!Contact.FirstName}!
+
+
+
+I am excited to advise that you have been enrolled in the 10K Way training program! 10K Way is a set of standards, processes and best practices designed to help you successfully deliver and manage Client projects. The 10K Way is comprised of four major components: Onboarding, Client Communications, Delivery Practices and Feedback and was developed based on years of successful Salesforce project delivery experience.
+
+
+
+Upon successful completion of 10K Way training, you’ll be awarded the 10K Way badge, shown above and visible on your Profile. By earning the 10K Way badge, you will have demonstrated your knowledge and skills for delivering client projects using the 10K Way.
+
+
+
+It&apos;s easy to get started on the training. Step -by-step instructions on how to launch and navigate through the program can be found here. I encourage you to review the directions prior to starting the program as they will get you off on the right path to successfully completing the course.
+
+
+
+The course will take around 4-5 hours to complete. Acquiring the 10K Way badge is required for all experts who work with 10K clients and should be completed prior to working on your first 10K project. Please note that the program should be completed outside of your normal billable work.
+
+
+
+Should you run into any issues with the program, please check the directions first. If you have not been able to resolve, please log a case per the instructions here.
+
+
+
+Thank you and I look forward to working with you and the 10K Way!
+
+
+Diane Shotton
+
+VP, Client Services</textOnly>
+    <type>html</type>
+</EmailTemplate>

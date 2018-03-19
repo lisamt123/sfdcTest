@@ -1,0 +1,17 @@
+.THIS .header{
+    font-weight: bold;
+}
+.THIS .slds-modal-close{
+    font-size: 20px;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    right: -.01rem;
+}
+.THIS .slds-modal__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important; 
+    max-height: 100% !important;
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>10K Customer Community Launch Email</name>
+    <style>none</style>
+    <subject>Your invite to the 10K community is coming soon!</subject>
+    <textOnly>{!Contact.FirstName},
+
+I&apos;m excited to let you know that you&apos;ll soon have an active account for the 10K Community!
+
+We have been working over the past few months to build a central location for our clients and delivery partners to work better together. This work has resulted in a collaborative community where as a client you will be able to:
+
+- Get an overview of all of the projects where you have 10K experts engaged
+- Collaborate with your delivery experts and the 10K team
+- View real-time assignment and time entry data for your projects
+- View and print invoices related to your account
+
+And this is just the beginning! This community will be the hub for all aspects of your relationship with 10K. We are working on much more functionality including lots of real-time reporting, Project/Expert Requests, Expert Reviews, agile project management tools, code repository integration and release tools, as well as more tools for our Delivery Experts that will help us easily find the right people at the right time for your project needs.
+
+You should expect to receive community login credentials at {!Contact.Email} in the next day or so. Invoices for this month will be delivered via email as normal, however in the future you should expect that you&apos;ll receive an email alert when your invoice is ready to view via the community. There will be no time sheets delivered with the invoice this month or in the future. There is a Time Entry Report tab in the community that will allow you to do detailed or summary time reporting for any period you would like as well as export the report to PDF.
+
+We are constantly striving to provide the best experience possible for our clients. If you have any questions, concerns, or feedback, please email me directly. I would love to hear from you!
+
+Cheers!
+
+Nick Hamm
+CEO
+10K Advisors
+nick@10Kview.com
+
+© Copyright 10K Advisors. All Rights Reserved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

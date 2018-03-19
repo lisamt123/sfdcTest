@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Default Training Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Default Training Plans</value>
+    </caseValues>
+    <fields>
+        <label><!-- Profile Name --></label>
+        <name>Profile_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Training Plan --></label>
+        <name>Training_Plan__c</name>
+        <relationshipLabel><!-- Default Training Plans --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Default Training Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

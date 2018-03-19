@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>10K Emailer</title>
+</head>
+<body style="font-family:Arial;">
+<table cellpadding="0" cellspacing="0" border="0" width="770" align="center">
+	<tr>
+    	<td style="border-bottom:2px solid #50646f" align="right">
+        	<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=015360000022nO2&oid= 00D36000000v5KY" border="0" width="120" height="120" />
+        </td>
+    </tr>
+    <tr>
+    	<td valign="top">
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Hello {!Lead.FirstName},
+ <p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Thank you for being one of the first people to register as a Salesforce Expert! 
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+My name is Jared Miller and I will be your main point of contact at 10K Advisors.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Over the next few weeks, I will be reaching out to schedule some time for us to talk. The conversation will be 15-30 minutes and we will discuss your Salesforce experience and the 10K Community. We are very excited to build this community and appreciate your patience!
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+In the meantime, please feel free to reach out to me with any questions or comments that you have. 
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Thank you again and I look forward to connecting.
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Jared
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+</p>
+<p style="line-height:18px; font-size:12px; padding:0px 5px;">
+Jared Miller<br>
+Vice President, Service Delivery<br>
+<a href="http://www.10kview.com/" target="_blank">10K Advisors</a><br>
+jared@10Kview.com
+</p>
+</td>
+</tr>
+<tr>
+ <td style="background:#399ab6; color:#fff; font-family:Arial; font-size:10px!important; padding:5px 10px;" align="right">
+        	&copy; Copyright 10K Advisors. All Rights Reserved.
+</td>
+</tr>
+</table>
+</body>
+</html>

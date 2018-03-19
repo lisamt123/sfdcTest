@@ -1,0 +1,82 @@
+<aura:component controller="ConfigureCodeQualityScanController" implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:lightningQuickActionWithoutHeader" access="global">
+	
+	<ltng:require styles="{!$Resource.lightningCss}" />
+	<lightning:spinner aura:id="Spinner" variant="brand"/>
+	<aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="sortOrder" type="String" default="up"/>
+    <aura:attribute name="shortBy" type="String" default="ruleSeverity"/>
+	<aura:attribute name="recordId" type="Id" />
+	<aura:attribute name="message" type="String" default=" "/>
+	<aura:attribute name="messageType" type="String" default=" "/>
+    <aura:attribute name="messageTitle" type="String" default=" "/>
+	<aura:attribute name="rulesetWrapperList" type="ConfigureCodeQualityScanController.RuleSetWrapper[]" default="[]"/>
+
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <!-- custom message -->
+        <div id="customMessage" class="slds-hide" style="height: 4rem;position: absolute;width: 98%;">
+            <c:CustomToast type="{!v.messageType}" message="{!v.message}" title="{!v.messageTitle}"/>
+        </div>
+        <div class="slds-modal__container" id="slds-modal__container">
+            <header class="slds-modal__header" >
+                <button class="slds-button slds-button_icon slds-modal-close slds-button_icon-inverse" onclick="{!c.cancelClick}" title="Close">
+	                X
+	                <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Configure Code Quality Scan</h2>
+            </header>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <lightning:layout horizontalAlign="start" multipleRows='true'>
+                	<lightning:layoutItem flexibility="grow" size="12" smallDeviceSize="12" largeDeviceSize="12" mediumDeviceSize="12" >
+                		<table class="slds-table slds-table--bordered fixHeaderDiv2" role="grid" style="table-layout: fixed;" id="fixHeaderDiv2">
+                            <thead>
+                               <tr class="headerRow">
+                                    <th style="cursor:pointer;width:20%;" id="ruleName" onclick="{!c.sortColumn}" class="shortable">Rule Name</th>
+                                    <th style="cursor:pointer;width:10%;" id="ruleState" onclick="{!c.sortColumn}" class="shortable">State</th>
+                                    <th style="cursor:pointer;width:10%;" id="ruleSeverity" onclick="{!c.sortColumn}" class="shortable">Severity <i class="up"/></th>
+                                    <th style="width:50%;">Desctiption</th>
+                                </tr>
+                            </thead>
+                        </table>
+                       <div id="artifactsListContainer2" class="artifactsListContainer2">
+                            <div id="innerDiv">
+                                <table data-reactroot="" class="slds-table slds-table--bordered" role="grid" style="table-layout: fixed;">
+                                    <tbody id="leftTable">
+                                        <aura:iteration items="{!v.rulesetWrapperList}" var="wrap">
+                                            <tr>
+                                                <td style="width:20%;">{!wrap.ruleName}</td>
+                                                <td style="width:10%;">
+                                                    
+                                                    <lightning:select label="" value="{!wrap.ruleState}">
+                                                        <option text="Active" value="Active" />
+                                                        <option text="Disabled" value="Disabled" />
+                                                    </lightning:select>
+
+                                                </td>
+                                                <td style="width:10%;">
+                                                    <lightning:select label="" value="{!wrap.ruleSeverity}">
+                                                        <option text="High" value="High" />
+                                                        <option text="Medium" value="Medium" />
+                                                        <option text="Low" value="Low" />
+                                                    </lightning:select>
+                                                </td>
+                                                <td style="width:50%;white-space: normal;">{!wrap.ruleDescription}</td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button aura:id="CancelButton" onclick="{!c.cancelClick}" class="slds-button slds-button_neutral" label="Cancel"/>
+                <lightning:button aura:id="UpdateButton" onclick="{!c.updateProjectScanRules}" variant="brand" label="Save and Close" />
+            </footer>
+        </div>
+    </section>
+
+</aura:component>

@@ -1,0 +1,536 @@
+<apex:page standardController="Release__c" extensions="ManageReleaseArtifactsController" action="{!manageRelease}">
+    <apex:includeScript value="{!$Resource.jqueryLatest}"/>
+    <style>
+        .popupBackground {
+            background-color:black;
+            opacity: 0.30;
+            filter: alpha(opacity = 30);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+        .custPopup {
+            background-color: white;
+            border-width: 0px;
+            border-radius:10px;
+            z-index: 9999;
+            left: 50%;
+            padding:20px;
+            position: absolute; 
+            margin-left: -100px; top:40%;
+        }
+        /**/
+        
+        .containerLightning {
+            border: 1px solid darkgrey;
+            border-radius: 4px;
+            margin-top: 1px;
+            display: none;
+            max-height: 200px;
+            min-width: 150px;
+            overflow: auto;
+            background: white;
+        }
+        .apexp .detailList .list td, .apexp .detailList .list th, .apexp .editPage .bPageBlock .detailList .list tr td, .apexp .editPage .bPageBlock .detailList .list tr th {
+            border-bottom: 1px solid #ededed; 
+        }
+        .detailList{
+        	table-layout: fixed;
+        }
+        .artifactsListContainer {
+            height: 500px;
+            overflow: auto;
+            border: 1px solid #cccccc;
+        }
+        .iconContainer {
+            font-weight: bold;
+            cursor: pointer;
+            font-size: initial;
+            color: #868383 !important;
+        }
+        .unselected {
+            display: none !important;
+        }
+        .otherConnUnselected {
+            display: none !important;
+        }
+        .fixHeaderDiv{
+            position: absolute;
+            z-index: 2;
+        }
+        .firstSectionDiv {
+            word-break: break-all;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            selectAll();        
+        });
+       
+        function selectAll() { 
+            $("#parentCheck").click(function() {
+                $(".childCheck").prop('checked', this.checked);
+            });
+            if ($('input.childCheck[type=checkbox]:not(:checked)').length) {
+                $("#parentCheck").removeAttr('checked');   
+            }else {
+                $("#parentCheck").prop('checked',true);
+            }
+            $(".childCheck").click(function() {
+                if ($('input.childCheck[type=checkbox]:not(:checked)').length) {
+                    $("#parentCheck").removeAttr('checked');   
+                }else {
+                    $("#parentCheck").prop('checked',true);
+                }
+            });
+        }
+    </script>
+    
+    <apex:form >    	
+    	<apex:actionStatus id="status">
+            <apex:facet name="start">
+                <apex:outputPanel id="tstpopup">
+                    <apex:outputPanel styleClass="popupBackground" layout="block"/>
+                    <apex:outputPanel styleClass="custPopup" layout="block">
+                        <img src="/img/loading24.gif" style="vertical-align:middle;horizontal-align:middle"/> <span>Please wait...</span>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <!-- Page Message -->
+        <apex:pageMessages id="messages"/>
+        
+        <apex:sectionHeader title="Manage Release Artifacts" subtitle="{!release.Name}"/>
+        <apex:pageBlock id="block" title="Manage Release Artifacts">
+            <apex:pageblockbuttons >
+                <apex:commandButton id="updateButton" value="Update Release Artifacts" onclick="createArtifatcs('{!$CurrentPage.parameters.id}','{!selectedStory}');" rerender="none" disabled="{!!connectionExist}"/>
+            </apex:pageblockbuttons>
+            <apex:pageBlockSection title="Manage Stories" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Sprint" />
+                    <apex:selectList value="{!selectedSprint}" size="1">
+                        <apex:selectOptions value="{!sprintList}"/>
+                        <apex:actionSupport event="onchange" action="{!retrieveStories}" status="status" rerender="storyTable,updateButton" oncomplete="selectAll();"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel id="storyTable" >
+                        <apex:variable var="counter" value="{!1}" />
+                        <apex:outputPanel layout="block" style="max-height: 355px; overflow-y: auto;">
+                            <apex:pageblocktable value="{!storyWrapperList}" var="wrapper" rendered="{!IF(storyWrapperList.size > 0 ,true , false)}">
+                                <apex:column >
+                                     <apex:facet name="header">
+                                         <input type="checkbox" id="parentCheck"/>
+                                      </apex:facet>
+                                    <apex:inputCheckbox value="{!wrapper.selected}" styleClass="childCheck {!wrapper.story.Id}"/>
+                                </apex:column>
+                                <apex:column headerValue="S.No.">
+                                    {!counter}
+                                    <apex:variable value="{!counter+1}" var="counter" />
+                                </apex:column>
+                                <apex:column value="{!wrapper.story.Name}"/>
+                                <apex:column value="{!wrapper.story.Status__c}"/>                    
+                            </apex:pageblocktable>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        
+            <!-- Manage Artifacts Page Block  -->
+            <apex:pageBlockSection title="Manage Artifacts">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Artifacts Type" />
+                    <select id="metadataTypeOption" onchange="refreshMetadataType();" size="1"></select>
+                </apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel >
+                        <apex:inputText id="inputText1" html-placeholder="(type artifact name to filter list)" onkeyup="searchConnectionMetadata(event);" style="width: 99.5%;" />
+                        <div id="outerDiv" class="artifactsListContainer">
+                        	<div id="innerDiv">
+                                <table id="fixHeaderDiv" class="list fixHeaderDiv" border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-left: 1px solid #cccccc;">
+                                    <thead>
+                                        <tr class="headerRow">
+                                            <th style='width:5%;'></th>
+                                            <th style='width:65%;'>Artifact</th>
+                                            <th style='width:30%;'>Type</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table class="list" border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+                                    <thead>
+                                        <tr class="headerRow">
+                                            <th style='width:5%;'></th>
+                                            <th style='width:65%;'>Artifact</th>
+                                            <th style='width:30%;'>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leftTable"/>
+                                </table>
+                            </div>
+                        </div>
+                    </apex:outputPanel> 
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel >
+                        <apex:inputText id="inputText2" html-placeholder="(type artifact name to filter list)" onkeyup="searchSelectedArtifacts(event,'secondSection');" style="width: 99.5%;" />
+                        <div class="artifactsListContainer" id="selectedContainer" >
+                            <table id="fixHeaderDiv2" class="list fixHeaderDiv" border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-left: 1px solid #cccccc;">
+                                <thead>
+                                    <tr class="headerRow">
+                                        <th style='width:15px;'></th>
+                                        <th style=''>Artifact</th>
+                                        <th style='width: 20%;'>Type</th>
+                                        <th style='width:100px;'>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="list" border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+                                <thead>
+                                    <tr class="headerRow">
+                                        <th style='width:15px;'></th>
+                                        <th style=''>Artifact</th>
+                                        <th style='width: 20%;'>Type</th>
+                                        <th style='width:100px;'>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rightTable"/>
+                            </table>
+                        </div>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+    </apex:form>
+    <script>
+
+        createArtifatcs = function(recordId,chkboxList) {
+            $('[id$="start"').show();
+            var chkbxList   = [];
+            var chkbxk      = document.getElementsByClassName('childCheck');
+            for(var count = 0 ; count < chkbxk.length ; count++) {
+                if(chkbxk[count].checked ) {
+                    chkbxList.push(chkbxk[count].getAttribute('class').split(" ")[1]);
+                }
+                else {
+                    chkboxList = chkboxList.replace(chkbxk[count].getAttribute('class').split(" ")[1],'')
+                }
+            }
+            chkbxk = chkboxList.replace('[','').replace(']','').replace(' ','').split(',');
+            for(var count = 0 ; count < chkbxk.length ; count++) {
+                if(chkbxk[count].trim() != '' && !chkbxList.includes(chkbxk[count].trim())) {
+                    chkbxList.push(chkbxk[count].trim());
+                }
+            }
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ManageReleaseArtifactsController.createArtifacts}',recordId,JSON.stringify(finalResult.wrapperListSelected),JSON.stringify(chkbxList),function(result,event) {
+                
+                if (event.status) {   
+                    if(result == 'Success')
+                        alert('Artifacts updated successfully');
+                    $('[id$="start"').hide();
+                }                
+            });
+        }
+        
+        var recordCount = 0;
+    	
+        function searchSelectedArtifacts(e,container) {
+        	//console.log('Event Code : '+e.keyCode); 
+        	var searchString = $('[id$="inputText2"]').val();
+            if( (e.keyCode==13 && searchString.length > 2) ||  (searchString.length == 0 && (e.keyCode == 8 || e.keyCode == 46))) {
+                $.each($('.'+container),function(index,row) {
+                    if($(row).text().toLowerCase().indexOf(searchString.toLowerCase()) == -1) 
+                        $(row).hide();
+                    else
+                        $(row).show();
+                });
+            }
+        }
+        function toggleRow(rowId,option) {
+            $('.' + rowId + 'row').toggleClass('selected unselected');
+            $('input.' + rowId).attr('checked',option);
+        }
+        $('[id$="start"').show();
+        window.onload = function() {
+            fixHeader();
+            refreshConnectHelper('{!$CurrentPage.parameters.id}');
+        }
+        window.onresize = function(event) {
+            fixHeader();
+        }
+
+        fixHeader = function() {
+            var content             = document.getElementById('innerDiv');
+            var content2            = document.getElementById('selectedContainer');
+            var headerDiv           = document.getElementById('fixHeaderDiv');
+            var headerDiv2          = document.getElementById('fixHeaderDiv2');
+            headerDiv.style.width   = content.clientWidth+'px';
+            headerDiv2.style.width  = content2.clientWidth+'px';
+        }
+
+        fixHeader();
+        var finalResult;
+        var outputJSON = JSON.parse('{!finalResult}')
+        refreshConnectHelper = function(recordId) {
+            var searchText              = $('[id$="inputText1"]').val();
+            var selectedMetadata        =  $('[id$="metadataTypeOption"]').val();
+            selectedMetadata            = selectedMetadata == '' || selectedMetadata == null ? 'All' : selectedMetadata; 
+            var selectedRecords         = [];
+            var selectedStoryRecords    = [];
+            //console.log(outputJSON);
+            outputJSON.ReleaseStories.forEach(function(rec,index1) { 
+                if(rec.storyId == "") {
+                    rec.artifacts.forEach(function(innerRec,index1) { 
+                        selectedRecords.push(innerRec);
+                    });
+                }
+            });
+            //console.log(JSON.stringify(selectedRecords));
+            var selectedMetadataListJson = finalResult == null ? JSON.stringify(selectedRecords) : JSON.stringify(finalResult.wrapperListSelected);
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ManageReleaseArtifactsController.getConnectionMetadata}',recordId,recordCount.toString(),searchText,selectedMetadata,selectedMetadataListJson,function(result,event) {
+                
+                if (event.status) {   
+                    //Create and append select list
+                    var selectList      = document.getElementById("metadataTypeOption");
+                    var metadataOption  = result.metadataOption;
+                    finalResult         = result;
+                    //Create and append the options
+                    for (var i = selectList.options.length; i < metadataOption.length; i++) {
+                        var option      = document.createElement("option");
+                        option.value    = metadataOption[i].value;
+                        option.text     = metadataOption[i].label; 
+                        selectList.appendChild(option);
+                    }
+                    lazyLoadHelper();
+                }                
+            });
+        }
+
+        lazyLoadHelper = function() {
+            document.getElementById("leftTable").innerHTML  = "";
+            document.getElementById("rightTable").innerHTML = "";
+            var retRecords = finalResult.wrapperList;
+          
+            retRecords.forEach(function(item,index1)
+            {
+            	if(item.metadataType != '') {
+                    item.metadataName.sort(this.compareInner);
+                    item.metadataName.forEach(function(field,index2) { 
+                        var tableRow = document.createElement('tr');
+                        tableRow.setAttribute("class", "firstSection");
+
+                        var tableData = document.createElement('td');
+                        tableData.setAttribute("style", "width:15px;cursor:pointer;");
+                        var tableDataNode = document.createTextNode('+');
+                        tableData.addEventListener("click", function(event) {
+                            toggleRow(index1,index2, true);
+                        });
+                        tableData.appendChild(tableDataNode);
+                        tableRow.appendChild(tableData);
+
+                        var tableData2 = document.createElement('td');
+                        var tableDataNode2 = document.createTextNode(field.name);
+                        tableData2.setAttribute("class", "wrap");
+                        tableData2.setAttribute("style", "width:65%");
+                        tableData2.appendChild(tableDataNode2);
+                        tableRow.appendChild(tableData2);
+
+                        var tableData1 = document.createElement('td');
+                        tableData1.setAttribute("class", "wrap");
+                        var tableDataNode1 = document.createTextNode(item.metadataType);
+                        tableData1.setAttribute("style", "width:30%");
+                        tableData1.appendChild(tableDataNode1);
+                        tableRow.appendChild(tableData1);
+                        document.getElementById("leftTable").appendChild(tableRow);
+                    });
+                }
+                
+            });
+           // console.log(JSON.stringify(finalResult.wrapperListSelected));
+            retRecords = finalResult.wrapperListSelected;
+            retRecords.forEach(function(item,index3)
+            {
+            	if(item.metadataType != '') {
+                    item.metadataName.sort(this.compareInner);
+                    item.metadataName.forEach(function(field,index4) { 
+                        var tableRow = document.createElement('tr');
+                        tableRow.setAttribute("class", "secondSection");
+
+                        var tableData = document.createElement('td');
+                        var tableDataNode = document.createTextNode('x');
+                        tableData.setAttribute("style", "width:15px;cursor:pointer;");
+                        tableData.addEventListener("click", function(event) {
+                            toggleRow(index3,index4, false);
+                        });
+                        tableData.appendChild(tableDataNode);
+                        tableRow.appendChild(tableData);
+
+                        var tableData2 = document.createElement('td');
+                        var tableDataNode2 = document.createTextNode(field.name);
+                        
+                        tableData2.setAttribute("class", "wrap");
+                        tableData2.appendChild(tableDataNode2);
+                        tableRow.appendChild(tableData2);
+
+                        var tableData1 = document.createElement('td');
+                        tableData1.setAttribute("class", "wrap");
+                        var tableDataNode1 = document.createTextNode(item.metadataType);
+                        tableData1.setAttribute("style", "");
+                        tableData1.appendChild(tableDataNode1);
+                        tableRow.appendChild(tableData1);
+
+                        var tableData3 = document.createElement('td');
+                        var select = document.createElement('select');
+                        select.setAttribute("id", field.artifactId);
+                        select.setAttribute("class", 'innerSelect');
+                        select.setAttribute("onchange","updateFinalResult();");
+                        var option = document.createElement("option");
+                        option.value = 'upsert';
+                        option.text = 'Add/Update'
+                        select.appendChild(option);
+                        option = document.createElement("option");
+                        option.value = 'delete';
+                        option.text = 'Delete'
+                        select.appendChild(option);
+                        select.value = field.action;
+                        tableData3.appendChild(select);
+                        tableRow.appendChild(tableData3);
+
+                        document.getElementById("rightTable").appendChild(tableRow);
+                    });
+                }
+            });
+            $('[id$="start"').hide();
+            fixHeader();
+        }
+
+        updateFinalResult = function() {
+            var retRecords = finalResult.wrapperListSelected;
+            retRecords.forEach(function(item,index) {
+                item.metadataName.forEach(function(field,index4) { 
+                    var selectlist = document.getElementById(field.artifactId);
+                    if(selectlist.value == 'delete')
+                        field.action = 'delete';
+                    else
+                        field.action = 'upsert';
+
+                });
+            });
+            finalResult.wrapperListSelected = retRecords;
+        }
+
+        toggleRow = function(i,j, add) {
+            var leftList    = finalResult.wrapperList;
+            var rightList   = finalResult.wrapperListSelected;
+            
+            if(add) {
+                var count = 0;
+                for(var index = 0 ; index < rightList.length ; index++ ) {
+                    if(rightList[index].metadataType == leftList[i].metadataType) {
+                        rightList[index].metadataName.push(leftList[i].metadataName[j]);
+                        rightList[index].metadataName.sort(this.compareInner);
+                        break;
+                    }
+                    count++;
+                }
+                if(count == rightList.length) {
+                    var innerobj = {"metadataType" :leftList[i].metadataType , "metadataName":[leftList[i].metadataName[j]]};
+                    rightList.push(innerobj);
+
+                    rightList.sort(this.compare);
+                }
+                leftList[i].metadataName.splice(j,1);
+            }
+            else {
+                var count = 0;
+                for(var index = 0 ; index < leftList.length ; index++ ) {
+                    if(leftList[index].metadataType == rightList[i].metadataType) {
+                        leftList[index].metadataName.push(rightList[i].metadataName[j]);
+                        leftList[index].metadataName.sort(this.compareInner);
+                        break;
+                    }
+                    count++;
+                }
+                if(count == leftList.length) {
+                    var innerobj = {"metadataType" :rightList[i].metadataType , "metadataName":[rightList[i].metadataName[j]]};
+                    leftList.push(innerobj);
+                    leftList.sort(this.compare);
+                }
+                rightList[i].metadataName.splice(j,1)
+            }
+            finalResult.wrapperList = leftList;
+            finalResult.wrapperListSelected = rightList;
+            lazyLoadHelper();
+        }
+
+        refreshConnection = function() {
+        	document.getElementById('outerDiv').scrollTop = 0;
+            recordCount = 0;
+            $('[id$="start"').show();
+            $('[id$="inputText1"]').val('');
+            $('[id$="inputText2"]').val('');
+            $('[id$="metadataTypeOption"]').val('');
+            refreshConnectHelper('{!$CurrentPage.parameters.id}');
+        }
+        
+        refreshMetadataType = function() {
+        	document.getElementById('outerDiv').scrollTop = 0;
+            recordCount = 0;
+            $('[id$="start"').show();
+            $('[id$="inputText1"]').val('');
+            $('[id$="inputText2"]').val(''); 
+            refreshConnectHelper('{!$CurrentPage.parameters.id}');
+        }
+         
+        searchConnectionMetadata = function(e) { 
+        	document.getElementById('outerDiv').scrollTop = 0;
+        	
+        	var searchText = $('[id$="inputText1"]').val();
+        	if( (e.keyCode==13 && searchText.length > 2) ||  (searchText.length == 0 && (e.keyCode == 8 || e.keyCode == 46))) {
+	            recordCount = 0;
+	            $('[id$="start"').show(); 
+	            refreshConnectHelper('{!$CurrentPage.parameters.id}');
+	            $('[id$="inputText2"]').val(''); 
+	        }
+        }
+        
+        $(document).ready(function() {
+	    	$("#outerDiv").scroll( function() {
+			  	var scroll  = document.getElementById('outerDiv');
+		        var content = document.getElementById('innerDiv');
+                var total   = scroll.scrollTop + scroll.clientHeight;
+                if(Math.ceil(total) >= content.clientHeight) {
+                	recordCount += 1000;
+		            $('[id$="start"').show();
+		            refreshConnectHelper('{!$CurrentPage.parameters.id}');
+		            $('[id$="inputText2"]').val('');  
+                } 
+			});
+			
+		});
+
+        compare = function(a,b) {
+            if (a.metadataType.toLowerCase() < b.metadataType.toLowerCase())
+                return -1;
+            if (a.metadataType.toLowerCase() > b.metadataType.toLowerCase())
+                return 1;
+            return 0;
+        }
+
+        compareInner = function(a,b) {
+            if (a.name.toLowerCase() < b.name.toLowerCase())
+                return -1;
+            if (a.name.toLowerCase() > b.name.toLowerCase())
+                return 1;
+            return 0;
+        }
+    </script>
+</apex:page>

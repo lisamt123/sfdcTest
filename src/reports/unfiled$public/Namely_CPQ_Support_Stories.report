@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>CHILD_NAME</field>
+    </columns>
+    <columns>
+        <field>Story__c.Story_Name__c</field>
+    </columns>
+    <columns>
+        <field>CHILD_LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Story__c.Delivery_Owner__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Level_of_Effort__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Story__c.Status_Notes__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <operator>contains</operator>
+            <value>namely - 2017 cpq</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Story__c.Status__c</column>
+            <operator>notEqual</operator>
+            <value>Completed</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Namely - CPQ Support Stories</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$Project__c$Story__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Project__c.End_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

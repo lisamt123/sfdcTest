@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        body {font-family: Arial !important;} 
+	table{max-width:650px!important; font-family:Arial !important;}
+	p{padding:0px 10px!important; text-align:justify!important; font-family:Arial !important; font-size:12pt; color:#000000}
+</style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>		
+<img src="https://10k--c.na30.content.force.com/servlet/servlet.ImageServer?id=01536000003Buj5&oid=00D36000000v5KY" width="100%" border="0" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>Hi {!CampaignMember.FirstName}!</p>
+			<p><b>This is your last chance to RSVP! To reserve your spot, please RSVP by Wednesday, November 1.</b></p>
+
+<p>It’s official - 10K is throwing THE party to attend at Dreamforce! Start your Trailhead adventure on the 10K Bourbon Trail, an ultra-exclusive peek into some historical Kentucky Straight Bourbon Whiskey bottled in the 60s, 70s, 80s, and 90s. These bottles are very rare and like time capsules into the past, and we couldn’t be more excited to share them with our biggest supporters. The <a href="http://www.barrelroomsf.com/">Barrel Room</a>’s speakeasy-esque atmosphere will provide the perfect backdrop to an evening of tasting rare bourbons from bygone eras. H'orderves will be served to complement the bourbon and cocktails crafted exclusively for this event.</p>
+			
+			<p>The attendance is limited, and so is the bourbon, so we respectfully request your response to this invitation by November 1st so that we may plan appropriately. Whether you can or cannot attend, please let us know by clicking <a href="https://www.getfeedback.com/r/DNdlQHwB?CAMPAIGNID=70136000000WFLg&CONTACTID={!CampaignMember.ContactId}&CONTACTFIRSTNAME={!CampaignMember.FirstName}">here</a>.</p>
+			
+			<p>If you plan to attend, please read your confirmation email for more details about the event.</p>
+			<p>Happy Trails to you!</p>
+			<p>The 10K Team</p>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

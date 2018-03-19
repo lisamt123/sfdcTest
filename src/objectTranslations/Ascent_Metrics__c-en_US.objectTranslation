@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Ascent Metric</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Ascent Metrics</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Ascent Metrics --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount Invoiced YTD --></label>
+        <name>Amount_Invoiced_YTD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Tier --></label>
+        <name>Current_Tier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Invoiced YTD --></label>
+        <name>Hours_Invoiced_YTD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month End Date --></label>
+        <name>Month_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month Start Date --></label>
+        <name>Month_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Tier --></label>
+        <name>Next_Tier__c</name>
+    </fields>
+    <layouts>
+        <layout>Ascent Metrics Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Metrics --></label>
+            <section>Financial Metrics</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

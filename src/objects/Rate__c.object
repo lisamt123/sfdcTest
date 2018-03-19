@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>ManageRateList</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>ManageRateList</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Agreement__c</fullName>
+        <externalId>false</externalId>
+        <label>Agreement</label>
+        <referenceTo>Agreement__c</referenceTo>
+        <relationshipLabel>Rates</relationshipLabel>
+        <relationshipName>Rates</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Assignment_Type__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>Assignment_Type</globalPicklist>
+        <label>Assignment Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISBLANK(Rate_Specific_Effective_Date__c),
+  Agreement__r.Effective_Date__c,
+  Rate_Specific_Effective_Date__c
+)</formula>
+        <label>Effective Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Hourly_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Hourly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Hours_Per_Month__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours Per Month</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hours_Per_Week__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours Per Week</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migration_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Migration Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Monthly_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Months__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Months</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Weeks__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Weeks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Specific_Effective_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>By default, all Rates have the same Effective Date and Valid Through date as their Agreement. If this Rate is bound by a date range that is a subset of the overall Agreement date range, specify that Rate-specific date range here.</inlineHelpText>
+        <label>Rate Specific Effective Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Rate_Specific_Valid_Through__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>By default, all Rates have the same Effective Date and Valid Through date as their Agreement. If this Rate is bound by a date range that is a subset of the overall Agreement date range, specify that Rate-specific date range here.</inlineHelpText>
+        <label>Rate Specific Valid Through</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>Region</globalPicklist>
+        <label>Region</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Retainer_Sequence_Number__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>An automatically generated sequence for the Retainer rates that helps differentiate them from one another on a given Agreement</inlineHelpText>
+        <label>Retainer Sequence Number</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>Role</globalPicklist>
+        <label>Role</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <inlineHelpText>A unique identifier that prevents more than one Retained Capacity or Time &amp; Materials Rate from being assigned to the same Agreement</inlineHelpText>
+        <label>Unique Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Valid_Through__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISBLANK(Rate_Specific_Valid_Through__c),
+  Agreement__r.Valid_Through__c,
+  Rate_Specific_Valid_Through__c
+)</formula>
+        <label>Valid Through</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Weekly_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Weekly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Rate</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement__c</columns>
+        <columns>Role__c</columns>
+        <columns>Assignment_Type__c</columns>
+        <columns>Hours_Per_Month__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Rate Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Rates</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Named_Resource_Rate</fullName>
+        <active>true</active>
+        <description>A Rate based on a Named Resource, charged to the client at a predetermined cost, for a certain number of months or weeks</description>
+        <label>Named Resource Rate</label>
+        <picklistValues>
+            <picklist>Assignment_Type</picklist>
+            <values>
+                <fullName>Named Resource</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region</picklist>
+            <values>
+                <fullName>ANZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Antarctica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role</picklist>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solution Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Lead</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Experience</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Retained_Capacity_Rate</fullName>
+        <active>true</active>
+        <description>A Rate based upon a &quot;use it or lose it&quot; pool of hours of a particular type, billed to the customer in full regardless of usage</description>
+        <label>Retained Capacity Rate</label>
+        <picklistValues>
+            <picklist>Assignment_Type</picklist>
+            <values>
+                <fullName>Retained Capacity</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region</picklist>
+            <values>
+                <fullName>ANZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Antarctica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role</picklist>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solution Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Lead</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Experience</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Time_Materials_Rate</fullName>
+        <active>true</active>
+        <description>A Rate based upon an hourly rate, charged to the client as actual time worked</description>
+        <label>Time &amp; Materials Rate</label>
+        <picklistValues>
+            <picklist>Assignment_Type</picklist>
+            <values>
+                <fullName>Time %26 Materials</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region</picklist>
+            <values>
+                <fullName>ANZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Antarctica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role</picklist>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solution Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Lead</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Experience</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Agreement__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Hours_Per_Month__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Agreement__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Hours_Per_Month__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Agreement__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Hours_Per_Month__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Agreement__c</searchFilterFields>
+        <searchFilterFields>Role__c</searchFilterFields>
+        <searchFilterFields>Assignment_Type__c</searchFilterFields>
+        <searchFilterFields>Hourly_Rate__c</searchFilterFields>
+        <searchFilterFields>Hours_Per_Month__c</searchFilterFields>
+        <searchResultsAdditionalFields>Agreement__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Hours_Per_Month__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Ensure_Rate_Specific_Dates_Are_A_Subset</fullName>
+        <active>true</active>
+        <description>Ensures that the Rate specific date range, if provided, is a subset of the Agreement date range</description>
+        <errorConditionFormula>OR(
+  Rate_Specific_Effective_Date__c &lt; Agreement__r.Effective_Date__c,
+  Rate_Specific_Effective_Date__c &gt; Agreement__r.Valid_Through__c,
+  Rate_Specific_Valid_Through__c &lt; Agreement__r.Effective_Date__c,
+  Rate_Specific_Valid_Through__c &gt; Agreement__r.Valid_Through__c
+)</errorConditionFormula>
+        <errorMessage>If you specify a date range for this Rate, it must be a subset of the Agreement&apos;s date range.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Rate_Specific_Dates_Are_All_Or_Nothing</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+  AND(
+   ISBLANK(Rate_Specific_Effective_Date__c),
+   NOT(ISBLANK(Rate_Specific_Valid_Through__c))
+  ),
+  AND(
+   NOT(ISBLANK(Rate_Specific_Effective_Date__c)),
+   ISBLANK(Rate_Specific_Valid_Through__c)
+  )
+)</errorConditionFormula>
+        <errorMessage>If you&apos;re going to set a Rate specific date range, you must provide both an Effective Date and Valid Through date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Through_Must_Be_GT_Effective_Date</fullName>
+        <active>true</active>
+        <errorConditionFormula>Valid_Through__c &lt;= Effective_Date__c</errorConditionFormula>
+        <errorMessage>The Valid Through date must be greater than the Effective Date</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Manage_Rates</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Manage Rates</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>/apex/ManageRateList?agreeId={!Agreement__c.Id }</url>
+    </webLinks>
+</CustomObject>

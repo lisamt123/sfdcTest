@@ -1,0 +1,77 @@
+<messaging:emailTemplate subject="10K Advisors Invoices" recipientType="Contact" relatedToType="Account">
+
+<messaging:htmlEmailBody >
+ <style type="text/css">
+     body {font-family: Arial;}
+</style>
+ <div style="text-align:right;"><apex:image url="{!URLFOR($Resource.x10KLogo125x125)}" height="80px"/></div> 
+<br/><hr style="background:#3399CC; height:5px;"/>
+
+    <p>
+        <apex:outputText rendered="{!IF(CONTAINS(recipient.FirstName, 'Accounts') || CONTAINS(recipient.LastName, 'Accounts') || CONTAINS(recipient.FirstName, 'Payable') || CONTAINS(recipient.LastName, 'Payable'),True, False)}">
+            Hi {!recipient.FirstName} {!recipient.LastName},
+        </apex:outputText>
+        <apex:outputText rendered="{!IF(!CONTAINS(recipient.FirstName, 'Accounts') && !CONTAINS(recipient.LastName, 'Accounts') && !CONTAINS(recipient.FirstName, 'Payable') && !CONTAINS(recipient.LastName, 'Payable'),True, False)}">
+            Hi {!recipient.FirstName},
+        </apex:outputText>
+        <br/><br/> 
+        Attached you'll find the following 10K invoices. You can find detailed time logs, invoice history, project records, and Chatter feeds within the <a href="https://10k.force.com/10kcommunity/login">10K Community</a>.
+        <br/><br/> 
+
+        <apex:variable var="count" value="{!1}"/>
+        <apex:variable var="totalBalance" value="{!0}"/>
+        <apex:repeat value="{!relatedTo.invoices__r}" var="inv">
+            <apex:outputText rendered="{!inv.Selected_To_Send_From_Account__c}">
+            {!count})<b> Invoice: </b>{!inv.Name}
+            <ul>
+                <li><b>Invoice Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                            <apex:param value="{!inv.Invoice_Generated_On__c}" /> 
+                                          </apex:outputText> </li>
+                <li><b>Due Date: </b> <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                          <apex:param value="{!inv.Due_Date__c}" /> 
+                                      </apex:outputText> </li>
+                <li><b>Outstanding Balance: </b> <apex:outputText value="{0, number, currency}">
+                                          <apex:param value="{!inv.Outstanding_Balance__c}" /> 
+                                      </apex:outputText> </li>
+                <!-- <li><b>Days Outstanding: </b> <apex:outputText value="{0, number, ###,##0}">
+                                          <apex:param value="{!TODAY() - inv.Sent_To_Customer_On__c}" /> 
+                                      </apex:outputText> </li> -->
+            </ul>
+
+            <apex:variable var="count" value="{!count+1}"/>
+            <apex:variable var="totalBalance" value="{!totalBalance+inv.Outstanding_Balance__c}"/>
+            </apex:outputText>
+        </apex:repeat>
+    <br/>
+    <b>Total Balance:  </b> <apex:outputText value="{0, number, currency}">
+                                          <apex:param value="{!totalBalance}" /> 
+                                      </apex:outputText>
+    </p>
+
+    <style>
+        .im {
+            color: #282222 !important;
+        }
+    </style>
+
+<p>
+
+    Please don't hesitate to contact me if you have any questions. Even better, let me know how our team helped your business grow last month!
+    <br/><br/>
+    Thanks for your continued support of our shared mission.
+    <br/><br/>
+    Cheers,
+    <br/><br/>
+    {!$User.FirstName} {!$User.LastName}<br/>
+    {!$User.Title}<br/>
+    <a href="http://www.10kview.com/">10K Advisors</a><br/>
+    {!$User.Email}<br/>
+    {!$User.Phone}<br/>
+    <hr style="background:#3399CC; height:5px;margin-top: -5px!important;"/>
+    <p style="font-size:7pt;">This is an automated message</p>
+</p>
+
+</messaging:htmlEmailBody>
+
+
+</messaging:emailTemplate>

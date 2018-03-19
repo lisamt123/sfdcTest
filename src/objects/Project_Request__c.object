@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>ProjectRequestOverridePage</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Project_Requests</relationshipName>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISBLANK(Closed_Date__c), 
+  TODAY() - DATEVALUE(CreatedDate), 
+  Closed_Date__c - DATEVALUE(CreatedDate)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Closed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Closed Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Created_by_Current_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>$User.Id = CreatedById</formula>
+        <label>Created by Current User</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Last_Status_Change_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Status Change Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>MSA_In_Place__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(Opportunity__r.MSA_Opportunity__c != null,true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MSA In Place</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>This Opportunity does not belong to the selected Account. Please select another Opportunity.</errorMessage>
+            <filterItems>
+                <field>Opportunity.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <infoMessage>Only Opportunities for the selected Account are shown.</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipName>Project_Requests</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Project_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Project Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Project</label>
+        <referenceTo>Project__c</referenceTo>
+        <relationshipName>Project_Requests</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Recalculate_Sharing_on_Save__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Recalculate Sharing on Save</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Request_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Request Contact</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>This Contact does not belong to the selected Account. Please select another Contact.</errorMessage>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <infoMessage>Only Contacts for the selected Account are shown.</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Project_Requests</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Status Detail</label>
+        <picklist>
+            <controllingField>Status__c</controllingField>
+            <picklistValues>
+                <fullName>Fulfilled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partially Fulfilled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unfulfilled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10K Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resource Plan Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ready for Staffing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending Contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Work Request</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Project__c</columns>
+        <columns>Request_Contact__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
+        <columns>Age__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Appirio_Requests</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Account__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Request_Contact__c</columns>
+        <columns>Age__c</columns>
+        <columns>Project__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>startsWith</operation>
+            <value>appirio</value>
+        </filters>
+        <label>Appirio Requests</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>In_progress_requests</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Request_Contact__c</columns>
+        <columns>Age__c</columns>
+        <columns>Project__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Under Review,Pending Contract</value>
+        </filters>
+        <label>In Progress Requests</label>
+    </listViews>
+    <listViews>
+        <fullName>My_Completed_Requests</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Request_Contact__c</columns>
+        <columns>Age__c</columns>
+        <columns>Project__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </filters>
+        <label>My Completed Requests</label>
+    </listViews>
+    <listViews>
+        <fullName>My_Project_Requests</fullName>
+        <columns>Project_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Last_Status_Change_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Created_by_Current_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Project Requests</label>
+    </listViews>
+    <listViews>
+        <fullName>New_Requests</fullName>
+        <columns>NAME</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Request_Contact__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
+        <columns>Age__c</columns>
+        <columns>Project__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </filters>
+        <label>New Requests</label>
+    </listViews>
+    <listViews>
+        <fullName>Open_Project_Requests</fullName>
+        <columns>Project_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Description__c</columns>
+        <columns>Project__c</columns>
+        <columns>Account__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Age__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <label>Open Project Requests</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Work Request Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Work Requests</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Project__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Request_Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status_Detail__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Age__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Project__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Request_Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status_Detail__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Age__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Project__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Request_Contact__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status_Detail__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Age__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Project__c</searchFilterFields>
+        <searchFilterFields>Request_Contact__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchFilterFields>Status_Detail__c</searchFilterFields>
+        <searchFilterFields>Age__c</searchFilterFields>
+        <searchResultsAdditionalFields>Project_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Request_Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status_Detail__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Age__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <sharingReasons>
+        <fullName>Customer__c</fullName>
+        <label>Customer</label>
+    </sharingReasons>
+    <webLinks>
+        <fullName>Create_Opportunity</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Opportunity</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
+
+document.getElementsByName(&quot;create_opportunity&quot;)[0].disabled = true; 
+var url = parent.location.href;
+var currentId = url.split(&quot;/&quot;)[3];
+
+if(&apos;{!Project_Request__c.Opportunity__c}&apos; != &apos;&apos;)
+{ 
+	alert(&apos;An opportunity has already been created for this work request.&apos;); 
+	document.getElementsByName(&quot;create_opportunity&quot;)[0].disabled = false; 
+}
+else
+{ 
+	//create a new Opportunity and associate it to current work request 
+	var callout = &quot;&quot; + sforce.apex.execute(&quot;CreateOpportunityFromWorkRequest&quot;,&quot;createOpportunity&quot;,
+                             {currentId:&quot;{!Project_Request__c.Id}&quot;});
+	
+	if(callout == &quot;Success&quot;) 
+	{ 
+		alert(&apos;Newly created Opportunity has been successfully associated with this work request.&apos;); 
+		window.location.reload(); 
+	}
+	else
+	{ 
+		alert(&apos;Failed to associate Newly created opportunity with this Work request. &apos;+ callout); 
+		document.getElementsByName(&quot;create_opportunity&quot;)[0].disabled = false; 
+	} 
+}</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,20 @@
+<aura:component >
+    <aura:attribute name="type" type="String" default="success" />
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="title" type="String" />
+    
+    
+ 	<div class="demo-only" style="height: 4rem;">
+      <div class="slds-notify_container slds-is-relative">
+        <div class="{!'slds-notify slds-notify_toast slds-theme_'+ v.type}" role="alert">
+          <span class="slds-assistive-text">{!v.title}</span>
+          <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+            <h2 class="slds-text-heading_small "><b>{!v.title} ! </b></h2>
+          </span>
+          <div class="slds-notify__content">
+            <h2 class="slds-text-heading_small ">{!v.message}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+</aura:component>

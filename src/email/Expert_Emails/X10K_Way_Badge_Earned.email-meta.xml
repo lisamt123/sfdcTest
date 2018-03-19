@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Congratulations to Experts who have completed 10K Way</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>X10K_Climb_Letterhead</letterhead>
+    <name>10K Way Badge Earned</name>
+    <style>freeForm</style>
+    <subject>10K Way Badge Earned</subject>
+    <textOnly>Hello {!Contact.FirstName},
+
+
+Congratulations on completing the 10K Way training course and earning your first 10K Climb badge!
+
+
+
+Please start to incorporate the best practices and standards into the work you do with clients and colleagues. The Knowledge Articles are there to assist should you need to reference any of the information about onboarding, client communications, delivery practices or feedback.
+
+
+Again, congratulations from the 10K Leadership Team!</textOnly>
+    <type>html</type>
+</EmailTemplate>

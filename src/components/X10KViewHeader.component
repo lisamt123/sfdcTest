@@ -1,0 +1,37 @@
+<apex:component >
+	<apex:attribute name="seletedTab" type="String" description="used to define which tab is selected."/>
+	<nav class="navbar navbar-default navbar-fixed-top" style="background-image : url('{!URLFOR($Resource.Resources, 'Resources/images/bg_stripe.png')}')">
+		<div class="container-fluid"> 
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1">
+		      		<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+		      	</button>
+		      	<a class="navbar-brand" href="/"><img src="{!URLFOR($Resource.Resources, 'Resources/images/10K_Advisors_Logo_300x300.png')}" alt="10K Advisors Logo"/></a>
+		    </div>
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="defaultNavbar1">
+		      	<ul class="nav navbar-nav navbar-right">
+		      		<li class="tab" id="home"><a href="/apex/X10KViewHome" class="selected-menu">Home</a></li><li class="menu-pipe"> | </li>
+		        	<li class="tab" id="about"><a href="/apex/X10KViewAbout">About</a></li><li class="menu-pipe"> | </li>
+		        	<li class="dropdown tab" id="partner"><a href="/apex/X10KViewPartner"  role="button" aria-expanded="false">Partner<span class="caret"></span></a>
+			          	<ul class="dropdown-menu" role="menu">
+				            <li><a href="/apex/X10KViewPartnerCustomer">Salesforce Customer</a></li>
+				            <li><a href="/apex/X10KViewPartnerSI">Salesforce SI or ISV</a></li>
+			          	</ul>
+			        </li>
+		        	<li class="menu-pipe tab"> | </li>
+		        	<li class="tab" id="expert"><a href="/apex/X10KViewExpert">Expert</a></li>
+		        	<li class="menu-pipe tab"> | </li>
+		        	<li class="tab" id="login"><a href="https://10k.force.com/10kcommunity/login" target="_blank">Login</a></li>
+		      	</ul>
+		    </div>
+		    <!-- /.navbar-collapse --> 
+	  	</div>
+	  	<!-- /.container-fluid --> 
+	</nav>
+	<script>
+		$('.tab a').removeClass('selected-menu');
+		$($('{!seletedTab} a')[0]).addClass('selected-menu');
+	</script>
+</apex:component>

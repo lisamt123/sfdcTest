@@ -1,0 +1,60 @@
+.THIS .emptyCart{
+    text-align: center !important;
+}
+.THIS .itemDesc{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 74px !important;
+}
+.THIS .leftSeparator{
+    border-right: 5px solid #9E9E9E;
+}
+.THIS .cartPic{
+    width: 100%;
+    text-align: center;
+}
+.THIS div .cartPic >p{
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+.THIS div .cartPic >p>img{
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+.THIS div .cartPic >img{
+    max-width: 100px !important;
+    max-height: 100px !important;
+    line-height: 100px;
+}
+.THIS .quantInput{
+    width: 80%;
+    display: flex;
+}
+.THIS .slds-form-element__label{
+    font-size: 1rem !important;
+    line-height: 2 !important;
+    width: 25% !important;
+}
+.THIS .slds-input{
+    border: .5px solid #2196F3;
+    padding: 0 1rem 0 0.3rem !important;
+    width: 200px !important;
+}
+.THIS .slds-grow{
+    padding-left: 4.5% !important;
+}
+.THIS .slds-text-longform >p{
+    margin-bottom: 0rem !important;
+    font-size: .88rem;
+}
+.THIS .slds-text-longform {
+    font-size: .88rem !important;
+}
+.THIS .cartHead{
+    font-size: .88rem !important;
+}
